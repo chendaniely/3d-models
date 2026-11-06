@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · Phase 2 started 2026-11-06: Dan's changes to the parts being asked (Phase 2 Q&A)
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 4), waiting on Dan's approval · Phase 2 started 2026-11-06
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -17,18 +17,26 @@ you can turn, its picture, its measurements and the files to download (Q&A answe
 The projects are vibe coded: an agent builds most models and all the tooling, Dan prints them and
 says what works. Others may print and adapt them, with credit, but not sell them (answer 15).
 
-The first real project is a **wall sconce for a grow light**, made of a wooden dowel and printed
-parts in a Japandi style, in the corner of a room where a monstera and a rubber plant stand. The
-light, Dan's Barrina 25 W grow bulb on a pendant cord, hangs 16 to 20 inches (406 to 508 mm) out
-from the wall from a clamp on the dowel (answer 11). Dan's doubt, in his words: "not sure if it'll
-look good with 3d printed parts and dowels". The sconce is the start of a dowel system in the
-spirit of Lofted Goods' The Rail, with original designs, none of Lofted Goods' files copied. Its
-parts are published as soon as they're designed, in three dowel sizes, so others can print them
-for their own dowels (answers 12 and 14).
+The first real project is a **grow-light rail**, made of wooden dowels and printed parts in a
+Japandi style, in the corner of a room where a monstera and a rubber plant stand. A vertical dowel
+rail hangs on the wall from two printed feet whose screws don't show. The light's arm, a second
+dowel, rides on the rail in a sliding joint locked by a wedge, so its height adjusts and planters
+can share the rail. Dan's Barrina 25 W grow bulb sits under a printed shade at the arm's tip, up to
+24 inches (610 mm) from the wall (Phase 2 Q&A 1 to 3). It began as a sconce: an arm straight out of
+one wall block, the light hanging by its cord from a clamp (answer 11). Phase 1 published those two
+parts; Dan's changes, brought forward before anything was printed, made it the rail (Phase 2 Q&A
+4). Dan's doubt, in his words: "not sure if it'll look good with 3d printed parts and dowels". His
+reference is Lofted Goods' The Rail v2 and its Grow Light for the Rail, in his words: "each piece
+slides into the rail and is held by a wedge piece, so it has a clean look. things then mount onto
+the rail using some kind of matching joint piece. i'm hoping to have a lamp that looks like his
+grow light setup but i need the light to reach out farther". The designs are original: those files
+are members-only downloads with no stated licence, so none is copied, and the parts don't fit Lofted
+Goods' pieces. They're published as soon as they're designed, in three dowel sizes, so others can
+print them for their own dowels (answers 12 and 14).
 
 **Success:** a visitor finds a model on the site, turns it in the viewer and downloads the STL for
 their dowel; Dan adds a model by saving a `.sc`, writing its `model.yml` and running one command;
-the sconce holds the light, out of the way, and looks like it belongs in the room.
+the rail holds the light, out of the way, and looks like it belongs in the room.
 
 **Goals**
 
@@ -37,7 +45,8 @@ the sconce holds the light, out of the way, and looks like it belongs in the roo
   download.
 - CI refuses a stale build, image metadata, a home-folder path and a leaked secret; and each push
   waits for the leak, privacy and model checks locally.
-- A sconce that passes a 48-hour load test at three times the light's weight before it goes up.
+- A rail light that passes a 48-hour load test at three times the light's weight, its arm at 24
+  inches, before it goes up.
 
 **Non-goals**
 
@@ -52,9 +61,10 @@ the sconce holds the light, out of the way, and looks like it belongs in the roo
 - Anything copied from Lofted Goods, or a page that looks like theirs.
 - A photo that shows where Dan lives: no metadata, and Dan looks at each before it's staged
   (answer 5; D14).
-- A sconce that looks printed-and-cheap: glossy plastic, bulky blocks, visible screws, a bare pink
-  grow bulb (kickoff notes, *How it can look good*).
-- A load-bearing part printed in PLA (it creeps under a constant load and softens near a warm bulb).
+- A light that looks printed-and-cheap: glossy plastic, bulky blocks, a screw, bolt or nut in
+  sight from the room, a bare pink grow bulb (kickoff notes, *How it can look good*).
+- A load-bearing part, or the shade, printed in PLA (it creeps under a constant load and softens
+  near a warm bulb).
 
 ## How it's made
 
@@ -131,31 +141,56 @@ Changelog, and How we work (`AGENTS.md`). Diagrams by link only:
 | Phase | Goal | Done means |
 |---|---|---|
 | 1: the repo and the first models | the pipeline from design to gallery, guarded by CI, with the coupon and the sconce's parts designed | the live site turns the coupon, the wall block and the cord clamp in 3D and downloads each in three sizes; CI runs every check |
-| 2: the wall sconce | the parts tuned to Dan's measurements, judged by eye, proven by a load test, and installed | the sconce is on the wall holding the light, after a passed load test, its pages saying so |
+| 2: the grow-light rail | the rail's parts designed from Dan's answers, sized to his measurements, judged by eye, proven by a load test at 24 inches, and installed | the rail and the light are on the wall after a passed load test, the parts' pages saying so; Phase 1's wall block and cord clamp are marked superseded |
 
-### The sconce's design calls
+### The rail's design calls
 
-All the agent's, from the kickoff notes and the council, but for the clamp (Dan's, answer 11);
-each can be revisited at Phase 2's start.
+Dan's answers (Phase 2 Q&A 1 to 4) are marked with their number; every other call is the agent's,
+for Dan to approve with this revision, and each can be revisited at the look test. The rough
+concept they describe was drawn for Dan on 2026-11-06, before this revision; the plan's parts
+replace it.
 
-- **Saved at 1 inch (25.4 mm)** (D5): 4.5 mm long-term sag at 20 inches with a 1 kg light, a 21×
-  strength margin, and the same size as The Rail; STLs for 3/4 inch and 25 mm too (answer 14).
-- **A straight cantilever** (D6): the cleanest line; the knee brace waits in Later (S15).
-- **A stand-alone wall block** (D7, D16): a plate with two screws 110 mm apart, at least 100 mm, into
-  a stud or 3/16-inch toggle anchors (the top screw's pull is about 54 N); their heads sunk in
-  counterbores under printed caps; a socket 54 mm deep, more than 2 inches; an M6 bolt and
-  nylon-insert nut through the boss and the dowel.
-- **A cord clamp** (answer 11, D17): a split ring that grips the dowel anywhere along it, closed by
-  an M4 bolt through two ears on its side, with a web down to a shelf a cord's width below the
-  dowel. The light's cord passes under the dowel, presses in through a slot 1.5 mm narrower than
-  itself and hangs from a hole 0.6 mm narrower, straight below the dowel, so it grips and the light
-  can't turn the clamp.
-- **The coupon decides the fit:** `dowel_d` stays the dowel's nominal size, and the socket's
-  `clearance` is the coupon's hole that fit, printed on its edge as the sockets print.
-- **A look test first** (D8): both parts printed in PLA and held up in the corner with the dowel
-  and the light, before any load-bearing print. Rounded edges wait for its verdict (D18, S22).
-- **PETG, matte,** for every load-bearing part (D9), the wall block printed on its side so the
-  layers run along the socket.
+- **The parts** (the agent's): two wall feet, a rail carrier with its wedge, an arm socket with its
+  wedge, an arm tip, and the shade; each its own model under `models/`, its name starting `rail-`;
+  a wedge and a depth gauge are bodies in their part's design, as the wall block's caps are.
+- **The rail** (Q&A 1): a vertical dowel, its length Dan's cut, held at each end by a wall foot.
+- **The wall feet** (the agent's): a closed cup over each end of the rail, so the rail is held
+  between them and can't drop or lift out; a bridge standing the rail off the wall, far enough for
+  the carrier's back and the cord behind it; a plate whose back has a keyhole slot that hangs on a
+  screw head, its depth set by a printed gauge, so no screw shows. The screws are the wall block's
+  (D16): #8 or #10 wood screws into a stud, or 3/16-inch toggle anchors. Something hidden from the
+  room stops a bump lifting the feet off their screws; how is the builder's. The bottom foot holds
+  the cord behind the rail.
+- **The rail carrier** (Q&A 1; its shape the agent's): a C-shaped sleeve open toward the wall,
+  pushed onto the rail from the front while the rail is up, so pieces can be added or moved
+  without taking the rail down; a wedge pushed up from below into the open back, between the rail
+  and the sleeve, locks it, out of sight. Its face carries a dovetail running up and down. Long
+  enough to hold the arm at 24 inches without slipping or rocking (S13, S29). If a wedge can't
+  hold a C-shape, the carrier slides on from the rail's end before the rail goes up, a ruling
+  logged on Phase 2's Q&A page.
+- **The arm socket** (Q&A 1's "matching joint piece"; its shape the agent's): slides down onto the
+  carrier's dovetail, so the same carrier can take a planter adapter later (S16); holds the arm
+  level in a socket at least 51 mm deep, locked by its own wedge, so no bolt shows.
+- **The arm** (Q&A 2): a second dowel of the rail's size, the light's centre up to 24 inches
+  (610 mm) from the wall. With a 1 kg light, a 1-inch arm sags about 8 mm at 24 inches over time
+  (D5's 4.5 mm at 20 inches, times 1.73); the load test measures it.
+- **The arm tip and the shade** (Q&A 3; their shape the agent's): a cap on the arm's end with a
+  stem down to a shade fixed under it; the bulb's socket held inside, the shade's wall at least
+  10 mm from the bulb all round, vents at its top, the cord up the stem. Its size waits on Dan's
+  measurement of the bulb. If the bulb's hottest surface is over 60 °C after an hour on, the gap
+  grows or the material changes, decided with Dan.
+- **The cord** (the agent's): from the socket up the stem, along the arm's underside in printed
+  clips, round the joint and down behind the rail, held by the bottom foot.
+- **No hardware in sight:** from the room, no screw, bolt or nut shows (the anti-goal).
+- **Sizes and fit:** every part saved at 1 inch (25.4 mm), with STLs for 3/4 inch and 25 mm
+  (answer 14); `dowel_d` and `clearance` parameters in each; `clearance` is the coupon's hole that
+  fit (S26), and each wedge is sized from it.
+- **A look test first** (D8): every part printed in PLA and held up with the rail, the arm and the
+  light, before any PETG print (S11); rounded edges wait for its verdict (D18, S22).
+- **PETG, matte,** for every load-bearing part and the shade (D9; Q&A 3); each part printed so its
+  layers run along its load.
+- **Phase 1's wall block and cord clamp** (Q&A 4): kept in the repo, their status `superseded`,
+  their pages pointing at the rail's parts.
 
 ## Scenarios
 
@@ -171,23 +206,26 @@ each can be revisited at Phase 2's start.
 | S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser after the merge (Phase 1, Task 10, step 9) | built |
 | S09 | Dan is about to print the coupon (Phase 1's part; printing it is S26) | each hole is marked by its clearance in dots, and the page says how to print it and read the result | Phase 1, Task 6 | `tests/test_coupon.py` | built |
 | S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | built |
-| S11 | Dan holds the PLA look-test parts, the dowel and the light up in the corner | he decides whether it looks right, the visible hardware included, before any PETG is printed | Phase 2, Task 4 | Dan's verdict on Phase 2's Q&A page | planned |
-| S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | built |
-| S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 5 | the load-test log on the parts' pages | planned |
-| S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2, Task 6 | Dan's check, with a photo he has looked at | planned |
-| S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8 | `tests/test_cord_clamp.py` | built |
+| S11 | Dan holds the PLA look-test parts up in the corner: the feet on the rail, the carrier and arm socket on it, the arm, the shade and the light | he decides whether it looks right, before any PETG is printed; nothing but the dowels and the parts shows | Phase 2, the look test | Dan's verdict on Phase 2's Q&A page | planned |
+| S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
+| S13 | the PETG rail parts, with the arm at 24 inches, hold three times the light's weight for 48 hours, mounted as they will be | the tip sag grows by under 3 mm, the carrier slips under 2 mm on the rail, and nothing cracks or pulls out | Phase 2, the load test | the load-test log on the parts' pages | planned |
+| S14 | the rail light is installed and bumped | the arm doesn't turn on the rail or droop, the feet stay on their screws, and the cord runs along the arm and down behind the rail | Phase 2, the install | Dan's check, with a photo he has looked at | planned |
+| S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8 | `tests/test_cord_clamp.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
 | S26 | Dan prints the coupon on its edge and tries his dowel in each hole (S09's Phase 2 part) | the hole his dowel goes into by hand, all the way, gives the dowel parts' `clearance` | Phase 2, Task 1 | his result on Phase 2's Q&A page | planned |
-| S27 | the light hangs by its cord from the clamp for two days (S18's Phase 2 part) | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 2, Task 5 | the load test's slip measurements | planned |
+| S27 | the light hangs by its cord from the clamp for two days (S18's Phase 2 part) | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 2, Task 5 | the load test's slip measurements | superseded (Phase 2 Q&A 4): no cord clamp; S29 checks the joint |
+| S28 | a rail part is built at 3/4 inch, 25 mm or 1 inch | each cup and socket takes its dowel with the coupon's clearance, the carrier's open back takes the rail, its wedge fills the gap, and the arm's socket is at least 51 mm deep | Phase 2, the rail parts | the parts' tests | planned |
+| S29 | Dan pushes the carrier onto the mounted rail, slides the arm socket down its dovetail and pushes both wedges in | the joint doesn't slide or turn by hand, comes apart when the wedges are tapped out, and no bolt or screw shows | Phase 2, the look test | Dan's check on Phase 2's Q&A page | planned |
+| S30 | the light runs for 14 hours, the timer's longest, inside the PETG shade | the shade doesn't soften, warp or discolour, and is nowhere hotter than 60 °C | Phase 2, the load test | the temperatures in the load-test log | planned |
 
 ### Later
 
 | ID | Situation | Expected | Kind | Why it waits |
 |---|---|---|---|---|
 | S15 | the load test fails, or the sag looks wrong | a knee-brace kit: a diagonal dowel meeting the arm about 12 inches out | optional | only needed if the straight arm fails (D6) |
-| S16 | Dan wants a wall planter or a second arm | it reuses the wall block and dowel joints | optional | after the sconce proves the joints |
+| S16 | Dan wants a wall planter or a second arm on the rail | a planter adapter or a second arm socket slides onto a rail carrier's dovetail | optional | after the rail proves the joint |
 | S17 | Dan saves a design from the app in its default zip format | `make models-check` warns, so designs stay plain text | optional | the first app-saved design shows whether it's needed |
 | S22 | the look test calls the square edges cheap | every visible edge rounded to one radius, a parameter | optional | a fillet picked by its edge's position may break the size exports; the look test decides (D18) |
 | S23 | a visitor opens a model's page | the viewer frames the whole model to fit; today its first view crops the cord clamp's bottom edge | optional | a cosmetic crop (Phase 1 end council, goal fit 5) |
@@ -201,8 +239,9 @@ each can be revisited at Phase 2's start.
   guess, and the cord may be flat. Phase 2's first task asks.
 - **[Dan] SolidCraft's save folder:** add this repo to the SolidCraft MCP server's `--allow-path`
   so live sessions can save here. Headless builds don't need it.
-- **[Dan] Changes to the wall block and the cord clamp:** how the dowel mounts and clamps to them
-  and how the block screws to the wall; after the PLA look test, in Phase 2 (Phase 1 Q&A 1 and 4).
+- **[Dan] The bulb:** its diameter, height and socket, its weight with its cord and timer, and its
+  hottest surface after an hour on; the shade's size and the load test wait on them (Phase 2's
+  first task). His changes to the parts are settled (Phase 2 Q&A 1 to 4).
 - **[Dan] His commits' author address:** the commits carry his personal email, public in the
   history; a GitHub noreply address would keep it out of future commits (Phase 1 end council,
   security 4).
@@ -242,3 +281,7 @@ each can be revisited at Phase 2's start.
 - 2026-11-05: Dan's changes to the wall block and the cord clamp wait for the PLA look test, in
   Phase 2; a standing push OK, and the merge, for Phase 1's end (Phase 1 Q&A 4 and 5, `9e47ad4`).
 - 2026-11-05: the GitHub settings applied by the agent (Phase 1 Q&A 6, `c0fec70`).
+- 2026-11-06: the sconce becomes a grow-light rail: a vertical rail on two wall feet with hidden
+  screws, the arm on a sliding joint locked by a wedge, the light up to 24 inches out under a PETG
+  shade, designed now in Phase 2; Phase 1's two parts kept, superseded (Phase 2 Q&A 1 to 4,
+  `684a776` to `09a9f55`).
