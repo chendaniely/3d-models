@@ -270,7 +270,17 @@ def test_build_refuses_an_invalid_model_instead_of_building_it(
     assert calls(fake_cli) == []
 
 
-def test_check_ignores_a_folder_without_a_design(repo: Path, capsys) -> None:
-    (repo / "models" / "notes").mkdir()
+def test_check_names_a_folder_without_a_design(repo: Path, capsys) -> None:
+    folder = repo / "models" / "hook"  # an empty folder can't be committed: this one holds a file
+    folder.mkdir()
+    (folder / "model.yml").write_text("title: Hook\n", encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    assert capsys.readouterr().err == "models: models/hook: no design: save it as hook.sc\n"
+
+
+def test_check_skips_a_folder_holding_only_hidden_files(repo: Path, capsys) -> None:
+    folder = repo / "models" / "hook"
+    folder.mkdir()
+    (folder / ".DS_Store").write_bytes(b"\0")  # Finder's, git-ignored: can't be committed
     assert models.main(["check"], root=repo) == 0
     assert "0 models" in capsys.readouterr().out

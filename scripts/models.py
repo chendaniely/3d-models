@@ -4,12 +4,13 @@
         rebuild each model whose design, sizes or built files changed since its build.json
         (needs solidcraft-cli); refuse, building nothing, while a model is invalid
     uv run scripts/models.py check
-        fail, naming each model, when it is invalid (a folder name that can't be a URL, a
-        misnamed or extra design, a model.yml or sizes it can't read, sizes giving one file name
-        or none, a size changing a parameter the design hasn't: no build fixes these) or stale
-        (a build is missing or doesn't match its design: make models fixes it)
+        fail, naming each model, when it is invalid (a folder name that can't be a URL, no
+        design, a misnamed or extra design, a model.yml or sizes it can't read, sizes giving one
+        file name or none, a size changing a parameter the design hasn't: no build fixes these)
+        or stale (a build is missing or doesn't match its design: make models fixes it)
 
-A model is a folder models/<slug>/ holding the design <slug>.sc. A build writes, beside it:
+A model is a folder models/<slug>/ holding the design <slug>.sc; a folder holding anything but
+hidden files (Finder's .DS_Store) and no design is named as invalid. A build writes, beside it:
 <slug>.stl, <slug>.png, <slug>.eval.json (solidcraft-cli eval's measurements), one STL per extra
 size its model.yml lists (<slug>-<size>.stl), and build.json, which records the design's sha256,
 the sizes, the CLI's version and every built file's sha256. Exporting the same design twice gives
@@ -73,7 +74,7 @@ def find_models(root: Path) -> list[Model]:
     return [
         Model(folder)
         for folder in sorted(models_dir.iterdir())
-        if folder.is_dir() and any(p.suffix.lower() == ".sc" for p in folder.iterdir())
+        if folder.is_dir() and any(not p.name.startswith(".") for p in folder.iterdir())
     ]
 
 
@@ -172,6 +173,8 @@ def invalid(model: Model) -> str | None:
             f"{where}: its folder name must be lowercase words joined by hyphens, as the page's URL"
         )
     designs = sorted(p.name for p in model.folder.iterdir() if p.suffix.lower() == ".sc")
+    if not designs:
+        return f"{where}: no design: save it as {model.design.name}"
     if designs != [model.design.name]:
         return f"{where}: the design must be {model.design.name} alone, not {', '.join(designs)}"
     try:
