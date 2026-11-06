@@ -21,9 +21,10 @@ from `scripts/commitmsg.py`'s headings.
 Through the `Makefile` (`make help`): `make hooks`, `make check`, `make test`, `make test-utc`,
 `make lint`, `make leaks`, and `make docs` on a site project. Name targets, never raw commands; a
 command anyone runs more than once becomes a target. This project adds `make models` (rebuild each
-changed design; needs SolidCraft), `make models-check` and `make privacy` (image metadata,
-unreadable photo formats, home-folder paths); `make check` runs all but `make models`, which CI
-can't.
+changed design; needs SolidCraft), `make models-check`, `make privacy` (image metadata,
+unreadable photo formats, home-folder paths, in the history too) and `make strip FILES=…` (a
+photo's metadata removed, before it's staged); `make check` runs all but `make models`, which CI
+can't, and `make strip`, which rewrites files.
 
 ## Resume
 

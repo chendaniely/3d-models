@@ -41,8 +41,9 @@ You need [uv](https://docs.astral.sh/uv/), [Quarto](https://quarto.org/) 1.11.6,
 
 1. Make a folder `models/<slug>/`, its name lowercase words joined by hyphens: it becomes the
    page's address.
-2. Save the design there as `<slug>.sc`, in SolidCraft's plain-text JSON format where you can, so
-   a diff can read it (a design saved in the default zip format builds too).
+2. Save the design there as `<slug>.sc`, in SolidCraft's plain-text JSON format: a diff can read
+   it, and the privacy check reads only plain-text designs (one saved in the default zip format
+   builds too, but nothing checks inside it).
 3. Write `models/<slug>/model.yml`:
 
    ```yaml
@@ -61,9 +62,10 @@ You need [uv](https://docs.astral.sh/uv/), [Quarto](https://quarto.org/) 1.11.6,
    ```
 
 4. `make models`, then `make check`, and commit the folder. A photo of a print goes in
-   `models/<slug>/photos/`, stripped first with `make strip FILES=<file>`; then look at the photo
-   for anything that shows where you live (a window's view, a street, a house number, a face, a
-   reflection, a screen) before committing it.
+   `models/<slug>/photos/` as a JPEG, PNG or WebP. Convert a HEIC to JPEG first (on a Mac,
+   `sips -s format jpeg IMG_0001.HEIC --out IMG_0001.jpg`), then strip it with
+   `make strip FILES=<file>`; then look at the photo for anything that shows where you live (a
+   window's view, a street, a house number, a face, a reflection, a screen) before committing it.
 
 ## How it's built
 

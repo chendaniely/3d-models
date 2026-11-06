@@ -103,8 +103,8 @@ tests/                pytest
 | Target | What it does |
 |---|---|
 | `make models` | rebuilds each model whose design, sizes or built files differ from its `build.json` (needs SolidCraft) |
-| `make models-check` | fails, naming each model, when a build is missing or stale, or a design is misnamed |
-| `make privacy` | fails, naming each file, on image metadata, a photo format it can't read inside, or a home-folder path, in anything git would commit |
+| `make models-check` | fails, naming each model, when a build is missing or stale, or the model is invalid: a folder name that can't be a URL, no design or a misnamed one, a `model.yml` or sizes it can't read, sizes giving one file name or none, a size changing a parameter the design hasn't |
+| `make privacy` | fails, naming each file, on image metadata (a chunk the picture doesn't need, or bytes after its end, included), a photo format it can't read inside, or a home-folder path, in anything git would commit and in every file the history holds; fails in a shallow clone; `make strip` fixes an image |
 | `make strip FILES=…` | rewrites each JPEG, PNG or WebP named upright, with no metadata but its colour profile; then you look at it |
 | `make leaks` | gitleaks over every commit, merges included |
 | `make test`, `make test-utc`, `make lint` | pytest; pytest under `TZ=UTC`; ruff check and format check |
@@ -163,22 +163,24 @@ each can be revisited at Phase 2's start.
 |---|---|---|---|---|---|
 | S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | its STLs, picture, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | built |
 | S02 | a design changes and `make models` isn't run, or a built file isn't the one recorded | `make check` and CI fail, naming the model and why | Phase 1, Task 2 | `tests/test_models.py` | built |
-| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo | `make privacy` fails, naming it, before the push it would go out in; `scripts/privacy.py strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | built |
+| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo, or is still in a commit the history holds | `make privacy` fails, naming it, before the push it would go out in, the history's copies included; `make strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | built |
 | S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | built |
 | S05 | a push to `phase-1` | CI runs the tests, lint, the model and privacy checks, the leak scan and the site's render and offline link check | Phase 1, Tasks 1 to 4 | a green CI run | built |
 | S06 | a doc under `docs/superpowers/` quotes Quarto's syntax, or isn't on the Design page | it renders as text; a doc missing from the Design page fails `make check` | Phase 1, Task 4 | `tests/test_site.py` | built |
 | S07 | a visitor opens the site's Models page | a card per model, with its picture, title and summary, linking to its page | Phase 1, Task 5 | `tests/test_gallery.py` | built |
-| S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser at the phase end | built |
-| S09 | Dan prints the coupon on its edge and tries his dowel in each hole | each hole is marked by its clearance in dots, and the page says how to read the result | Phase 1, Task 6; Phase 2, Task 1 | `tests/test_coupon.py` | built |
+| S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser after the merge (Phase 1, Task 10, step 9) | built |
+| S09 | Dan is about to print the coupon (Phase 1's part; printing it is S26) | each hole is marked by its clearance in dots, and the page says how to print it and read the result | Phase 1, Task 6 | `tests/test_coupon.py` | built |
 | S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | planned |
 | S11 | Dan holds the PLA look-test parts, the dowel and the light up in the corner | he decides whether it looks right, the visible hardware included, before any PETG is printed | Phase 2, Task 3 | Dan's verdict on Phase 2's Q&A page | planned |
 | S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | built |
 | S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 4 | the load-test log on the parts' pages | planned |
 | S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2, Task 5 | Dan's check, with a photo he has looked at | planned |
-| S18 | the light hangs by its cord from the clamp for two days | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 1, Task 8; Phase 2, Task 4 | `tests/test_cord_clamp.py`; the load test's slip measurements | built |
+| S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8 | `tests/test_cord_clamp.py` | built |
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
+| S26 | Dan prints the coupon on its edge and tries his dowel in each hole (S09's Phase 2 part) | the hole his dowel goes into by hand, all the way, gives the dowel parts' `clearance` | Phase 2, Task 1 | his result on Phase 2's Q&A page | planned |
+| S27 | the light hangs by its cord from the clamp for two days (S18's Phase 2 part) | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 2, Task 4 | the load test's slip measurements | planned |
 
 ### Later
 
@@ -188,6 +190,9 @@ each can be revisited at Phase 2's start.
 | S16 | Dan wants a wall planter or a second arm | it reuses the wall block and dowel joints | optional | after the sconce proves the joints |
 | S17 | Dan saves a design from the app in its default zip format | `make models-check` warns, so designs stay plain text | optional | the first app-saved design shows whether it's needed |
 | S22 | the look test calls the square edges cheap | every visible edge rounded to one radius, a parameter | optional | a fillet picked by its edge's position may break the size exports; the look test decides (D18) |
+| S23 | a visitor opens a model's page | the viewer frames the whole model to fit; today its first view crops the cord clamp's bottom edge | optional | a cosmetic crop (Phase 1 end council, goal fit 5) |
+| S24 | a build runs on another CLI version or hangs, or the history grows large | a warning when `build.json`'s CLI version isn't the one installed, a timeout on each CLI call, and a history scan that streams its blobs | optional | today's size and one machine (reliability 9, 10) |
+| S25 | a home-folder path reaches a commit or tag message, a symlink's blob sits in the history, or an image and a text path share one blob | commit and tag messages scanned for home paths, a symlink's blob told apart from a file's, and each path of a shared blob checked as its kind | optional | no hits today, and contrived (security 2; the phase-end list's b and e) |
 
 ## Open items and risks
 
@@ -198,6 +203,12 @@ each can be revisited at Phase 2's start.
   so live sessions can save here. Headless builds don't need it.
 - **[Dan] Changes to the wall block and the cord clamp:** how the dowel mounts and clamps to them
   and how the block screws to the wall; after the PLA look test, in Phase 2 (Phase 1 Q&A 1 and 4).
+- **[Dan] His commits' author address:** the commits carry his personal email, public in the
+  history; a GitHub noreply address would keep it out of future commits (Phase 1 end council,
+  security 4).
+- **[Dan] Dependabot's security updates:** off, while its version updates are on; turning them
+  on is a repo setting outside the five he OKed (Phase 1 Q&A 6; Phase 1 end council, security
+  5).
 - **GitHub settings:** applied in Phase 1's Task 9, with Dan's OK (Phase 1 Q&A 6): Pages from
   GitHub Actions, Actions limited and SHA-pinned, merge commits only, a ruleset on `main`.
 - **Binary files can't be leak-scanned:** STL and PNG files are listed in each phase PR for Dan to
