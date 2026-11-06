@@ -185,7 +185,7 @@ def test_strip_keeps_a_png_s_transparency(repo: Path) -> None:
         assert stripped.convert("RGBA").getpixel((1, 1))[3] == 255
 
 
-def test_strip_checks_every_file_before_rewriting_any(repo: Path, capsys) -> None:
+def test_strip_checks_every_file_before_rewriting_any(repo: Path) -> None:
     good = photo(repo / "good.jpg", comment=b"taken at home")
     bad = repo / "IMG.heic"
     bad.write_bytes(b"\x00")
