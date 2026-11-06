@@ -28,6 +28,7 @@ jobs:
       - run: uv sync --frozen
       - run: make test
       - run: make lint
+      - run: make models-check
 
   leaks:
     runs-on: ubuntu-latest
