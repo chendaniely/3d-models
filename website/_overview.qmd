@@ -8,7 +8,7 @@ flowchart LR
   ci["CI on every push<br/>tests · lint · models-check · privacy · leaks · site"]
   gallery["make docs<br/>doc copies + model pages + Quarto"]
   pages["GitHub Pages<br/>the gallery and its 3D viewer"]
-  sconce["the wall sconce's models<br/>Phase 2"]
+  sconce["the sconce tuned, load-tested and installed<br/>Phase 2"]
 
   design --> build --> built
   built --> ci
@@ -16,7 +16,7 @@ flowchart LR
   built --> gallery
   yml --> gallery
   gallery --> pages
-  sconce -.-> design
+  built -.-> sconce
 
   classDef planned stroke-dasharray: 5 5
   class sconce planned

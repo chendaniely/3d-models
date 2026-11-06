@@ -36,7 +36,7 @@ the sconce holds the light, out of the way, and looks like it belongs in the roo
 - The site renders every model in a 3D viewer, with an STL per dowel size and the `.sc` to
   download.
 - CI refuses a stale build, image metadata, a home-folder path and a leaked secret; and each push
-  waits for the same checks locally.
+  waits for the leak, privacy and model checks locally.
 - A sconce that passes a 48-hour load test at three times the light's weight before it goes up.
 
 **Non-goals**
@@ -105,11 +105,17 @@ tests/                pytest
 | `make models` | rebuilds each model whose design, sizes or built files differ from its `build.json` (needs SolidCraft) |
 | `make models-check` | fails, naming each model, when a build is missing or stale, or a design is misnamed |
 | `make privacy` | fails, naming each file, on image metadata, a photo format it can't read inside, or a home-folder path, in anything git would commit |
+| `make strip FILES=…` | rewrites each JPEG, PNG or WebP named upright, with no metadata but its colour profile; then you look at it |
+| `make leaks` | gitleaks over every commit, merges included |
 | `make test`, `make test-utc`, `make lint` | pytest; pytest under `TZ=UTC`; ruff check and format check |
 | `make docs` | copies the docs, writes the model pages, renders the site, fails on an unresolved link, runs lychee where installed |
 | `make check` | test, test-utc, lint, models-check, privacy, leaks, docs |
+| `make hooks` | installs nothing: no hooks yet |
+| `make help` | lists the targets |
 
-Every push waits for `make leaks privacy` and Dan's OK while the repo has no hooks (`AGENTS.md`).
+While the repo has no hooks, every push waits for `make leaks privacy models-check` to pass, and
+for Dan's OK unless Dan gives a standing OK, as he did for Phase 1's end (Phase 1 Q&A 5;
+`AGENTS.md`).
 
 ### The site
 
@@ -190,13 +196,18 @@ each can be revisited at Phase 2's start.
   guess, and the cord may be flat. Phase 2's first task asks.
 - **[Dan] SolidCraft's save folder:** add this repo to the SolidCraft MCP server's `--allow-path`
   so live sessions can save here. Headless builds don't need it.
-- **The `vibe-coded` topic** and the website field: set in Phase 1's settings task.
+- **[Dan] Changes to the wall block and the cord clamp:** how the dowel mounts and clamps to them
+  and how the block screws to the wall; after the PLA look test, in Phase 2 (Phase 1 Q&A 1 and 4).
 - **GitHub settings:** applied in Phase 1's Task 9, with Dan's OK (Phase 1 Q&A 6): Pages from
   GitHub Actions, Actions limited and SHA-pinned, merge commits only, a ruleset on `main`.
 - **Binary files can't be leak-scanned:** STL and PNG files are listed in each phase PR for Dan to
-  check by eye, so a PR that adds them waits for him even though the mode is fully vibed.
+  check by eye, so a PR that adds them waits for him even though the mode is fully vibed. Ruling:
+  Dan looked at and OKed each binary file by name when it was pushed (Phase 1 Q&A 2 and 3), so the
+  wait for his look at a PR's binaries is met for Phase 1; a phase-end step that adds a new binary
+  would need his look again.
 - **No hooks yet:** plan-driven-development's hooks and leak check aren't built, so every push waits
-  for Dan's OK after `make leaks privacy` passes, and there is no standing push OK.
+  for `make leaks privacy models-check` to pass, and for Dan's OK unless Dan gives a standing OK,
+  as he did for Phase 1's end (Phase 1 Q&A 5).
 - **lychee runs in CI only:** it isn't installed on Dan's machine, and running a downloaded copy
   was refused in this session; installing it locally is Dan's call (Phase 1's phase-end list).
 - **The parts are untested designs** until Phase 2's look and load tests; their pages say so.
@@ -217,3 +228,6 @@ each can be revisited at Phase 2's start.
 - 2026-11-05: CC BY-NC 4.0 for the models, pictures and docs, MIT for the code (Q&A answer 15,
   `647e01f`).
 - 2026-11-05: the spec and both plans approved as written (Q&A answer 16).
+- 2026-11-05: Dan's changes to the wall block and the cord clamp wait for the PLA look test, in
+  Phase 2; a standing push OK, and the merge, for Phase 1's end (Phase 1 Q&A 4 and 5, `9e47ad4`).
+- 2026-11-05: the GitHub settings applied by the agent (Phase 1 Q&A 6, `c0fec70`).

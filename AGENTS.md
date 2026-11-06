@@ -10,9 +10,9 @@ out the phase branch. Attended: phase PRs and the fifth stop wait for Dan; fully
 merges and decides. Made from plan-driven-development a558635.
 
 Until the hooks and the leak check exist, `make hooks` installs nothing and there is no denylist:
-every push waits for Dan's OK, after `make leaks privacy` passes (once `make privacy` exists;
-`make leaks` alone before it), the request naming every binary file the push adds, and there is
-no standing push OK. Text that leaves without git is scanned by `gitleaks stdin --redact
+every push waits for `make leaks privacy models-check` to pass, and for Dan's OK, the request
+naming every binary file the push adds, unless Dan gives a standing OK, as he did for Phase 1's
+end (Phase 1 Q&A 5). Text that leaves without git is scanned by `gitleaks stdin --redact
 --no-banner` alone, and `docs/agents/close-task.txt` and `wip.txt` are this project's own, written
 from `scripts/commitmsg.py`'s headings.
 

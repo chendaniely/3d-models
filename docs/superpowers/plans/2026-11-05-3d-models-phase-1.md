@@ -44,8 +44,9 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 - No home-folder path, private address or personal detail in any committed file; images carry no
   metadata but a colour profile.
 - Every commit: message in a file, `git commit -F`, staged by path, `Plan:` trailer checked.
-- No hooks yet: every push waits for Dan's OK, after `make leaks privacy` passes, the request
-  naming every binary file the push adds.
+- No hooks yet: every push waits for `make leaks privacy models-check` to pass, and for Dan's OK,
+  the request naming every binary file the push adds, unless Dan gives a standing OK, as he did
+  for Phase 1's end (Phase 1 Q&A 5).
 
 ## Review Focus
 
@@ -1376,7 +1377,7 @@ Co-Authored-By: <the model's own line>
 > extracts `lychee-x86_64-unknown-linux-gnu/lychee`, the path the release tarball really uses (the
 > listing's `lychee` failed CI's first run; escaped from this task, fixed under Task 6's reopen). One
 > file more,
-> `website/.gitignore`, which Quarto's render writes (its own `/.quarto/` and `*.quarto_ipynb`
+> `website/.gitignore`, which Quarto's render writes (its own `/.quarto/` and `**/*.quarto_ipynb`
 > lines) whenever it's missing; committed, as Quarto's practice, so checkouts stay clean. The
 > listing stays as planned.
 
@@ -4164,7 +4165,9 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   `gh pr merge <N> --merge --match-head-commit <sha>` and the subject
   `chore(repo): 🤖 merge Phase 1: the repo and the first models (#N)`, never `--admin`, squash,
   rebase or `--delete-branch`; but the PR adds STL and PNG files no scan can read, so it waits for
-  Dan's look at them first (`AGENTS.md`, *Stops*).
+  Dan's look at them first (`AGENTS.md`, *Stops*). Ruling: Dan looked at and OKed each binary file
+  by name when it was pushed (Phase 1 Q&A 2 and 3), so that wait is met for Phase 1; a phase-end
+  step that adds a new binary would need his look again.
 - [ ] **9. After the merge:** each model's page on <https://chendaniely.github.io/3d-models/>
   serves its sizes, and its viewer loads (S08, S10).
 
