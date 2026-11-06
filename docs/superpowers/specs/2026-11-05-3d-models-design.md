@@ -1,7 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec drafted 2026-11-05 and revised after the kickoff council, awaiting Dan's approval ·
-Phase 1 planned · Phase 2 planned
+**Status:** spec approved 2026-11-05 · Phase 1 in progress on `phase-1` · Phase 2 planned
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -217,3 +216,4 @@ each can be revisited at Phase 2's start.
 - 2026-11-05: ready-made STLs for 3/4 inch, 25 mm and 1 inch (Q&A answer 14, `351878b`).
 - 2026-11-05: CC BY-NC 4.0 for the models, pictures and docs, MIT for the code (Q&A answer 15,
   `647e01f`).
+- 2026-11-05: the spec and both plans approved as written (Q&A answer 16).
