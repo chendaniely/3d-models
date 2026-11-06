@@ -50,7 +50,10 @@ def test_the_wedge_holds_by_friction_and_shows_below_to_be_tapped() -> None:
 
 @pytest.mark.parametrize("off", [-0.5, 0.0, 0.5])
 def test_a_dowel_half_a_millimetre_off_still_seats_the_wedge_inside(off: float) -> None:
-    p = params(CARRIER)  # the wedge pushes the rail to the U's front, so the gap gains clearance/2
+    # A dowel off its size gets the clearance the coupon picks for it (S28), and wedge_top follows
+    # clearance, so the seat depends on the offset alone; the wedge pushes the rail to the U's
+    # front, so the gap gains clearance / 2.
+    p = params(CARRIER)
     below_top = (p["wedge_top"] - p["room_top"] - p["clearance"] / 2 + off) / p["taper"]
     assert 0 < below_top < p["carrier_l"] - 10.0
 
