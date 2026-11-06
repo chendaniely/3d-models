@@ -1,4 +1,4 @@
-# 3d-models Phase 1: the repo, implementation plan
+# 3d-models Phase 1: the repo and the first models, implementation plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development
 > (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use
@@ -6,16 +6,19 @@
 > it (the task loop, reviews, stops, commits, pushing) and outranks this header where they differ.
 
 **Goal:** the pipeline from a SolidCraft design to a gallery page with a 3D viewer, guarded by CI,
-with the dowel fit-test coupon as its first model.
+with three models on it: the dowel fit-test coupon and the sconce's wall block and cord clamp,
+each in three dowel sizes.
 
 **Architecture:** designs are plain-text `.sc` files under `models/<slug>/`; `scripts/models.py`
-builds each changed one with `solidcraft-cli` and judges freshness by the design's SHA-256;
-`scripts/photos.py` keeps GPS data out; `scripts/gallery.py` writes a Quarto page per model, which
-`website/assets/stl-viewer.js` turns into a 3D view with three.js. CI runs every check on each push
-and deploys the site from `main`.
+builds each changed one with `solidcraft-cli`, one STL per size, and records every file's SHA-256;
+`scripts/privacy.py` keeps image metadata and home-folder paths out; `scripts/sitedocs.py` copies
+the design docs into the site, Quarto's syntax escaped; `scripts/gallery.py` writes a page per
+model, which `website/assets/stl-viewer.js` turns into a 3D view with a local copy of three.js.
+CI runs every check on each push and deploys the site from `main`.
 
-**Tech Stack:** Python 3.12+ under uv (pytest, ruff, PyYAML, Pillow), solidcraft-cli 0.30.1,
-Quarto 1.11.6, three.js 0.187.0, GitHub Actions and Pages, gitleaks 8.30.1, lychee v0.24.2.
+**Tech Stack:** Python 3.12 under uv (pytest, ruff, PyYAML, Pillow), solidcraft-cli 0.30.1,
+Quarto 1.11.6, three.js 0.187.0 (copied from npm's package), GitHub Actions pinned by commit SHA,
+GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
@@ -25,32 +28,37 @@ Quarto 1.11.6, three.js 0.187.0, GitHub Actions and Pages, gitleaks 8.30.1, lych
 
 ## Global Constraints
 
-- Python runs only through uv: `uv sync --frozen`, `uv run --frozen …`; never pip.
-- `requires-python = ">=3.12"`; ruff `line-length = 100`, `target-version = "py312"`.
+- Python 3.12 (`.python-version`), run only through uv: `uv sync --frozen`, `uv run --frozen …`;
+  never pip.
+- ruff `line-length = 100`, `target-version = "py312"`; Markdown is not ruff's to format.
 - Every command is a `make` target; GNU make 3.81 features only.
 - solidcraft-cli 0.30.1. Designs are saved with `file.save_as`, `format: json`, `cache: false`.
-- A model's folder name is lowercase words joined by hyphens; it is the page's URL.
-- Quarto 1.11.6; three.js 0.187.0 from `https://cdn.jsdelivr.net/npm/three@0.187.0/`.
+- A model's folder name is lowercase words joined by hyphens, its design `<folder>.sc` alone.
+- The dowel parts are saved at 1 inch (25.4 mm) and list `3/4 in` (19.05 mm) and `25 mm` as sizes
+  (Q&A answer 14).
+- Models, pictures and docs are CC BY-NC 4.0; code is MIT (Q&A answer 15).
+- Quarto 1.11.6; three.js 0.187.0, served from `website/assets/three/`, never a CDN.
+- Every CI action pinned to a full commit SHA with its version in a comment.
 - The site is <https://chendaniely.github.io/3d-models/>; the repo
   <https://github.com/chendaniely/3d-models>.
-- No absolute local path, private address or personal detail in any committed file; every photo's
-  GPS data stripped before it's staged.
+- No home-folder path, private address or personal detail in any committed file; images carry no
+  metadata but a colour profile.
 - Every commit: message in a file, `git commit -F`, staged by path, `Plan:` trailer checked.
-- No hooks yet: every push waits for Dan's OK, after `make leaks` passes.
+- No hooks yet: every push waits for Dan's OK, after `make leaks privacy` passes, the request
+  naming every binary file the push adds.
 
 ## Review Focus
 
-1. **A design saved from the SolidCraft app in its default zip format:** `make models` builds it
-   and `make models-check` judges it like a text one (Task 2,
-   `test_build_and_check_take_a_design_saved_as_a_zip`).
-2. **A model folder named with spaces, capitals or underscores:** `make models-check` names it,
-   since the name becomes a URL (Task 2, `test_check_names_a_folder_that_cannot_be_a_url`).
-3. **A model with a design but no `model.yml`:** `make docs` names it instead of crashing (Task 5,
-   `test_write_names_a_model_without_a_model_yml`).
-4. **A `|` in a print setting:** it stays inside its table cell (Task 5,
-   `test_a_bar_in_a_print_setting_stays_inside_its_cell`).
-5. **A photo from a phone, named `IMG_0001.JPG`:** the upper-case extension is checked like any
-   other (Task 3, `PRINT.JPG` in `test_check_names_a_photo_with_a_gps_block`).
+1. **A design saved from the SolidCraft app in its default zip format:** it builds and checks like
+   a text one (Task 2, `test_build_and_check_take_a_design_saved_as_a_zip`).
+2. **A design named `Hook.sc` in `models/hook/`,** which macOS finds and Linux doesn't:
+   `make models-check` names it (Task 2, `test_check_names_a_design_not_named_after_its_folder`).
+3. **A commit with a new design and record but an old STL:** `make models-check` names the file
+   (Task 2, `test_check_names_a_built_file_that_is_not_the_one_recorded`).
+4. **`Supports: no` in a `model.yml`,** which YAML reads as false: `make docs` says to quote it
+   (Task 5, the `quote the print setting` case).
+5. **A phone photo, `IMG_0001.JPG`, with the camera's serial number but no GPS:** refused like a
+   GPS one (Task 3, `test_check_names_a_camera_serial_without_any_gps` and `PRINT.JPG`).
 
 ***
 
@@ -60,17 +68,17 @@ Quarto 1.11.6, three.js 0.187.0, GitHub Actions and Pages, gitleaks 8.30.1, lych
 S05
 
 **Files:**
-- Create: `pyproject.toml`, `uv.lock` (by `uv lock`), `tests/test_makefile.py`,
+- Create: `pyproject.toml`, `.python-version`, `uv.lock` (by `uv lock`), `tests/test_makefile.py`,
   `.github/workflows/ci.yml`, `.github/dependabot.yml`
-- Modify: `Makefile` (whole file below), `.gitignore` (three blocks appended)
+- Modify: `Makefile` (whole file below), `.gitignore` (blocks appended)
 
 **Interfaces:**
 - Consumes: nothing.
 - Produces: `make test` (`uv run --frozen pytest -q`), `make test-utc`, `make lint`
-  (`ruff check .` and `ruff format --check .`), `make leaks`; placeholder targets `models`,
-  `models-check` (Task 2), `photos` (Task 3) and `docs` (Task 4) that fail with "not built yet";
-  CI jobs `tests` and `leaks`; ruff's first-party modules `conftest`, `gallery`, `models`,
-  `photos`.
+  (`ruff check .` and `ruff format --check .`), `make leaks` (merge commits included);
+  placeholder targets `models`, `models-check` (Task 2), `privacy` (Task 3) and `docs` (Task 4)
+  that fail with "not built yet"; CI jobs `tests` and `leaks`; ruff's first-party modules
+  `conftest`, `gallery`, `models`, `privacy`, `sitedocs`.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **Step 1: Write the uv project.**
@@ -104,18 +112,20 @@ addopts = "-ra"
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-# scripts/commitmsg.py is plan-driven-development's copy, kept byte-identical to the skill's.
-extend-exclude = ["scripts/commitmsg.py", "website/_site", "website/.quarto"]
+# scripts/commitmsg.py is plan-driven-development's copy, kept byte-identical to the skill's;
+# Markdown is excluded because the plans quote code exactly as it is to be written.
+extend-exclude = ["scripts/commitmsg.py", "*.md", "website/_site", "website/.quarto"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["conftest", "gallery", "models", "photos"]
+known-first-party = ["conftest", "gallery", "models", "privacy", "sitedocs"]
 ```
 
-  Then `uv lock` (writes `uv.lock`) and `uv sync --frozen`. Expected: `pillow`, `pytest`,
-  `pyyaml` and `ruff` installed into `.venv`.
+  `.python-version` holds one line, `3.12`. Then `uv lock` (writes `uv.lock`) and
+  `uv sync --frozen`. Expected: CPython 3.12, and `pillow`, `pytest`, `pyyaml` and `ruff` in
+  `.venv`.
 
 - [ ] **Step 2: Write the failing test.**
 
@@ -131,34 +141,22 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TARGETS = [
-    "help",
-    "hooks",
-    "check",
-    "test",
-    "test-utc",
-    "lint",
-    "leaks",
-    "models",
-    "models-check",
-    "photos",
-    "docs",
-]
+    "help", "hooks", "check", "test", "test-utc", "lint", "leaks",
+    "models", "models-check", "privacy", "docs",
+]  # fmt: skip
 
 
 def test_help_lists_every_target() -> None:
     result = subprocess.run(
-        ["make", "--no-print-directory", "help"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
+        ["make", "--no-print-directory", "help"], cwd=ROOT, capture_output=True, text=True,
         check=True,
-    )
+    )  # fmt: skip
     listed = {line.split()[0] for line in result.stdout.splitlines() if line.strip()}
     assert set(TARGETS) <= listed, sorted(set(TARGETS) - listed)
 ```
 
 - [ ] **Step 3: Run it; watch it fail.** `uv run --frozen pytest -q tests/test_makefile.py`.
-  Expected: `AssertionError: ['models', 'models-check', 'photos']`.
+  Expected: `AssertionError: ['models', 'models-check', 'privacy']`.
 - [ ] **Step 4: Write the Makefile,** the whole file:
 
 `Makefile`:
@@ -170,7 +168,7 @@ def test_help_lists_every_target() -> None:
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: help hooks check test test-utc lint leaks models models-check photos docs
+.PHONY: help hooks check test test-utc lint leaks models models-check privacy docs
 
 help: ## List the targets
 	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-13s %s\n", $$1, $$2}'
@@ -188,46 +186,50 @@ lint: ## Lint the code: ruff check and ruff format --check
 	uv run --frozen ruff check .
 	uv run --frozen ruff format --check .
 
-leaks: ## Scan the whole git history for secrets
-	gitleaks git --redact --no-banner .
+leaks: ## Scan the whole git history for secrets, merge commits' own changes included
+	gitleaks git --redact --no-banner --log-opts="--all --full-history -m" .
 
-models: ## Rebuild each changed design's STL, picture and measurements (needs SolidCraft)
+models: ## Rebuild each changed design's STLs, picture and measurements (needs SolidCraft)
 	@echo "not built yet: Phase 1, Task 2 sets it"; exit 1
 
-models-check: ## Fail when a design has no build or a stale one
+models-check: ## Fail when a design has no build, a stale one, or the wrong name
 	@echo "not built yet: Phase 1, Task 2 sets it"; exit 1
 
-photos: ## Fail when an image in the repo carries GPS data, or is a HEIC
+privacy: ## Fail on image metadata, a photo format the check can't read, or a home-folder path
 	@echo "not built yet: Phase 1, Task 3 sets it"; exit 1
 
 docs: ## Render the site into website/_site, failing on a broken link
 	@echo "not built yet: Phase 1, Task 4 sets it"; exit 1
 
-check: test test-utc lint leaks ## Everything CI runs
+check: test test-utc lint leaks ## Everything CI runs, and the suite under UTC
 ```
 
   And append to `.gitignore`:
 
 ```text
 
-# the site: the generated model pages and the render log
+# the site: the generated doc and model pages, and the render log
+website/superpowers/
 website/models/
 website/.render.log
 
 # the Playwright browser tool's screenshots and logs
 .playwright-mcp/
+
+# SolidCraft keeps the design it overwrote as <name>.sc.bak
+*.sc.bak
 ```
 
-- [ ] **Step 5: Run the checks; they pass.** `make test`, then `make lint`. Expected:
-  `1 passed`; `All checks passed!` and `files already formatted`. ruff skips
-  `scripts/commitmsg.py`, the skill's copy, kept byte-identical (`pyproject.toml`).
+- [ ] **Step 5: Run the checks; they pass.** `make test`, then `make lint`. Expected: `1 passed`;
+  `All checks passed!` and `files already formatted`.
 - [ ] **Step 6: Write CI and Dependabot.**
 
 `.github/workflows/ci.yml`:
 
 ```yaml
-# CI: the tests, lint, the model and photo checks, the leak scan and the site, on every push to
+# CI: the tests, lint, the model and privacy checks, the leak scan and the site, on every push to
 # main or a phase branch and on every PR into main. Only main deploys the site to GitHub Pages.
+# Every action is pinned to a commit SHA, its version in the comment; Dependabot keeps both current.
 name: CI
 
 on:
@@ -248,19 +250,18 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - run: uv sync --frozen
       - run: make test
-      - run: make test-utc
       - run: make lint
 
   leaks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -280,49 +281,58 @@ jobs:
 `.github/dependabot.yml`:
 
 ```yaml
-# Keep the pinned CI actions and the Python dependencies current, once a month.
+# Keep the pinned CI actions and the Python dependencies current: once a month, one PR for each.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
   - package-ecosystem: uv
     directory: /
     schedule:
       interval: monthly
+    groups:
+      python:
+        patterns: ["*"]
 ```
 
-  Check both parse: `uv run --frozen python -c "import yaml; [yaml.safe_load(open(f)) for f in
-  ('.github/workflows/ci.yml', '.github/dependabot.yml')]"`. Expected: no output.
-- [ ] **Step 7: Run every check; they pass.** `make check`. Expected: the tests twice, lint, then
+  Each action's SHA is the commit its version tag names, from
+  `gh api repos/<owner>/<repo>/commits/<tag> --jq .sha`; recheck them if a tag is older than this
+  plan. Check both files parse: `uv run --frozen python -c "import yaml; [yaml.safe_load(open(f))
+  for f in ('.github/workflows/ci.yml', '.github/dependabot.yml')]"`. Expected: no output.
+- [ ] **Step 7: Run every check; they pass.** `make check`. Expected: the test twice, lint, then
   gitleaks' `no leaks found`.
 - [ ] **Step 8: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 build(repo): 🤖 add the uv project, make test and lint, and CI
 
-The repo had no test runner, linter or CI. This adds a uv project
-(pytest, ruff, PyYAML, Pillow), sets make test, test-utc and lint, adds
-placeholder targets for models, models-check, photos and docs that fail
-until their tasks, and a CI workflow whose tests job runs the suite twice
-(once under TZ=UTC) and lint, and whose leaks job runs gitleaks 8.30.1,
-checked against its published checksum, over the whole history.
-Dependabot keeps the actions and the lockfile current.
+The repo had no test runner, linter or CI. This adds a uv project on
+Python 3.12 (pytest, ruff, PyYAML, Pillow), sets make test, test-utc and
+lint, adds placeholder targets for models, models-check, privacy and docs
+that fail until their tasks, and makes make leaks scan merge commits' own
+changes too. CI's tests job runs the suite and lint; its leaks job runs
+gitleaks 8.30.1, checked against its published checksum, over every
+commit. Every action is pinned to a commit SHA; Dependabot keeps them and
+the lockfile current, one grouped PR a month each.
 
 The new test failed first with: AssertionError: ['models',
-'models-check', 'photos'].
+'models-check', 'privacy'].
 
 Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 1
 Co-Authored-By: <the model's own line>
 ```
 
-  `git add pyproject.toml uv.lock Makefile .gitignore tests/test_makefile.py .github/workflows/ci.yml .github/dependabot.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+  `git add pyproject.toml .python-version uv.lock Makefile .gitignore tests/test_makefile.py .github/workflows/ci.yml .github/dependabot.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
 - [ ] **Step 9: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Tasks 2 to 5 replace this task's placeholder targets; check their Consumes lines.
-  - **Docs:** the README's command list stays true (it names `make models`, `check` and `docs`).
+  - **Docs:** the README's command list stays true.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
@@ -344,15 +354,16 @@ Co-Authored-By: <the model's own line>
     Co-Authored-By: <the model's own line>
     ```
 
-  - **Push,** once Dan has OKed it (`AGENTS.md`'s interim line): `make leaks`, then
-    `git push origin phase-1`. The task is closed once CI on the closing commit, or a later
-    one, is green; until a push, the local checks are the gate.
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
 
 ***
 
 ### Task 2: `make models` and `make models-check`
 
-**Tier:** 2 · **Scenarios:** S01, S02
+**Tier:** 2 · **Scenarios:** S01, S02, S19
 
 **Files:**
 - Create: `scripts/models.py`, `tests/conftest.py`, `tests/test_models.py`
@@ -361,13 +372,18 @@ Co-Authored-By: <the model's own line>
 **Interfaces:**
 - Consumes: Task 1's `make test`, `make lint` and the `tests` CI job.
 - Produces, in `scripts/models.py`: `ROOT: Path`; `Model(folder: Path)` with `.slug -> str`,
-  `.design -> Path` (`<slug>.sc`), `.built(kind: str) -> Path` (`<slug>.<kind>`, kind one of
-  `"stl"`, `"png"`, `"eval.json"`), `.record -> Path` (`build.json`);
+  `.design -> Path` (`<slug>.sc`), `.built(kind: str) -> Path` (kind `"stl"`, `"png"` or
+  `"eval.json"`), `.sized(size: str) -> Path` (`<slug>-<size_name>.stl`), `.record -> Path`
+  (`build.json`); `size_name(size: str) -> str` (`"3/4 in"` → `"3-4in"`);
   `find_models(root: Path) -> list[Model]`; `sha256(path: Path) -> str`;
-  `staleness(model: Model) -> str | None`; `main(argv: list[str] | None = None, root: Path = ROOT)
-  -> int` with subcommands `build [--force] [SLUG ...]` and `check`. In `tests/conftest.py`: the
-  fixtures `fake_cli` (returns the call log's path) and `repo` (an empty root with `models/`), and
-  `add_design(root: Path, slug: str, text: str = ...) -> Path`. `SOLIDCRAFT_CLI` names the CLI.
+  `sizes(model: Model) -> dict[str, dict[str, str]]` (from `model.yml`'s `sizes`, raising
+  `ValueError` when malformed); `outputs(model: Model) -> list[Path]`;
+  `staleness(model: Model) -> str | None`; `main(argv: list[str] | None = None,
+  root: Path = ROOT) -> int` with subcommands `build [SLUG ...]` and `check`. In
+  `tests/conftest.py`: the fixtures `fake_cli` (returns the call log's path) and `repo` (an empty
+  git repo with `models/`); `add_design(root, slug, text=...) -> Path`; and, for the model tests,
+  `measured(model) -> dict`, `params(model) -> dict[str, float]`, `body(model, name) -> dict`.
+  `SOLIDCRAFT_CLI` names the CLI.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **Step 1: Write the fixtures and the failing tests.**
@@ -379,8 +395,10 @@ Co-Authored-By: <the model's own line>
 
 from __future__ import annotations
 
+import json
 import os
 import stat
+import subprocess
 import sys
 from pathlib import Path
 
@@ -422,9 +440,10 @@ def fake_cli(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
 
 @pytest.fixture
 def repo(tmp_path: Path) -> Path:
-    """An empty repo root with a models/ folder."""
+    """An empty git repo with a models/ folder."""
     root = tmp_path / "repo"
     (root / "models").mkdir(parents=True)
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
     return root
 
 
@@ -434,12 +453,27 @@ def add_design(root: Path, slug: str, text: str = '{"format": "solidcraft/48"}')
     design = folder / f"{slug}.sc"
     design.write_text(text, encoding="utf-8")
     return design
+
+
+def measured(model) -> dict:
+    """A model's measurements: solidcraft-cli eval's JSON, as make models wrote it."""
+    return json.loads(model.built("eval.json").read_text(encoding="utf-8"))
+
+
+def params(model) -> dict[str, float]:
+    """A model's parameters by name, each one's value in millimetres."""
+    return {p["name"]: p["value"] for p in measured(model)["params"]}
+
+
+def body(model, name: str) -> dict:
+    """One body of a model, by its name in the design."""
+    return next(b for b in measured(model)["bodies"] if b["name"] == name)
 ```
 
 `tests/test_models.py`:
 
 ```python
-"""scripts/models.py: build only what changed (S01); fail on a stale build (S02)."""
+"""scripts/models.py: build only what changed (S01); fail on a stale build (S02); sizes (S19)."""
 
 from __future__ import annotations
 
@@ -451,23 +485,36 @@ import pytest
 import models
 from conftest import add_design
 
+SIZES = "sizes:\n  3/4 in: {dowel_d: 19.05 mm}\n  25 mm: {dowel_d: 25 mm}\n"
+
 
 def calls(log: Path) -> list[str]:
     return log.read_text(encoding="utf-8").splitlines() if log.exists() else []
 
 
-def test_build_writes_each_built_file_beside_the_design(repo: Path, fake_cli: Path) -> None:
+def test_build_writes_each_built_file_and_records_its_hash(repo: Path, fake_cli: Path) -> None:
     design = add_design(repo, "coupon")
     assert models.main(["build"], root=repo) == 0
     folder = design.parent
-    for name in ("coupon.stl", "coupon.png", "coupon.eval.json", "build.json"):
-        assert (folder / name).is_file(), name
     record = json.loads((folder / "build.json").read_text(encoding="utf-8"))
-    assert record == {
-        "design": "coupon.sc",
-        "sha256": models.sha256(design),
-        "solidcraft_cli": "solidcraft-cli 0.30.1",
-    }
+    assert record["design"] == "coupon.sc"
+    assert record["sha256"] == models.sha256(design)
+    assert record["sizes"] == {}
+    assert record["solidcraft_cli"] == "solidcraft-cli 0.30.1"
+    for name in ("coupon.stl", "coupon.png", "coupon.eval.json"):
+        assert record["built"][name] == models.sha256(folder / name), name
+
+
+def test_build_writes_an_stl_for_each_size_model_yml_lists(repo: Path, fake_cli: Path) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(SIZES, encoding="utf-8")
+    assert models.main(["build"], root=repo) == 0
+    for name in ("clamp-3-4in.stl", "clamp-25mm.stl"):
+        assert (design.parent / name).is_file(), name
+    sized = [line for line in calls(fake_cli) if line.startswith("run ") and "size.json" in line]
+    assert len(sized) == 2
+    record = json.loads((design.parent / "build.json").read_text(encoding="utf-8"))
+    assert record["sizes"] == {"3/4 in": {"dowel_d": "19.05 mm"}, "25 mm": {"dowel_d": "25 mm"}}
 
 
 def test_build_leaves_an_up_to_date_model_alone(repo: Path, fake_cli: Path) -> None:
@@ -489,25 +536,28 @@ def test_build_rebuilds_only_the_changed_design(repo: Path, fake_cli: Path) -> N
     assert rebuilt == {str(other)}
 
 
-def test_build_force_rebuilds_an_up_to_date_model(repo: Path, fake_cli: Path) -> None:
-    add_design(repo, "coupon")
-    models.main(["build"], root=repo)
-    fake_cli.unlink()
-    assert models.main(["build", "--force", "coupon"], root=repo) == 0
-    assert any(line.startswith("run --in") for line in calls(fake_cli))
-
-
 def test_build_refuses_an_unknown_slug(repo: Path, fake_cli: Path, capsys) -> None:
     add_design(repo, "coupon")
     assert models.main(["build", "nope"], root=repo) == 2
     assert "no such model: nope" in capsys.readouterr().err
 
 
-def test_build_reports_a_failing_design(repo: Path, fake_cli: Path, capsys) -> None:
-    add_design(repo, "broken", text='{"fail": true}')
+def test_a_failing_build_leaves_no_record_vouching_for_it(
+    repo: Path, fake_cli: Path, capsys
+) -> None:
+    design = add_design(repo, "broken")
+    models.main(["build"], root=repo)
+    design.write_text('{"fail": true}', encoding="utf-8")
     assert models.main(["build"], root=repo) == 1
     assert "a timeline feature failed" in capsys.readouterr().err
     assert not (repo / "models" / "broken" / "build.json").exists()
+
+
+def test_build_and_check_take_a_design_saved_as_a_zip(repo: Path, fake_cli: Path) -> None:
+    design = add_design(repo, "hook")
+    design.write_bytes(b"PK\x03\x04 a zip container, as the app saves by default")
+    assert models.main(["build"], root=repo) == 0
+    assert models.main(["check"], root=repo) == 0
 
 
 def test_check_passes_when_every_build_matches(repo: Path, fake_cli: Path, capsys) -> None:
@@ -526,6 +576,25 @@ def test_check_names_a_design_that_changed(repo: Path, fake_cli: Path, capsys) -
     assert "stale: models/coupon: coupon.sc changed since its last build" in err
 
 
+def test_check_names_a_built_file_that_is_not_the_one_recorded(
+    repo: Path, fake_cli: Path, capsys
+) -> None:
+    design = add_design(repo, "coupon")
+    models.main(["build"], root=repo)
+    (design.parent / "coupon.stl").write_bytes(b"an older export")
+    assert models.main(["check"], root=repo) == 1
+    assert "coupon.stl changed since build.json recorded it" in capsys.readouterr().err
+
+
+def test_check_names_sizes_that_changed(repo: Path, fake_cli: Path, capsys) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(SIZES, encoding="utf-8")
+    models.main(["build"], root=repo)
+    (design.parent / "model.yml").write_text(SIZES.replace("25 mm}", "24 mm}"), encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    assert "model.yml's sizes changed since its last build" in capsys.readouterr().err
+
+
 @pytest.mark.parametrize("missing", ["coupon.stl", "coupon.png", "coupon.eval.json", "build.json"])
 def test_check_names_a_missing_built_file(repo: Path, fake_cli: Path, capsys, missing: str) -> None:
     add_design(repo, "coupon")
@@ -535,19 +604,6 @@ def test_check_names_a_missing_built_file(repo: Path, fake_cli: Path, capsys, mi
     assert f"stale: models/coupon: missing {missing}" in capsys.readouterr().err
 
 
-def test_check_ignores_a_folder_without_a_design(repo: Path, capsys) -> None:
-    (repo / "models" / "notes").mkdir()
-    assert models.main(["check"], root=repo) == 0
-    assert "0 models" in capsys.readouterr().out
-
-
-def test_build_and_check_take_a_design_saved_as_a_zip(repo: Path, fake_cli: Path) -> None:
-    design = add_design(repo, "hook")
-    design.write_bytes(b"PK\x03\x04 a zip container, as the app saves by default")
-    assert models.main(["build"], root=repo) == 0
-    assert models.main(["check"], root=repo) == 0
-
-
 @pytest.mark.parametrize("slug", ["Wall Hook", "wall_hook", "WallHook", "-hook"])
 def test_check_names_a_folder_that_cannot_be_a_url(repo: Path, capsys, slug: str) -> None:
     add_design(repo, slug)
@@ -555,6 +611,30 @@ def test_check_names_a_folder_that_cannot_be_a_url(repo: Path, capsys, slug: str
     assert f"stale: models/{slug}: its folder name must be lowercase words joined by hyphens" in (
         capsys.readouterr().err
     )
+
+
+@pytest.mark.parametrize("name", ["Hook.sc", "hook-v2.sc"])
+def test_check_names_a_design_not_named_after_its_folder(repo: Path, capsys, name: str) -> None:
+    folder = repo / "models" / "hook"
+    folder.mkdir()
+    (folder / name).write_text("{}", encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    assert f"stale: models/hook: the design must be hook.sc alone, not {name}" in (
+        capsys.readouterr().err
+    )
+
+
+def test_check_names_unreadable_sizes(repo: Path, capsys) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text("sizes: [3/4 in]\n", encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    assert "'sizes' must map each size to parameter changes" in capsys.readouterr().err
+
+
+def test_check_ignores_a_folder_without_a_design(repo: Path, capsys) -> None:
+    (repo / "models" / "notes").mkdir()
+    assert models.main(["check"], root=repo) == 0
+    assert "0 models" in capsys.readouterr().out
 ```
 
 - [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
@@ -564,17 +644,19 @@ def test_check_names_a_folder_that_cannot_be_a_url(repo: Path, capsys, slug: str
 `scripts/models.py`:
 
 ```python
-"""Build, check and publish the models under models/.
+"""Build and check the models under models/.
 
-    uv run scripts/models.py build [--force] [SLUG ...]
-        rebuild each model whose design changed since its build.json (needs solidcraft-cli)
+    uv run scripts/models.py build [SLUG ...]
+        rebuild each model whose design, sizes or built files changed since its build.json
+        (needs solidcraft-cli)
     uv run scripts/models.py check
-        fail, naming each model, when a design has no build or a stale one
+        fail, naming each model, when a build is missing or stale, or a design is misnamed
 
 A model is a folder models/<slug>/ holding the design <slug>.sc. A build writes, beside it:
-<slug>.stl, <slug>.png, <slug>.eval.json (solidcraft-cli eval's measurements) and build.json
-(the design's sha256 and the CLI's version). Exporting the same design twice gives a
-byte-different STL, so freshness is judged by the design's hash, never by rebuilding.
+<slug>.stl, <slug>.png, <slug>.eval.json (solidcraft-cli eval's measurements), one STL per extra
+size its model.yml lists (<slug>-<size>.stl), and build.json, which records the design's sha256,
+the sizes, the CLI's version and every built file's sha256. Exporting the same design twice gives
+a byte-different STL, so freshness is judged by those hashes, never by rebuilding.
 
 SOLIDCRAFT_CLI names the CLI to run (default: solidcraft-cli); the tests point it at a fake.
 """
@@ -588,11 +670,13 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parent.parent
-BUILT = ("stl", "png", "eval.json")
 SLUG = re.compile(r"[a-z0-9]+(-[a-z0-9]+)*")
 PICTURE = ("--view", "iso", "--width", "1200", "--height", "900", "--no-grid", "--no-axes")
 
@@ -612,9 +696,17 @@ class Model:
     def built(self, kind: str) -> Path:
         return self.folder / f"{self.slug}.{kind}"
 
+    def sized(self, size: str) -> Path:
+        return self.folder / f"{self.slug}-{size_name(size)}.stl"
+
     @property
     def record(self) -> Path:
         return self.folder / "build.json"
+
+
+def size_name(size: str) -> str:
+    """'3/4 in' -> '3-4in', '25 mm' -> '25mm': the part of a file name a size gives."""
+    return re.sub(r"[^a-z0-9-]", "", size.lower().replace("/", "-").replace(" ", ""))
 
 
 def find_models(root: Path) -> list[Model]:
@@ -624,7 +716,7 @@ def find_models(root: Path) -> list[Model]:
     return [
         Model(folder)
         for folder in sorted(models_dir.iterdir())
-        if folder.is_dir() and (folder / f"{folder.name}.sc").is_file()
+        if folder.is_dir() and any(p.suffix.lower() == ".sc" for p in folder.iterdir())
     ]
 
 
@@ -632,21 +724,58 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def sizes(model: Model) -> dict[str, dict[str, str]]:
+    """The extra sizes model.yml lists: {'3/4 in': {'dowel_d': '19.05 mm'}, ...}."""
+    path = model.folder / "model.yml"
+    if not path.is_file():
+        return {}
+    meta = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    listed = meta.get("sizes") or {}
+    if not isinstance(listed, dict) or not all(
+        isinstance(changes, dict) and all(isinstance(v, str) for v in changes.values())
+        for changes in listed.values()
+    ):
+        raise ValueError(
+            f"models/{model.slug}/model.yml: 'sizes' must map each size to parameter changes, "
+            "such as '3/4 in': {dowel_d: 19.05 mm}"
+        )
+    return {str(size): changes for size, changes in listed.items()}
+
+
+def outputs(model: Model) -> list[Path]:
+    return [model.built(k) for k in ("stl", "png", "eval.json")] + [
+        model.sized(size) for size in sizes(model)
+    ]
+
+
 def staleness(model: Model) -> str | None:
     """Why the model needs a build, or None when its built files match its design."""
     if not SLUG.fullmatch(model.slug):
         return "its folder name must be lowercase words joined by hyphens, as the page's URL"
-    missing = [model.built(kind).name for kind in BUILT if not model.built(kind).is_file()]
+    designs = sorted(p.name for p in model.folder.iterdir() if p.suffix.lower() == ".sc")
+    if designs != [model.design.name]:
+        return f"the design must be {model.design.name} alone, not {', '.join(designs)}"
+    try:
+        wanted = outputs(model)
+    except ValueError as error:
+        return str(error)
+    missing = [path.name for path in wanted if not path.is_file()]
     if not model.record.is_file():
         missing.append(model.record.name)
     if missing:
         return "missing " + ", ".join(missing)
     try:
-        recorded = json.loads(model.record.read_text(encoding="utf-8"))["sha256"]
+        record = json.loads(model.record.read_text(encoding="utf-8"))
+        recorded_design, recorded_sizes, built = record["sha256"], record["sizes"], record["built"]
     except (json.JSONDecodeError, KeyError, TypeError):
         return "build.json is unreadable"
-    if recorded != sha256(model.design):
+    if recorded_design != sha256(model.design):
         return f"{model.design.name} changed since its last build"
+    if recorded_sizes != sizes(model):
+        return "model.yml's sizes changed since its last build"
+    changed = [p.name for p in wanted if built.get(p.name) != sha256(p)]
+    if changed:
+        return f"{', '.join(changed)} changed since build.json recorded it"
     return None
 
 
@@ -662,19 +791,35 @@ def run(*args: str) -> str:
 
 
 def build(model: Model) -> None:
+    model.record.unlink(missing_ok=True)  # a build that fails halfway leaves no record vouching
+    design_hash = sha256(model.design)  # hashed first: an edit saved mid-build shows as stale
+    wanted_sizes = sizes(model)
     design = str(model.design)
     run("run", "--in", design, "--out", str(model.built("stl")), "--quiet")
     run("snapshot", "--in", design, "--out", str(model.built("png")), *PICTURE)
     run("eval", "--in", design, "--json-out", str(model.built("eval.json")))
+    for size, changes in wanted_sizes.items():
+        script = {
+            "commands": [
+                {"command": "parameters.change", "params": {"name": name, "expression": value}}
+                for name, value in changes.items()
+            ]
+        }
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "size.json"
+            path.write_text(json.dumps(script), encoding="utf-8")
+            run("run", str(path), "--in", design, "--out", str(model.sized(size)), "--quiet")
     record = {
         "design": model.design.name,
-        "sha256": sha256(model.design),
+        "sha256": design_hash,
+        "sizes": wanted_sizes,
         "solidcraft_cli": run("--version").strip(),
+        "built": {path.name: sha256(path) for path in outputs(model)},
     }
     model.record.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
 
 
-def command_build(root: Path, slugs: list[str], force: bool) -> int:
+def command_build(root: Path, slugs: list[str]) -> int:
     models = find_models(root)
     unknown = sorted(set(slugs) - {m.slug for m in models})
     if unknown:
@@ -683,13 +828,13 @@ def command_build(root: Path, slugs: list[str], force: bool) -> int:
     chosen = [m for m in models if not slugs or m.slug in slugs]
     built = 0
     for model in chosen:
-        reason = "forced" if force else staleness(model)
+        reason = staleness(model)
         if reason is None:
             continue
         print(f"building models/{model.slug} ({reason})")
         try:
             build(model)
-        except (OSError, RuntimeError) as error:
+        except (OSError, RuntimeError, ValueError) as error:
             print(f"models: {error}", file=sys.stderr)
             return 1
         built += 1
@@ -713,11 +858,10 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     build_parser = sub.add_parser("build", help="rebuild each changed model")
     build_parser.add_argument("slugs", nargs="*", metavar="SLUG")
-    build_parser.add_argument("--force", action="store_true", help="rebuild even if up to date")
     sub.add_parser("check", help="fail when a model's build is missing or stale")
     args = parser.parse_args(argv)
     if args.command == "build":
-        return command_build(root, args.slugs, args.force)
+        return command_build(root, args.slugs)
     return command_check(root)
 
 
@@ -728,33 +872,35 @@ if __name__ == "__main__":
   In the `Makefile`, replace the two placeholder recipes, and add `models-check` to `check`:
 
 ```makefile
-models: ## Rebuild each changed design's STL, picture and measurements (needs SolidCraft)
+models: ## Rebuild each changed design's STLs, picture and measurements (needs SolidCraft)
 	uv run --frozen scripts/models.py build
 
-models-check: ## Fail when a design has no build or a stale one
+models-check: ## Fail when a design has no build, a stale one, or the wrong name
 	uv run --frozen scripts/models.py check
 ```
 
 ```makefile
-check: test test-utc lint models-check leaks ## Everything CI runs
+check: test test-utc lint models-check leaks ## Everything CI runs, and the suite under UTC
 ```
 
   In `.github/workflows/ci.yml`'s `tests` job, after `- run: make lint`, add
   `      - run: make models-check`.
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: `19 passed` twice, lint
-  clean, `0 models, every build matches its design`, `no leaks found`.
+- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+  lint clean, `0 models, every build matches its design`, `no leaks found`.
 - [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 build changed designs and fail on a stale build
 
 make models had nothing behind it. scripts/models.py build runs
-solidcraft-cli for each design whose SHA-256 differs from its build.json,
-writing the STL, the picture, the measurements and the record beside it;
-check fails, naming each model, when a build is missing or stale, or when a
-folder's name can't be a URL. Freshness is the design's hash because the
-CLI exports a byte-different STL each run. The tests run a fake CLI, named
-by SOLIDCRAFT_CLI, so CI needs no SolidCraft.
+solidcraft-cli for each model whose design, sizes or built files differ
+from its build.json, writing the STL, an STL per size its model.yml lists,
+the picture and the measurements beside it, and a record of every file's
+SHA-256. check fails, naming each model, when a build is missing or stale,
+a built file isn't the one recorded, the folder's name can't be a URL, or
+the design isn't named after its folder. Freshness is by hashes because
+the CLI exports a byte-different STL each run. A failing build leaves no
+record. The tests run a fake CLI, named by SOLIDCRAFT_CLI.
 
 The new tests failed first with: ModuleNotFoundError: No module named
 'models'.
@@ -767,7 +913,7 @@ Co-Authored-By: <the model's own line>
 - [ ] **Step 6: Review, look forward, close.**
 
   - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Tasks 5 and 6 consume `find_models`, `Model` and `staleness`; check their listings.
+  - **Forward:** Tasks 5 to 8 consume `find_models`, `Model`, `sizes` and the conftest helpers.
   - **Docs:** the Architecture page doesn't exist yet (Task 4 draws this as built).
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -790,53 +936,58 @@ Co-Authored-By: <the model's own line>
     Co-Authored-By: <the model's own line>
     ```
 
-  - **Push,** once Dan has OKed it (`AGENTS.md`'s interim line): `make leaks`, then
-    `git push origin phase-1`. The task is closed once CI on the closing commit, or a later
-    one, is green; until a push, the local checks are the gate.
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
 
 ***
 
-### Task 3: The photo guard, `make photos`
+### Task 3: The privacy guard, `make privacy`
 
-**Tier:** 1 (if wrong, a photo leaks where Dan lives) · **Scenarios:** S03
+**Tier:** 1 (if wrong, a photo shows where Dan lives, or a path names his machine) ·
+**Scenarios:** S03, S21
 
 **Files:**
-- Create: `scripts/photos.py`, `tests/test_photos.py`
+- Create: `scripts/privacy.py`, `tests/test_privacy.py`
 - Modify: `Makefile` (one recipe and the `check` line), `.github/workflows/ci.yml` (one step)
 
 **Interfaces:**
-- Consumes: Task 2's `repo` fixture.
-- Produces, in `scripts/photos.py`: `images(root: Path) -> list[Path]`,
-  `problem(path: Path) -> str | None`, `strip(path: Path) -> None`,
+- Consumes: Task 2's `repo` fixture (a git repo).
+- Produces, in `scripts/privacy.py`: `committable(root: Path) -> list[Path]` (what git would
+  commit), `image_problem(path: Path) -> str | None`, `path_problem(path: Path) -> str | None`,
+  `problems(root: Path) -> list[tuple[Path, str]]`, `strip(path: Path) -> None`,
   `main(argv: list[str] | None = None, root: Path = ROOT) -> int` with subcommands `check` and
   `strip FILE ...`.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **Step 1: Write the failing tests.**
 
-`tests/test_photos.py`:
+`tests/test_privacy.py`:
 
 ```python
-"""scripts/photos.py: no image with a location gets in (S03)."""
+"""scripts/privacy.py: nothing that shows where Dan lives, or whose machine this is, gets in
+(S03, S21)."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
 import pytest
-from PIL import ExifTags, Image
+from PIL import ExifTags, Image, PngImagePlugin
 
-import photos
+import privacy
 
-XMP_WITH_GPS = (
+HOME = "/" + "Users" + "/someone/"  # joined at runtime, so this file holds no home path itself
+XMP = (
     b'<x:xmpmeta xmlns:x="adobe:ns:meta/"><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-'
     b'syntax-ns#"><rdf:Description xmlns:exif="http://ns.adobe.com/exif/1.0/" '
     b'exif:GPSLatitude="0,0.0N" exif:GPSLongitude="0,0.0E"/></rdf:RDF></x:xmpmeta>'
 )
 
 
-def photo(path: Path, *, gps: bool = False, orientation: int | None = None) -> Path:
-    """A 40x20 image, optionally with a GPS block and an EXIF orientation."""
+def photo(path: Path, *, gps: bool = False, orientation: int | None = None, **save) -> Path:
+    """A 40x20 image, optionally with a GPS block, an EXIF orientation or other save options."""
     path.parent.mkdir(parents=True, exist_ok=True)
     image = Image.new("RGB", (40, 20), (200, 180, 150))
     exif = image.getexif()
@@ -846,168 +997,279 @@ def photo(path: Path, *, gps: bool = False, orientation: int | None = None) -> P
         block[ExifTags.GPS.GPSLatitude] = (0.0, 0.0, 0.0)
     if orientation:
         exif[ExifTags.Base.Orientation] = orientation
-    image.save(
-        path, exif=exif.tobytes()
-    )  # an Exif object holding only a GPS block is dropped from a PNG
+    if len(exif) or gps:
+        save["exif"] = exif.tobytes()  # an Exif object holding only a GPS block is dropped
+    image.save(path, **save)
     return path
 
 
-def test_check_passes_a_clean_photo(repo: Path, capsys) -> None:
-    photo(repo / "models" / "coupon" / "photos" / "print.jpg")
-    assert photos.main(["check"], root=repo) == 0
-    assert "1 images, none with a location" in capsys.readouterr().out
+def check(repo: Path, capsys) -> tuple[int, str]:
+    code = privacy.main(["check"], root=repo)
+    return code, capsys.readouterr().err
+
+
+@pytest.mark.parametrize("name", ["print.jpg", "print.png", "print.webp"])
+def test_check_passes_an_image_with_no_metadata(repo: Path, capsys, name: str) -> None:
+    photo(repo / "models" / "coupon" / "photos" / name)
+    assert check(repo, capsys) == (0, "")
 
 
 @pytest.mark.parametrize("name", ["print.jpg", "PRINT.JPG", "print.png", "print.webp"])
 def test_check_names_a_photo_with_a_gps_block(repo: Path, capsys, name: str) -> None:
     photo(repo / "models" / "coupon" / "photos" / name, gps=True)
-    assert photos.main(["check"], root=repo) == 1
-    err = capsys.readouterr().err
-    assert f"photo: models/coupon/photos/{name}: a GPS block in its EXIF" in err
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert f"privacy: models/coupon/photos/{name}: EXIF metadata" in err
 
 
-def test_check_names_a_photo_with_gps_in_its_xmp(repo: Path, capsys) -> None:
-    path = repo / "docs" / "install.jpg"
-    path.parent.mkdir(parents=True)
-    Image.new("RGB", (40, 20)).save(path, xmp=XMP_WITH_GPS)
-    assert photos.main(["check"], root=repo) == 1
-    assert "photo: docs/install.jpg: GPS coordinates in its metadata" in capsys.readouterr().err
+def test_check_names_a_camera_serial_without_any_gps(repo: Path, capsys) -> None:
+    image = Image.new("RGB", (40, 20))
+    exif = image.getexif()
+    exif[ExifTags.Base.BodySerialNumber] = "12345"
+    exif[ExifTags.Base.CameraOwnerName] = "someone"
+    image.save(repo / "print.jpg", exif=exif)
+    assert check(repo, capsys) == (1, "privacy: print.jpg: EXIF metadata\n")
 
 
-@pytest.mark.parametrize("name", ["IMG_0001.HEIC", "shot.heif"])
-def test_check_refuses_a_heic(repo: Path, capsys, name: str) -> None:
+@pytest.mark.parametrize(
+    ("name", "save"),
+    [
+        ("xmp.jpg", {"xmp": XMP}),
+        ("comment.jpg", {"comment": b"taken at home"}),
+        ("xmp.webp", {"xmp": XMP}),
+    ],
+)
+def test_check_names_xmp_and_comments(repo: Path, capsys, name: str, save: dict) -> None:
+    photo(repo / name, **save)
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert f"privacy: {name}: metadata" in err
+
+
+def test_check_names_xmp_hidden_in_a_compressed_png_chunk(repo: Path, capsys) -> None:
+    info = PngImagePlugin.PngInfo()
+    info.add_itxt("XML:com.adobe.xmp", XMP.decode(), zip=True)
+    photo(repo / "print.png", pnginfo=info)
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert "privacy: print.png: metadata: XML:com.adobe.xmp" in err
+
+
+def test_check_names_a_second_frame(repo: Path, capsys) -> None:
+    frames = [Image.new("RGB", (40, 20), colour) for colour in ("red", "blue")]
+    frames[0].save(repo / "turn.webp", save_all=True, append_images=frames[1:])
+    assert check(repo, capsys) == (1, "privacy: turn.webp: more than one frame\n")
+
+
+@pytest.mark.parametrize("name", ["IMG_0001.HEIC", "shot.heif", "clip.mov", "scan.dng", "a.gif"])
+def test_check_refuses_a_format_it_cannot_read_inside(repo: Path, capsys, name: str) -> None:
     (repo / "models" / name).write_bytes(b"\x00\x00\x00\x18ftypheic")
-    assert photos.main(["check"], root=repo) == 1
-    assert f"photo: models/{name}: a HEIC or HEIF photo; convert it to JPEG" in (
-        capsys.readouterr().err
-    )
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert f"privacy: models/{name}: a {Path(name).suffix.lower()} file" in err
 
 
-def test_check_skips_the_rendered_site_and_the_venv(repo: Path) -> None:
+def test_check_names_the_line_of_a_home_folder_path_without_printing_it(repo: Path, capsys) -> None:
+    (repo / "notes.md").write_text(f"first\nsaved in {HOME}git/x\n", encoding="utf-8")
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert "privacy: notes.md: a home-folder path on line 2" in err
+    assert "someone" not in err
+
+
+def test_check_finds_a_home_folder_path_inside_a_binary(repo: Path, capsys) -> None:
+    (repo / "part.stl").write_bytes(b"\x80\x81 exported from " + HOME.encode() + b"\xff")
+    assert check(repo, capsys) == (1, "privacy: part.stl: a home-folder path inside it\n")
+
+
+def test_check_skips_what_git_ignores(repo: Path, capsys) -> None:
+    (repo / ".gitignore").write_text("website/_site/\n.venv/\n", encoding="utf-8")
     photo(repo / "website" / "_site" / "shot.jpg", gps=True)
-    photo(repo / ".venv" / "lib" / "shot.jpg", gps=True)
-    assert photos.main(["check"], root=repo) == 0
+    (repo / ".venv").mkdir()
+    (repo / ".venv" / "paths.txt").write_text(HOME, encoding="utf-8")
+    assert check(repo, capsys) == (0, "")
 
 
 @pytest.mark.parametrize("name", ["print.jpg", "print.png", "print.webp"])
-def test_strip_removes_the_location(repo: Path, name: str) -> None:
-    path = photo(repo / "models" / "photos" / name, gps=True)
-    assert photos.main(["strip", str(path)], root=repo) == 0
-    assert photos.problem(path) is None
+def test_strip_leaves_no_metadata(repo: Path, capsys, name: str) -> None:
+    path = photo(repo / name, gps=True, **({"xmp": XMP} if name != "print.png" else {}))
+    assert privacy.main(["strip", str(path)], root=repo) == 0
+    assert privacy.image_problem(path) is None
     with Image.open(path) as image:
         assert image.size == (40, 20)
 
 
-def test_strip_removes_gps_from_the_xmp(repo: Path) -> None:
-    path = repo / "install.jpg"
-    Image.new("RGB", (40, 20)).save(path, xmp=XMP_WITH_GPS)
-    photos.main(["strip", str(path)], root=repo)
-    assert photos.problem(path) is None
+def test_strip_drops_a_jpeg_comment(repo: Path) -> None:
+    path = photo(repo / "print.jpg", comment=b"taken at home")
+    privacy.main(["strip", str(path)], root=repo)
+    assert privacy.image_problem(path) is None
 
 
 def test_strip_turns_the_photo_upright_before_dropping_its_orientation(repo: Path) -> None:
     path = photo(repo / "sideways.jpg", orientation=6)
-    photos.main(["strip", str(path)], root=repo)
+    privacy.main(["strip", str(path)], root=repo)
     with Image.open(path) as image:
         assert image.size == (20, 40)
-        assert ExifTags.Base.Orientation not in image.getexif()
+        assert not len(image.getexif())
+
+
+def test_strip_keeps_the_colour_profile(repo: Path) -> None:
+    icc = b"\x00" * 128  # Pillow keeps the bytes as given; a real profile would be parsed
+    path = photo(repo / "print.png", icc_profile=icc)
+    privacy.main(["strip", str(path)], root=repo)
+    with Image.open(path) as image:
+        assert image.info.get("icc_profile") == icc
 
 
 def test_strip_refuses_a_heic(repo: Path, capsys) -> None:
     path = repo / "IMG_0001.heic"
     path.write_bytes(b"\x00")
-    assert photos.main(["strip", str(path)], root=repo) == 2
+    assert privacy.main(["strip", str(path)], root=repo) == 2
     assert "strip takes JPEG, PNG or WebP only" in capsys.readouterr().err
 ```
 
 - [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
-  `ModuleNotFoundError: No module named 'photos'`.
+  `ModuleNotFoundError: No module named 'privacy'`.
 - [ ] **Step 3: Write the guard.**
 
-`scripts/photos.py`:
+`scripts/privacy.py`:
 
 ```python
-"""Keep photo locations out of the repo.
+"""Keep where Dan lives, and whose machine built this, out of a public repo.
 
-    uv run scripts/photos.py check
-        fail, naming each file, when an image anywhere in the repo carries GPS data,
-        or is a HEIC or HEIF (convert it to JPEG first: this check can't read inside one)
-    uv run scripts/photos.py strip FILE ...
-        rewrite each JPEG, PNG or WebP without its metadata, turned upright first
+    uv run scripts/privacy.py check
+        fail, naming each file, when a file git would commit is an image carrying any metadata
+        but a colour profile, is a photo or video format this check can't read inside, or holds
+        a home-folder path (/Users/<name>/ or /home/<name>/)
+    uv run scripts/privacy.py strip FILE ...
+        rewrite each JPEG, PNG or WebP upright, with no metadata but its colour profile
 
-GPS data hides in two places: EXIF's GPS block, and XMP text (exif:GPSLatitude and the like).
-The check reads both; strip drops all EXIF, XMP and text chunks, keeping only the colour profile.
+A photo's location hides in EXIF's GPS block, in XMP text (plain or compressed), in IPTC and in
+PNG text chunks; a camera's serial number and its owner's name hide beside it. Rather than hunt
+for each, the check allows nothing but a colour profile and the format's own housekeeping, and
+refuses the formats it can't read inside (HEIC, AVIF, RAW, video). What a photo shows (a window's
+view, a street, a face) no check can see: Dan looks at each before it's staged.
 """
 
 from __future__ import annotations
 
 import argparse
+import os
+import re
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
-from PIL import ExifTags, Image, ImageOps
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
-READABLE = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff"}
-UNREADABLE = {".heic", ".heif"}
-SKIPPED_DIRS = {".git", ".venv", "_site", ".quarto", "node_modules", ".pytest_cache", ".ruff_cache"}
-GPS_TEXT = (b"GPSLatitude", b"GPSLongitude")
+READABLE = {".jpg", ".jpeg", ".png", ".webp"}
+UNREADABLE = {
+    ".heic", ".heif", ".avif", ".jxl", ".gif", ".tif", ".tiff", ".bmp", ".jfif", ".mpo",
+    ".dng", ".raw", ".cr2", ".cr3", ".nef", ".arw", ".orf", ".rw2",
+    ".mov", ".mp4", ".m4v", ".3gp",
+}  # fmt: skip
+HOUSEKEEPING = {
+    "icc_profile", "dpi", "jfif", "jfif_version", "jfif_unit", "jfif_density", "adobe",
+    "adobe_transform", "progressive", "progression", "gamma", "srgb", "chromaticity",
+    "transparency", "aspect", "interlace", "loop", "background", "timestamp", "duration",
+}  # fmt: skip
+JPEG_HOUSEKEEPING = {"APP0", "APP2", "APP14"}  # JFIF, the colour profile, Adobe's colour flag
+HOME = re.compile(rb"/(?:Users|home)/[^/\s\"'<>()]+/")
 
 
-def images(root: Path) -> list[Path]:
-    found = []
-    for path in sorted(root.rglob("*")):
-        if any(part in SKIPPED_DIRS for part in path.relative_to(root).parts):
-            continue
-        if path.is_file() and path.suffix.lower() in READABLE | UNREADABLE:
-            found.append(path)
-    return found
+def committable(root: Path) -> list[Path]:
+    """Every file git would commit: tracked, or untracked and not ignored."""
+    listed = subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        cwd=root, capture_output=True, check=True,
+    ).stdout.decode("utf-8").split("\0")  # fmt: skip
+    return sorted({root / name for name in listed if name and (root / name).is_file()})
 
 
-def problem(path: Path) -> str | None:
-    """Why this image can't be committed, or None when it carries no location."""
-    if path.suffix.lower() in UNREADABLE:
-        return "a HEIC or HEIF photo; convert it to JPEG, then run photos.py strip on it"
-    raw = path.read_bytes()
-    if any(marker in raw for marker in GPS_TEXT):
-        return "GPS coordinates in its metadata"
+def image_problem(path: Path) -> str | None:
+    """Why this image can't be committed, or None when it carries nothing but a colour profile."""
+    suffix = path.suffix.lower()
+    if suffix in UNREADABLE:
+        return f"a {suffix} file, which this check can't read inside; convert it to JPEG first"
     try:
         with Image.open(path) as image:
-            image.load()  # a PNG may keep its EXIF after the image data
-            gps = image.getexif().get_ifd(ExifTags.IFD.GPSInfo)
+            image.load()
+            if getattr(image, "n_frames", 1) > 1:
+                return "more than one frame"
+            if len(image.getexif()):
+                return "EXIF metadata"
+            extra = sorted(set(image.info) - HOUSEKEEPING)
+            markers = {marker for marker, _ in getattr(image, "applist", [])}
     except OSError as error:
         return f"unreadable as an image ({error})"
-    if gps:
-        return "a GPS block in its EXIF"
+    if extra:
+        return f"metadata: {', '.join(extra)}"
+    if markers - JPEG_HOUSEKEEPING:
+        return f"metadata segments: {', '.join(sorted(markers - JPEG_HOUSEKEEPING))}"
     return None
+
+
+def path_problem(path: Path) -> str | None:
+    """Where this file holds a home-folder path, or None. The path itself is never printed."""
+    data = path.read_bytes()
+    if not HOME.search(data):
+        return None
+    try:
+        lines = data.decode("utf-8").splitlines()
+    except UnicodeDecodeError:
+        return "a home-folder path inside it"
+    numbers = [str(n) for n, line in enumerate(lines, 1) if HOME.search(line.encode("utf-8"))]
+    return f"a home-folder path on line {', '.join(numbers)}"
+
+
+def problems(root: Path) -> list[tuple[Path, str]]:
+    found = []
+    for path in committable(root):
+        if path.suffix.lower() in READABLE | UNREADABLE:
+            reason = image_problem(path)
+            if reason:
+                found.append((path, reason))
+        reason = path_problem(path)
+        if reason:
+            found.append((path, reason))
+    return found
 
 
 def strip(path: Path) -> None:
     with Image.open(path) as opened:
+        image_format = opened.format
+        icc = opened.info.get("icc_profile")
         image = ImageOps.exif_transpose(opened)
         image.load()
-        icc = opened.info.get("icc_profile")
-        image_format = opened.format
+    image.info = {}  # Pillow writes a JPEG's comment, and EXIF or XMP, from info unless cleared
     options = {"icc_profile": icc} if icc else {}
     if image_format == "JPEG":
         options |= {"quality": 95, "subsampling": 0}
-    image.save(path, format=image_format, **options)
+    handle, temp = tempfile.mkstemp(dir=path.parent, suffix=path.suffix)
+    os.close(handle)
+    try:
+        image.save(temp, format=image_format, **options)
+        os.replace(temp, path)
+    finally:
+        Path(temp).unlink(missing_ok=True)
 
 
 def command_check(root: Path) -> int:
-    found = [(path, reason) for path in images(root) if (reason := problem(path)) is not None]
+    found = problems(root)
     for path, reason in found:
-        print(f"photo: {path.relative_to(root)}: {reason}", file=sys.stderr)
+        print(f"privacy: {path.relative_to(root)}: {reason}", file=sys.stderr)
     if found:
         return 1
-    print(f"{len(images(root))} images, none with a location")
+    print("privacy: no image metadata, unreadable photo format or home-folder path")
     return 0
 
 
 def command_strip(files: list[Path]) -> int:
     for path in files:
-        if path.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp"}:
-            print(f"photo: {path}: strip takes JPEG, PNG or WebP only", file=sys.stderr)
+        if path.suffix.lower() not in READABLE:
+            print(f"privacy: {path}: strip takes JPEG, PNG or WebP only", file=sys.stderr)
             return 2
         strip(path)
         print(f"stripped {path}")
@@ -1017,7 +1279,7 @@ def command_strip(files: list[Path]) -> int:
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("check", help="fail on an image with a location, or a HEIC")
+    sub.add_parser("check", help="fail on image metadata, an unreadable format or a home path")
     strip_parser = sub.add_parser("strip", help="rewrite images without their metadata")
     strip_parser.add_argument("files", nargs="+", type=Path, metavar="FILE")
     args = parser.parse_args(argv)
@@ -1030,53 +1292,55 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-  In the `Makefile`, replace the placeholder recipe, and add `photos` to `check`:
+  In the `Makefile`, replace the placeholder recipe, and add `privacy` to `check`:
 
 ```makefile
-photos: ## Fail when an image in the repo carries GPS data, or is a HEIC
-	uv run --frozen scripts/photos.py check
+privacy: ## Fail on image metadata, a photo format the check can't read, or a home-folder path
+	uv run --frozen scripts/privacy.py check
 ```
 
 ```makefile
-check: test test-utc lint models-check photos leaks ## Everything CI runs
+check: test test-utc lint models-check privacy leaks ## Everything CI runs, and the suite under UTC
 ```
 
   In `.github/workflows/ci.yml`'s `tests` job, after `- run: make models-check`, add
-  `      - run: make photos`.
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: `34 passed` twice, lint
-  clean, `0 models, …`, `0 images, none with a location`, `no leaks found`.
+  `      - run: make privacy`.
+- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+  `privacy: no image metadata, unreadable photo format or home-folder path`, `no leaks found`.
 - [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
-feat(photos): 🤖 refuse a photo carrying GPS data, and strip one
+feat(privacy): 🤖 refuse image metadata and home-folder paths
 
 Dan's rule for this public repo is that no photo carries its location.
-scripts/photos.py check walks the repo (skipping .git, .venv and the
-rendered site) and fails, naming each file, on a GPS block in a JPEG, PNG,
-WebP or TIFF's EXIF, on GPS coordinates in its XMP, and on any HEIC or
-HEIF, which it can't read inside. strip rewrites a JPEG, PNG or WebP
-upright and without its metadata, keeping the colour profile. make photos
-runs the check, and so do make check and CI.
+Hunting for GPS alone misses XMP in a compressed PNG chunk, a camera's
+serial number and its owner's name, so scripts/privacy.py check allows an
+image nothing but a colour profile and its format's housekeeping, refuses
+the formats it can't read inside (HEIC, AVIF, RAW, video, GIF), and fails
+on a home-folder path in any file git would commit, naming the line but
+never printing the path. strip rewrites a JPEG, PNG or WebP upright with
+no metadata but its colour profile, through a temporary file. make privacy
+runs the check, and so do make check and CI; every push waits for it.
 
 The new tests failed first with: ModuleNotFoundError: No module named
-'photos'.
+'privacy'.
 
 Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 3
 Co-Authored-By: <the model's own line>
 ```
 
-  `git add scripts/photos.py tests/test_photos.py Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+  `git add scripts/privacy.py tests/test_privacy.py Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
 - [ ] **Step 6: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Phase 2's install task adds the first photo; its listing runs `scripts/photos.py strip`.
-  - **Docs:** the README's command list; `AGENTS.md`'s docs table already names `photos.py strip`.
+  - **Forward:** Tasks 6 to 8 commit SolidCraft's first real outputs, which this check scans; Phase 2's photo steps run `privacy.py strip`.
+  - **Docs:** `AGENTS.md`'s docs table and the README name `privacy.py strip`; check they still do.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 3: The photo guard, make photos
+    docs(plan): 🤖 close Task 3: The privacy guard, make privacy
 
     <what the task built, and why, in a few lines>
 
@@ -1092,9 +1356,10 @@ Co-Authored-By: <the model's own line>
     Co-Authored-By: <the model's own line>
     ```
 
-  - **Push,** once Dan has OKed it (`AGENTS.md`'s interim line): `make leaks`, then
-    `git push origin phase-1`. The task is closed once CI on the closing commit, or a later
-    one, is green; until a push, the local checks are the gate.
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
 
 ***
 
@@ -1104,87 +1369,158 @@ Co-Authored-By: <the model's own line>
 S10
 
 **Files:**
-- Create: `website/_quarto.yml`, `website/styles.css`, `website/_diagram-zoom.html`,
-  `website/index.qmd`, `website/_overview.qmd`, `website/architecture.qmd`, `website/design.qmd`,
-  `website/changelog.md`, `website/how-we-work.md`, the six wrappers under `website/superpowers/`,
-  `tests/test_site.py`
-- Modify: `Makefile` (the `docs` recipe and the `check` line), `tests/test_makefile.py` (one test
-  appended), `.github/workflows/ci.yml` (the `site` and `pages` jobs appended)
+- Create: `scripts/sitedocs.py`, `tests/test_site.py`, `website/_quarto.yml`,
+  `website/styles.css`, `website/_diagram-zoom.html`, `website/index.qmd`,
+  `website/_overview.qmd`, `website/architecture.qmd`, `website/design.qmd`,
+  `website/changelog.md`, `website/how-we-work.md`
+- Modify: `Makefile` (the `docs` recipe and the `check` line), `.github/workflows/ci.yml` (the
+  `site` and `pages` jobs appended)
 
 **Interfaces:**
 - Consumes: Task 1's targets and CI; the docs under `docs/superpowers/`.
-- Produces: `make docs` (render, fail on an unresolved link, `lychee --offline` when installed);
-  the site's pages Home, Architecture, Design, Changelog and How we work; `website/_overview.qmd`
-  (the one overview diagram); CI jobs `site` (uploads the Pages artifact on `main`) and `pages`;
-  the rule that every `.md` under `docs/superpowers/` has a wrapper and a Design-page line.
+- Produces: `scripts/sitedocs.py`'s `escaped(text: str) -> str`, `title(text: str, fallback: str)
+  -> str` and `main(argv=None, root=ROOT) -> int`, writing `website/superpowers/` (generated,
+  git-ignored); `make docs` (the doc copies, the render, a failure on an unresolved link, lychee
+  when installed); the pages Home, Architecture, Design, Changelog and How we work;
+  `website/_overview.qmd`; CI jobs `site` (installs lychee; uploads the Pages artifact on `main`)
+  and `pages`; the rule that every `.md` under `docs/superpowers/` has its line on the Design page.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **Step 1: Write the failing tests.**
 
 `tests/test_site.py`:
 
-```python
-"""Every doc under docs/superpowers/ is on the site (S06)."""
+````python
+"""Every doc under docs/superpowers/ reaches the site, its Quarto syntax shown, not run (S06)."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
+import sitedocs
+
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "docs" / "superpowers"
-SITE = ROOT / "website"
+OPEN, CLOSE = "{" * 2 + "<", ">" + "}" * 2
+LISTING = f"""# A plan
 
+````markdown
+{OPEN} include /../README.md {CLOSE}
 
-def docs() -> list[Path]:
-    return sorted(path.relative_to(DOCS) for path in DOCS.rglob("*.md"))
-
-
-def test_there_are_docs_to_check() -> None:
-    assert docs()
-
-
-def test_every_doc_has_a_wrapper_that_includes_it() -> None:
-    missing = []
-    for doc in docs():
-        wrapper = SITE / "superpowers" / doc
-        include = f"{{{{< include /../docs/superpowers/{doc.as_posix()} >}}}}"
-        if not wrapper.is_file() or include not in wrapper.read_text(encoding="utf-8"):
-            missing.append(f"website/superpowers/{doc.as_posix()}")
-    assert not missing, f"docs without a wrapper: {missing}"
-
-
-def test_every_wrapper_is_listed_on_the_design_page() -> None:
-    design = (SITE / "design.qmd").read_text(encoding="utf-8")
-    unlisted = [doc.as_posix() for doc in docs() if f"(superpowers/{doc.as_posix()})" not in design]
-    assert not unlisted, f"docs missing from the Design page: {unlisted}"
-
-
-def test_no_wrapper_is_left_without_its_doc() -> None:
-    wrappers = sorted(
-        p.relative_to(SITE / "superpowers") for p in (SITE / "superpowers").rglob("*.md")
-    )
-    orphans = [w.as_posix() for w in wrappers if not (DOCS / w).is_file()]
-    assert not orphans, f"wrappers whose doc is gone: {orphans}"
+```{{mermaid}}
+flowchart LR
+  a --> b
 ```
+````
+"""
 
-  Append to `tests/test_makefile.py`:
+
+def write_doc(root: Path, rel: str, text: str) -> None:
+    path = root / "docs" / "superpowers" / rel
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+
+
+def test_every_doc_is_copied_with_its_heading_as_the_title(tmp_path: Path) -> None:
+    write_doc(tmp_path, "specs/a-design.md", "# A: design spec\n\nText.\n")
+    write_doc(tmp_path, "plans/a-phase-1.md", "No heading.\n")
+    assert sitedocs.main([], root=tmp_path) == 0
+    site = tmp_path / "website" / "superpowers"
+    spec = (site / "specs" / "a-design.md").read_text(encoding="utf-8")
+    assert spec.startswith('---\npagetitle: "A: design spec"\n---\n\n# A: design spec')
+    assert 'pagetitle: "a-phase-1"' in (site / "plans" / "a-phase-1.md").read_text("utf-8")
+
+
+def test_shortcodes_and_executable_cells_are_shown_not_run(tmp_path: Path) -> None:
+    write_doc(tmp_path, "plans/a-phase-1.md", LISTING)
+    sitedocs.main([], root=tmp_path)
+    page = (tmp_path / "website" / "superpowers" / "plans" / "a-phase-1.md").read_text("utf-8")
+    assert f"{OPEN}/* include /../README.md */{CLOSE}" in page
+    assert "```mermaid\n" in page
+    assert "```{" not in page
+
+
+def test_a_doc_that_is_gone_loses_its_page(tmp_path: Path) -> None:
+    write_doc(tmp_path, "specs/a-design.md", "# A\n")
+    stale = tmp_path / "website" / "superpowers" / "specs" / "old.md"
+    stale.parent.mkdir(parents=True)
+    stale.write_text("old", encoding="utf-8")
+    sitedocs.main([], root=tmp_path)
+    assert not stale.exists()
+
+
+def test_every_real_doc_is_listed_on_the_design_page() -> None:
+    docs = ROOT / "docs" / "superpowers"
+    design = (ROOT / "website" / "design.qmd").read_text(encoding="utf-8")
+    unlisted = [
+        rel.as_posix()
+        for rel in (p.relative_to(docs) for p in sorted(docs.rglob("*.md")))
+        if f"(superpowers/{rel.as_posix()})" not in design
+    ]
+    assert not unlisted, f"docs missing from the Design page: {unlisted}"
+````
+
+- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
+  `ModuleNotFoundError: No module named 'sitedocs'`.
+- [ ] **Step 3: Write the copier and the site.**
+
+`scripts/sitedocs.py`:
 
 ```python
+"""Copy the docs under docs/superpowers/ into the site, with Quarto's own syntax shown, not run.
+
+    uv run scripts/sitedocs.py
+        write website/superpowers/<path> for every .md under docs/superpowers/ (generated and
+        git-ignored), each with its first heading as the page's title
+
+The plans quote Quarto's shortcodes and executable cells in their code listings, and Quarto
+expands both even inside fenced code, so a plain include of a plan breaks the render. The copies
+escape them instead: a shortcode's braces get Quarto's escape markers, and an executable cell's
+fence loses its braces. The docs themselves stay as written, where conventions put them.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import shutil
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+OPEN, CLOSE = "{" * 2 + "<", ">" + "}" * 2  # spelt in parts, so this file is safe to quote
+CELL = re.compile(r"^(\s*(?:`{3,}|~{3,}))\{([A-Za-z][\w-]*)\}", re.MULTILINE)
 
 
-def test_check_runs_everything_ci_runs_but_the_build() -> None:
-    line = next(
-        line
-        for line in (ROOT / "Makefile").read_text(encoding="utf-8").splitlines()
-        if line.startswith("check:")
-    )
-    prerequisites = line.split(":", 1)[1].split("##")[0].split()
-    assert prerequisites == ["test", "test-utc", "lint", "models-check", "photos", "leaks", "docs"]
+def escaped(text: str) -> str:
+    """Quarto shows an escaped shortcode as written, and a fence without braces as code."""
+    text = text.replace(OPEN, OPEN + "/*").replace(CLOSE, "*/" + CLOSE)
+    return CELL.sub(r"\1\2", text)
+
+
+def title(text: str, fallback: str) -> str:
+    heading = next((line[2:].strip() for line in text.splitlines() if line.startswith("# ")), "")
+    return heading or fallback
+
+
+def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
+    docs = root / "docs" / "superpowers"
+    out = root / "website" / "superpowers"
+    shutil.rmtree(out, ignore_errors=True)
+    copied = 0
+    for doc in sorted(docs.rglob("*.md")):
+        text = doc.read_text(encoding="utf-8")
+        page = out / doc.relative_to(docs)
+        page.parent.mkdir(parents=True, exist_ok=True)
+        front = f"---\npagetitle: {json.dumps(title(text, doc.stem), ensure_ascii=False)}\n---\n\n"
+        page.write_text(front + escaped(text), encoding="utf-8")
+        copied += 1
+    print(f"sitedocs: {copied} docs copied into website/superpowers/")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 ```
-
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `docs without a wrapper`,
-  `FileNotFoundError` for `website/design.qmd`, and the `check` line's prerequisites differing.
-- [ ] **Step 3: Write the site.**
 
 `website/_quarto.yml`:
 
@@ -1333,9 +1669,9 @@ flowchart LR
   design["models/&lt;slug&gt;/&lt;slug&gt;.sc<br/>the design, plain-text JSON"]
   yml["model.yml<br/>title, summary, print settings"]
   build["make models<br/>solidcraft-cli on Dan's machine"]
-  built["STL · PNG · eval.json · build.json<br/>committed beside the design"]
-  ci["CI on every push<br/>tests · lint · models-check · photos · leaks · site"]
-  gallery["make docs<br/>Quarto"]
+  built["an STL per size · PNG · eval.json · build.json<br/>committed beside the design"]
+  ci["CI on every push<br/>tests · lint · models-check · privacy · leaks · site"]
+  gallery["make docs<br/>doc copies + Quarto"]
   modelpages["model pages + 3D viewer<br/>Phase 1, Task 5"]
   pages["GitHub Pages<br/>the gallery and its 3D viewer"]
   sconce["the wall sconce's models<br/>Phase 2"]
@@ -1372,15 +1708,16 @@ full-screen.
 ## Building a model
 
 ```{mermaid}
-%%| fig-cap: "make models rebuilds only a design whose hash differs from its build record."
+%%| fig-cap: "make models rebuilds only a model whose design, sizes or built files differ from its build record."
 flowchart TD
   start["make models"] --> each{"for each models/&lt;slug&gt;/&lt;slug&gt;.sc"}
-  each --> hash{"sha256 of the design<br/>= build.json's?"}
+  each --> hash{"the design, its sizes and its built files<br/>match build.json?"}
   hash -- yes --> skip["left alone"]
   hash -- "no, or no build yet" --> run["solidcraft-cli run → &lt;slug&gt;.stl"]
   run --> snap["solidcraft-cli snapshot → &lt;slug&gt;.png"]
   snap --> evaluate["solidcraft-cli eval → &lt;slug&gt;.eval.json"]
-  evaluate --> record["build.json: the design's sha256, the CLI's version"]
+  evaluate --> sized["for each extra size in model.yml:<br/>a parameter change → &lt;slug&gt;-&lt;size&gt;.stl"]
+  sized --> record["build.json: every file's sha256, the sizes, the CLI's version"]
 ```
 
 ## Checks and the deploy
@@ -1388,9 +1725,9 @@ flowchart TD
 ```{mermaid}
 %%| fig-cap: "CI runs on every push; only main deploys."
 flowchart LR
-  push["a push"] --> tests["tests job<br/>make test · test-utc · lint<br/>models-check · photos"]
-  push --> leaks["leaks job<br/>gitleaks over the history"]
-  push --> site["site job<br/>make docs · lychee"]
+  push["a push"] --> tests["tests job<br/>make test · lint<br/>models-check · privacy"]
+  push --> leaks["leaks job<br/>gitleaks over every commit, merges included"]
+  push --> site["site job<br/>make docs, with lychee"]
   tests --> pagesjob{"on main?"}
   leaks --> pagesjob
   site --> pagesjob
@@ -1441,81 +1778,20 @@ pagetitle: "How we work"
 {{< include /../AGENTS.md >}}
 ```
 
-  The wrappers, one per doc:
-
-`website/superpowers/specs/2026-11-05-3d-models-design.md`:
-
-```markdown
----
-pagetitle: "3d-models: design spec"
----
-
-{{< include /../docs/superpowers/specs/2026-11-05-3d-models-design.md >}}
-```
-
-`website/superpowers/specs/2026-11-05-3d-models-qa.md`:
-
-```markdown
----
-pagetitle: "3d-models: kickoff Q&A"
----
-
-{{< include /../docs/superpowers/specs/2026-11-05-3d-models-qa.md >}}
-```
-
-`website/superpowers/specs/2026-11-05-3d-models-kickoff-notes.md`:
-
-```markdown
----
-pagetitle: "3d-models: kickoff notes"
----
-
-{{< include /../docs/superpowers/specs/2026-11-05-3d-models-kickoff-notes.md >}}
-```
-
-`website/superpowers/specs/2026-11-05-3d-models-kickoff-council.md`:
-
-```markdown
----
-pagetitle: "3d-models: kickoff council"
----
-
-{{< include /../docs/superpowers/specs/2026-11-05-3d-models-kickoff-council.md >}}
-```
-
-`website/superpowers/plans/2026-11-05-3d-models-phase-1.md`:
-
-```markdown
----
-pagetitle: "3d-models: Phase 1 plan"
----
-
-{{< include /../docs/superpowers/plans/2026-11-05-3d-models-phase-1.md >}}
-```
-
-`website/superpowers/plans/2026-11-05-3d-models-phase-2.md`:
-
-```markdown
----
-pagetitle: "3d-models: Phase 2 plan"
----
-
-{{< include /../docs/superpowers/plans/2026-11-05-3d-models-phase-2.md >}}
-```
-
   In the `Makefile`, replace the `docs` placeholder and set `check`'s final line:
 
 ```makefile
 docs: ## Render the site into website/_site, failing on a broken link
+	uv run --frozen scripts/sitedocs.py
 	@set -o pipefail; quarto render website 2>&1 | tee website/.render.log
 	@if grep -q 'Unable to resolve link target' website/.render.log; then \
 	  echo "docs: an unresolved link, above"; exit 1; fi
 	@if command -v lychee >/dev/null; then lychee --offline --no-progress website/_site; \
-	else echo "lychee isn't installed: the offline link check runs in CI only"; fi
+	else echo "lychee isn't installed: the offline link check runs in CI"; fi
 ```
 
 ```makefile
-check: test test-utc lint models-check photos leaks docs ## Everything CI runs
+check: test test-utc lint models-check privacy leaks docs ## Everything CI runs, and the suite under UTC
 ```
 
   Append the `site` and `pages` jobs to `.github/workflows/ci.yml`:
@@ -1524,24 +1800,26 @@ check: test test-utc lint models-check photos leaks docs ## Everything CI runs
   site:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: astral-sh/setup-uv@v10.3.3
-      - uses: quarto-dev/quarto-actions/setup@v2.2.0
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
         with:
           version: 1.11.6
+      - name: Install lychee 0.24.2, checked against its published checksum
+        run: |
+          curl -sSfL -o lychee.tar.gz \
+            https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2/lychee-x86_64-unknown-linux-gnu.tar.gz
+          echo "1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a  lychee.tar.gz" |
+            sha256sum --check --strict -
+          tar -xzf lychee.tar.gz lychee
+          sudo install -m 755 lychee /usr/local/bin/lychee
+          rm lychee lychee.tar.gz
       - run: uv sync --frozen
       - run: make docs
-      - name: Check every link inside the rendered site
-        uses: lycheeverse/lychee-action@v2.9.0
-        with:
-          lycheeVersion: v0.24.2
-          args: --offline --no-progress website/_site
-          fail: true
-          jobSummary: false
       - if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v5.0.0
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: website/_site
 
@@ -1557,12 +1835,13 @@ check: test test-utc lint models-check photos leaks docs ## Everything CI runs
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v5.0.1
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 ```
 
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice, the
-  render ends `Output created: _site/index.html` with no "Unable to resolve link target", and
-  lychee runs, or says it runs in CI only.
+- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+  `sitedocs: 6 docs copied` (or more, as docs have been added), the render ending
+  `Output created: _site/index.html` with no "Unable to resolve link target", and lychee's
+  note that it runs in CI.
 - [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
@@ -1570,27 +1849,28 @@ feat(site): 🤖 add the Quarto docs site and its deploy
 
 The repo had no site. website/ holds a Quarto site with Home (the README,
 then the overview diagram), Architecture (every diagram, planned parts
-dashed), Design (a .md wrapper per doc under docs/superpowers/), Changelog
-and How we work, in a quiet Japandi palette. make docs renders it and fails
-on an unresolved link. CI's site job renders it and runs lychee offline;
-on main it uploads the Pages artifact, and the pages job, the only one
-with pages and id-token write, deploys it once tests, leaks and site pass.
-make check now runs everything CI runs.
+dashed), Design (the spec, plans, Q&A pages and council reports), Changelog
+and How we work, in a quiet Japandi palette. The plans quote Quarto's
+shortcodes and executable cells in their listings, which Quarto expands
+even inside fenced code, so scripts/sitedocs.py copies each doc into the
+site with that syntax escaped, rather than including it. make docs renders
+it and fails on an unresolved link. CI's site job installs lychee 0.24.2,
+checked against its checksum, so make docs runs its offline link check; on
+main it uploads the Pages artifact, and the pages job, the only one with
+pages and id-token write, deploys it once tests, leaks and site pass.
 
-The new tests failed first with: docs without a wrapper, and
-FileNotFoundError for website/design.qmd.
+The new tests failed first with: ModuleNotFoundError: No module named
+'sitedocs'.
 
 Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 4
 Co-Authored-By: <the model's own line>
 ```
 
-  `git add website tests/test_site.py tests/test_makefile.py Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-  (`git add website` stages the new folder only; check `git status --short` names no other
-  path under it.)
+  `git add scripts/sitedocs.py tests/test_site.py website/_quarto.yml website/styles.css website/_diagram-zoom.html website/index.qmd website/_overview.qmd website/architecture.qmd website/design.qmd website/changelog.md website/how-we-work.md Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
 - [ ] **Step 6: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 5 adds the Models page, the viewer and two lines to `make docs`; Task 7 sets Pages' source, without which the `pages` job fails on `main`.
+  - **Forward:** Task 5 adds the Models page, the viewer and the gallery's line in `make docs`; Task 9 sets Pages' source, without which the `pages` job fails on `main`.
   - **Docs:** the README's links point at the site; the overview's built parts are solid.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -1613,31 +1893,33 @@ Co-Authored-By: <the model's own line>
     Co-Authored-By: <the model's own line>
     ```
 
-  - **Push,** once Dan has OKed it (`AGENTS.md`'s interim line): `make leaks`, then
-    `git push origin phase-1`. The task is closed once CI on the closing commit, or a later
-    one, is green; until a push, the local checks are the gate.
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
 
 ***
 
 ### Task 5: The gallery and the 3D viewer
 
-**Tier:** 2 · **Scenarios:** S07, S08
+**Tier:** 2 · **Scenarios:** S07, S08, S19, S20
 
 **Files:**
 - Create: `scripts/gallery.py`, `tests/test_gallery.py`, `website/models.qmd`,
-  `website/_stl-viewer.html`, `website/assets/stl-viewer.js`
+  `website/_stl-viewer.html`, `website/assets/stl-viewer.js`, `website/assets/three/` (five files
+  from npm's `three@0.187.0`)
 - Modify: `website/_quarto.yml` (resources and a navbar entry), `website/styles.css` (the
-  viewer's rules), `website/_overview.qmd` (the gallery drawn as built), `Makefile` (two lines in
-  `docs`)
+  viewer's rules), `website/_overview.qmd` (the gallery drawn as built), `Makefile` (one line in
+  `docs`), `README.md` (an "Adding a model" section)
 
 **Interfaces:**
-- Consumes: Task 2's `ROOT`, `Model`, `find_models`; Task 4's site and `make docs`.
+- Consumes: Task 2's `ROOT`, `Model`, `find_models`, `sizes`; Task 4's site and `make docs`.
 - Produces, in `scripts/gallery.py`: `ModelError(ValueError)`; `read_meta(model: Model) -> dict`
-  (fields `title`, `summary`, `status` in `designed | printed | in use`, `material`, optional
-  `print` mapping and `notes` text); `read_eval(model: Model) -> dict`;
-  `page(model: Model, meta: dict, evaluation: dict) -> str`;
-  `main(argv: list[str] | None = None, root: Path = ROOT) -> int` with subcommands `write` and
-  `check-site`. On the site: `website/models/<slug>.qmd` (generated, git-ignored) and the
+  (fields `title`, `summary`, `status` in `designed | printed | in use`, `material`; optional
+  `print` mapping with no bare booleans, `notes`, `size`; and `sizes`, filled from
+  `models.sizes`); `read_eval(model: Model) -> dict`; `photos(model: Model) -> list[Path]`;
+  `page(model: Model, meta: dict, evaluation: dict) -> str`; `main(argv=None, root=ROOT) -> int`.
+  On the site: `website/models/<slug>.qmd` (generated, git-ignored) and the
   `<div class="stl-viewer" data-stl="<slug>/<slug>.stl">` the viewer mounts on.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1646,7 +1928,8 @@ Co-Authored-By: <the model's own line>
 `tests/test_gallery.py`:
 
 ```python
-"""scripts/gallery.py: a card and a page per model (S07), with a 3D viewer and downloads (S08)."""
+"""scripts/gallery.py: a card and a page per model (S07), with a 3D viewer, downloads for each size,
+photos and a licence (S08, S19)."""
 
 from __future__ import annotations
 
@@ -1654,6 +1937,7 @@ import json
 from pathlib import Path
 
 import pytest
+from PIL import Image
 
 import gallery
 from conftest import add_design
@@ -1668,6 +1952,7 @@ print:
   Infill: 20%
 notes: Hang it on a dowel.
 """
+SIZED = META + "size: 1 in\nsizes:\n  3/4 in: {dowel_d: 19.05 mm}\n  25 mm: {dowel_d: 25 mm}\n"
 
 EVAL = {
     "bodies": [
@@ -1683,25 +1968,27 @@ def add_model(root: Path, slug: str = "hook", meta: str = META) -> Path:
     folder = design.parent
     (folder / "model.yml").write_text(meta, encoding="utf-8")
     (folder / f"{slug}.eval.json").write_text(json.dumps(EVAL), encoding="utf-8")
-    (folder / f"{slug}.stl").write_bytes(b"solid")
+    for name in (f"{slug}.stl", f"{slug}-3-4in.stl", f"{slug}-25mm.stl"):
+        (folder / name).write_bytes(b"solid")
     (folder / f"{slug}.png").write_bytes(b"\x89PNG")
     return folder
 
 
+def page(repo: Path, slug: str = "hook") -> str:
+    assert gallery.main([], root=repo) == 0
+    return (repo / "website" / "models" / f"{slug}.qmd").read_text(encoding="utf-8")
+
+
 def test_write_makes_a_page_and_copies_the_files(repo: Path) -> None:
     add_model(repo)
-    assert gallery.main(["write"], root=repo) == 0
-    out = repo / "website" / "models"
-    assert (out / "hook.qmd").is_file()
-    for name in ("hook.stl", "hook.png", "hook.sc"):
-        assert (out / "hook" / name).is_file(), name
+    page(repo)
+    out = repo / "website" / "models" / "hook"
+    assert sorted(p.name for p in out.iterdir()) == ["hook.png", "hook.sc", "hook.stl"]
 
 
 def test_the_page_is_a_card_with_a_picture_title_and_summary(repo: Path) -> None:
     add_model(repo)
-    gallery.main(["write"], root=repo)
-    text = (repo / "website" / "models" / "hook.qmd").read_text(encoding="utf-8")
-    front = text.split("---")[1]
+    front = page(repo).split("---")[1]
     assert 'title: "Test hook"' in front
     assert 'description: "A hook for testing."' in front
     assert "image: hook/hook.png" in front
@@ -1709,8 +1996,7 @@ def test_the_page_is_a_card_with_a_picture_title_and_summary(repo: Path) -> None
 
 def test_the_page_has_the_viewer_the_measurements_and_the_downloads(repo: Path) -> None:
     add_model(repo)
-    gallery.main(["write"], root=repo)
-    text = (repo / "website" / "models" / "hook.qmd").read_text(encoding="utf-8")
+    text = page(repo)
     assert "include-in-header: ../_stl-viewer.html" in text
     assert '::: {.stl-viewer data-stl="hook/hook.stl"' in text
     assert "| Size (x × y × z) | 45.0 × 30.0 × 10.0 mm |" in text
@@ -1719,9 +2005,42 @@ def test_the_page_has_the_viewer_the_measurements_and_the_downloads(repo: Path) 
     assert "| `hook_w` | `20 mm` | 20 mm |" in text
     assert "| Infill | 20% |" in text
     assert "Hang it on a dowel." in text
-    assert "- [hook.stl](hook/hook.stl)" in text
+    assert "- [hook.stl](hook/hook.stl): the mesh to slice\n" in text
     assert "- [hook.sc](hook/hook.sc)" in text
     assert "https://github.com/chendaniely/3d-models/tree/main/models/hook" in text
+
+
+def test_every_page_carries_the_licence(repo: Path) -> None:
+    add_model(repo)
+    text = page(repo)
+    assert "## Licence" in text
+    assert "[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)" in text
+
+
+def test_a_model_with_sizes_offers_an_stl_for_each(repo: Path) -> None:
+    add_model(repo, meta=SIZED)
+    text = page(repo)
+    assert "- [hook.stl](hook/hook.stl): the mesh to slice, for 1 in" in text
+    assert "- [hook-3-4in.stl](hook/hook-3-4in.stl): for 3/4 in" in text
+    assert "- [hook-25mm.stl](hook/hook-25mm.stl): for 25 mm" in text
+    assert "change `dowel_d` under Parameters" in text
+    files = sorted(p.name for p in (repo / "website" / "models" / "hook").iterdir())
+    assert files == ["hook-25mm.stl", "hook-3-4in.stl", "hook.png", "hook.sc", "hook.stl"]
+
+
+def test_a_model_with_sizes_names_the_size_it_is_saved_at(repo: Path, capsys) -> None:
+    add_model(repo, meta=SIZED.replace("size: 1 in\n", ""))
+    assert gallery.main([], root=repo) == 1
+    assert "'size' names the size the design is saved at" in capsys.readouterr().err
+
+
+def test_photos_are_published_on_the_page(repo: Path) -> None:
+    folder = add_model(repo)
+    (folder / "photos").mkdir()
+    Image.new("RGB", (8, 8)).save(folder / "photos" / "installed.jpg")
+    text = page(repo)
+    assert "## Photos\n\n![](hook/photos/installed.jpg)" in text
+    assert (repo / "website" / "models" / "hook" / "photos" / "installed.jpg").is_file()
 
 
 def test_write_removes_the_page_of_a_model_that_is_gone(repo: Path) -> None:
@@ -1729,8 +2048,13 @@ def test_write_removes_the_page_of_a_model_that_is_gone(repo: Path) -> None:
     stale = repo / "website" / "models" / "old.qmd"
     stale.parent.mkdir(parents=True)
     stale.write_text("old", encoding="utf-8")
-    gallery.main(["write"], root=repo)
+    page(repo)
     assert not stale.exists()
+
+
+def test_a_bar_in_a_print_setting_stays_inside_its_cell(repo: Path) -> None:
+    add_model(repo, meta=META.replace("Infill: 20%", "Infill: 20% | gyroid"))
+    assert "| Infill | 20% \\| gyroid |" in page(repo)
 
 
 @pytest.mark.parametrize(
@@ -1742,6 +2066,7 @@ def test_write_removes_the_page_of_a_model_that_is_gone(repo: Path) -> None:
             META.replace("  Layer height: 0.2 mm\n  Infill: 20%", "  - Layer height 0.2 mm"),
             "'print' must map settings to values",
         ),
+        (META.replace("Infill: 20%", "Supports: no"), "quote the print setting Supports"),
         (META + "notes: [unclosed\n", "isn't valid YAML"),
     ],
 )
@@ -1749,80 +2074,25 @@ def test_write_names_a_bad_model_yml_and_writes_nothing(
     repo: Path, capsys, meta: str, message: str
 ) -> None:
     add_model(repo, meta=meta)
-    assert gallery.main(["write"], root=repo) == 1
-    assert "gallery: models/hook/model.yml" in (err := capsys.readouterr().err)
+    assert gallery.main([], root=repo) == 1
+    err = capsys.readouterr().err
+    assert "gallery: models/hook/model.yml" in err
     assert message in err
     assert not (repo / "website" / "models").exists()
-
-
-def test_write_names_a_model_never_built(repo: Path, capsys) -> None:
-    folder = add_model(repo)
-    (folder / "hook.eval.json").unlink()
-    assert gallery.main(["write"], root=repo) == 1
-    assert "gallery: models/hook: no hook.eval.json; run make models" in capsys.readouterr().err
-
-
-def rendered_site(root: Path, slug: str = "hook") -> Path:
-    site = root / "website" / "_site"
-    (site / "assets").mkdir(parents=True)
-    (site / "assets" / "stl-viewer.js").write_text("//", encoding="utf-8")
-    (site / "models.html").write_text(f'<a href="models/{slug}.html">', encoding="utf-8")
-    (site / "models" / slug).mkdir(parents=True)
-    (site / "models" / f"{slug}.html").write_text(
-        f'<div class="stl-viewer" data-stl="{slug}/{slug}.stl"></div>', encoding="utf-8"
-    )
-    for kind in ("stl", "png", "sc"):
-        (site / "models" / slug / f"{slug}.{kind}").write_bytes(b"x")
-    return site
-
-
-def test_check_site_passes_a_complete_render(repo: Path) -> None:
-    add_model(repo)
-    rendered_site(repo)
-    assert gallery.main(["check-site"], root=repo) == 0
-
-
-@pytest.mark.parametrize(
-    ("remove", "message"),
-    [
-        ("models/hook/hook.stl", "site: missing models/hook/hook.stl"),
-        ("models/hook.html", "site: missing models/hook.html"),
-        ("assets/stl-viewer.js", "site: missing assets/stl-viewer.js"),
-    ],
-)
-def test_check_site_names_what_the_render_left_out(
-    repo: Path, capsys, remove: str, message: str
-) -> None:
-    add_model(repo)
-    site = rendered_site(repo)
-    (site / remove).unlink()
-    assert gallery.main(["check-site"], root=repo) == 1
-    assert message in capsys.readouterr().err
-
-
-def test_check_site_names_a_page_without_its_viewer_or_card(repo: Path, capsys) -> None:
-    add_model(repo)
-    site = rendered_site(repo)
-    (site / "models" / "hook.html").write_text("<p>no viewer</p>", encoding="utf-8")
-    (site / "models.html").write_text("<p>no cards</p>", encoding="utf-8")
-    assert gallery.main(["check-site"], root=repo) == 1
-    err = capsys.readouterr().err
-    assert "site: missing models/hook.html's 3D viewer" in err
-    assert "site: missing models.html's card for hook" in err
 
 
 def test_write_names_a_model_without_a_model_yml(repo: Path, capsys) -> None:
     folder = add_model(repo)
     (folder / "model.yml").unlink()
-    assert gallery.main(["write"], root=repo) == 1
+    assert gallery.main([], root=repo) == 1
     assert "gallery: models/hook: no model.yml" in capsys.readouterr().err
 
 
-def test_a_bar_in_a_print_setting_stays_inside_its_cell(repo: Path) -> None:
-    add_model(repo, meta=META.replace("Infill: 20%", "Infill: 20% | gyroid"))
-    gallery.main(["write"], root=repo)
-    text = (repo / "website" / "models" / "hook.qmd").read_text(encoding="utf-8")
-    assert "| Infill | 20% \\| gyroid |" in text
+def test_write_names_a_model_never_built(repo: Path, capsys) -> None:
+    folder = add_model(repo)
+    (folder / "hook.eval.json").unlink()
+    assert gallery.main([], root=repo) == 1
+    assert "gallery: models/hook: no hook.eval.json; run make models" in capsys.readouterr().err
 ```
 
 - [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
@@ -1832,22 +2102,19 @@ def test_a_bar_in_a_print_setting_stays_inside_its_cell(repo: Path) -> None:
 `scripts/gallery.py`:
 
 ```python
-"""Write the site's model pages from models/, and check the rendered site has them.
+"""Write the site's model pages from models/.
 
-    uv run scripts/gallery.py write
-        write website/models/<slug>.qmd for each model and copy its .stl, .png and .sc beside it
-    uv run scripts/gallery.py check-site
-        after quarto render: fail, naming each, when a model's page or file is missing from
-        website/_site
+    uv run scripts/gallery.py
+        write website/models/<slug>.qmd for each model, and copy its STLs, picture, design and
+        photos beside it
 
-website/models/ is generated and git-ignored: write empties it first, so a removed model's page
-goes with it. Each model's model.yml gives its title, summary, status, material, print settings
-and notes; its eval.json gives the measurements and parameters.
+website/models/ is generated and git-ignored: each run empties it first, so a removed model's page
+goes with it. Each model's model.yml gives its title, summary, status, material, size, print
+settings and notes; its eval.json gives the measurements and parameters.
 """
 
 from __future__ import annotations
 
-import argparse
 import json
 import shutil
 import sys
@@ -1855,12 +2122,16 @@ from pathlib import Path
 
 import yaml
 
-from models import ROOT, Model, find_models
+from models import ROOT, Model, find_models, sizes
 
 REPO_URL = "https://github.com/chendaniely/3d-models"
+LICENCE = (
+    "[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): print it, change it and "
+    "share it, crediting chendaniely and linking here; don't sell it or prints of it."
+)
 STATUSES = ("designed", "printed", "in use")
 DENSITY_G_CM3 = {"PLA": 1.24, "PETG": 1.27}
-COPIED = ("stl", "png", "sc")
+PHOTOS = {".jpg", ".jpeg", ".png", ".webp"}
 
 
 class ModelError(ValueError):
@@ -1871,26 +2142,38 @@ def read_meta(model: Model) -> dict:
     path = model.folder / "model.yml"
     if not path.is_file():
         raise ModelError(f"models/{model.slug}: no model.yml")
+    where = f"models/{model.slug}/model.yml"
     try:
         meta = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     except yaml.YAMLError as error:
-        raise ModelError(f"models/{model.slug}/model.yml isn't valid YAML: {error}") from error
+        raise ModelError(f"{where} isn't valid YAML: {error}") from error
     if not isinstance(meta, dict):
-        raise ModelError(f"models/{model.slug}/model.yml must be a mapping of fields")
+        raise ModelError(f"{where} must be a mapping of fields")
     for field in ("title", "summary", "status", "material"):
         if not isinstance(meta.get(field), str) or not meta[field].strip():
-            raise ModelError(f"models/{model.slug}/model.yml: '{field}' must be a non-empty string")
+            raise ModelError(f"{where}: '{field}' must be a non-empty string")
     if meta["status"] not in STATUSES:
-        raise ModelError(
-            f"models/{model.slug}/model.yml: 'status' must be one of {', '.join(STATUSES)}"
-        )
+        raise ModelError(f"{where}: 'status' must be one of {', '.join(STATUSES)}")
     print_settings = meta.get("print", {})
     if not isinstance(print_settings, dict) or not all(
         isinstance(k, str) and isinstance(v, str | int | float) for k, v in print_settings.items()
     ):
-        raise ModelError(f"models/{model.slug}/model.yml: 'print' must map settings to values")
-    if not isinstance(meta.get("notes", ""), str):
-        raise ModelError(f"models/{model.slug}/model.yml: 'notes' must be text")
+        raise ModelError(f"{where}: 'print' must map settings to values")
+    flags = [k for k, v in print_settings.items() if isinstance(v, bool)]
+    if flags:
+        raise ModelError(
+            f"{where}: quote the print setting {', '.join(flags)}: YAML reads yes and no as true "
+            "and false"
+        )
+    for field in ("notes", "size"):
+        if not isinstance(meta.get(field, ""), str):
+            raise ModelError(f"{where}: '{field}' must be text")
+    try:
+        meta["sizes"] = sizes(model)
+    except ValueError as error:
+        raise ModelError(str(error)) from error
+    if meta["sizes"] and not meta.get("size"):
+        raise ModelError(f"{where}: with 'sizes', 'size' names the size the design is saved at")
     return meta
 
 
@@ -1899,6 +2182,13 @@ def read_eval(model: Model) -> dict:
     if not path.is_file():
         raise ModelError(f"models/{model.slug}: no {path.name}; run make models")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def photos(model: Model) -> list[Path]:
+    folder = model.folder / "photos"
+    if not folder.is_dir():
+        return []
+    return sorted(p for p in folder.iterdir() if p.suffix.lower() in PHOTOS)
 
 
 def quoted(text: str) -> str:
@@ -1926,6 +2216,33 @@ def measurements(evaluation: dict) -> list[tuple[str, str]]:
     return rows
 
 
+def downloads(model: Model, meta: dict) -> list[str]:
+    slug = model.slug
+    lines = ["## Files", ""]
+    if meta["sizes"]:
+        lines.append(f"- [{slug}.stl]({slug}/{slug}.stl): the mesh to slice, for {meta['size']}")
+        lines += [
+            f"- [{model.sized(size).name}]({slug}/{model.sized(size).name}): for {size}"
+            for size in meta["sizes"]
+        ]
+    else:
+        lines.append(f"- [{slug}.stl]({slug}/{slug}.stl): the mesh to slice")
+    lines += [
+        f"- [{slug}.sc]({slug}/{slug}.sc): the SolidCraft design, every dimension a parameter",
+        f"- [The model's folder on GitHub]({REPO_URL}/tree/main/models/{slug})",
+        "",
+    ]
+    if meta["sizes"]:
+        names = sorted({name for changes in meta["sizes"].values() for name in changes})
+        changed = " and ".join(f"`{name}`" for name in names)
+        lines += [
+            "**For another size:** open the `.sc` in SolidCraft and change "
+            f"{changed} under Parameters; every other dimension follows.",
+            "",
+        ]
+    return lines
+
+
 def page(model: Model, meta: dict, evaluation: dict) -> str:
     slug = model.slug
     lines = [
@@ -1949,6 +2266,11 @@ def page(model: Model, meta: dict, evaluation: dict) -> str:
     ]
     if meta.get("notes", "").strip():
         lines += ["## Notes", "", meta["notes"].strip(), ""]
+    shots = photos(model)
+    if shots:
+        lines += ["## Photos", ""]
+        lines += [f"![]({slug}/photos/{shot.name})" for shot in shots]
+        lines.append("")
     if meta.get("print"):
         lines += ["## Printing", "", "| Setting | Value |", "|---|---|"]
         lines += [f"| {cell(key)} | {cell(value)} |" for key, value in meta["print"].items()]
@@ -1965,76 +2287,36 @@ def page(model: Model, meta: dict, evaluation: dict) -> str:
             value = f"{param['value']:g} {param.get('unit', '')}".strip()
             lines.append(f"| `{param['name']}` | `{param['expression']}` | {value} |")
         lines.append("")
-    lines += [
-        "## Files",
-        "",
-        f"- [{slug}.stl]({slug}/{slug}.stl): the mesh to slice",
-        f"- [{slug}.sc]({slug}/{slug}.sc): the SolidCraft design, every dimension a parameter",
-        f"- [The model's folder on GitHub]({REPO_URL}/tree/main/models/{slug})",
-        "",
-    ]
+    lines += downloads(model, meta)
+    lines += ["## Licence", "", LICENCE, ""]
     return "\n".join(lines)
 
 
-def command_write(root: Path) -> int:
+def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     out = root / "website" / "models"
     models = find_models(root)
     try:
-        pages = [(m, page(m, read_meta(m), read_eval(m))) for m in models]
+        pages = [(m, read_meta(m)) for m in models]
+        pages = [(m, meta, page(m, meta, read_eval(m))) for m, meta in pages]
     except ModelError as error:
         print(f"gallery: {error}", file=sys.stderr)
         return 1
     shutil.rmtree(out, ignore_errors=True)
     out.mkdir(parents=True)
-    for model, text in pages:
+    for model, meta, text in pages:
         (out / f"{model.slug}.qmd").write_text(text, encoding="utf-8")
         files = out / model.slug
         files.mkdir()
-        for kind in COPIED:
-            source = model.design if kind == "sc" else model.built(kind)
+        copied = [model.built("stl"), model.built("png"), model.design]
+        copied += [model.sized(size) for size in meta["sizes"]]
+        for source in copied:
             shutil.copy2(source, files / source.name)
+        if photos(model):
+            (files / "photos").mkdir()
+            for shot in photos(model):
+                shutil.copy2(shot, files / "photos" / shot.name)
     print(f"gallery: {len(pages)} model pages in website/models/")
     return 0
-
-
-def command_check_site(root: Path) -> int:
-    site = root / "website" / "_site"
-    missing = []
-    if not (site / "assets" / "stl-viewer.js").is_file():
-        missing.append("assets/stl-viewer.js")
-    listing = site / "models.html"
-    listing_text = listing.read_text(encoding="utf-8") if listing.is_file() else ""
-    if not listing_text:
-        missing.append("models.html")
-    for model in find_models(root):
-        slug = model.slug
-        html = site / "models" / f"{slug}.html"
-        if not html.is_file():
-            missing.append(f"models/{slug}.html")
-        elif f'data-stl="{slug}/{slug}.stl"' not in html.read_text(encoding="utf-8"):
-            missing.append(f"models/{slug}.html's 3D viewer")
-        for kind in COPIED:
-            if not (site / "models" / slug / f"{slug}.{kind}").is_file():
-                missing.append(f"models/{slug}/{slug}.{kind}")
-        if listing_text and f"models/{slug}.html" not in listing_text:
-            missing.append(f"models.html's card for {slug}")
-    for item in missing:
-        print(f"site: missing {item}", file=sys.stderr)
-    if missing:
-        return 1
-    print("site: every model's page, viewer and files are in website/_site")
-    return 0
-
-
-def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("write", help="write the model pages into website/models/")
-    sub.add_parser("check-site", help="check the rendered site has every model")
-    args = parser.parse_args(argv)
-    if args.command == "write":
-        return command_write(root)
-    return command_check_site(root)
 
 
 if __name__ == "__main__":
@@ -2064,8 +2346,8 @@ Every model has a page with a 3D view you can turn, its print settings, its meas
 <script type="importmap">
 {
   "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+    "three": "../assets/three/three.module.js",
+    "three/addons/": "../assets/three/"
   }
 }
 </script>
@@ -2076,10 +2358,11 @@ Every model has a page with a 3D view you can turn, its print settings, its meas
 
 ```javascript
 // Turns each <div class="stl-viewer" data-stl="..."> into a 3D view of that STL:
-// drag to rotate, scroll to zoom, right-drag to pan. three.js comes from the page's import map.
+// drag to rotate, scroll to zoom, right-drag to pan. three.js 0.187.0 is served from
+// website/assets/three/ (copied from npm's package), named by the page's import map.
 import * as THREE from "three";
-import { STLLoader } from "three/addons/loaders/STLLoader.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { STLLoader } from "three/addons/STLLoader.js";
+import { OrbitControls } from "three/addons/OrbitControls.js";
 
 const BONE = 0xf4f1ec;
 const OAK = 0xc9b79c;
@@ -2145,6 +2428,22 @@ function mount(element) {
 document.querySelectorAll(".stl-viewer[data-stl]").forEach(mount);
 ```
 
+  three.js, copied from npm's package rather than loaded from a CDN, in a scratch folder:
+  `npm pack three@0.187.0`, `tar -xzf three-0.187.0.tgz`, then copy `package/build/three.module.js`,
+  `package/build/three.core.js`, `package/examples/jsm/loaders/STLLoader.js`,
+  `package/examples/jsm/controls/OrbitControls.js` and `package/LICENSE` into
+  `website/assets/three/`. `cd website/assets/three && shasum -a 256 -c` with:
+
+```text
+613e370f76638fdef83926642bf256dc9615684922de1ce1f63a8583e5d78578  three.core.js
+104f56145899722094556490d787aae0617cc2fc3382f31df02d724ea1aee341  three.module.js
+a07441b8cd812faf8049741fe5e95373b19547e4038694753dfec26fe230a7eb  STLLoader.js
+e7fca2fe9e7670a828af9b28084669a5909445b7f36f1f26cee9bf8f2961c32c  OrbitControls.js
+8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc  LICENSE
+```
+
+  Expected: five `OK` lines.
+
   In `website/_quarto.yml`, under `project:` after `output-dir: _site`, add:
 
 ```yaml
@@ -2191,9 +2490,9 @@ flowchart LR
   design["models/&lt;slug&gt;/&lt;slug&gt;.sc<br/>the design, plain-text JSON"]
   yml["model.yml<br/>title, summary, print settings"]
   build["make models<br/>solidcraft-cli on Dan's machine"]
-  built["STL · PNG · eval.json · build.json<br/>committed beside the design"]
-  ci["CI on every push<br/>tests · lint · models-check · photos · leaks · site"]
-  gallery["make docs<br/>gallery pages + Quarto"]
+  built["an STL per size · PNG · eval.json · build.json<br/>committed beside the design"]
+  ci["CI on every push<br/>tests · lint · models-check · privacy · leaks · site"]
+  gallery["make docs<br/>doc copies + model pages + Quarto"]
   pages["GitHub Pages<br/>the gallery and its 3D viewer"]
   sconce["the wall sconce's models<br/>Phase 2"]
 
@@ -2214,32 +2513,64 @@ flowchart LR
 
 ```makefile
 docs: ## Render the site into website/_site, failing on a broken link
-	uv run --frozen scripts/gallery.py write
+	uv run --frozen scripts/sitedocs.py
+	uv run --frozen scripts/gallery.py
 	@set -o pipefail; quarto render website 2>&1 | tee website/.render.log
 	@if grep -q 'Unable to resolve link target' website/.render.log; then \
 	  echo "docs: an unresolved link, above"; exit 1; fi
-	uv run --frozen scripts/gallery.py check-site
 	@if command -v lychee >/dev/null; then lychee --offline --no-progress website/_site; \
-	else echo "lychee isn't installed: the offline link check runs in CI only"; fi
+	else echo "lychee isn't installed: the offline link check runs in CI"; fi
 ```
 
+  In `README.md`, before "## How it's built", add:
+
+````markdown
+## Adding a model
+
+1. Make a folder `models/<slug>/`, its name lowercase words joined by hyphens: it becomes the
+   page's address.
+2. Save the design there as `<slug>.sc`, in SolidCraft's plain-text JSON format where you can, so
+   a diff can read it (a design saved in the default zip format builds too).
+3. Write `models/<slug>/model.yml`:
+
+   ```yaml
+   title: Wall hook
+   summary: One sentence, shown on the gallery's card.
+   status: designed          # designed, printed or in use
+   material: PETG
+   size: 1 in                # with sizes below: the size the design is saved at
+   sizes:                    # optional: one more STL for each, by changing parameters
+     3/4 in: {dowel_d: 19.05 mm}
+   print:
+     Orientation: flat on its back
+     Supports: "no"          # quote yes and no, or YAML reads them as true and false
+   notes: |
+     Anything someone printing it should know.
+   ```
+
+4. `make models`, then `make check`, and commit the folder. A photo of a print goes in
+   `models/<slug>/photos/`, stripped first: `uv run --frozen scripts/privacy.py strip <file>`.
+````
+
 - [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
-  `gallery: 0 model pages in website/models/`, the render clean but for one WARN that the Models
-  listing matches no files (until Task 6 adds the coupon), and
-  `site: every model's page, viewer and files are in website/_site`.
+  `gallery: 0 model pages in website/models/`, and the render clean but for one WARN that the
+  Models listing matches no files, until Task 6 adds the coupon.
 - [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(site): 🤖 a gallery page per model, with a 3D viewer
 
-The site had no models. scripts/gallery.py write turns each model's
-model.yml and measurements into a page under website/models/ (generated,
-git-ignored) with its picture, notes, print settings, measurements,
-parameters and downloads, and copies its .stl, .png and .sc beside it; a
-bad model.yml is named, and nothing is written. check-site fails when the
-rendered site lacks a model's page, viewer or files. The Models page lists
-a card per model. website/assets/stl-viewer.js mounts a three.js 0.187.0
-view, from jsDelivr through an import map, on each page's viewer div.
+The site had no models. scripts/gallery.py turns each model's model.yml
+and measurements into a page under website/models/ (generated,
+git-ignored): its picture, notes, photos, print settings, measurements,
+parameters, a download for each size with a note on which parameters to
+change for another, and the CC BY-NC 4.0 licence. It copies the STLs,
+picture, design and photos beside it; a bad model.yml is named and nothing
+is written. The Models page lists a card per model.
+website/assets/stl-viewer.js mounts a three.js 0.187.0 view on each page,
+three.js served from the site itself, copied from npm's package and
+checked by SHA-256, so no visitor's browser calls a CDN. The README says
+how to add a model.
 
 The new tests failed first with: ModuleNotFoundError: No module named
 'gallery'.
@@ -2248,14 +2579,15 @@ Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 5
 Co-Authored-By: <the model's own line>
 ```
 
-  `git add scripts/gallery.py tests/test_gallery.py website/models.qmd website/_stl-viewer.html website/assets/stl-viewer.js website/_quarto.yml website/styles.css website/_overview.qmd Makefile`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 6: Review, look forward, close.** The review includes the viewer seen working: with
-  a model in place (Task 6's, or a scratch one not committed), `make docs`, serve
-  `website/_site` on a free local port, open a model's page, and confirm its `.stl-viewer` has
-  `data-loaded="true"` and a canvas; record it under `Rounds:`.
+  `git add scripts/gallery.py tests/test_gallery.py website/models.qmd website/_stl-viewer.html website/assets/stl-viewer.js website/assets/three website/_quarto.yml website/styles.css website/_overview.qmd Makefile README.md`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+- [ ] **Step 6: Review, look forward, close.** The review includes the viewer seen working: once
+  Task 6's coupon is in, or with a scratch model not committed, `make docs`, serve `website/_site`
+  on a free local port, open a model's page, and confirm its `.stl-viewer` has
+  `data-loaded="true"`, a canvas, and three.js fetched from `assets/three/`; record it under
+  `Rounds:`. The security checklist gets one line for the import map.
 
   - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 6's `model.yml` must pass `read_meta`; Phase 2's models consume the same fields.
+  - **Forward:** Tasks 6 to 8's `model.yml` files must pass `read_meta`.
   - **Docs:** the overview diagram's gallery is solid; the README's gallery line stays true.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -2278,26 +2610,26 @@ Co-Authored-By: <the model's own line>
     Co-Authored-By: <the model's own line>
     ```
 
-  - **Push,** once Dan has OKed it (`AGENTS.md`'s interim line): `make leaks`, then
-    `git push origin phase-1`. The task is closed once CI on the closing commit, or a later
-    one, is green; until a push, the local checks are the gate.
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
 
 ***
 
-### Task 6: The first model, the dowel fit-test coupon
+### Task 6: The dowel fit-test coupon
 
-**Tier:** 2 · **Scenarios:** S09
+**Tier:** 1 · **Scenarios:** S09, S19
 
 **Files:**
-- Create: `models/dowel-fit-coupon/dowel-fit-coupon.sc` (by SolidCraft), its built files
-  (`.stl`, `.png`, `.eval.json`, `build.json`, by `make models`), `models/dowel-fit-coupon/model.yml`,
+- Create: `models/dowel-fit-coupon/dowel-fit-coupon.sc` (by SolidCraft), its built files (`.stl`, `-3-4in.stl`,
+  `-25mm.stl`, `.png`, `.eval.json`, `build.json`, by `make models`), `models/dowel-fit-coupon/model.yml`,
   `tests/test_coupon.py`
 
 **Interfaces:**
-- Consumes: Task 2's `make models`, `Model`, `staleness`; Task 5's `read_meta` and the page.
-- Produces: the design's parameters `dowel_d` (25.4 mm), `step` (0.2 mm), `wall`, `margin`,
-  `bar_h`, `dot_d`, `dot_depth`, `pitch`, `bar_l`, `bar_w`, which Phase 2's wall block takes its
-  `clearance` from (`step` times the dots of the hole that fit).
+- Consumes: Task 2's `make models`, `Model`, `sizes` and the conftest helpers; Task 5's
+  `read_meta` and the page.
+- Produces: the design's parameters `dowel_d` (25.4 mm), `step` (0.2 mm), `wall`, `margin`, `bar_h`, `dot_d`, `dot_depth`, `pitch`, `bar_l`, `bar_w`, which the dowel parts' `clearance` comes from (`step` times the dots of the hole that fit).
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **Step 1: Write the failing tests.**
@@ -2309,7 +2641,6 @@ Co-Authored-By: <the model's own line>
 
 from __future__ import annotations
 
-import json
 import math
 from pathlib import Path
 
@@ -2317,59 +2648,49 @@ import pytest
 
 import gallery
 import models
+from conftest import body, params
 
-ROOT = Path(__file__).resolve().parent.parent
-COUPON = models.Model(ROOT / "models" / "dowel-fit-coupon")
-
-
-@pytest.fixture(scope="module")
-def evaluation() -> dict:
-    return json.loads(COUPON.built("eval.json").read_text(encoding="utf-8"))
+COUPON = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-fit-coupon")
 
 
-@pytest.fixture(scope="module")
-def params(evaluation: dict) -> dict[str, float]:
-    return {p["name"]: p["value"] for p in evaluation["params"]}
+def test_it_is_saved_for_a_one_inch_dowel_in_steps_of_a_fifth_of_a_millimetre() -> None:
+    assert params(COUPON)["dowel_d"] == pytest.approx(25.4)
+    assert params(COUPON)["step"] == pytest.approx(0.2)
 
 
-def test_the_coupon_is_built_from_its_design() -> None:
-    assert models.staleness(COUPON) is None
+def test_it_comes_in_three_dowel_sizes() -> None:
+    assert models.sizes(COUPON) == {
+        "3/4 in": {"dowel_d": "19.05 mm"},
+        "25 mm": {"dowel_d": "25 mm"},
+    }
 
 
-def test_it_is_for_a_one_inch_dowel_in_steps_of_a_fifth_of_a_millimetre(params) -> None:
-    assert params["dowel_d"] == pytest.approx(25.4)
-    assert params["step"] == pytest.approx(0.2)
+def test_it_is_one_closed_body_with_four_holes_and_ten_dots() -> None:
+    coupon = body(COUPON, "Coupon")
+    assert coupon["closed"]
+    assert coupon["face_types"]["cylinder"] == 4 + (1 + 2 + 3 + 4)
 
 
-def test_it_is_one_closed_body_with_four_holes_and_ten_dots(evaluation: dict) -> None:
-    (body,) = evaluation["bodies"]
-    assert body["closed"]
-    assert body["face_types"]["cylinder"] == 4 + (1 + 2 + 3 + 4)
-
-
-def test_its_volume_matches_holes_at_plus_point_two_to_point_eight(evaluation, params) -> None:
-    box = params["bar_l"] * params["bar_w"] * params["bar_h"]
+def test_its_volume_matches_holes_at_plus_point_two_to_point_eight() -> None:
+    p = params(COUPON)
+    box = p["bar_l"] * p["bar_w"] * p["bar_h"]
     holes = sum(
-        math.pi * ((params["dowel_d"] + k * params["step"]) / 2) ** 2 * params["bar_h"]
-        for k in range(1, 5)
+        math.pi * ((p["dowel_d"] + k * p["step"]) / 2) ** 2 * p["bar_h"] for k in (1, 2, 3, 4)
     )
-    dots = 10 * math.pi * (params["dot_d"] / 2) ** 2 * params["dot_depth"]
-    assert evaluation["bodies"][0]["volume_mm3"] == pytest.approx(box - holes - dots, rel=1e-3)
+    dots = 10 * math.pi * (p["dot_d"] / 2) ** 2 * p["dot_depth"]
+    assert body(COUPON, "Coupon")["volume_mm3"] == pytest.approx(box - holes - dots, rel=1e-3)
 
 
-def test_its_page_says_how_to_read_each_hole() -> None:
-    notes = gallery.read_meta(COUPON)["notes"]
-    for dots, hole, clearance in [
-        (1, "25.6", "0.2"),
-        (2, "25.8", "0.4"),
-        (3, "26.0", "0.6"),
-        (4, "26.2", "0.8"),
-    ]:
-        assert f"| {dots} | {hole} mm | +{clearance} mm |" in notes
+def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:
+    meta = gallery.read_meta(COUPON)
+    for dots, clearance, hole in [(1, "0.2", "25.6"), (2, "0.4", "25.8"), (3, "0.6", "26.0"),
+                                  (4, "0.8", "26.2")]:  # fmt: skip
+        assert f"| {dots} | +{clearance} mm | {hole} mm |" in meta["notes"]
+    assert "the holes horizontal" in meta["print"]["Orientation"]
 ```
 
 - [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
-  `models/dowel-fit-coupon/dowel-fit-coupon.eval.json`, and `staleness` naming the missing build.
+  `models/dowel-fit-coupon/dowel-fit-coupon.eval.json`.
 - [ ] **Step 3: Build the design.** Write SolidCraft's command script to `.git/coupon-script.json`
   (it stays out of the repo: the saved design holds the same feature tree, and
   `solidcraft-cli script` regenerates it):
@@ -2685,9 +3006,7 @@ def test_its_page_says_how_to_read_each_hole() -> None:
 
   From the repo's root: `mkdir -p models/dowel-fit-coupon`, then
   `solidcraft-cli run .git/coupon-script.json --quiet`. Expected: exit 0, and
-  `models/dowel-fit-coupon/dowel-fit-coupon.sc` is about 9.5 KB of JSON. Then `make models`.
-  Expected: `building models/dowel-fit-coupon (missing …)` and `1 built, 0 up to date`. Look at
-  `dowel-fit-coupon.png`: a bar with four holes, one to four dots in front of them.
+  `models/dowel-fit-coupon/dowel-fit-coupon.sc` is a few KB of JSON.
 - [ ] **Step 4: Write its page's text.**
 
 `models/dowel-fit-coupon/model.yml`:
@@ -2695,49 +3014,58 @@ def test_its_page_says_how_to_read_each_hole() -> None:
 ```yaml
 title: Dowel fit-test coupon
 summary: >-
-  One bar with four holes, each a little wider than a 1-inch dowel, to find the clearance your
-  printer and your dowel need before printing a part that holds one.
+  One bar with four holes, each a little wider than the dowel, to find the clearance your printer
+  and your dowel need before printing a part that holds one.
 status: designed
-material: PETG (PLA is fine for this test)
+material: PETG, or what the dowel parts will be printed in
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
 print:
-  Orientation: flat on the bed, holes vertical
+  Orientation: standing on its long edge, the holes horizontal, as the sockets print
   Layer height: 0.2 mm
   Walls: 3
   Infill: 15%
-  Supports: none
+  Supports: none, not even inside the holes
 notes: |
-  Dowels sold as 1 inch vary by about half a millimetre, and printers print holes a little
-  small, so the hole a dowel needs is found by trying it. The dots beside each hole say how much
-  wider than 25.4 mm it is:
+  Dowels sold as one size vary by about half a millimetre, and printers print holes a little
+  small, so the hole a dowel needs is found by trying it. Print the coupon for your dowel's size,
+  standing on its edge: the dowel parts' sockets print with their holes horizontal, and a
+  horizontal hole comes out a little smaller and less round than a vertical one. The dots beside
+  each hole say how much wider than the dowel it is:
 
-  | Dots | Hole | Clearance |
+  | Dots | Clearance | For a 1-inch dowel |
   |---|---|---|
-  | 1 | 25.6 mm | +0.2 mm |
-  | 2 | 25.8 mm | +0.4 mm |
-  | 3 | 26.0 mm | +0.6 mm |
-  | 4 | 26.2 mm | +0.8 mm |
+  | 1 | +0.2 mm | 25.6 mm |
+  | 2 | +0.4 mm | 25.8 mm |
+  | 3 | +0.6 mm | 26.0 mm |
+  | 4 | +0.8 mm | 26.2 mm |
 
   Push the dowel into each hole. The one to use is the tightest it goes into by hand, all the way,
-  without a mallet; it should hold the coupon up when you lift the dowel. Every part that holds a
-  dowel takes that clearance as its `step` times the dot count. If even four dots is too tight,
-  change `step` to 0.3 mm in the design and print it again.
+  without a mallet; it should hold the coupon up when you lift the dowel. Set each dowel part's
+  `clearance` to that hole's: `step` times its dots. If even four dots is too tight, change `step`
+  to 0.3 mm and print it again.
 ```
 
+  Then `make models`. Expected: `building models/dowel-fit-coupon (missing …)` and `1 built`. Look at
+  `dowel-fit-coupon.png` against the design's description in its notes.
 - [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
-  `1 models, every build matches its design`, `2 images, none with a location` (the picture and
-  its copy in the generated site folder), and the site's check names the coupon's page as there.
+  every model's build matches its design, the privacy check is clean over the new files, and the
+  render lists the model's page.
 - [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the dowel fit-test coupon
 
-The sconce's socket needs the clearance that suits Dan's dowel and
-printer, and dowels sold as 1 inch vary by about half a millimetre. The
-coupon is one bar with four holes at 25.4 mm plus 0.2, 0.4, 0.6 and 0.8,
-marked by one to four dots, every size a parameter. Built headless by
-solidcraft-cli from a command script, saved as plain-text JSON, with its
-STL, picture, measurements and build record from make models; its page
-says how to read the result.
+The dowel parts need the clearance that suits a printer and its dowel,
+and dowels sold as one size vary by about half a millimetre. The coupon is
+one bar with four holes at the dowel plus 0.2, 0.4, 0.6 and 0.8 mm, marked
+by one to four dots, every size a parameter, in STLs for 3/4 inch, 25 mm
+and 1 inch. It prints on its edge, the holes horizontal, as the sockets
+print. Built headless by solidcraft-cli from a command script, saved as
+plain-text JSON, with its STLs, picture, measurements and record from make
+models; its page says how to read the result.
 
 The new tests failed first with: FileNotFoundError for
 models/dowel-fit-coupon/dowel-fit-coupon.eval.json.
@@ -2746,19 +3074,501 @@ Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 6
 Co-Authored-By: <the model's own line>
 ```
 
-  `git add models/dowel-fit-coupon/dowel-fit-coupon.sc models/dowel-fit-coupon/dowel-fit-coupon.stl models/dowel-fit-coupon/dowel-fit-coupon.png models/dowel-fit-coupon/dowel-fit-coupon.eval.json models/dowel-fit-coupon/build.json models/dowel-fit-coupon/model.yml tests/test_coupon.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+  `git add models/dowel-fit-coupon/dowel-fit-coupon.sc models/dowel-fit-coupon/dowel-fit-coupon.stl models/dowel-fit-coupon/dowel-fit-coupon-3-4in.stl models/dowel-fit-coupon/dowel-fit-coupon-25mm.stl models/dowel-fit-coupon/dowel-fit-coupon.png models/dowel-fit-coupon/dowel-fit-coupon.eval.json models/dowel-fit-coupon/build.json models/dowel-fit-coupon/model.yml tests/test_coupon.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
 - [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
-  viewer, not the `.sc` alone.
+  viewer, not the `.sc` alone. Tier 1 (the first real `solidcraft-cli` output in the repo): before staging, `make privacy` passes over the new files, and the picture is looked at.
 
-  - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Phase 2's first task prints this coupon; its wall block takes `clearance` from it.
+  - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** Phase 2's first task prints this coupon; Task 7's `clearance` test reads its `step`.
   - **Docs:** the README's first-project lines; the overview diagram needs no change.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 6: The first model, the dowel fit-test coupon
+    docs(plan): 🤖 close Task 6: The dowel fit-test coupon
+
+    <what the task built, and why, in a few lines>
+
+    Drift: <filled at the close, or none>
+    Rulings: <filled at the close, or none>
+    Phase-end: <filled at the close, or none>
+    Forward: <filled at the close, or none>
+    Tier: 1
+    Rounds: <filled at the close>
+    Findings: <filled at the close, or none>
+
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 6
+    Co-Authored-By: <the model's own line>
+    ```
+
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
+
+***
+
+### Task 7: The sconce's wall block
+
+**Tier:** 2 · **Scenarios:** S12, S19
+
+**Files:**
+- Create: `models/sconce-wall-block/sconce-wall-block.sc` (by SolidCraft), its built files (`.stl`, `-3-4in.stl`,
+  `-25mm.stl`, `.png`, `.eval.json`, `build.json`, by `make models`), `models/sconce-wall-block/model.yml`,
+  `tests/test_wall_block.py`
+
+**Interfaces:**
+- Consumes: Task 2's `make models`, `Model`, `sizes` and the conftest helpers; Task 5's
+  `read_meta` and the page.
+- Produces: the design's parameters `dowel_d`, `clearance`, `socket_depth` (54 mm), `boss_wall`, `plate_t`, `plate_w`, `screw_spacing` (110 mm), `plate_h`, `screw_d`, `head_d`, `head_depth`, `cap_h`, `bolt_d`, `socket_d`, `boss_d`; the bodies `Wall block`, `Cap 1` and `Cap 2`.
+
+- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **Step 1: Write the failing tests.**
+
+`tests/test_wall_block.py`:
+
+```python
+"""The sconce's wall block (S12): a deep socket, screws far apart and hidden, the coupon's fit."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+import models
+from conftest import body, params
+
+MODELS = Path(__file__).resolve().parent.parent / "models"
+WALL_BLOCK = models.Model(MODELS / "sconce-wall-block")
+COUPON = models.Model(MODELS / "dowel-fit-coupon")
+SCREW_HEAD_MM = 3.0  # a #8 or #10 pan or washer head, and a toggle bolt's
+
+
+def test_the_block_is_one_closed_body_with_two_caps_beside_it() -> None:
+    assert body(WALL_BLOCK, "Wall block")["closed"]
+    assert body(WALL_BLOCK, "Cap 1")["closed"] and body(WALL_BLOCK, "Cap 2")["closed"]
+
+
+def test_it_is_saved_for_one_inch_and_comes_in_three_sizes() -> None:
+    assert params(WALL_BLOCK)["dowel_d"] == pytest.approx(25.4)
+    assert set(models.sizes(WALL_BLOCK)) == {"3/4 in", "25 mm"}
+
+
+def test_the_socket_is_at_least_two_inches_deep() -> None:
+    assert params(WALL_BLOCK)["socket_depth"] >= 51.0
+
+
+def test_the_screws_are_at_least_100_mm_apart() -> None:
+    p = params(WALL_BLOCK)
+    assert p["screw_spacing"] >= 100.0
+    assert p["plate_h"] > p["screw_spacing"] + p["head_d"]
+
+
+def test_each_screw_head_sinks_below_the_face_with_room_for_its_cap() -> None:
+    p, cap = params(WALL_BLOCK), body(WALL_BLOCK, "Cap 1")["bbox"]
+    assert p["head_depth"] >= SCREW_HEAD_MM + p["cap_h"]
+    assert p["head_depth"] < p["plate_t"]
+    assert cap["max"][2] - cap["min"][2] == pytest.approx(p["cap_h"])
+
+
+def test_the_socket_takes_one_of_the_coupons_clearances() -> None:
+    p, step = params(WALL_BLOCK), params(COUPON)["step"]
+    assert p["socket_d"] == pytest.approx(p["dowel_d"] + p["clearance"])
+    assert any(p["clearance"] == pytest.approx(k * step) for k in (1, 2, 3, 4))
+
+
+def test_the_block_reaches_its_socket_depth_out_from_the_wall() -> None:
+    p, bbox = params(WALL_BLOCK), body(WALL_BLOCK, "Wall block")["bbox"]
+    assert bbox["max"][0] - bbox["min"][0] == pytest.approx(p["plate_t"] + p["socket_depth"])
+```
+
+- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
+  `models/sconce-wall-block/sconce-wall-block.eval.json`.
+- [ ] **Step 3: Build the design.** Write SolidCraft's command script to `.git/wall-block-script.json`
+  (it stays out of the repo: the saved design holds the same feature tree, and
+  `solidcraft-cli script` regenerates it):
+
+```json
+{
+  "commands": [
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "dowel_d",
+        "expression": "25.4 mm",
+        "comment": "the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "clearance",
+        "expression": "0.4 mm",
+        "comment": "added to the dowel for the socket: the coupon's hole that fit"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "socket_depth",
+        "expression": "54 mm",
+        "comment": "at least 51 mm (2 inches), so the joint carries the arm's moment"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "boss_wall",
+        "expression": "6 mm",
+        "comment": "plastic around the socket"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "plate_t",
+        "expression": "10 mm",
+        "comment": "the wall plate's thickness, behind the socket"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "plate_w",
+        "expression": "50 mm",
+        "comment": "the wall plate's width"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "screw_spacing",
+        "expression": "110 mm",
+        "comment": "at least 100 mm between the screws, so the top one pulls under 54 N"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "plate_h",
+        "expression": "screw_spacing + 30 mm",
+        "comment": "the wall plate's height"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "screw_d",
+        "expression": "5 mm",
+        "comment": "fits #8 and #10 wood screws and 3/16 in toggle bolts; 6.6 mm for 1/4 in"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "head_d",
+        "expression": "10.5 mm",
+        "comment": "the counterbore that sinks each screw's head below the face"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "head_depth",
+        "expression": "5 mm",
+        "comment": "the counterbore's depth: a screw head, then a cap"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "cap_h",
+        "expression": "2 mm",
+        "comment": "a printed cap's height, pressed in over the screw head"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "bolt_d",
+        "expression": "6.6 mm",
+        "comment": "clearance for an M6 bolt through the boss and the dowel"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "socket_d",
+        "expression": "dowel_d + clearance",
+        "comment": "the socket's diameter"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "boss_d",
+        "expression": "socket_d + 2 * boss_wall",
+        "comment": "the boss around the socket"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": "plate_t",
+        "width": "plate_w",
+        "height": "plate_h",
+        "corner": [
+          0,
+          "-plate_w / 2",
+          "-plate_h / 2"
+        ],
+        "body_name": "Wall block"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "boss_d",
+        "height": "plate_t + socket_depth",
+        "base": [
+          0,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Boss"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Wall block",
+        "tools": [
+          "Boss"
+        ],
+        "operation": "join"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "socket_d",
+        "height": "socket_depth",
+        "base": [
+          "plate_t",
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Socket"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "bolt_d",
+        "height": "boss_d + 2 mm",
+        "base": [
+          "plate_t + socket_depth / 2",
+          0,
+          "-boss_d / 2 - 1 mm"
+        ],
+        "axis": "Z",
+        "body_name": "Bolt hole"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "screw_d",
+        "height": "plate_t",
+        "base": [
+          0,
+          0,
+          "screw_spacing / 2"
+        ],
+        "axis": "X",
+        "body_name": "Top screw"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "head_d",
+        "height": "head_depth",
+        "base": [
+          "plate_t - head_depth",
+          0,
+          "screw_spacing / 2"
+        ],
+        "axis": "X",
+        "body_name": "Top counterbore"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "screw_d",
+        "height": "plate_t",
+        "base": [
+          0,
+          0,
+          "-screw_spacing / 2"
+        ],
+        "axis": "X",
+        "body_name": "Bottom screw"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "head_d",
+        "height": "head_depth",
+        "base": [
+          "plate_t - head_depth",
+          0,
+          "-screw_spacing / 2"
+        ],
+        "axis": "X",
+        "body_name": "Bottom counterbore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Wall block",
+        "tools": [
+          "Socket",
+          "Bolt hole",
+          "Top screw",
+          "Top counterbore",
+          "Bottom screw",
+          "Bottom counterbore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "head_d - 0.2 mm",
+        "height": "cap_h",
+        "base": [
+          0,
+          "plate_w / 2 + 10 mm",
+          "-plate_h / 2"
+        ],
+        "axis": "Z",
+        "body_name": "Cap 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "head_d - 0.2 mm",
+        "height": "cap_h",
+        "base": [
+          0,
+          "plate_w / 2 + 25 mm",
+          "-plate_h / 2"
+        ],
+        "axis": "Z",
+        "body_name": "Cap 2"
+      }
+    },
+    {
+      "command": "file.save_as",
+      "params": {
+        "path": "models/sconce-wall-block/sconce-wall-block.sc",
+        "format": "json",
+        "cache": false
+      }
+    }
+  ]
+}
+```
+
+  From the repo's root: `mkdir -p models/sconce-wall-block`, then
+  `solidcraft-cli run .git/wall-block-script.json --quiet`. Expected: exit 0, and
+  `models/sconce-wall-block/sconce-wall-block.sc` is a few KB of JSON.
+- [ ] **Step 4: Write its page's text.**
+
+`models/sconce-wall-block/model.yml`:
+
+```yaml
+title: Sconce wall block
+summary: >-
+  The wall end of a grow-light sconce: a plate for two hidden screws and a deep socket that holds
+  a dowel straight out from the wall, bolted through.
+status: designed
+material: PETG, matte (never PLA for this part)
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: on its side, a long edge of the plate on the bed, so the layers run along the socket
+  Layer height: 0.2 mm
+  Walls: 5
+  Infill: 40% gyroid
+  Supports: under the boss, along its length, from the bed only
+notes: |
+  The arm is a straight cantilever: a dowel up to 20 inches long, with the light hanging near its
+  end. The socket is 54 mm deep, more than the 51 mm (2 inches) the joint needs to carry the arm's
+  bending moment: about 5 N·m with a 1 kg light at 20 inches on a 1-inch dowel.
+
+  - **Screws:** two, 110 mm apart: #8 or #10 wood screws into a stud, or 3/16-inch toggle bolts
+    in drywall, never plastic plugs, since the top screw is pulled out with about 54 N. For
+    1/4-inch toggles, set `screw_d` to 6.6 mm. Each head sinks into a counterbore, and one of the
+    two printed caps beside the block presses in over it.
+  - **Bolt:** an M6 × 50 mm bolt and a nylon-insert nut, down through the boss and a hole drilled
+    through the seated dowel, so it can't pull out or turn.
+  - **Clearance:** the socket is the dowel plus `clearance`, from the fit-test coupon.
+
+  This is a first design, not yet printed or load-tested; its page will say when it has been.
+```
+
+  Then `make models`. Expected: `building models/sconce-wall-block (missing …)` and `1 built`. Look at
+  `sconce-wall-block.png` against the design's description in its notes.
+- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+  every model's build matches its design, the privacy check is clean over the new files, and the
+  render lists the model's page.
+- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+
+```text
+feat(models): 🤖 add the sconce's wall block
+
+The sconce's arm needs a wall joint that carries about 5 N·m (Q&A
+answer 12 puts the dowel parts in the repo now). The wall block is a plate
+for two screws 110 mm apart, their heads sunk into counterbores under
+printed caps, and a boss with a 54 mm socket, deeper than the 2 inches the
+joint needs, sized to the dowel plus the coupon's clearance, with a hole
+for an M6 bolt through the dowel. Saved at 1 inch, with STLs for 3/4 inch
+and 25 mm. The tests hold the socket's depth, the screws' spacing, the
+counterbores and the clearance to the spec.
+
+The new tests failed first with: FileNotFoundError for
+models/sconce-wall-block/sconce-wall-block.eval.json.
+
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 7
+Co-Authored-By: <the model's own line>
+```
+
+  `git add models/sconce-wall-block/sconce-wall-block.sc models/sconce-wall-block/sconce-wall-block.stl models/sconce-wall-block/sconce-wall-block-3-4in.stl models/sconce-wall-block/sconce-wall-block-25mm.stl models/sconce-wall-block/sconce-wall-block.png models/sconce-wall-block/sconce-wall-block.eval.json models/sconce-wall-block/build.json models/sconce-wall-block/model.yml tests/test_wall_block.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+  viewer, not the `.sc` alone.
+
+  - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** Phase 2's second task sets `clearance` and `screw_d` from Dan's answers.
+  - **Docs:** the README's first-project lines; the overview diagram needs no change.
+  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
+    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
+    scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
+
+    ```text
+    docs(plan): 🤖 close Task 7: The sconce's wall block
 
     <what the task built, and why, in a few lines>
 
@@ -2770,42 +3580,538 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 6
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 7
     Co-Authored-By: <the model's own line>
     ```
 
-  - **Push,** once Dan has OKed it (`AGENTS.md`'s interim line): `make leaks`, then
-    `git push origin phase-1`. The task is closed once CI on the closing commit, or a later
-    one, is green; until a push, the local checks are the gate.
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
 
 ***
 
-### Task 7: [Dan] The GitHub settings
+### Task 8: The sconce's cord clamp
+
+**Tier:** 2 · **Scenarios:** S18, S19
+
+**Files:**
+- Create: `models/sconce-cord-clamp/sconce-cord-clamp.sc` (by SolidCraft), its built files (`.stl`, `-3-4in.stl`,
+  `-25mm.stl`, `.png`, `.eval.json`, `build.json`, by `make models`), `models/sconce-cord-clamp/model.yml`,
+  `tests/test_cord_clamp.py`
+
+**Interfaces:**
+- Consumes: Task 2's `make models`, `Model`, `sizes` and the conftest helpers; Task 5's
+  `read_meta` and the page.
+- Produces: the design's parameters `dowel_d`, `clearance` (0.2 mm), `ring_wall`, `ring_len`, `split`, `ear_t`, `ear_len`, `bolt_d` (M4), `cord_d`, `under_gap` (`cord_d + 4 mm`), `grip_d` (`cord_d - 0.6 mm`), `slot_w` (`cord_d - 1.5 mm`), `shelf_len`, `shelf_w`, `shelf_t`, `web_w`, `bore_d`, `ring_d`, `shelf_top`; the body `Cord clamp`.
+
+- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **Step 1: Write the failing tests.**
+
+`tests/test_cord_clamp.py`:
+
+```python
+"""The sconce's cord clamp (S18): it grips the dowel and the cord, and leaves the cord a way in."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+import models
+from conftest import body, params
+
+MODELS = Path(__file__).resolve().parent.parent / "models"
+CORD_CLAMP = models.Model(MODELS / "sconce-cord-clamp")
+WALL_BLOCK = models.Model(MODELS / "sconce-wall-block")
+
+
+def test_it_is_one_closed_body() -> None:
+    assert body(CORD_CLAMP, "Cord clamp")["closed"]
+
+
+def test_it_fits_the_same_dowel_as_the_wall_block_in_the_same_sizes() -> None:
+    assert params(CORD_CLAMP)["dowel_d"] == pytest.approx(params(WALL_BLOCK)["dowel_d"])
+    assert models.sizes(CORD_CLAMP) == models.sizes(WALL_BLOCK)
+
+
+def test_the_slot_and_the_hole_are_narrower_than_the_cord_so_it_grips() -> None:
+    p = params(CORD_CLAMP)
+    assert p["slot_w"] < p["grip_d"] < p["cord_d"]
+
+
+def test_the_cord_has_room_to_pass_under_the_dowel_to_its_hole() -> None:
+    p = params(CORD_CLAMP)
+    assert p["under_gap"] >= p["cord_d"] + 2
+
+
+def test_the_shelf_hangs_its_gap_and_thickness_below_the_dowel() -> None:
+    p = params(CORD_CLAMP)
+    lowest = body(CORD_CLAMP, "Cord clamp")["bbox"]["min"][2]
+    assert lowest == pytest.approx(-(p["dowel_d"] / 2 + p["under_gap"] + p["shelf_t"]))
+```
+
+- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
+  `models/sconce-cord-clamp/sconce-cord-clamp.eval.json`.
+- [ ] **Step 3: Build the design.** Write SolidCraft's command script to `.git/cord-clamp-script.json`
+  (it stays out of the repo: the saved design holds the same feature tree, and
+  `solidcraft-cli script` regenerates it):
+
+```json
+{
+  "commands": [
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "dowel_d",
+        "expression": "25.4 mm",
+        "comment": "the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "clearance",
+        "expression": "0.2 mm",
+        "comment": "a snug slide; the bolt closes the split to grip"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "ring_wall",
+        "expression": "5 mm",
+        "comment": "plastic around the dowel"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "ring_len",
+        "expression": "20 mm",
+        "comment": "the ring's length along the dowel"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "split",
+        "expression": "3 mm",
+        "comment": "the gap the bolt closes"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "ear_t",
+        "expression": "6 mm",
+        "comment": "each clamping ear's thickness"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "ear_len",
+        "expression": "11 mm",
+        "comment": "how far the ears stand out from the ring, on its side"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "bolt_d",
+        "expression": "4.4 mm",
+        "comment": "clearance for an M4 bolt"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "cord_d",
+        "expression": "6 mm",
+        "comment": "the light's cord, measured: 6 mm is a guess until it is"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "under_gap",
+        "expression": "cord_d + 4 mm",
+        "comment": "room under the dowel for the cord to reach the hole"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "grip_d",
+        "expression": "cord_d - 0.6 mm",
+        "comment": "the hole the cord hangs from: a little tight, so it grips"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "slot_w",
+        "expression": "cord_d - 1.5 mm",
+        "comment": "the slot the cord is pressed in through: tighter still"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "shelf_len",
+        "expression": "18 mm",
+        "comment": "how far the cord shelf reaches beyond the ring"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "shelf_w",
+        "expression": "18 mm",
+        "comment": "the cord shelf's width"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "shelf_t",
+        "expression": "8 mm",
+        "comment": "the cord shelf's thickness"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "web_w",
+        "expression": "8 mm",
+        "comment": "the web joining the ring to the shelf"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "bore_d",
+        "expression": "dowel_d + clearance",
+        "comment": "the ring's bore"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "ring_d",
+        "expression": "bore_d + 2 * ring_wall",
+        "comment": "the ring's outside diameter"
+      }
+    },
+    {
+      "command": "parameters.add",
+      "params": {
+        "name": "shelf_top",
+        "expression": "-dowel_d / 2 - under_gap",
+        "comment": "the shelf's top face, below the dowel's axis"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "ring_d",
+        "height": "ring_len",
+        "base": [
+          0,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Cord clamp"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": "ring_len",
+        "width": "ring_d / 2 + ear_len - bore_d / 2",
+        "height": "split + 2 * ear_t",
+        "corner": [
+          0,
+          "bore_d / 2",
+          "-split / 2 - ear_t"
+        ],
+        "body_name": "Ears"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": "ring_len",
+        "width": "web_w",
+        "height": "-bore_d / 2 - 1 mm - shelf_top",
+        "corner": [
+          0,
+          "-web_w / 2",
+          "shelf_top"
+        ],
+        "body_name": "Web"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": "ring_len + shelf_len",
+        "width": "shelf_w",
+        "height": "shelf_t",
+        "corner": [
+          0,
+          "-shelf_w / 2",
+          "shelf_top - shelf_t"
+        ],
+        "body_name": "Shelf"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Cord clamp",
+        "tools": [
+          "Ears",
+          "Web",
+          "Shelf"
+        ],
+        "operation": "join"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "bore_d",
+        "height": "ring_len + 2 mm",
+        "base": [
+          "-1 mm",
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bore"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": "ring_len + 2 mm",
+        "width": "ring_d / 2 + ear_len + 1 mm",
+        "height": "split",
+        "corner": [
+          "-1 mm",
+          0,
+          "-split / 2"
+        ],
+        "body_name": "Split"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "bolt_d",
+        "height": "split + 2 * ear_t + 2 mm",
+        "base": [
+          "ring_len / 2",
+          "ring_d / 2 + ear_len / 2 - 0.5 mm",
+          "-split / 2 - ear_t - 1 mm"
+        ],
+        "axis": "Z",
+        "body_name": "Bolt hole"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "diameter": "grip_d",
+        "height": "shelf_t + 2 mm",
+        "base": [
+          "ring_len + shelf_len / 2",
+          0,
+          "shelf_top - shelf_t - 1 mm"
+        ],
+        "axis": "Z",
+        "body_name": "Cord hole"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": "slot_w",
+        "width": "shelf_w / 2 + 1 mm",
+        "height": "shelf_t + 2 mm",
+        "corner": [
+          "ring_len + shelf_len / 2 - slot_w / 2",
+          0,
+          "shelf_top - shelf_t - 1 mm"
+        ],
+        "body_name": "Cord slot"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Cord clamp",
+        "tools": [
+          "Bore",
+          "Split",
+          "Bolt hole",
+          "Cord hole",
+          "Cord slot"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "file.save_as",
+      "params": {
+        "path": "models/sconce-cord-clamp/sconce-cord-clamp.sc",
+        "format": "json",
+        "cache": false
+      }
+    }
+  ]
+}
+```
+
+  From the repo's root: `mkdir -p models/sconce-cord-clamp`, then
+  `solidcraft-cli run .git/cord-clamp-script.json --quiet`. Expected: exit 0, and
+  `models/sconce-cord-clamp/sconce-cord-clamp.sc` is a few KB of JSON.
+- [ ] **Step 4: Write its page's text.**
+
+`models/sconce-cord-clamp/model.yml`:
+
+```yaml
+title: Sconce cord clamp
+summary: >-
+  Clamps anywhere along a dowel and holds a pendant light's cord, so the light hangs straight
+  below the arm at the height you set.
+status: designed
+material: PETG, matte
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: the shelf flat on the bed, the ring above it
+  Layer height: 0.2 mm
+  Walls: 4
+  Infill: 30%
+  Supports: under the ring, from the bed only
+notes: |
+  Slide the clamp onto the dowel, ears to the side you see least, set it where the light should
+  hang, and close the split with an M4 × 30 mm bolt and nut through the ears.
+
+  The light's cord comes along the top of the arm, down the side of the dowel and through the gap
+  under it, then presses in through the slot in the shelf and hangs from the round hole beyond it,
+  straight below the dowel, so the light's weight can't turn the clamp. The slot is 1.5 mm
+  narrower than the cord and the hole 0.6 mm narrower, so the cord grips; pull it through to set
+  the light's height. Ease the hole's edges with a countersink bit, so a swinging light doesn't
+  wear the cord.
+
+  `cord_d` is the cord's diameter: measure yours and set it before printing; 6 mm is a guess.
+  For a flat two-wire cord, the hole and slot need reshaping, not just resizing.
+
+  This is a first design, not yet printed; its page will say when it has been.
+```
+
+  Then `make models`. Expected: `building models/sconce-cord-clamp (missing …)` and `1 built`. Look at
+  `sconce-cord-clamp.png` against the design's description in its notes.
+- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+  every model's build matches its design, the privacy check is clean over the new files, and the
+  render lists the model's page.
+- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+
+```text
+feat(models): 🤖 add the sconce's cord clamp
+
+Dan asked for a printed joint that clamps onto the dowel and holds the
+grow light's cord with the light at its end (Q&A answer 11). The clamp is
+a split ring closed by an M4 bolt through two ears on its side, so it
+holds anywhere along the arm and keeps its top clear for the cord. A web
+drops to a shelf a cord's width below the dowel: the cord comes under the
+dowel, presses in through a slot 1.5 mm narrower than itself, and hangs
+from a hole 0.6 mm narrower, straight below the dowel's axis, so it grips
+and the light can't turn the clamp. cord_d is a guess until Dan measures
+the cord. Saved at 1 inch, with STLs for 3/4 inch and 25 mm.
+
+The new tests failed first with: FileNotFoundError for
+models/sconce-cord-clamp/sconce-cord-clamp.eval.json.
+
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 8
+Co-Authored-By: <the model's own line>
+```
+
+  `git add models/sconce-cord-clamp/sconce-cord-clamp.sc models/sconce-cord-clamp/sconce-cord-clamp.stl models/sconce-cord-clamp/sconce-cord-clamp-3-4in.stl models/sconce-cord-clamp/sconce-cord-clamp-25mm.stl models/sconce-cord-clamp/sconce-cord-clamp.png models/sconce-cord-clamp/sconce-cord-clamp.eval.json models/sconce-cord-clamp/build.json models/sconce-cord-clamp/model.yml tests/test_cord_clamp.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+  viewer, not the `.sc` alone.
+
+  - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** Phase 2's second task sets `cord_d` from Dan's measurement.
+  - **Docs:** the README's first-project lines; the overview diagram needs no change.
+  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
+    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
+    scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
+
+    ```text
+    docs(plan): 🤖 close Task 8: The sconce's cord clamp
+
+    <what the task built, and why, in a few lines>
+
+    Drift: <filled at the close, or none>
+    Rulings: <filled at the close, or none>
+    Phase-end: <filled at the close, or none>
+    Forward: <filled at the close, or none>
+    Tier: 2
+    Rounds: <filled at the close>
+    Findings: <filled at the close, or none>
+
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Task 8
+    Co-Authored-By: <the model's own line>
+    ```
+
+  - **Push,** once Dan has OKed it, the request naming every binary file the push adds
+    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-1`.
+    The task is closed once CI on the closing commit, or a later one, is green; until a
+    push, the local checks are the gate.
+
+***
+
+### Task 9: [Dan] The GitHub settings
 
 **Tier:** none: settings Dan applies on github.com, which never relax (`AGENTS.md`, *Stops*) ·
 **Scenarios:** S10
 
 Runs on <https://github.com/chendaniely/3d-models/settings>, by Dan, one step at a time, asked by
-*Asking Dan*. **Now** reads `waiting on Dan: <the step>` until each is done.
+*Asking Dan*. **Now** reads `waiting on Dan: <the step>` until each is done. The agent runs the
+security checklist over these settings, one line each, in the close.
 
-- [ ] **1. Pages:** Settings → Pages → Source: "GitHub Actions".
-- [ ] **2. Merge commits only:** Settings → General → Pull Requests: allow merge commits, its
+- [ ] **1. Pages:** Settings → Pages → Source: "GitHub Actions"; then Settings → Environments →
+  `github-pages` → deployment branches: `main` only.
+- [ ] **2. Actions:** Settings → Actions → General: workflow permissions "Read repository
+  contents"; allow only GitHub's own actions and these: `astral-sh/setup-uv`,
+  `quarto-dev/quarto-actions/setup`; require actions pinned to a full commit SHA, where offered.
+- [ ] **3. Merge commits only:** Settings → General → Pull Requests: allow merge commits, its
   message the PR title and description; squash and rebase merging off.
-- [ ] **3. A ruleset on `main`:** Settings → Rules → Rulesets → New branch ruleset, target the
+- [ ] **4. A ruleset on `main`:** Settings → Rules → Rulesets → New branch ruleset, target the
   default branch: require a pull request; require the status checks `tests`, `leaks` and `site`;
   block force pushes and deletion; bypass list "For pull requests only" (so the agent's pushes,
   made with Dan's login, aren't exempt). Classic branch protection instead, if rulesets aren't
   offered.
-- [ ] **4. The website field and topics:** the agent drafts
+- [ ] **5. The website field and topics:** the agent drafts
   `gh repo edit --homepage https://chendaniely.github.io/3d-models/ --add-topic 3d-printing
   --add-topic solidcraft --add-topic vibe-coded`; Dan runs it, or says the agent may.
-- [ ] **5. Close:** the agent ticks these boxes and sets **Now** to the phase end, in
-  `docs(plan): 🤖 close Task 7: The GitHub settings` (every heading `none` but `Rulings:`, which
-  names anything Dan chose differently), with this plan's `Plan:` line.
+- [ ] **6. Close:** the agent ticks these boxes and sets **Now** to the phase end, in
+  `docs(plan): 🤖 close Task 9: The GitHub settings` (every heading `none` but `Rulings:`, which
+  names anything Dan chose differently, and `Rounds:`, the checklist), with this plan's `Plan:`
+  line.
 
 ***
 
-### Task 8: Phase end
+### Task 10: Phase end
 
 Each step is one box; each ends with its commit (`docs(plan): 🤖 phase end step K: <what it
 did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase end`), which ticks its box and sets **Now** to
@@ -2819,31 +4125,32 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   carries, under its task.
 - [ ] **3. The phase-end council:** four read-only reviewers (goal fit and scenarios,
   reliability, security, simplicity) on the whole branch; their reports committed first in
-  `docs/superpowers/plans/2026-11-05-3d-models-phase-1-end-council.md`, with its wrapper and
-  Design-page line; each claim checked; each finding a severity and a decision.
+  `docs/superpowers/plans/2026-11-05-3d-models-phase-1-end-council.md`, with its Design-page line
+  and nothing that quotes Quarto's syntax; each claim checked; each finding a severity and a
+  decision.
 - [ ] **4. The phase-end list worked through:** each item fixed in its own commit at its tier, or
   moved to the spec's Later with a reason; missing docs written; built parts solid in the diagrams.
 - [ ] **5. The forward look:** Phase 2's plan rewritten to fit what was built; its listings run
   against this code where they can.
 - [ ] **6. The retro:** `docs/superpowers/plans/2026-11-05-3d-models-phase-1-retro.md` (departures,
-  items carried forward, metrics per tier, starting over), with its wrapper and Design-page line;
-  the retuning rules applied to Phase 2's tiers.
+  items carried forward, metrics per tier, starting over), with its Design-page line; the retuning
+  rules applied to Phase 2's tiers.
 - [ ] **7. The changelog and status:** a dated `CHANGELOG.md` entry; the README's status line says
   the gallery is live; the spec's status line `Phase 1 PR open (#N)`, N filled once step 8 opens
   it.
-- [ ] **8. The PR:** title `chore(repo): 🤖 merge Phase 1: the repo`; the body summarizes each
-  task, the council's findings and their fate, links the retro, lists every file no scan can read
-  (`git log --format= --numstat origin/main..HEAD | awk '$1 == "-" { print "not scanned, check by
-  eye: " $3 }'`), and ends `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase end`. Title and body in `.git/PR_TITLE` and
-  `.git/PR_BODY.md`, scanned with `gitleaks stdin --redact --no-banner` before
+- [ ] **8. The PR:** title `chore(repo): 🤖 merge Phase 1: the repo and the first models`; the
+  body summarizes each task, the council's findings and their fate, links the retro, lists every
+  file no scan can read (`git log --format= --numstat origin/main..HEAD | awk '$1 == "-" { print
+  "not scanned, check by eye: " $3 }'`), and ends `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase end`. Title and body in
+  `.git/PR_TITLE` and `.git/PR_BODY.md`, scanned with `gitleaks stdin --redact --no-banner` before
   `gh pr create --base main --head phase-1 --title "$(cat .git/PR_TITLE)" --body-file
   .git/PR_BODY.md`. Fully vibed, the agent merges it once CI is green, with
   `gh pr merge <N> --merge --match-head-commit <sha>` and the subject
-  `chore(repo): 🤖 merge Phase 1: the repo (#N)`, never `--admin`, squash, rebase or
-  `--delete-branch`; but the PR adds STL and PNG files no scan can read, so it waits for Dan's look
-  at them first (`AGENTS.md`, *Stops*).
-- [ ] **9. After the merge:** <https://chendaniely.github.io/3d-models/models/dowel-fit-coupon.html>
-  serves the coupon, and its viewer loads (S08, S10).
+  `chore(repo): 🤖 merge Phase 1: the repo and the first models (#N)`, never `--admin`, squash,
+  rebase or `--delete-branch`; but the PR adds STL and PNG files no scan can read, so it waits for
+  Dan's look at them first (`AGENTS.md`, *Stops*).
+- [ ] **9. After the merge:** each model's page on <https://chendaniely.github.io/3d-models/>
+  serves its sizes, and its viewer loads (S08, S10).
 
 ***
 
@@ -2851,3 +4158,5 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 
 | Source | Severity | File | Item | Status |
 |---|---|---|---|---|
+| kickoff council, simplicity 7 | Minor | `website/_diagram-zoom.html` | kept as the skill's standard site kit; drop it if it never earns its 50 lines | open |
+| kickoff council, reliability 9 | Minor | `Makefile` | lychee isn't installed on Dan's machine, so `make docs` skips it locally and only CI runs it; installing it is Dan's call | open |
