@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TARGETS = [
     "help", "hooks", "check", "test", "test-utc", "lint", "leaks",
-    "models", "models-check", "privacy", "docs",
+    "models", "models-check", "privacy", "strip", "docs",
 ]  # fmt: skip
 
 

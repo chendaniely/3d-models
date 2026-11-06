@@ -4,7 +4,7 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: help hooks check test test-utc lint leaks models models-check privacy docs
+.PHONY: help hooks check test test-utc lint leaks models models-check privacy strip docs
 
 help: ## List the targets
 	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-13s %s\n", $$1, $$2}'
@@ -33,6 +33,9 @@ models-check: ## Fail when a design has no build, a stale one, or the wrong name
 
 privacy: ## Fail on image metadata, a photo format the check can't read, or a home-folder path
 	uv run --frozen scripts/privacy.py check
+
+strip: ## Strip a photo's metadata, then look at it: make strip FILES="a.jpg b.png"
+	uv run --frozen scripts/privacy.py strip $(FILES)
 
 docs: ## Render the site into website/_site, failing on a broken link
 	uv run --frozen scripts/sitedocs.py
