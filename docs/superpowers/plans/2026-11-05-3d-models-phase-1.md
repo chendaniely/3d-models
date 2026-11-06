@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 7 stopped: waiting on Dan (Q&A, item 1): what changes to how the dowel mounts in the wall block, clamps in the cord clamp, and screws to the wall should Tasks 7 and 8 build in place of the planned designs?
+**Now:** Task 7: The sconce's wall block, open.
 
 ***
 
