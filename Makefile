@@ -32,9 +32,9 @@ models-check: ## Fail when a design has no build, a stale one, or the wrong name
 	uv run --frozen scripts/models.py check
 
 privacy: ## Fail on image metadata, a photo format the check can't read, or a home-folder path
-	@echo "not built yet: Phase 1, Task 3 sets it"; exit 1
+	uv run --frozen scripts/privacy.py check
 
 docs: ## Render the site into website/_site, failing on a broken link
 	@echo "not built yet: Phase 1, Task 4 sets it"; exit 1
 
-check: test test-utc lint models-check leaks ## Everything CI runs, and the suite under UTC
+check: test test-utc lint models-check privacy leaks ## Everything CI runs, and the suite under UTC
