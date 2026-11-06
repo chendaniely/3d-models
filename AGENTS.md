@@ -227,7 +227,7 @@ its list; diagrams never wait. Keep this table true, and extend it as files appe
 | a task's state | the plan's boxes and Now; the spec's status line and scenario statuses |
 | a design (`models/<slug>/<slug>.sc`) | its built files, from `make models` |
 | a doc under `docs/superpowers/` added | its line on the Design page (`website/design.qmd`); `make docs` copies it into the site |
-| a photo added under `models/<slug>/photos/` | nothing: it's stripped (`scripts/privacy.py strip`), and Dan has looked at it and OKed it by name, before it's staged |
+| a photo added under `models/<slug>/photos/` | nothing: it's stripped (`make strip FILES=<file>`), and Dan has looked at it and OKed it by name, before it's staged |
 
 Never read or create the leak-check denylist: `make hooks` proves it exists and parses. A leak
 finding is recorded by its kind and `file:line` only, never its excerpt.

@@ -32,7 +32,7 @@ toggle bolts.
   covers the dowel's own variation.
 - Screws go into a stud or toggle anchors, never plastic plugs; `screw_d` fits the anchor chosen.
 - Load-bearing parts are PETG, matte, never PLA (D9); PLA only for the look test (D8).
-- A photo: Strip it first, `uv run --frozen scripts/privacy.py strip <file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged.
+- A photo: Strip it first, `make strip FILES=<file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged.
 
 ## Review Focus
 
@@ -202,7 +202,7 @@ Settles "not sure if it'll look good with 3d printed parts and dowels" for a few
   agent revises Phase 1's listings for that part in this plan, reopens Task 2 for the change, and
   logs a ruling on the Q&A page (fully vibed). Rounded edges, the kickoff notes' advice, are a
   likely B: the spec's Later row S22.
-- [ ] **4. A photo, if Dan wants one on the page:** Strip it first, `uv run --frozen scripts/privacy.py strip <file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged.
+- [ ] **4. A photo, if Dan wants one on the page:** Strip it first, `make strip FILES=<file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged.
 - [ ] **5. Close.**
 
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; with a photo, Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
@@ -307,7 +307,7 @@ Co-Authored-By: <the model's own line>
   bolt through the boss and the dowel; the clamp where the light should hang; the cord along the
   top of the arm and into the clamp.
 - [ ] **2. Bump it:** it doesn't twist; the light swings and settles.
-- [ ] **3. A photo:** Strip it first, `uv run --frozen scripts/privacy.py strip <file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged. It goes in `models/sconce-wall-block/photos/installed.jpg`;
+- [ ] **3. A photo:** Strip it first, `make strip FILES=<file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged. It goes in `models/sconce-wall-block/photos/installed.jpg`;
   the gallery shows it on the page. Both parts' `status: in use`. Commit:
 
 ```text

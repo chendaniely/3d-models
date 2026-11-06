@@ -61,7 +61,9 @@ You need [uv](https://docs.astral.sh/uv/), [Quarto](https://quarto.org/) 1.11.6,
    ```
 
 4. `make models`, then `make check`, and commit the folder. A photo of a print goes in
-   `models/<slug>/photos/`, stripped first: `uv run --frozen scripts/privacy.py strip <file>`.
+   `models/<slug>/photos/`, stripped first with `make strip FILES=<file>`; then look at the photo
+   for anything that shows where you live (a window's view, a street, a house number, a face, a
+   reflection, a screen) before committing it.
 
 ## How it's built
 

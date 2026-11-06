@@ -4179,4 +4179,4 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 |---|---|---|---|---|
 | kickoff council, simplicity 7 | Minor | `website/_diagram-zoom.html` | kept as the skill's standard site kit; drop it if it never earns its 50 lines | open |
 | kickoff council, reliability 9 | Minor | `Makefile` | lychee isn't installed on Dan's machine, so `make docs` skips it locally and only CI runs it; installing it is Dan's call | open |
-| Task 6, Spec review | Minor | `models/dowel-fit-coupon/model.yml` | the STL lies flat as modelled; the page could say to stand it on its edge in the slicer, not only that it prints that way | open |
+| Task 6, Spec review | Minor | `models/dowel-fit-coupon/model.yml` | the STL lies flat as modelled; the page could say to stand it on its edge in the slicer, not only that it prints that way | fixed by the final review's fix pass |

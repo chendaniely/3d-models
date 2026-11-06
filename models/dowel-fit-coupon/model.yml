@@ -9,7 +9,7 @@ sizes:
   3/4 in: {dowel_d: 19.05 mm}
   25 mm: {dowel_d: 25 mm}
 print:
-  Orientation: standing on its long edge, the holes horizontal, as the sockets print
+  Orientation: stand it on its long edge in the slicer (the STL lies flat), so it prints with the holes horizontal, as the sockets print
   Layer height: 0.2 mm
   Walls: 3
   Infill: 15%
