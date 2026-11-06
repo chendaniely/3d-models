@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 3: The phase-end council.
+**Now:** Phase end, step 4: The phase-end list worked through.
 
 ***
 
@@ -4140,7 +4140,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 - [x] **2. The rest of the ledger copied into the plan:** whatever
   `.superpowers/sdd/2026-11-05-3d-models-phase-1/progress.md` holds that no closing commit
   carries, under its task.
-- [ ] **3. The phase-end council:** four read-only reviewers (goal fit and scenarios,
+- [x] **3. The phase-end council:** four read-only reviewers (goal fit and scenarios,
   reliability, security, simplicity) on the whole branch; their reports committed first in
   `docs/superpowers/plans/2026-11-05-3d-models-phase-1-end-council.md`, with its Design-page line
   and nothing that quotes Quarto's syntax; each claim checked; each finding a severity and a

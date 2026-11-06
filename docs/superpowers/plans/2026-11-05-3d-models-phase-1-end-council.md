@@ -102,4 +102,32 @@ stale split, `make strip`) is each close to the simplest thing that does its job
 
 ## Decisions
 
-Written after the reports above were committed.
+Written after the reports above were committed (`d4cb4c6`). The claims marked verified were probed
+by their reviewers (with the real CLI, in scratch repos); the rest were checked against the files
+they cite. "Fixed" means fixed in phase-end step 4, each at its tier, unless it says step 5.
+
+| Finding | Severity | Decision |
+|---|---|---|
+| Goal fit 1 | Important | Fixed: S08, S09 and S18 split into what Phase 1 built and what Phase 2 proves |
+| Goal fit 2 | Important | Fixed: the "For another size" note names `clearance` too; the clamp's notes say why its clearance differs from the socket's |
+| Goal fit 3 | Important | Fixed in step 5: Phase 2's first task asks what Dan already knows he'll change before anything is printed or tuned; its look test says what it judges; the coupon becomes `printed` once he prints it |
+| Reliability 1 | Important | Fixed: a size whose parameter the design doesn't have is refused, naming both |
+| Reliability 2 | Important | Fixed: sizes whose file names collide, or reduce to nothing, are refused |
+| Security 1 | Important | Fixed: a PNG may hold only the chunks a picture needs, and neither a PNG nor a JPEG anything after its end |
+| Goal fit 4, 6 | Minor | Fixed: the wall block's notes say its size includes the caps beside it, and that its clearance is a placeholder until the coupon is printed |
+| Goal fit 5 | Minor | Later (S23): the viewer frames each model to fit |
+| Reliability 3 | Minor | Fixed: a folder under `models/` with no design is named, not skipped |
+| Reliability 4 | Minor | Declined: CI's site job catches a bad `model.yml` in the same run, and `models.py` calling the gallery would make the two scripts import each other |
+| Reliability 5 | Minor | Fixed: CI's `uv sync` is `--locked` |
+| Reliability 6 | Minor | Fixed: `.gitattributes` keeps `models/` byte-exact |
+| Reliability 7, 8 | Minor | Fixed: the README says how to convert a HEIC, and that the privacy check reads only plain-text designs |
+| Reliability 9, 10 | Minor | Later (S24): a CLI-version warning, a build timeout, and a history scan that streams |
+| Security 2 | Minor | Later (S25): commit and tag messages scanned for home paths (the real history holds only placeholders) |
+| Security 3 | Minor | Fixed: a model's free text is escaped for Quarto as the doc copies are |
+| Security 4 | Minor | Dan's: his commits' author address; a noreply address would keep it out of future commits |
+| Security 5 | Minor | Dan's: Dependabot's security updates are a repo setting, outside the five he OKed |
+| Security 6 | Minor | Fixed: CI pins uv's version |
+| Simplicity 1 to 10 | Minor | Declined: each saves a few lines at the cost of a distinction or a test that documents a choice; the lens itself calls the branch lean |
+| Phase-end list f | Minor | Fixed: the spec, AGENTS.md and the Phase 2 plan name the history check, `make strip` and the current push gate |
+| Phase-end list d | Minor | Fixed: the privacy check refuses to pass in a shallow clone |
+| Phase-end list b, e | Minor | Later (S25), with the message scan |
