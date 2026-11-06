@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 4: The docs site, open.
+**Now:** Task 5: The gallery and the 3D viewer, open.
 
 ***
 
@@ -1372,6 +1372,12 @@ Co-Authored-By: <the model's own line>
 
 ### Task 4: The docs site
 
+> **Built differently** (closed 2026-11-05; commits 21822a8, 218d074): one file more,
+> `website/.gitignore`, which Quarto's render writes (its own `/.quarto/` and `*.quarto_ipynb`
+> lines) whenever it's missing; committed, as Quarto's practice, so checkouts stay clean. The
+> listing stays as planned.
+
+
 **Tier:** 1 (the `pages` job holds the only write permissions in CI) · **Scenarios:** S05, S06,
 S10
 
@@ -1392,8 +1398,8 @@ S10
   `website/_overview.qmd`; CI jobs `site` (installs lychee; uploads the Pages artifact on `main`)
   and `pages`; the rule that every `.md` under `docs/superpowers/` has its line on the Design page.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_site.py`:
 
@@ -1466,9 +1472,9 @@ def test_every_real_doc_is_listed_on_the_design_page() -> None:
     assert not unlisted, f"docs missing from the Design page: {unlisted}"
 ````
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
   `ModuleNotFoundError: No module named 'sitedocs'`.
-- [ ] **Step 3: Write the copier and the site.**
+- [x] **Step 3: Write the copier and the site.**
 
 `scripts/sitedocs.py`:
 
@@ -1845,11 +1851,11 @@ check: test test-utc lint models-check privacy leaks docs ## Everything CI runs,
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 ```
 
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   `sitedocs: 6 docs copied` (or more, as docs have been added), the render ending
   `Output created: _site/index.html` with no "Unable to resolve link target", and lychee's
   note that it runs in CI.
-- [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(site): 🤖 add the Quarto docs site and its deploy
@@ -1874,7 +1880,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add scripts/sitedocs.py tests/test_site.py website/_quarto.yml website/styles.css website/_diagram-zoom.html website/index.qmd website/_overview.qmd website/architecture.qmd website/design.qmd website/changelog.md website/how-we-work.md Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 6: Review, look forward, close.**
+- [x] **Step 6: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Task 5 adds the Models page, the viewer and the gallery's line in `make docs`; Task 9 sets Pages' source, without which the `pages` job fails on `main`.
