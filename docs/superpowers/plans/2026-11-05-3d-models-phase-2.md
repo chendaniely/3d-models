@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 6: The shade, open.
+**Now:** Task 7: Mark Phase 1's parts superseded, open.
 
 ***
 
@@ -1815,6 +1815,8 @@ Co-Authored-By: <the model's own line>
 
 ### Task 6: The shade
 
+> **Built differently** (closed 2026-11-06; commit b706bab): the six vents go straight down through the shade's flat top, placed by a new parameter, `vent_r`, with a test holding them clear of the stem's notches and the wall. The listing's radial vents through the cone's wall left 8 edges shared by three to six slivers in the STL, at every quality SolidCraft exports, where one vent met the sloped wall: its tessellator, found by `tests/test_meshes.py` and traced by systematic debugging. Vertical vents meet only flat faces, and the STL is watertight at every quality.
+
 **Tier:** 2 · **Scenarios:** S30, S11
 
 **Files:**
@@ -1829,8 +1831,8 @@ Co-Authored-By: <the model's own line>
   (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the PETG shade the lamp hangs inside; the parameters and bodies its test names.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing test.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing test.**
 
 `tests/test_rail_shade.py`:
 
@@ -1883,9 +1885,9 @@ def test_the_lugs_sit_inside_with_room_above_the_socket() -> None:
     assert p["drop"] > params(TIP)["lug_t"]
 ```
 
-- [ ] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
   `models/rail-shade/rail-shade.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to
   `.git/rail-shade-script.json` (it stays out of the repo: the saved design holds the same feature tree):
 
 ```json
@@ -1930,7 +1932,7 @@ def test_the_lugs_sit_inside_with_room_above_the_socket() -> None:
   From the repo's root: `mkdir -p models/rail-shade`, then
   `solidcraft-cli run .git/rail-shade-script.json --quiet`. Expected: exit 0, and
   `models/rail-shade/rail-shade.sc` is plain-text JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/rail-shade/model.yml`:
 
@@ -1969,12 +1971,12 @@ notes: |
 
   Then `make models`. Expected: `building models/rail-shade (missing …)` and `1 built`. Look at
   `rail-shade.png` against the notes.
-- [ ] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the line `  class shade planned` ("The rail, part by part"): the
+- [x] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the line `  class shade planned` ("The rail, part by part"): the
   part is built.
-- [ ] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy and offsite checks pass, the render lists
   the model's page.
-- [ ] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the PETG shade the lamp hangs inside
@@ -1996,7 +1998,7 @@ Co-Authored-By: <the model's own line>
 
   `git add models/rail-shade/rail-shade.sc models/rail-shade/rail-shade.stl models/rail-shade/rail-shade.png models/rail-shade/rail-shade.eval.json models/rail-shade/build.json models/rail-shade/model.yml tests/test_rail_shade.py website/architecture.qmd`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'`
   shows the `Plan:` line.
-- [ ] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
@@ -2671,3 +2673,7 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 5, review | Minor | `models/rail-arm-tip` | The clips' rings ignore `clearance`, and are three copied blocks with literals | open |
 | Task 5, review | Minor | `tests/test_rail_arm_tip.py` | The test holds the cord's sizes, not its built path through the keel and the stem | open |
 | Task 5, review | Minor | `models/rail-arm-tip` | 1.5 mm of plastic between the keel's channel and the bore | open |
+| Task 6, review | Minor | `tests/test_rail_shade.py` | The gap is tested radially; across the cone's slope it is a little less (about 10 mm at a 12 mm radial gap) | open |
+| Task 6, review | Minor | `tests/test_rail_shade.py` | The notches' fit round the stem's lugs is untested | open |
+| Task 6, review | Minor | `models/rail-shade` | Its picture shows the open rim, not the top with its notches and vents | open |
+| Task 6, review | Minor | `models/rail-shade/model.yml` | The notes don't say the shade needs a bed about 155 mm across | open |
