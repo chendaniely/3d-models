@@ -136,11 +136,10 @@ def history(root: Path) -> list[tuple[str, str, bytes]]:
         sha, kind, *rest = batch[at:end].split(b" ", 3)
         start = end + 1
         if kind == b"missing":
-            at = start
-            continue
+            raise RuntimeError(f"git cat-file reports object {sha.decode()} missing")
         stop = start + int(rest[0])
         name = rest[1] if len(rest) > 1 else b""
-        if kind == b"blob" and name:
+        if kind == b"blob":
             blobs.append((name.decode("utf-8", "replace"), sha.decode(), batch[start:stop]))
         at = stop + 1  # each object's content ends with a newline
     return blobs
@@ -154,6 +153,7 @@ def history_problems(root: Path, reported: dict[str, bytes]) -> list[tuple[str, 
         if reported.get(name) == data:
             continue
         path = PurePath(name)
+        name = name or sha[:7]  # a blob a tag points at directly has no path: name it by sha
         if path.suffix.lower() in READABLE | UNREADABLE:
             reason = image_problem(path, data)
             if reason:

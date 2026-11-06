@@ -279,3 +279,15 @@ def test_check_names_a_symlink_to_a_home_folder_itself(repo: Path, capsys) -> No
 def test_check_names_a_line_ending_in_a_home_folder(repo: Path, capsys) -> None:
     (repo / "notes.md").write_text(f"first\ncd {HOME.rstrip('/')}\n", encoding="utf-8")
     assert check(repo, capsys) == (1, "privacy: notes.md: a home-folder path on line 2\n")
+
+
+def test_check_names_a_blob_a_tag_points_at_directly(repo: Path, capsys) -> None:
+    blob = subprocess.run(
+        ["git", "hash-object", "-w", "--stdin"], cwd=repo, check=True, capture_output=True,
+        input=f"saved in {HOME}git/x\n".encode(),
+    ).stdout.decode().strip()  # fmt: skip
+    subprocess.run(["git", "tag", "loose", blob], cwd=repo, check=True)
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert f"privacy: {blob[:7]} (in history, {blob[:7]}): a home-folder path on line 1" in err
+    assert "someone" not in err
