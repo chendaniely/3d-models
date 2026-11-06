@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 1: Close the privacy gaps, and load nothing from other hosts, open.
+**Now:** Task 2: The rail's wall feet, open.
 
 ***
 
@@ -74,6 +74,8 @@ pendant cord.
 
 ### Task 1: Close the privacy gaps, and load nothing from other hosts
 
+**Ruling:** this run's commits, an implementer's included, carry this session's own attribution line, `Co-Authored-By: Claude Opus 5.5`, as its harness gives it; the Spec review asked whether a subagent's commit should name its own model. Costs if wrong: a trailer naming the session's model, not the subagent's.
+
 **Tier:** 1 (if wrong, a photo of Dan's home carries what it shouldn't onto a public repo, or every
 visitor is seen by a third party) · **Scenarios:** S03, S31
 
@@ -99,8 +101,8 @@ visits. This task closes both, as the phase-start council asked (security 1 to 3
   `offsite.main(argv) -> int`; `make docs` running `scripts/offsite.py website/_site` after the
   render.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests, and Step 3's code, as one patch.** The patch below holds
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests, and Step 3's code, as one patch.** The patch below holds
   both; Step 2 runs the tests with the code held back. Write it to `.git/task2.patch`:
 
 ```diff
@@ -641,11 +643,11 @@ index 0000000..105f782
 +$web-font-path: false;
 ```
 
-- [ ] **Step 2: Run the tests; watch them fail.** Apply only the tests first:
+- [x] **Step 2: Run the tests; watch them fail.** Apply only the tests first:
   `git apply --include='tests/*' .git/task2.patch`, then `make test`. Expected: pytest stops while
   collecting, with `ModuleNotFoundError: No module named 'offsite'` and `Interrupted: 1 error
   during collection`.
-- [ ] **Step 3: The code.** `git apply --exclude='tests/*' .git/task2.patch`. What it does: the
+- [x] **Step 3: The code.** `git apply --exclude='tests/*' .git/task2.patch`. What it does: the
   JPEG walk names any segment a picture doesn't need, and any JFIF, colour-profile or Adobe segment
   holding more than its own data, by its marker, as PNG chunks are named; a file that goes, or
   can't be opened, between the listing and the read is reported as `privacy.GONE`, not a
@@ -654,13 +656,13 @@ index 0000000..105f782
   sheet, font, image or frame from another host, or when there's no rendered site to check; the
   theme drops Bootswatch's web font (`$web-font-path: false`) and the pages render maths as plain
   text, so neither Google's fonts nor MathJax loads.
-- [ ] **Step 4: The docs.** In the spec's *The commands* table, the `make docs` row ends "…,
+- [x] **Step 4: The docs.** In the spec's *The commands* table, the `make docs` row ends "…,
   fails on an unresolved link or anything it loads from another host, runs lychee where
   installed". In `website/architecture.qmd`, "Checks and the deploy", the site node reads
   `site["site job<br/>make docs: render, offsite check, lychee"]`.
-- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: 158 tests pass twice, lint
+- [x] **Step 5: Run the checks; they pass.** `make check`. Expected: 158 tests pass twice, lint
   passes, `offsite: the site loads nothing from another host`.
-- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 fix(privacy): 🤖 refuse JPEG segments that could hold text, and load nothing off-site
@@ -691,7 +693,7 @@ Co-Authored-By: <the model's own line>
   `git add scripts/privacy.py tests/test_privacy.py scripts/gallery.py tests/test_gallery.py scripts/offsite.py tests/test_offsite.py Makefile pyproject.toml website/_quarto.yml website/theme.scss docs/superpowers/specs/2026-11-05-3d-models-design.md website/architecture.qmd`,
   then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the
   `Plan:` line.
-- [ ] **Step 7: Review, look forward, close.**
+- [x] **Step 7: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security
     checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
@@ -2637,3 +2639,6 @@ Dan*: plan it, keep it optional, or drop it.
 |---|---|---|---|---|
 | Phase start, goal fit 19 | Minor | spec, *Open items* | The PythonSCAD grow-light stand from 2026-10-16 ("worth a look at Phase 2's start") wasn't looked at: the rail's design came from Dan's references | open |
 | Phase start, security 8 | Minor | `scripts/privacy.py` | A photo with a suffix the check doesn't list (`.jpe`, `.pjpeg`, none) is never opened; the look test adds the first photos | open |
+| Task 1, Standards 2 | Minor | `scripts/offsite.py` | An `iframe`'s `srcdoc` (HTML with its own tags) isn't parsed | open |
+| Task 1, Standards 3 and 4 | Minor | `scripts/offsite.py` | A URL a browser normalises (a backslash for a slash, a tab inside the scheme, `https:/host`) or CSS escapes and comments (`u\72l(`, `url(/**/…)`) pass; none can come from Quarto's output | open |
+| Task 1, Spec 2 | Minor | `scripts/offsite.py` | A script's `fetch(` or `importScripts(`, an import map, and JSON files aren't read; the phase end's network-log look covers them | open |

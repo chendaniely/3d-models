@@ -232,7 +232,7 @@ replace it.
 | S28 | a rail part is built at 3/4 inch, 25 mm or 1 inch | each cup and socket takes its dowel with the coupon's clearance, the carrier's open back takes the rail, its wedge fills the gap, the arm's socket is at least 51 mm deep, and each wedge seats inside on a dowel 0.5 mm over or under | Phase 2, Tasks 2 to 5 | the parts' tests | planned |
 | S29 | Dan pushes the carrier onto the mounted rail, slides the arm socket down its dovetail and pushes both wedges in | the joint doesn't slide or turn by hand, comes apart when the wedges are tapped out, and no bolt or screw shows | Phase 2, Task 11 | Dan's check on Phase 2's Q&A page | planned |
 | S30 | the light runs for 14 hours, the timer's longest, inside the PETG shade | the shade doesn't soften, warp or discolour, and is nowhere hotter than 60 °C | Phase 2, Tasks 9 and 12 | the temperatures in the load-test log | planned |
-| S31 | a visitor opens any page of the site | their browser fetches nothing from another host: no web font, script or style sheet | Phase 2, Task 1 | `tests/test_offsite.py`; `make docs` | planned |
+| S31 | a visitor opens any page of the site | their browser fetches nothing from another host: no web font, script or style sheet | Phase 2, Task 1 | `tests/test_offsite.py`; `make docs` | built |
 | S32 | someone lifts a carrier, the arm or a planter on the mounted rail | the rail doesn't rise, and both feet stay on the wall | Phase 2, Tasks 2 and 13 | `tests/test_rail_feet.py` (the floor's screw); Dan's check at the install | planned |
 
 ### Later
