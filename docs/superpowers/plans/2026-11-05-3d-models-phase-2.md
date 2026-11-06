@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 2: The rail's wall feet, open.
+**Now:** Task 3: The rail carrier and its wedge, open.
 
 ***
 
@@ -729,6 +729,8 @@ Co-Authored-By: <the model's own line>
 
 ### Task 2: The rail's wall feet
 
+> **Built differently** (closed 2026-11-06; commits ee53ea2, 3144398): `head_h` is 4.2 mm, not the listing's 3 mm, and the test's least head height 4 mm, since a #8 pan head stands about 3.6 mm and a #10 about 4.1 mm and the cap couldn't seat over it (Task 2's review, Important); step 4 of the notes says the rail's lower end swings in over the bottom cup.
+
 **Tier:** 2 · **Scenarios:** S28, S14, S32
 
 **Files:**
@@ -743,8 +745,8 @@ Co-Authored-By: <the model's own line>
   (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the two feet that hold the rail off the wall, and their caps; the parameters and bodies its test names.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing test.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing test.**
 
 `tests/test_rail_feet.py`:
 
@@ -824,9 +826,9 @@ def test_the_notes_give_where_the_top_screw_goes() -> None:
     assert f"within {p['spacing_tol']:g} mm" in notes
 ```
 
-- [ ] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
   `models/rail-feet/rail-feet.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to
   `.git/rail-feet-script.json` (it stays out of the repo: the saved design holds the same feature tree):
 
 ```json
@@ -885,7 +887,7 @@ def test_the_notes_give_where_the_top_screw_goes() -> None:
   From the repo's root: `mkdir -p models/rail-feet`, then
   `solidcraft-cli run .git/rail-feet-script.json --quiet`. Expected: exit 0, and
   `models/rail-feet/rail-feet.sc` is plain-text JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/rail-feet/model.yml`:
 
@@ -947,19 +949,19 @@ notes: |
 
   Then `make models`. Expected: `building models/rail-feet (missing …)` and `1 built`. Look at
   `rail-feet.png` against the notes.
-- [ ] **Step 4b: The coupon's notes.** In `models/dowel-fit-coupon/model.yml`, the sentence
+- [x] **Step 4b: The coupon's notes.** In `models/dowel-fit-coupon/model.yml`, the sentence
   "standing on its edge: the dowel parts' sockets print with their holes horizontal, and a
   horizontal hole comes out a little smaller and less round than a vertical one." becomes
   "standing on its edge: the sockets that hold an arm print with their holes horizontal, and a
   horizontal hole comes out a little smaller and less round than a vertical one. The rail's feet
   and carrier print theirs upright, a little closer to size, and their wedge or their slack takes
   that up.", its lines rewrapped at 100 characters as the file's are.
-- [ ] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the lines `  class feet planned` ("The rail, part by part") and `  class foot planned` ("The light's cord"): the
+- [x] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the lines `  class feet planned` ("The rail, part by part") and `  class foot planned` ("The light's cord"): the
   part is built.
-- [ ] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy and offsite checks pass, the render lists
   the model's page.
-- [ ] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the two feet that hold the rail off the wall, and their caps
@@ -985,7 +987,7 @@ Co-Authored-By: <the model's own line>
 
   `git add models/rail-feet/rail-feet.sc models/rail-feet/rail-feet.stl models/rail-feet/rail-feet-3-4in.stl models/rail-feet/rail-feet-25mm.stl models/rail-feet/rail-feet.png models/rail-feet/rail-feet.eval.json models/rail-feet/build.json models/rail-feet/model.yml tests/test_rail_feet.py website/architecture.qmd models/dowel-fit-coupon/model.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'`
   shows the `Plan:` line.
-- [ ] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
@@ -2642,3 +2644,6 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 1, Standards 2 | Minor | `scripts/offsite.py` | An `iframe`'s `srcdoc` (HTML with its own tags) isn't parsed | open |
 | Task 1, Standards 3 and 4 | Minor | `scripts/offsite.py` | A URL a browser normalises (a backslash for a slash, a tab inside the scheme, `https:/host`) or CSS escapes and comments (`u\72l(`, `url(/**/…)`) pass; none can come from Quarto's output | open |
 | Task 1, Spec 2 | Minor | `scripts/offsite.py` | A script's `fetch(` or `importScripts(`, an import map, and JSON files aren't read; the phase end's network-log look covers them | open |
+| Task 2, review | Minor | `models/rail-feet` | 0.75 mm of plastic between the cord's groove and each screw's counterbore | open |
+| Task 2, review | Minor | `models/rail-feet` | The caps hold by a press fit alone, with no catch; the look test (Task 11) checks them | open |
+| Task 2, review | Minor | `tests/test_rail_feet.py` | The test holds the parameters, not the built cuts: a design with the floor's hole or the groove deleted would pass | open |
