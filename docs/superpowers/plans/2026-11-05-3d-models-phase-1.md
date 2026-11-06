@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 6: The dowel fit-test coupon, open.
+**Now:** Task 7: The sconce's wall block, open.
 
 ***
 
@@ -2644,8 +2644,8 @@ Co-Authored-By: <the model's own line>
   `read_meta` and the page.
 - Produces: the design's parameters `dowel_d` (25.4 mm), `step` (0.2 mm), `wall`, `margin`, `bar_h`, `dot_d`, `dot_depth`, `pitch`, `bar_l`, `bar_w`, which the dowel parts' `clearance` comes from (`step` times the dots of the hole that fit).
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_coupon.py`:
 
@@ -2702,9 +2702,9 @@ def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:
     assert "the holes horizontal" in meta["print"]["Orientation"]
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
   `models/dowel-fit-coupon/dowel-fit-coupon.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to `.git/coupon-script.json`
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to `.git/coupon-script.json`
   (it stays out of the repo: the saved design holds the same feature tree, and
   `solidcraft-cli script` regenerates it):
 
@@ -3020,7 +3020,7 @@ def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:
   From the repo's root: `mkdir -p models/dowel-fit-coupon`, then
   `solidcraft-cli run .git/coupon-script.json --quiet`. Expected: exit 0, and
   `models/dowel-fit-coupon/dowel-fit-coupon.sc` is a few KB of JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/dowel-fit-coupon/model.yml`:
 
@@ -3063,10 +3063,10 @@ notes: |
 
   Then `make models`. Expected: `building models/dowel-fit-coupon (missing …)` and `1 built`. Look at
   `dowel-fit-coupon.png` against the design's description in its notes.
-- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy check is clean over the new files, and the
   render lists the model's page.
-- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the dowel fit-test coupon
@@ -3088,7 +3088,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add models/dowel-fit-coupon/dowel-fit-coupon.sc models/dowel-fit-coupon/dowel-fit-coupon.stl models/dowel-fit-coupon/dowel-fit-coupon-3-4in.stl models/dowel-fit-coupon/dowel-fit-coupon-25mm.stl models/dowel-fit-coupon/dowel-fit-coupon.png models/dowel-fit-coupon/dowel-fit-coupon.eval.json models/dowel-fit-coupon/build.json models/dowel-fit-coupon/model.yml tests/test_coupon.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone. Tier 1 (the first real `solidcraft-cli` output in the repo): before staging, `make privacy` passes over the new files, and the picture is looked at.
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
@@ -4173,3 +4173,4 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 |---|---|---|---|---|
 | kickoff council, simplicity 7 | Minor | `website/_diagram-zoom.html` | kept as the skill's standard site kit; drop it if it never earns its 50 lines | open |
 | kickoff council, reliability 9 | Minor | `Makefile` | lychee isn't installed on Dan's machine, so `make docs` skips it locally and only CI runs it; installing it is Dan's call | open |
+| Task 6, Spec review | Minor | `models/dowel-fit-coupon/model.yml` | the STL lies flat as modelled; the page could say to stand it on its edge in the slicer, not only that it prints that way | open |
