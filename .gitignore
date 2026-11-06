@@ -13,3 +13,14 @@ website/.quarto/
 
 # superpowers' own workspace
 .superpowers/
+
+# the site: the generated doc and model pages, and the render log
+website/superpowers/
+website/models/
+website/.render.log
+
+# the Playwright browser tool's screenshots and logs
+.playwright-mcp/
+
+# SolidCraft keeps the design it overwrote as <name>.sc.bak
+*.sc.bak

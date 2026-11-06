@@ -1,0 +1,35 @@
+[project]
+name = "3d-models"
+version = "0.1.0"
+description = "SolidCraft models, the STL files exported from them, and the tooling that builds the gallery."
+requires-python = ">=3.12"
+dependencies = [
+    "pillow>=12.0",
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "ruff>=0.14",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# scripts/commitmsg.py is plan-driven-development's copy, kept byte-identical to the skill's;
+# Markdown is excluded because the plans quote code exactly as it is to be written.
+extend-exclude = ["scripts/commitmsg.py", "*.md", "website/_site", "website/.quarto"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["conftest", "gallery", "models", "privacy", "sitedocs"]

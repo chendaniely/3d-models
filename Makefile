@@ -4,27 +4,37 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: help hooks check test test-utc lint leaks docs
+.PHONY: help hooks check test test-utc lint leaks models models-check privacy docs
 
 help: ## List the targets
-	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-10s %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  %-13s %s\n", $$1, $$2}'
 
 hooks: ## Install the git hooks (none are built yet)
 	@echo "no hooks are installed yet: plan-driven-development's hooks aren't built"
 
 test: ## Run the test suite
-	@echo "no test command yet: the plan's CI task sets it"; exit 1
+	uv run --frozen pytest -q
 
 test-utc: ## Run the test suite under TZ=UTC
 	@TZ=UTC $(MAKE) --no-print-directory test
 
-lint: ## Lint the code
-	@echo "no lint command yet: the plan's CI task sets it"; exit 1
+lint: ## Lint the code: ruff check and ruff format --check
+	uv run --frozen ruff check .
+	uv run --frozen ruff format --check .
 
-leaks: ## Scan the whole git history for secrets
-	gitleaks git --redact --no-banner .
+leaks: ## Scan the whole git history for secrets, merge commits' own changes included
+	gitleaks git --redact --no-banner --log-opts="--all --full-history -m" .
 
-docs: ## Render the docs site
-	@echo "no docs site yet: the plan's site task sets it"; exit 1
+models: ## Rebuild each changed design's STLs, picture and measurements (needs SolidCraft)
+	@echo "not built yet: Phase 1, Task 2 sets it"; exit 1
 
-check: test test-utc lint leaks docs ## Everything CI runs
+models-check: ## Fail when a design has no build, a stale one, or the wrong name
+	@echo "not built yet: Phase 1, Task 2 sets it"; exit 1
+
+privacy: ## Fail on image metadata, a photo format the check can't read, or a home-folder path
+	@echo "not built yet: Phase 1, Task 3 sets it"; exit 1
+
+docs: ## Render the site into website/_site, failing on a broken link
+	@echo "not built yet: Phase 1, Task 4 sets it"; exit 1
+
+check: test test-utc lint leaks ## Everything CI runs, and the suite under UTC
