@@ -20,6 +20,5 @@ flowchart LR
   built -.-> railparts -.-> railup
 
   classDef planned stroke-dasharray: 5 5
-  class railparts planned
   class railup planned
 ```

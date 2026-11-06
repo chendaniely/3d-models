@@ -200,6 +200,11 @@ def test_a_bar_in_a_print_setting_stays_inside_its_cell(repo: Path) -> None:
     assert "| Infill | 20% \\| gyroid |" in page(repo)
 
 
+def test_a_superseded_model_keeps_its_page_and_says_so(repo: Path) -> None:
+    add_model(repo, meta=META.replace("status: printed", "status: superseded"))
+    assert "**Status:** superseded." in page(repo)
+
+
 @pytest.mark.parametrize(
     ("meta", "message"),
     [

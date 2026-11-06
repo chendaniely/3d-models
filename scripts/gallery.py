@@ -26,7 +26,7 @@ LICENCE = (
     "[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): print it, change it and "
     f"share it, crediting chendaniely and linking to <{REPO_URL}>; don't sell it or prints of it."
 )
-STATUSES = ("designed", "printed", "in use")
+STATUSES = ("designed", "printed", "in use", "superseded")
 FREE_TEXT = ("title", "summary", "status", "material", "size", "notes")  # escaped, as sitedocs
 DENSITY_G_CM3 = {"PLA": 1.24, "PETG": 1.27}
 
