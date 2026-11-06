@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 6: The retro.
+**Now:** Phase end, step 7: The changelog and status.
 
 ***
 
@@ -4149,7 +4149,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   moved to the spec's Later with a reason; missing docs written; built parts solid in the diagrams.
 - [x] **5. The forward look:** Phase 2's plan rewritten to fit what was built; its listings run
   against this code where they can.
-- [ ] **6. The retro:** `docs/superpowers/plans/2026-11-05-3d-models-phase-1-retro.md` (departures,
+- [x] **6. The retro:** `docs/superpowers/plans/2026-11-05-3d-models-phase-1-retro.md` (departures,
   items carried forward, metrics per tier, starting over), with its Design-page line; the retuning
   rules applied to Phase 2's tiers.
 - [ ] **7. The changelog and status:** a dated `CHANGELOG.md` entry; the README's status line says

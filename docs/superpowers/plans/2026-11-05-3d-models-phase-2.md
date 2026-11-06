@@ -157,7 +157,7 @@ Co-Authored-By: <the model's own line>
   `git add models/sconce-wall-block models/sconce-cord-clamp`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
 - [ ] **Step 5: Review, look forward, close.**
 
-  - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
+  - **Review (Tier 2, one reviewer under both headings (Standards and Spec), per Phase 1's retro; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Task 4 prints these designs.
   - **Docs:** each part's page says what it's tuned to.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
