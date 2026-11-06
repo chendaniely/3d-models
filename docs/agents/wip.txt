@@ -1,0 +1,11 @@
+chore(plan): 🤖 wip Task N: <where it stopped>
+
+<Why it stopped, in a line or two. Then each heading below, filled;
+scripts/commitmsg.py refuses a wip commit without all three.>
+
+Done so far: <the task's steps finished, with their commits>
+Stopped at: <the step it stopped in, and what's half done>
+Tests: <the last make check, and what passed or failed>
+
+Plan: docs/superpowers/plans/<plan file> Task N
+Co-Authored-By: <the model's own line>

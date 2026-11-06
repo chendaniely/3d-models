@@ -1,0 +1,15 @@
+docs(plan): 🤖 close Task N: <title>
+
+<What the task built, and why, in a few lines. Then each heading below,
+filled or "none"; scripts/commitmsg.py refuses a close without all seven.>
+
+Drift: <each departure from the plan's listing, why, its commits; or none>
+Rulings: <each ruling made without Dan: what, why, what it costs if wrong; or none>
+Phase-end: <each finding deferred to the plan's phase-end list; or none>
+Forward: <each later listing rewritten in the plan; or none>
+Tier: <1, 2 or 3>
+Rounds: <the reviews run, by whom, and how many re-reviews>
+Findings: <each finding: severity, file:line, fixed in <sha> or where it went; or none>
+
+Plan: docs/superpowers/plans/<plan file> Task N
+Co-Authored-By: <the model's own line>
