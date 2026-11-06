@@ -1,0 +1,20 @@
+{
+  "design": "dowel-fit-coupon.sc",
+  "sha256": "2b27888d8893ead96503133d262e318b5e3d01aa8ae43cd7517428ab9c06abd0",
+  "sizes": {
+    "3/4 in": {
+      "dowel_d": "19.05 mm"
+    },
+    "25 mm": {
+      "dowel_d": "25 mm"
+    }
+  },
+  "solidcraft_cli": "solidcraft-cli 0.30.1",
+  "built": {
+    "dowel-fit-coupon.stl": "6dcb8c3ff5a299d403bf66a8499ff54ef3a2fe47a91293f0a1661c77b8288882",
+    "dowel-fit-coupon.png": "4c65e96d765fb28fa70d65e4467928669534dd378bd7f9846861f71a4e788be6",
+    "dowel-fit-coupon.eval.json": "79b5a9a42d418901325ffb545d8faba7356c5f325f7ddc09e4aaee98b2383519",
+    "dowel-fit-coupon-3-4in.stl": "9b03d374d9a0dd842634f5d73bc590ecdd6dfda3c0c5ea73f9497fbabac2611a",
+    "dowel-fit-coupon-25mm.stl": "999fdad111da63fceb7f82214785dc917008186461aa6b404fc232680883a5f9"
+  }
+}
