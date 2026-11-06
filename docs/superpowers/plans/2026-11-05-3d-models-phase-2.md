@@ -11,8 +11,9 @@
 **Goal:** Dan's grow light on a vertical dowel rail: two wall feet whose screws hide behind the
 rail, a carrier wedged onto the rail with the light's arm on its dovetail, the light up to 24
 inches out inside a PETG shade; each part printed in PLA and judged by eye, then in PETG and
-load-tested, then installed. Dan's measurements come first (Q&A 4); the photo and site gaps Phase
-1 left are closed while his coupon prints.
+load-tested, then installed. The parts are built first at placeholder sizes and published to the
+live gallery, then retuned to Dan's measurements and published again (Q&A 9); the photo and site
+gaps Phase 1 left are closed first.
 
 **Architecture:** five new models under `models/`, each a parametric SolidCraft design built by
 Phase 1's `make models` in three dowel sizes, with a test that holds its fit and its numbers to
@@ -27,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 1: [Dan] Measure, weigh, and print the coupon, open.
+**Now:** Task 1: Close the privacy gaps, and load nothing from other hosts, open.
 
 ***
 
@@ -44,7 +45,7 @@ pendant cord.
 - The light's cord is never threaded through a hole: its plug and timer won't pass. Every part
   takes it pressed in from the side.
 - Every part with a dowel is saved at 1 inch (25.4 mm) and lists `3/4 in` (19.05 mm) and `25 mm`
-  as sizes; `clearance` is one of the coupon's (0.4 mm, a placeholder until Task 1).
+  as sizes; `clearance` is one of the coupon's (0.4 mm, a placeholder until Task 10).
 - The parts and the shade are PETG, matte, never PLA (D9; Phase 2 Q&A 3); PLA only for the look
   test (D8).
 - Screws go into a stud or toggle anchors, never plastic plugs.
@@ -52,105 +53,26 @@ pendant cord.
 - Each design's command script stays in `.git/`, out of the repo; the saved `.sc` holds the same
   feature tree.
 - The tiers judge the code and the docs. The parts' physical strength is proven by the load test
-  (Task 10), not by a tier: a Tier 2 part task still holds a light over people's heads.
+  (Task 12), not by a tier: a Tier 2 part task still holds a light over people's heads.
 
 ## Review Focus
 
 1. **A cord whose plug or timer won't go through a hole:** every place the cord goes is open to
    the side (the stem's slot, the keel's mouth, the clips' loops, the bottom foot's groove, the
-   carrier's channel); Task 6's test holds the slots against the cord and the cord's room behind
+   carrier's channel); Task 5's test holds the slots against the cord and the cord's room behind
    the rail.
-2. **A lamp bigger than the guesses:** Task 1 measures the socket and the bulb, and its close
-   rewrites Task 7's parameters; Task 7's test holds 10 mm of air round each.
-3. **A dowel half a millimetre over or under its size:** each wedge's travel covers it; Tasks 4, 5
+2. **A lamp bigger than the guesses:** Task 9 measures the socket and the bulb, and Task 10
+   retunes the shade; Task 6's test holds 10 mm of air round each.
+3. **A dowel half a millimetre over or under its size:** each wedge's travel covers it; Tasks 3, 4
    and 6 test it at -0.5, 0 and +0.5 mm.
 4. **A carrier, a planter or the arm lifted:** the rail can't rise, held by the screw through the
-   bottom cup's floor (Task 3's test; Task 11's check).
+   bottom cup's floor (Task 2's test; Task 13's check).
 5. **Drywall with no stud where a foot goes:** 3/16-inch toggle bolts, which clamp each foot's
-   plate; Task 1 measures the heads, and the load test (Task 10) mounts as it will be.
+   plate; Task 9 measures the heads, and the load test (Task 12) mounts as it will be.
 
 ***
 
-### Task 1: [Dan] Measure, weigh, and print the coupon
-
-**Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S26, S30
-
-Runs in Dan's home. **Now** reads `waiting on Dan: <the step>` until each answer is in. The steps
-are asked by *Asking Dan*, one at a time, after the list. Dan's changes to the parts are settled
-(Phase 2 Q&A 1 to 7), so this is measurements only. Start the coupon's print first (step 9): it
-runs while he measures, and Task 2 can't start before this task closes.
-
-- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **1. Weigh the light:** the Barrina with its socket, cord and timer, on a kitchen scale.
-  The parts assume 1 kg; above that, the agent re-runs the carrier's and the socket's moment
-  (about 7.5 N·m at 24 inches) and lengthens `carrier_l` or `socket_depth` in Tasks 4 and 5.
-- [ ] **2. The bulb:** its widest diameter, and its length from where it meets the socket to its
-  face.
-- [ ] **3. The socket:** its body's widest diameter, and its length from where the cord goes in
-  to where the bulb starts.
-- [ ] **4. The cord:** round or flat; its diameter, or its width and thickness, just above the
-  socket, with calipers.
-- [ ] **5. The heat:** the bulb on for an hour, then its hottest surface with a thermometer (an
-  infrared one, or a kitchen probe held against it).
-- [ ] **6. The screws:** which ones (#8 or #10 wood screws into a stud, or 3/16-inch toggle
-  bolts); their heads' diameter and height, and the shank's; each a pan or washer head, since a
-  flat (countersunk) head won't sit in the counterbores.
-- [ ] **7. The dowels:** the size bought (1 inch, 25 mm or 3/4 inch) and the wood; the rail's
-  real diameter with calipers, across two directions; the rail's length, up to about 48 inches,
-  and the arm's, 550 mm for the light at 24 inches.
-- [ ] **8. The wall,** as measurements: its material, and whether a stud is where the feet go.
-- [ ] **9. Print the coupon** for that size, standing on its edge (its page's print settings),
-  and try the dowel in each hole: which hole, by its dots, is the tightest it goes into by hand,
-  all the way (S26)? If every 1-inch hole is loose, the dowel is really 25 mm: print the 25 mm
-  coupon, and build the parts at 25 mm.
-- [ ] **10. Record and close.** Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 Phase 2 Q&A <N>: <what>` with this plan's `Plan:` line. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. The coupon's `model.yml` becomes `status: printed`
-  (Tier 3), with the hole that fit in its notes. Then the forward rewrites, each named under
-  `Forward:`, in Tasks 3 to 7's listings:
-  - `clearance` (the coupon's `step` times the dots that fit) in Tasks 3 to 6, and the sentence in
-    each of their notes that calls 0.4 mm a placeholder;
-  - the screws in Task 3: `screw_d` and `head_d` at least 0.4 mm over the shank's and the head's,
-    and `head_h` the head's height;
-  - the cord: `cord_d` in Task 6, and in Task 3 `cord_w` and `cord_depth` at least the cord and
-    1 mm (a flat cord: Task 6's slots and grip reshaped, a ruling);
-  - the lamp in Task 7: `socket_d`, `socket_l`, `bulb_d` and `bulb_l`;
-  - over 60 °C at step 5: Task 7's `gap` grows, decided with Dan (the spec's design calls);
-  - over 1 kg at step 1: Tasks 4 and 5, as step 1 says.
-
-  The close:
-
-  - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
-    added Q&A and notes text read for a place, an address, a person or a description of the
-    home),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Tasks 3 to 7 take these values (above).
-  - **Docs:** the coupon's page says it's printed and which hole fit; S26 `built`.
-  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
-    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
-    scenario statuses. The message, from `docs/agents/close-task.txt`:
-
-    ```text
-    docs(plan): 🤖 close Task 1: [Dan] Measure, weigh, and print the coupon
-
-    <what the task built, and why, in a few lines>
-
-    Drift: <filled at the close, or none>
-    Rulings: <filled at the close, or none>
-    Phase-end: <filled at the close, or none>
-    Forward: <filled at the close, or none>
-    Tier: 3
-    Rounds: <filled at the close>
-    Findings: <filled at the close, or none>
-
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 1
-    Co-Authored-By: <the model's own line>
-    ```
-
-  - **Push** under the standing OK (Phase 2 Q&A 7): `make leaks privacy models-check`, then
-    `git push origin phase-2`. The task is closed once CI on the closing commit, or a later one,
-    is green.
-
-***
-
-### Task 2: Close the privacy gaps, and load nothing from other hosts
+### Task 1: Close the privacy gaps, and load nothing from other hosts
 
 **Tier:** 1 (if wrong, a photo of Dan's home carries what it shouldn't onto a public repo, or every
 visitor is seen by a third party) · **Scenarios:** S03, S31
@@ -715,7 +637,7 @@ index 0000000..105f782
 +++ b/website/theme.scss
 @@ -0,0 +1,3 @@
 +/*-- scss:defaults --*/
-+// No web font: the site loads nothing from another host (Phase 2, Task 1)
++// No web font: a font from another host would tell it who visits (scripts/offsite.py)
 +$web-font-path: false;
 ```
 
@@ -762,7 +684,7 @@ another host (scripts/offsite.py), or on a site that isn't there.
 The new tests failed first with: ModuleNotFoundError: No module named
 'offsite', stopping the collection.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 2
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 1
 Co-Authored-By: <the model's own line>
 ```
 
@@ -773,7 +695,7 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security
     checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test's photo (Task 9) is the first the check meets.
+  - **Forward:** the look test's photo (Task 11) is the first the check meets.
   - **Docs:** Step 4; S31 `built`, S03 stays `built`. After the merge, the phase end's step 9 looks
     at the live site's network log too.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
@@ -781,7 +703,7 @@ Co-Authored-By: <the model's own line>
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 2: Close the privacy gaps, and load nothing from other hosts
+    docs(plan): 🤖 close Task 1: Close the privacy gaps, and load nothing from other hosts
 
     <what the task built, and why, in a few lines>
 
@@ -793,7 +715,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 2
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 1
     Co-Authored-By: <the model's own line>
     ```
 
@@ -803,7 +725,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 3: The rail's wall feet
+### Task 2: The rail's wall feet
 
 **Tier:** 2 · **Scenarios:** S28, S14, S32
 
@@ -815,8 +737,8 @@ Co-Authored-By: <the model's own line>
 **Interfaces:**
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
-  parameters, where its test checks them against its own; Task 1's measurements, as its close
-  rewrote this listing's values.
+  parameters, where its test checks them against its own. It's built at the placeholder sizes
+  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the two feet that hold the rail off the wall, and their caps; the parameters and bodies its test names.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1055,7 +977,7 @@ Saved at 1 inch, with STLs for 3/4 inch and 25 mm.
 The new test failed first with: FileNotFoundError for
 models/rail-feet/rail-feet.eval.json.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 3
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 2
 Co-Authored-By: <the model's own line>
 ```
 
@@ -1066,14 +988,15 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test (Task 9) prints it; Task 8 links its page.
-  - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 6.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
+    (Task 11) prints it.
+  - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 5.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 3: The rail's wall feet
+    docs(plan): 🤖 close Task 2: The rail's wall feet
 
     <what the task built, and why, in a few lines>
 
@@ -1085,7 +1008,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 3
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 2
     Co-Authored-By: <the model's own line>
     ```
 
@@ -1095,7 +1018,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 4: The rail carrier and its wedge
+### Task 3: The rail carrier and its wedge
 
 **Tier:** 2 · **Scenarios:** S28, S29, S14
 
@@ -1107,8 +1030,8 @@ Co-Authored-By: <the model's own line>
 **Interfaces:**
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
-  parameters, where its test checks them against its own; Task 1's measurements, as its close
-  rewrote this listing's values.
+  parameters, where its test checks them against its own. It's built at the placeholder sizes
+  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the U that pushes onto the rail from the front, and its wedge; the parameters and bodies its test names.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1304,7 +1227,7 @@ Saved at 1 inch, with STLs for 3/4 inch and 25 mm.
 The new test failed first with: FileNotFoundError for
 models/rail-carrier/rail-carrier.eval.json.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 3
 Co-Authored-By: <the model's own line>
 ```
 
@@ -1315,14 +1238,15 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test (Task 9) prints it; Task 8 links its page.
-  - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 6.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
+    (Task 11) prints it.
+  - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 5.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 4: The rail carrier and its wedge
+    docs(plan): 🤖 close Task 3: The rail carrier and its wedge
 
     <what the task built, and why, in a few lines>
 
@@ -1334,7 +1258,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 3
     Co-Authored-By: <the model's own line>
     ```
 
@@ -1344,7 +1268,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 5: The arm socket and its wedge
+### Task 4: The arm socket and its wedge
 
 **Tier:** 2 · **Scenarios:** S28, S29, S13
 
@@ -1356,8 +1280,8 @@ Co-Authored-By: <the model's own line>
 **Interfaces:**
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
-  parameters, where its test checks them against its own; Task 1's measurements, as its close
-  rewrote this listing's values.
+  parameters, where its test checks them against its own. It's built at the placeholder sizes
+  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the block that slides down the carrier's dovetail and holds the arm level; the parameters and bodies its test names.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1547,7 +1471,7 @@ Saved at 1 inch, with STLs for 3/4 inch and 25 mm.
 The new test failed first with: FileNotFoundError for
 models/rail-arm-socket/rail-arm-socket.eval.json.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
 Co-Authored-By: <the model's own line>
 ```
 
@@ -1558,14 +1482,15 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test (Task 9) prints it; Task 8 links its page.
-  - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 6.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
+    (Task 11) prints it.
+  - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 5.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 5: The arm socket and its wedge
+    docs(plan): 🤖 close Task 4: The arm socket and its wedge
 
     <what the task built, and why, in a few lines>
 
@@ -1577,7 +1502,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
     Co-Authored-By: <the model's own line>
     ```
 
@@ -1587,7 +1512,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 6: The arm tip, its wedge and the cord clips
+### Task 5: The arm tip, its wedge and the cord clips
 
 **Tier:** 2 · **Scenarios:** S28, S14, S27
 
@@ -1599,8 +1524,8 @@ Co-Authored-By: <the model's own line>
 **Interfaces:**
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
-  parameters, where its test checks them against its own; Task 1's measurements, as its close
-  rewrote this listing's values.
+  parameters, where its test checks them against its own. It's built at the placeholder sizes
+  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the cap on the arm's end, its stem that grips the cord and takes the shade, and three clips; the parameters and bodies its test names.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1830,7 +1755,7 @@ Saved at 1 inch, with STLs for 3/4 inch and 25 mm.
 The new test failed first with: FileNotFoundError for
 models/rail-arm-tip/rail-arm-tip.eval.json.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 6
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
 Co-Authored-By: <the model's own line>
 ```
 
@@ -1841,14 +1766,15 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test (Task 9) prints it; Task 8 links its page.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
+    (Task 11) prints it.
   - **Docs:** the diagrams (Step 5); S28 `built`: the four dowel parts are built at all three sizes.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 6: The arm tip, its wedge and the cord clips
+    docs(plan): 🤖 close Task 5: The arm tip, its wedge and the cord clips
 
     <what the task built, and why, in a few lines>
 
@@ -1860,7 +1786,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 6
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
     Co-Authored-By: <the model's own line>
     ```
 
@@ -1870,7 +1796,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 7: The shade
+### Task 6: The shade
 
 **Tier:** 2 · **Scenarios:** S30, S11
 
@@ -1882,8 +1808,8 @@ Co-Authored-By: <the model's own line>
 **Interfaces:**
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
-  parameters, where its test checks them against its own; Task 1's measurements, as its close
-  rewrote this listing's values.
+  parameters, where its test checks them against its own. It's built at the placeholder sizes
+  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the PETG shade the lamp hangs inside; the parameters and bodies its test names.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -2047,7 +1973,7 @@ It has no dowel, so one STL.
 The new test failed first with: FileNotFoundError for
 models/rail-shade/rail-shade.eval.json.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 7
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 6
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2058,14 +1984,15 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test (Task 9) prints it; Task 8 links its page.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
+    (Task 11) prints it.
   - **Docs:** the diagrams (Step 5); S30 stays `planned` until the load test.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 7: The shade
+    docs(plan): 🤖 close Task 6: The shade
 
     <what the task built, and why, in a few lines>
 
@@ -2077,7 +2004,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 7
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 6
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2087,7 +2014,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 8: Mark Phase 1's parts superseded
+### Task 7: Mark Phase 1's parts superseded
 
 **Tier:** 2 · **Scenarios:** S12, S18 (superseded), S28
 
@@ -2099,7 +2026,7 @@ the rail's parts (Phase 2 Q&A 4). The gallery takes a fourth status for it.
   `models/sconce-cord-clamp/model.yml`, `website/_overview.qmd`
 
 **Interfaces:**
-- Consumes: Task 1's `gallery.py`; Tasks 3 to 7's pages, which the notes link.
+- Consumes: Task 9's `gallery.py`; Tasks 2 to 6's pages, which the notes link.
 - Produces: `gallery.STATUSES` with `superseded`.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -2209,7 +2136,7 @@ parts. The overview diagram shows the rail's parts built.
 
 The new test failed first with: <the failing line from Step 2>.
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 8
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 7
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2227,7 +2154,7 @@ Co-Authored-By: <the model's own line>
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 8: Mark Phase 1's parts superseded
+    docs(plan): 🤖 close Task 7: Mark Phase 1's parts superseded
 
     <what the task built, and why, in a few lines>
 
@@ -2236,6 +2163,70 @@ Co-Authored-By: <the model's own line>
     Phase-end: <filled at the close, or none>
     Forward: <filled at the close, or none>
     Tier: 2
+    Rounds: <filled at the close>
+    Findings: <filled at the close, or none>
+
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 7
+    Co-Authored-By: <the model's own line>
+    ```
+
+  - **Push** under the standing OK (Phase 2 Q&A 7): `make leaks privacy models-check`, then
+    `git push origin phase-2`. The task is closed once CI on the closing commit, or a later one,
+    is green.
+
+***
+
+### Task 8: Publish the parts: a mid-phase merge to `main`
+
+**Tier:** none: a merge, gated by Dan's look at each file no scan can read (`AGENTS.md`, *Stops*;
+Phase 2 Q&A 7), reviewed as Tier 3 · **Scenarios:** S07, S08, S19
+
+Dan asked to see the rail's parts in the live gallery as soon as they're built, with the guessed
+sizes, and to retune them after measuring (Phase 2 Q&A 9). Their pages already say which sizes are
+placeholders. `phase-2` carries on after the merge.
+
+- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **1. The files no scan can read, named to Dan:** every STL and PNG the merge adds, listed
+  with `git diff --numstat origin/main..phase-2 | awk '$1 == "-" { print $3 }'` (eighteen: four
+  for each dowel part, two for the shade). Show him each picture, and the local render's 3D views
+  (`make docs`, then serve `website/_site`); ask, naming each file, whether he OKs it going out.
+  His answer goes on the Phase 2 Q&A page, committed as `docs(plan): 🤖 Phase 2 Q&A <N>: <what>`
+  with this plan's `Plan:` line, and pushed.
+- [ ] **2. The PR.** Its title, in `.git/PR_TITLE`:
+  `chore(repo): 🤖 merge the rail's five parts, at placeholder sizes`. Its body, in
+  `.git/PR_BODY.md`: what it carries (Tasks 1 to 7), that the sizes are placeholders until Task 10,
+  and a section *Files no scan can read*, each by name, saying Dan OKed it (the Q&A answer), then
+  the Claude Code line and the trailer paragraph (`Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 8` and
+  `Co-Authored-By:`). Scan both: `cat .git/PR_TITLE .git/PR_BODY.md | gitleaks stdin --redact
+  --no-banner`, then `gh pr create --base main --head phase-2 --title "$(cat .git/PR_TITLE)"
+  --body-file .git/PR_BODY.md`.
+- [ ] **3. The merge,** once every check on the PR's head is green:
+  `gh pr merge <N> --merge --match-head-commit "$(git rev-parse phase-2)"`, never `--admin`,
+  squash, rebase or `--delete-branch`.
+- [ ] **4. After the merge:** CI on `main` deploys; each rail page on
+  <https://chendaniely.github.io/3d-models/> answers, its viewer loads in a browser, and the live
+  site loads nothing from another host (Task 1).
+- [ ] **5. Close.**
+
+  - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
+    PR's text read for a place, an address, a person or a description of the home),** from
+    `$(cat .git/TASK_BASE)`.
+  - **Forward:** Task 10 retunes the parts and publishes them again.
+  - **Docs:** none; the spec's status line names the merge.
+  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
+    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
+    scenario statuses. The message, from `docs/agents/close-task.txt`:
+
+    ```text
+    docs(plan): 🤖 close Task 8: Publish the parts: a mid-phase merge to `main`
+
+    <what the task built, and why, in a few lines>
+
+    Drift: <filled at the close, or none>
+    Rulings: <filled at the close, or none>
+    Phase-end: <filled at the close, or none>
+    Forward: <filled at the close, or none>
+    Tier: 3
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
@@ -2249,7 +2240,175 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 9: [Dan] The look test
+### Task 9: [Dan] Measure, weigh, and print the coupon
+
+**Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S26, S30
+
+Runs in Dan's home. **Now** reads `waiting on Dan: <the step>` until each answer is in. The steps
+are asked by *Asking Dan*, one at a time, after the list. Dan's changes to the parts are settled
+(Phase 2 Q&A 1 to 7), so this is measurements only; the parts are already built at placeholder
+sizes (Q&A 9), and Task 10 retunes them. Start the coupon's print first (step 9): it runs while he
+measures.
+
+- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **1. Weigh the light:** the Barrina with its socket, cord and timer, on a kitchen scale.
+  The parts assume 1 kg; above that, the agent re-runs the carrier's and the socket's moment
+  (about 7.5 N·m at 24 inches), and Task 10 lengthens `carrier_l` or `socket_depth`.
+- [ ] **2. The bulb:** its widest diameter, and its length from where it meets the socket to its
+  face.
+- [ ] **3. The socket:** its body's widest diameter, and its length from where the cord goes in
+  to where the bulb starts.
+- [ ] **4. The cord:** round or flat; its diameter, or its width and thickness, just above the
+  socket, with calipers.
+- [ ] **5. The heat:** the bulb on for an hour, then its hottest surface with a thermometer (an
+  infrared one, or a kitchen probe held against it).
+- [ ] **6. The screws:** which ones (#8 or #10 wood screws into a stud, or 3/16-inch toggle
+  bolts); their heads' diameter and height, and the shank's; each a pan or washer head, since a
+  flat (countersunk) head won't sit in the counterbores.
+- [ ] **7. The dowels:** the size bought (1 inch, 25 mm or 3/4 inch) and the wood; the rail's
+  real diameter with calipers, across two directions; the rail's length, up to about 48 inches,
+  and the arm's, 550 mm for the light at 24 inches.
+- [ ] **8. The wall,** as measurements: its material, and whether a stud is where the feet go.
+- [ ] **9. Print the coupon** for that size, standing on its edge (its page's print settings),
+  and try the dowel in each hole: which hole, by its dots, is the tightest it goes into by hand,
+  all the way (S26)? If every 1-inch hole is loose, the dowel is really 25 mm: print the 25 mm
+  coupon, and build the parts at 25 mm.
+- [ ] **10. Record and close.** Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 Phase 2 Q&A <N>: <what>` with this plan's `Plan:` line. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. The coupon's `model.yml` becomes `status: printed`
+  (Tier 3), with the hole that fit in its notes. Then the forward rewrite, named under
+  `Forward:`: Task 10's retune scripts and notes, filled in with these values, part by part:
+  - `clearance` (the coupon's `step` times the dots that fit) in the four dowel parts, and the sentence in
+    each of their notes that calls 0.4 mm a placeholder;
+  - the screws in the feet: `screw_d` and `head_d` at least 0.4 mm over the shank's and the head's,
+    and `head_h` the head's height;
+  - the cord: `cord_d` in the tip, and in the feet `cord_w` and `cord_depth` at least the cord and
+    1 mm (a flat cord: the tip's slots and grip reshaped, a ruling);
+  - the lamp in the shade: `socket_d`, `socket_l`, `bulb_d` and `bulb_l`;
+  - over 60 °C at step 5: the shade's `gap` grows, decided with Dan (the spec's design calls);
+  - over 1 kg at step 1: the carrier and the socket, as step 1 says.
+
+  The close:
+
+  - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
+    added Q&A and notes text read for a place, an address, a person or a description of the
+    home),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** Task 10's scripts and notes take these values (above).
+  - **Docs:** the coupon's page says it's printed and which hole fit; S26 `built`.
+  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
+    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
+    scenario statuses. The message, from `docs/agents/close-task.txt`:
+
+    ```text
+    docs(plan): 🤖 close Task 9: [Dan] Measure, weigh, and print the coupon
+
+    <what the task built, and why, in a few lines>
+
+    Drift: <filled at the close, or none>
+    Rulings: <filled at the close, or none>
+    Phase-end: <filled at the close, or none>
+    Forward: <filled at the close, or none>
+    Tier: 3
+    Rounds: <filled at the close>
+    Findings: <filled at the close, or none>
+
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 9
+    Co-Authored-By: <the model's own line>
+    ```
+
+  - **Push** under the standing OK (Phase 2 Q&A 7): `make leaks privacy models-check`, then
+    `git push origin phase-2`. The task is closed once CI on the closing commit, or a later one,
+    is green.
+
+***
+
+### Task 10: Retune the parts to Dan's measurements, and publish them again
+
+**Tier:** 2 · **Scenarios:** S28, S26, S30
+
+**Files:**
+- Modify: the five rail designs (`models/rail-*/rail-*.sc`, by SolidCraft), their built files (by
+  `make models`), their `model.yml` notes
+
+**Interfaces:**
+- Consumes: Task 9's answers; Tasks 2 to 6's designs and tests; Task 8's publishing steps.
+- Produces: the five parts at Dan's sizes, live again.
+
+- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **Step 1: The parameter changes,** one command script per part, `.git/<slug>-retune.json`,
+  each a `parameters.change` per value Task 9's close names for that part, then the save. Task
+  9's close writes each script here, its values filled in (a forward rewrite); the shape, for the
+  feet:
+
+```json
+{
+  "commands": [
+    {"command": "parameters.change", "params": {"name": "clearance", "expression": "<the coupon's>"}},
+    {"command": "parameters.change", "params": {"name": "screw_d", "expression": "<the shank's + 0.4 mm>"}},
+    {"command": "parameters.change", "params": {"name": "head_d", "expression": "<the head's + 0.4 mm>"}},
+    {"command": "parameters.change", "params": {"name": "head_h", "expression": "<the head's height>"}},
+    {"command": "parameters.change", "params": {"name": "cord_w", "expression": "<the cord + 1 mm>"}},
+    {"command": "parameters.change", "params": {"name": "cord_depth", "expression": "<the cord + 1 mm>"}},
+    {"command": "file.save_as", "params": {"path": "models/rail-feet/rail-feet.sc", "format": "json", "cache": false}}
+  ]
+}
+```
+
+  `solidcraft-cli run .git/<slug>-retune.json --in models/<slug>/<slug>.sc --quiet`, for each
+  part.
+- [ ] **Step 2: The notes:** each page's placeholder sentences give the measured values instead
+  (the clearance, the cord, the lamp), and the feet's *Putting the rail together* its new numbers
+  (its test holds them to the parameters).
+- [ ] **Step 3: Rebuild and check.** `make models`, then `make check`. Expected: the five parts
+  rebuilt, every test passing at the new values.
+- [ ] **Step 4: Commit.** Write the message to `.git/COMMIT_MSG`:
+
+```text
+feat(models): 🤖 retune the rail's parts to Dan's measurements
+
+<each value changed, with the Q&A answer it came from>
+
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+Co-Authored-By: <the model's own line>
+```
+
+  `git add` each changed file under `models/rail-feet`, `models/rail-carrier`,
+  `models/rail-arm-socket`, `models/rail-arm-tip` and `models/rail-shade`, by path, then
+  `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
+- [ ] **Step 5: Publish again,** as Task 8's steps 1 to 4 do, its PR titled
+  `chore(repo): 🤖 merge the rail's parts, retuned to Dan's measurements`.
+- [ ] **Step 6: Review, look forward, close.**
+
+  - **Review (Tier 2, one reviewer under both headings, Standards and Spec; fix Critical and
+    Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** the look test (Task 11) prints these.
+  - **Docs:** each page gives its measured values; S28 stays `built`; S26 `built` at Task 9.
+  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
+    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
+    scenario statuses. The message, from `docs/agents/close-task.txt`:
+
+    ```text
+    docs(plan): 🤖 close Task 10: Retune the parts to Dan's measurements, and publish them again
+
+    <what the task built, and why, in a few lines>
+
+    Drift: <filled at the close, or none>
+    Rulings: <filled at the close, or none>
+    Phase-end: <filled at the close, or none>
+    Forward: <filled at the close, or none>
+    Tier: 2
+    Rounds: <filled at the close>
+    Findings: <filled at the close, or none>
+
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+    Co-Authored-By: <the model's own line>
+    ```
+
+  - **Push** under the standing OK (Phase 2 Q&A 7): `make leaks privacy models-check`, then
+    `git push origin phase-2`. The task is closed once CI on the closing commit, or a later one,
+    is green.
+
+***
+
+### Task 11: [Dan] The look test
 
 **Tier:** none: Dan's verdict, recorded by the agent; Tier 1 if a photo is committed ·
 **Scenarios:** S11, S29
@@ -2265,7 +2424,7 @@ PLA (D8), and the joint by hand.
   (*Putting the rail together*), the feet screwed as they will be (PLA holds a look test, not a
   light for days).
 - [ ] **3. The joint by hand (S29):** does the carrier stay put when pushed down and twisted;
-  does the arm socket sit on the dovetail without rocking (if it rocks, Task 5's `fit` goes to
+  does the arm socket sit on the dovetail without rocking (if it rocks, Task 4's `fit` goes to
   0.2 mm, a ruling); do the wedges come out as the notes say; and does anything show but the dowels
   and the parts? Then the light on for a few minutes, no longer (the shade is PLA here): does any
   pink show from the room?
@@ -2282,14 +2441,14 @@ PLA (D8), and the joint by hand.
     added text read for a place, an address, a person or a description of the home; with a photo,
     Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist,
     one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 10 prints the PETG parts.
+  - **Forward:** Task 12 prints the PETG parts.
   - **Docs:** each part's notes say the look test passed, or what changed; S11 and S29 `built`.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 9: [Dan] The look test
+    docs(plan): 🤖 close Task 11: [Dan] The look test
 
     <what the task built, and why, in a few lines>
 
@@ -2301,7 +2460,7 @@ PLA (D8), and the joint by hand.
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 9
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 11
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2311,7 +2470,7 @@ PLA (D8), and the joint by hand.
 
 ***
 
-### Task 10: [Dan] The load test
+### Task 12: [Dan] The load test
 
 **Tier:** none: Dan runs it; the agent records it (Tier 3) · **Scenarios:** S13, S27, S30
 
@@ -2323,7 +2482,7 @@ PLA (D8), and the joint by hand.
   its feet and screwed down through the bottom cup's floor; the arm (550 mm) on its carrier, the
   tip on its end; the second socket on the second carrier, a 150 mm stub of dowel wedged in it.
   Every wedge tapped home with a mallet. Note the rail's length and each carrier's height.
-- [ ] **3. Load it:** three times the light's weight (Task 1's answer) hung from the tip by the
+- [ ] **3. Load it:** three times the light's weight (Task 9's answer) hung from the tip by the
   light's cord through the stem's grip, not from the tip; 12 kg (three times two watered small
   planters) hung from the stub 100 mm out from the carrier. Mark the cord where it leaves the grip,
   and each carrier's top edge on the rail.
@@ -2351,7 +2510,7 @@ docs(models): 🤖 record the rail's load test
 <the loads, the arm's length, the mounting, the readings at 0, 24 and 48
 hours, the shade's temperature, and the result, from the Q&A page>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 12
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2363,14 +2522,14 @@ Co-Authored-By: <the model's own line>
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks, and the
     added text read for a place, an address, a person or a description of the home),** from
     `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 11 installs what passed.
+  - **Forward:** Task 13 installs what passed.
   - **Docs:** each part's page carries the load test; S13, S27 and S30 `built`.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 10: [Dan] The load test
+    docs(plan): 🤖 close Task 12: [Dan] The load test
 
     <what the task built, and why, in a few lines>
 
@@ -2382,7 +2541,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 12
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2392,7 +2551,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 11: [Dan] Install it
+### Task 13: [Dan] Install it
 
 **Tier:** none: Dan installs it; the agent records it, Tier 1 for the photo · **Scenarios:** S14, S32
 
@@ -2411,7 +2570,7 @@ docs(models): 🤖 the grow-light rail is installed
 <how it was fixed to the wall, the rail's length, and Dan's words on how it
 looks>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 11
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 13
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2429,7 +2588,7 @@ Co-Authored-By: <the model's own line>
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 11: [Dan] Install it
+    docs(plan): 🤖 close Task 13: [Dan] Install it
 
     <what the task built, and why, in a few lines>
 
@@ -2441,7 +2600,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 11
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 13
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2451,7 +2610,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 12: Phase end
+### Task 14: Phase end
 
 The same nine steps as Phase 1's Task 10, each one box ending in its commit
 (`docs(plan): 🤖 phase end step K: <what it did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Phase end`), resumed at the

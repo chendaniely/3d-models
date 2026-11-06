@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`, its start merged to `main` (#2, `7b53336`)
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -211,7 +211,7 @@ replace it.
 |---|---|---|---|---|---|
 | S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | its STLs, picture, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | built |
 | S02 | a design changes and `make models` isn't run, or a built file isn't the one recorded | `make check` and CI fail, naming the model and why | Phase 1, Task 2 | `tests/test_models.py` | built |
-| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo, or is still in a commit the history holds | `make privacy` fails, naming it, before the push it would go out in, the history's copies included; `make strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3; Phase 2, Task 2 | `tests/test_privacy.py` | built |
+| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo, or is still in a commit the history holds | `make privacy` fails, naming it, before the push it would go out in, the history's copies included; `make strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3; Phase 2, Task 1 | `tests/test_privacy.py` | built |
 | S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | built |
 | S05 | a push to `phase-1` | CI runs the tests, lint, the model and privacy checks, the leak scan and the site's render and offline link check | Phase 1, Tasks 1 to 4 | a green CI run | built |
 | S06 | a doc under `docs/superpowers/` quotes Quarto's syntax, or isn't on the Design page | it renders as text; a doc missing from the Design page fails `make check` | Phase 1, Task 4 | `tests/test_site.py` | built |
@@ -219,21 +219,21 @@ replace it.
 | S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser after the merge (Phase 1, Task 10, step 9) | built |
 | S09 | Dan is about to print the coupon (Phase 1's part; printing it is S26) | each hole is marked by its clearance in dots, and the page says how to print it and read the result | Phase 1, Task 6 | `tests/test_coupon.py` | built |
 | S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | built |
-| S11 | Dan holds the PLA look-test parts up in the corner: the feet on the rail, the carrier and arm socket on it, the arm, the shade and the light | he decides whether it looks right, before any PETG is printed; nothing but the dowels and the parts shows | Phase 2, Task 9 | Dan's verdict on Phase 2's Q&A page | planned |
-| S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 8 | `tests/test_wall_block.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
-| S13 | the PETG rail parts hold for 48 hours, mounted as they will be: the arm at 24 inches with three times the light's weight at its tip, and a second carrier with 12 kg hung from it (three times two watered small planters) | the arm's tilt at its socket adds under 1 mm at the tip, neither carrier slips 2 mm on the rail, the tip's total sag, the wood's creep included, grows by under 5 mm, and nothing cracks or pulls out | Phase 2, Task 10 | the load-test log on the parts' pages | planned |
-| S14 | the rail light is installed and bumped | the arm doesn't turn on the rail or droop, the feet stay on their screws, and the cord runs along the arm and down behind the rail | Phase 2, Task 11 | Dan's check, with a photo he has looked at | planned |
-| S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8; Phase 2, Task 8 | `tests/test_cord_clamp.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
+| S11 | Dan holds the PLA look-test parts up in the corner: the feet on the rail, the carrier and arm socket on it, the arm, the shade and the light | he decides whether it looks right, before any PETG is printed; nothing but the dowels and the parts shows | Phase 2, Task 11 | Dan's verdict on Phase 2's Q&A page | planned |
+| S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 7 | `tests/test_wall_block.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
+| S13 | the PETG rail parts hold for 48 hours, mounted as they will be: the arm at 24 inches with three times the light's weight at its tip, and a second carrier with 12 kg hung from it (three times two watered small planters) | the arm's tilt at its socket adds under 1 mm at the tip, neither carrier slips 2 mm on the rail, the tip's total sag, the wood's creep included, grows by under 5 mm, and nothing cracks or pulls out | Phase 2, Task 12 | the load-test log on the parts' pages | planned |
+| S14 | the rail light is installed and bumped | the arm doesn't turn on the rail or droop, the feet stay on their screws, and the cord runs along the arm and down behind the rail | Phase 2, Task 13 | Dan's check, with a photo he has looked at | planned |
+| S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8; Phase 2, Task 7 | `tests/test_cord_clamp.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
-| S26 | Dan prints the coupon on its edge and tries his dowel in each hole (S09's Phase 2 part) | the hole his dowel goes into by hand, all the way, gives the dowel parts' `clearance` | Phase 2, Task 1 | his result on Phase 2's Q&A page | planned |
-| S27 | the light hangs by its cord from the arm tip's stem for 48 hours, three times its weight (ruled at the phase start: the stem's grip is a cord clamp; Phase 2 Q&A, decided without Dan 2) | the cord slips under 2 mm at its mark | Phase 2, Task 10 | the load test's slip measurements | planned |
-| S28 | a rail part is built at 3/4 inch, 25 mm or 1 inch | each cup and socket takes its dowel with the coupon's clearance, the carrier's open back takes the rail, its wedge fills the gap, the arm's socket is at least 51 mm deep, and each wedge seats inside on a dowel 0.5 mm over or under | Phase 2, Tasks 3 to 6 | the parts' tests | planned |
-| S29 | Dan pushes the carrier onto the mounted rail, slides the arm socket down its dovetail and pushes both wedges in | the joint doesn't slide or turn by hand, comes apart when the wedges are tapped out, and no bolt or screw shows | Phase 2, Task 9 | Dan's check on Phase 2's Q&A page | planned |
-| S30 | the light runs for 14 hours, the timer's longest, inside the PETG shade | the shade doesn't soften, warp or discolour, and is nowhere hotter than 60 °C | Phase 2, Tasks 1 and 10 | the temperatures in the load-test log | planned |
-| S31 | a visitor opens any page of the site | their browser fetches nothing from another host: no web font, script or style sheet | Phase 2, Task 2 | `tests/test_offsite.py`; `make docs` | planned |
-| S32 | someone lifts a carrier, the arm or a planter on the mounted rail | the rail doesn't rise, and both feet stay on the wall | Phase 2, Tasks 3 and 11 | `tests/test_rail_feet.py` (the floor's screw); Dan's check at the install | planned |
+| S26 | Dan prints the coupon on its edge and tries his dowel in each hole (S09's Phase 2 part) | the hole his dowel goes into by hand, all the way, gives the dowel parts' `clearance` | Phase 2, Task 9 | his result on Phase 2's Q&A page | planned |
+| S27 | the light hangs by its cord from the arm tip's stem for 48 hours, three times its weight (ruled at the phase start: the stem's grip is a cord clamp; Phase 2 Q&A, decided without Dan 2) | the cord slips under 2 mm at its mark | Phase 2, Task 12 | the load test's slip measurements | planned |
+| S28 | a rail part is built at 3/4 inch, 25 mm or 1 inch | each cup and socket takes its dowel with the coupon's clearance, the carrier's open back takes the rail, its wedge fills the gap, the arm's socket is at least 51 mm deep, and each wedge seats inside on a dowel 0.5 mm over or under | Phase 2, Tasks 2 to 5 | the parts' tests | planned |
+| S29 | Dan pushes the carrier onto the mounted rail, slides the arm socket down its dovetail and pushes both wedges in | the joint doesn't slide or turn by hand, comes apart when the wedges are tapped out, and no bolt or screw shows | Phase 2, Task 11 | Dan's check on Phase 2's Q&A page | planned |
+| S30 | the light runs for 14 hours, the timer's longest, inside the PETG shade | the shade doesn't soften, warp or discolour, and is nowhere hotter than 60 °C | Phase 2, Tasks 9 and 12 | the temperatures in the load-test log | planned |
+| S31 | a visitor opens any page of the site | their browser fetches nothing from another host: no web font, script or style sheet | Phase 2, Task 1 | `tests/test_offsite.py`; `make docs` | planned |
+| S32 | someone lifts a carrier, the arm or a planter on the mounted rail | the rail doesn't rise, and both feet stay on the wall | Phase 2, Tasks 2 and 13 | `tests/test_rail_feet.py` (the floor's screw); Dan's check at the install | planned |
 
 ### Later
 
@@ -251,12 +251,12 @@ replace it.
 
 - **[Dan] The light's weight, its cord and the wall.** The numbers assume 1 kg; one listing gives
   the Barrina kit, cord and timer included, as 1.7 lb (0.77 kg). The clamp's `cord_d` is a 6 mm
-  guess, and the cord may be flat. Phase 2's first task asks.
+  guess, and the cord may be flat. Phase 2's measuring task (Task 9) asks.
 - **[Dan] SolidCraft's save folder:** add this repo to the SolidCraft MCP server's `--allow-path`
   so live sessions can save here. Headless builds don't need it.
 - **[Dan] The bulb:** its diameter, height and socket, its weight with its cord and timer, and its
   hottest surface after an hour on; the shade's size and the load test wait on them (Phase 2's
-  first task). His changes to the parts are settled (Phase 2 Q&A 1 to 4).
+  measuring task, Task 9). His changes to the parts are settled (Phase 2 Q&A 1 to 4).
 - **[Dan] His commits' author address:** the commits carry his personal email, public in the
   history; a GitHub noreply address would keep it out of future commits (Phase 1 end council,
   security 4).
@@ -305,3 +305,7 @@ replace it.
   the tip's total sag a looser 5 mm, after the builder check found the wood's own creep could use
   up a 3 mm limit (Phase 2 Q&A 5).
 - 2026-11-06: the revision approved as written (Phase 2 Q&A 6).
+- 2026-11-06: everything on `phase-2` merged to `main` mid-phase, so Dan can see it rendered (Phase 2
+  Q&A 8, `4e15845`; #2).
+- 2026-11-06: the rail's parts are built at placeholder sizes and published first, then retuned to
+  Dan's measurements and published again (Phase 2 Q&A 9).
