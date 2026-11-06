@@ -94,9 +94,21 @@ def test_a_model_with_sizes_offers_an_stl_for_each(repo: Path) -> None:
     assert "- [hook.stl](hook/hook.stl): the mesh to slice, for 1 in" in text
     assert "- [hook-3-4in.stl](hook/hook-3-4in.stl): for 3/4 in" in text
     assert "- [hook-25mm.stl](hook/hook-25mm.stl): for 25 mm" in text
-    assert "change `dowel_d` under Parameters" in text
+    assert "change `dowel_d` under Parameters; every other dimension follows." in text
     files = sorted(p.name for p in (repo / "website" / "models" / "hook").iterdir())
     assert files == ["hook-25mm.stl", "hook-3-4in.stl", "hook.png", "hook.sc", "hook.stl"]
+
+
+def test_the_size_note_names_clearance_when_the_design_has_it(repo: Path) -> None:
+    folder = add_model(repo, meta=SIZED)
+    clearance = {"name": "clearance", "expression": "0.4 mm", "unit": "mm", "value": 0.4}
+    evaluation = EVAL | {"params": [*EVAL["params"], clearance]}
+    (folder / "hook.eval.json").write_text(json.dumps(evaluation), encoding="utf-8")
+    assert (
+        "**For another size:** open the `.sc` in SolidCraft and change `dowel_d` under "
+        "Parameters, and `clearance` for your printer's fit (the fit-test coupon finds it); "
+        "every other dimension follows."
+    ) in page(repo)
 
 
 def test_a_model_with_sizes_names_the_size_it_is_saved_at(repo: Path, capsys) -> None:

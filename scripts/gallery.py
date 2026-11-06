@@ -114,7 +114,8 @@ def measurements(evaluation: dict) -> list[tuple[str, str]]:
     return rows
 
 
-def downloads(model: Model, meta: dict) -> list[str]:
+def downloads(model: Model, meta: dict, params: set[str]) -> list[str]:
+    """The Files section; params, the design's parameter names, says whether to name clearance."""
     slug = model.slug
     lines = ["## Files", ""]
     if meta["sizes"]:
@@ -133,9 +134,12 @@ def downloads(model: Model, meta: dict) -> list[str]:
     if meta["sizes"]:
         names = sorted({name for changes in meta["sizes"].values() for name in changes})
         changed = " and ".join(f"`{name}`" for name in names)
+        fit = ""
+        if "clearance" in params and "clearance" not in names:
+            fit = ", and `clearance` for your printer's fit (the fit-test coupon finds it)"
         lines += [
             "**For another size:** open the `.sc` in SolidCraft and change "
-            f"{changed} under Parameters; every other dimension follows.",
+            f"{changed} under Parameters{fit}; every other dimension follows.",
             "",
         ]
     return lines
@@ -188,7 +192,7 @@ def page(model: Model, meta: dict, evaluation: dict) -> str:
             value = f"{param['value']:g} {param.get('unit', '')}".strip()
             lines.append(f"| `{param['name']}` | `{param['expression']}` | {value} |")
         lines.append("")
-    lines += downloads(model, meta)
+    lines += downloads(model, meta, {param["name"] for param in params})
     lines += ["## Licence", "", LICENCE, ""]
     return "\n".join(lines)
 
