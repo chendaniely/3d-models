@@ -1,6 +1,6 @@
 {
   "design": "rail-arm-tip.sc",
-  "sha256": "4d8ab5128b9d0da4df685cc65a3d85c524c7129e846bcc7d996c8b8433639149",
+  "sha256": "b5f669a38cd86067f1c39a33b421b9fad418c7b4f8f98ed649091117442c371f",
   "sizes": {
     "3/4 in": {
       "dowel_d": "19.05 mm"
@@ -11,10 +11,10 @@
   },
   "solidcraft_cli": "solidcraft-cli 0.30.1",
   "built": {
-    "rail-arm-tip.stl": "769ccee8d431407e09da70fe3873789356f94f569c865a2487209d6ac6c4c7dd",
+    "rail-arm-tip.stl": "e7cc526a06e964aefb8163b120d70acbbd08d8e9644365ede28b1d239ea1028d",
     "rail-arm-tip.png": "4c0a259e68cd803177a629e8c09ccb581b9e448d8f5d907732ff3846245079d9",
-    "rail-arm-tip.eval.json": "55d3ab3d45bdc48a41c0df69fd74d21e397735496fe1c62eb3867330179d0c95",
-    "rail-arm-tip-3-4in.stl": "4f97de29f0bd21584a1d96f6c40b4e592e156f1742c33b75182063e4a6f30184",
-    "rail-arm-tip-25mm.stl": "7b4d7f47e1fa2908fc5e196fa44f81d16f21096cd59ed93c7760bee1421d8e10"
+    "rail-arm-tip.eval.json": "0652465445c5cf775e4b71ddb4f74994c76b03e57ef86974cf506ce3e56f9218",
+    "rail-arm-tip-3-4in.stl": "a28627873e96c35fc06584d0537cc0321bab824d99ca179089f611c82a44f980",
+    "rail-arm-tip-25mm.stl": "7fc0cb5bee34ad49d29da4bacc6c3ff210c5ae422c8e4066d45732f2586816cd"
   }
 }

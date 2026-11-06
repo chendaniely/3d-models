@@ -420,11 +420,11 @@
       "corner": [
         "stem_x - stem_d / 2 - 1 mm",
         "-slot_w / 2",
-        "foot_z + grip_l"
+        "foot_z + grip_l + 0.25 mm"
       ],
       "length": "stem_d / 2 + 1 mm",
       "width": "slot_w",
-      "height": "stem_l - grip_l + 2 mm",
+      "height": "stem_l - grip_l + 1.75 mm",
       "operation": "cut"
     },
     {
