@@ -37,6 +37,32 @@ You need [uv](https://docs.astral.sh/uv/), [Quarto](https://quarto.org/) 1.11.6,
 [gitleaks](https://github.com/gitleaks/gitleaks) and, for `make models`, SolidCraft's
 `solidcraft-cli` 0.30.1.
 
+## Adding a model
+
+1. Make a folder `models/<slug>/`, its name lowercase words joined by hyphens: it becomes the
+   page's address.
+2. Save the design there as `<slug>.sc`, in SolidCraft's plain-text JSON format where you can, so
+   a diff can read it (a design saved in the default zip format builds too).
+3. Write `models/<slug>/model.yml`:
+
+   ```yaml
+   title: Wall hook
+   summary: One sentence, shown on the gallery's card.
+   status: designed          # designed, printed or in use
+   material: PETG
+   size: 1 in                # with sizes below: the size the design is saved at
+   sizes:                    # optional: one more STL for each, by changing parameters
+     3/4 in: {dowel_d: 19.05 mm}
+   print:
+     Orientation: flat on its back
+     Supports: "no"          # quote yes and no, or YAML reads them as true and false
+   notes: |
+     Anything someone printing it should know.
+   ```
+
+4. `make models`, then `make check`, and commit the folder. A photo of a print goes in
+   `models/<slug>/photos/`, stripped first: `uv run --frozen scripts/privacy.py strip <file>`.
+
 ## How it's built
 
 The design spec, the phase plans and every decision are in `docs/superpowers/`, and on the site's

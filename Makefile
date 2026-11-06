@@ -36,6 +36,7 @@ privacy: ## Fail on image metadata, a photo format the check can't read, or a ho
 
 docs: ## Render the site into website/_site, failing on a broken link
 	uv run --frozen scripts/sitedocs.py
+	uv run --frozen scripts/gallery.py
 	@set -o pipefail; quarto render website 2>&1 | tee website/.render.log
 	@if grep -q 'Unable to resolve link target' website/.render.log; then \
 	  echo "docs: an unresolved link, above"; exit 1; fi

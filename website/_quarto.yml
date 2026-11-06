@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - assets/
+    - models/*/
 
 website:
   title: "3d-models"
@@ -12,6 +15,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: models.qmd
+        text: Models
       - href: architecture.qmd
         text: Architecture
       - href: design.qmd

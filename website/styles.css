@@ -25,6 +25,24 @@ a {
   color: var(--clay);
 }
 
+.stl-viewer {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bone);
+  cursor: grab;
+}
+
+.stl-viewer-failed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: auto;
+  padding: 1rem;
+  cursor: default;
+}
+
 .mermaid-zoomable {
   cursor: zoom-in;
 }
