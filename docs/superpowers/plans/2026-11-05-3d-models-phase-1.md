@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 2: `make models` and `make models-check`, open.
+**Now:** Task 3: The privacy guard, `make privacy`, open.
 
 ***
 
@@ -385,8 +385,8 @@ Co-Authored-By: <the model's own line>
   `measured(model) -> dict`, `params(model) -> dict[str, float]`, `body(model, name) -> dict`.
   `SOLIDCRAFT_CLI` names the CLI.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the fixtures and the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the fixtures and the failing tests.**
 
 `tests/conftest.py`:
 
@@ -637,9 +637,9 @@ def test_check_ignores_a_folder_without_a_design(repo: Path, capsys) -> None:
     assert "0 models" in capsys.readouterr().out
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
   `ModuleNotFoundError: No module named 'models'`.
-- [ ] **Step 3: Write the builder.**
+- [x] **Step 3: Write the builder.**
 
 `scripts/models.py`:
 
@@ -885,9 +885,9 @@ check: test test-utc lint models-check leaks ## Everything CI runs, and the suit
 
   In `.github/workflows/ci.yml`'s `tests` job, after `- run: make lint`, add
   `      - run: make models-check`.
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   lint clean, `0 models, every build matches its design`, `no leaks found`.
-- [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 build changed designs and fail on a stale build
@@ -910,7 +910,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add scripts/models.py tests/conftest.py tests/test_models.py Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 6: Review, look forward, close.**
+- [x] **Step 6: Review, look forward, close.**
 
   - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Tasks 5 to 8 consume `find_models`, `Model`, `sizes` and the conftest helpers.
