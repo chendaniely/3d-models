@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 8: The PR.
+**Now:** Phase end, step 9: After the merge.
 
 ***
 
@@ -4155,7 +4155,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 - [x] **7. The changelog and status:** a dated `CHANGELOG.md` entry; the README's status line says
   the gallery is live; the spec's status line `Phase 1 PR open (#N)`, N filled once step 8 opens
   it.
-- [ ] **8. The PR:** title `chore(repo): 🤖 merge Phase 1: the repo and the first models`; the
+- [x] **8. The PR:** title `chore(repo): 🤖 merge Phase 1: the repo and the first models`; the
   body summarizes each task, the council's findings and their fate, links the retro, lists every
   file no scan can read (`git log --format= --numstat origin/main..HEAD | awk '$1 == "-" { print
   "not scanned, check by eye: " $3 }'`), and ends `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase end`. Title and body in
