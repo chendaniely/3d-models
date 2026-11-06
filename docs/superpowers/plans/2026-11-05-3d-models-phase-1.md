@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 5: The gallery and the 3D viewer, open.
+**Now:** Task 6: The dowel fit-test coupon, open.
 
 ***
 
@@ -1935,8 +1935,8 @@ Co-Authored-By: <the model's own line>
   On the site: `website/models/<slug>.qmd` (generated, git-ignored) and the
   `<div class="stl-viewer" data-stl="<slug>/<slug>.stl">` the viewer mounts on.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_gallery.py`:
 
@@ -2108,9 +2108,9 @@ def test_write_names_a_model_never_built(repo: Path, capsys) -> None:
     assert "gallery: models/hook: no hook.eval.json; run make models" in capsys.readouterr().err
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
   `ModuleNotFoundError: No module named 'gallery'`.
-- [ ] **Step 3: Write the gallery and the viewer.**
+- [x] **Step 3: Write the gallery and the viewer.**
 
 `scripts/gallery.py`:
 
@@ -2565,10 +2565,10 @@ docs: ## Render the site into website/_site, failing on a broken link
    `models/<slug>/photos/`, stripped first: `uv run --frozen scripts/privacy.py strip <file>`.
 ````
 
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   `gallery: 0 model pages in website/models/`, and the render clean but for one WARN that the
   Models listing matches no files, until Task 6 adds the coupon.
-- [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(site): 🤖 a gallery page per model, with a 3D viewer
@@ -2593,7 +2593,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add scripts/gallery.py tests/test_gallery.py website/models.qmd website/_stl-viewer.html website/assets/stl-viewer.js website/assets/three website/_quarto.yml website/styles.css website/_overview.qmd Makefile README.md`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 6: Review, look forward, close.** The review includes the viewer seen working: once
+- [x] **Step 6: Review, look forward, close.** The review includes the viewer seen working: once
   Task 6's coupon is in, or with a scratch model not committed, `make docs`, serve `website/_site`
   on a free local port, open a model's page, and confirm its `.stl-viewer` has
   `data-loaded="true"`, a canvas, and three.js fetched from `assets/three/`; record it under
