@@ -133,7 +133,7 @@ def test_check_names_a_missing_built_file(repo: Path, fake_cli: Path, capsys, mi
 def test_check_names_a_folder_that_cannot_be_a_url(repo: Path, capsys, slug: str) -> None:
     add_design(repo, slug)
     assert models.main(["check"], root=repo) == 1
-    assert f"stale: models/{slug}: its folder name must be lowercase words joined by hyphens" in (
+    assert f"models: models/{slug}: its folder name must be lowercase words joined by hyphens" in (
         capsys.readouterr().err
     )
 
@@ -144,7 +144,7 @@ def test_check_names_a_design_not_named_after_its_folder(repo: Path, capsys, nam
     folder.mkdir()
     (folder / name).write_text("{}", encoding="utf-8")
     assert models.main(["check"], root=repo) == 1
-    assert f"stale: models/hook: the design must be hook.sc alone, not {name}" in (
+    assert f"models: models/hook: the design must be hook.sc alone, not {name}" in (
         capsys.readouterr().err
     )
 
@@ -153,7 +153,50 @@ def test_check_names_unreadable_sizes(repo: Path, capsys) -> None:
     design = add_design(repo, "clamp")
     (design.parent / "model.yml").write_text("sizes: [3/4 in]\n", encoding="utf-8")
     assert models.main(["check"], root=repo) == 1
-    assert "'sizes' must map each size to parameter changes" in capsys.readouterr().err
+    err = capsys.readouterr().err
+    assert "models: models/clamp/model.yml: 'sizes' must map each size to parameter changes" in err
+    assert "stale:" not in err
+
+
+@pytest.mark.parametrize(
+    ("text", "message"),
+    [
+        ("sizes: [unclosed\n", "models: models/clamp/model.yml isn't valid YAML: "),
+        ("- a list, not fields\n", "models: models/clamp/model.yml must be a mapping of fields\n"),
+    ],
+)
+def test_check_names_a_model_yml_it_cannot_read(
+    repo: Path, capsys, text: str, message: str
+) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(text, encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    err = capsys.readouterr().err
+    assert message in err
+    assert "stale:" not in err
+
+
+def test_read_yml_reads_no_model_yml_as_no_fields(repo: Path) -> None:
+    design = add_design(repo, "clamp")
+    assert models.read_yml(models.Model(design.parent)) == {}
+
+
+@pytest.mark.parametrize(
+    ("slug", "yml", "message"),
+    [
+        ("Wall Hook", None, "models: models/Wall Hook: its folder name must be lowercase"),
+        ("clamp", "sizes: [unclosed\n", "models: models/clamp/model.yml isn't valid YAML"),
+    ],
+)
+def test_build_refuses_an_invalid_model_instead_of_building_it(
+    repo: Path, fake_cli: Path, capsys, slug: str, yml: str | None, message: str
+) -> None:
+    design = add_design(repo, slug)
+    if yml:
+        (design.parent / "model.yml").write_text(yml, encoding="utf-8")
+    assert models.main(["build"], root=repo) == 1
+    assert message in capsys.readouterr().err
+    assert calls(fake_cli) == []
 
 
 def test_check_ignores_a_folder_without_a_design(repo: Path, capsys) -> None:

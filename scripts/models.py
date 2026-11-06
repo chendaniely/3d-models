@@ -2,9 +2,11 @@
 
     uv run scripts/models.py build [SLUG ...]
         rebuild each model whose design, sizes or built files changed since its build.json
-        (needs solidcraft-cli)
+        (needs solidcraft-cli); refuse, building nothing, while a model is invalid
     uv run scripts/models.py check
-        fail, naming each model, when a build is missing or stale, or a design is misnamed
+        fail, naming each model, when it is invalid (a folder name that can't be a URL, a
+        misnamed or extra design, a model.yml or sizes it can't read: no build fixes these) or
+        stale (a build is missing or doesn't match its design: make models fixes it)
 
 A model is a folder models/<slug>/ holding the design <slug>.sc. A build writes, beside it:
 <slug>.stl, <slug>.png, <slug>.eval.json (solidcraft-cli eval's measurements), one STL per extra
@@ -78,13 +80,27 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def sizes(model: Model) -> dict[str, dict[str, str]]:
-    """The extra sizes model.yml lists: {'3/4 in': {'dowel_d': '19.05 mm'}, ...}."""
+def read_yml(model: Model) -> dict:
+    """model.yml's fields, {} when there's no model.yml; a ValueError, naming it, when it can't
+    be read as a mapping of fields."""
     path = model.folder / "model.yml"
     if not path.is_file():
         return {}
-    meta = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    listed = meta.get("sizes") or {}
+    where = f"models/{model.slug}/model.yml"
+    try:
+        meta = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as error:
+        raise ValueError(f"{where} isn't valid YAML: {error}") from error
+    if meta is None:
+        return {}
+    if not isinstance(meta, dict):
+        raise ValueError(f"{where} must be a mapping of fields")
+    return meta
+
+
+def sizes(model: Model) -> dict[str, dict[str, str]]:
+    """The extra sizes model.yml lists: {'3/4 in': {'dowel_d': '19.05 mm'}, ...}."""
+    listed = read_yml(model).get("sizes") or {}
     if not isinstance(listed, dict) or not all(
         isinstance(changes, dict) and all(isinstance(v, str) for v in changes.values())
         for changes in listed.values()
@@ -102,17 +118,26 @@ def outputs(model: Model) -> list[Path]:
     ]
 
 
-def staleness(model: Model) -> str | None:
-    """Why the model needs a build, or None when its built files match its design."""
+def invalid(model: Model) -> str | None:
+    """What's wrong with the model that no build can fix, starting with where, or None."""
+    where = f"models/{model.slug}"
     if not SLUG.fullmatch(model.slug):
-        return "its folder name must be lowercase words joined by hyphens, as the page's URL"
+        return (
+            f"{where}: its folder name must be lowercase words joined by hyphens, as the page's URL"
+        )
     designs = sorted(p.name for p in model.folder.iterdir() if p.suffix.lower() == ".sc")
     if designs != [model.design.name]:
-        return f"the design must be {model.design.name} alone, not {', '.join(designs)}"
+        return f"{where}: the design must be {model.design.name} alone, not {', '.join(designs)}"
     try:
-        wanted = outputs(model)
+        sizes(model)
     except ValueError as error:
         return str(error)
+    return None
+
+
+def staleness(model: Model) -> str | None:
+    """Why a valid model needs a build, or None when its built files match its design."""
+    wanted = outputs(model)
     missing = [path.name for path in wanted if not path.is_file()]
     if not model.record.is_file():
         missing.append(model.record.name)
@@ -180,6 +205,11 @@ def command_build(root: Path, slugs: list[str]) -> int:
         print(f"models: no such model: {', '.join(unknown)}", file=sys.stderr)
         return 2
     chosen = [m for m in models if not slugs or m.slug in slugs]
+    refused = [reason for m in chosen if (reason := invalid(m)) is not None]
+    for reason in refused:
+        print(f"models: {reason}", file=sys.stderr)
+    if refused:
+        return 1
     built = 0
     for model in chosen:
         reason = staleness(model)
@@ -198,10 +228,14 @@ def command_build(root: Path, slugs: list[str]) -> int:
 
 def command_check(root: Path) -> int:
     models = find_models(root)
-    stale = [(m, reason) for m in models if (reason := staleness(m)) is not None]
+    broken = {m.slug: reason for m in models if (reason := invalid(m)) is not None}
+    for reason in broken.values():
+        print(f"models: {reason}", file=sys.stderr)
+    valid = [m for m in models if m.slug not in broken]
+    stale = [(m, reason) for m in valid if (reason := staleness(m)) is not None]
     for model, reason in stale:
         print(f"stale: models/{model.slug}: {reason}; run make models", file=sys.stderr)
-    if stale:
+    if broken or stale:
         return 1
     print(f"{len(models)} models, every build matches its design")
     return 0
@@ -212,7 +246,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     build_parser = sub.add_parser("build", help="rebuild each changed model")
     build_parser.add_argument("slugs", nargs="*", metavar="SLUG")
-    sub.add_parser("check", help="fail when a model's build is missing or stale")
+    sub.add_parser("check", help="fail when a model is invalid, or its build missing or stale")
     args = parser.parse_args(argv)
     if args.command == "build":
         return command_build(root, args.slugs)

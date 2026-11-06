@@ -16,9 +16,7 @@ import shutil
 import sys
 from pathlib import Path
 
-import yaml
-
-from models import ROOT, Model, find_models, sizes
+from models import ROOT, Model, find_models, read_yml, sizes
 
 REPO_URL = "https://github.com/chendaniely/3d-models"
 LICENCE = (
@@ -40,11 +38,9 @@ def read_meta(model: Model) -> dict:
         raise ModelError(f"models/{model.slug}: no model.yml")
     where = f"models/{model.slug}/model.yml"
     try:
-        meta = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    except yaml.YAMLError as error:
-        raise ModelError(f"{where} isn't valid YAML: {error}") from error
-    if not isinstance(meta, dict):
-        raise ModelError(f"{where} must be a mapping of fields")
+        meta = read_yml(model)
+    except ValueError as error:
+        raise ModelError(str(error)) from error
     for field in ("title", "summary", "status", "material"):
         if not isinstance(meta.get(field), str) or not meta[field].strip():
             raise ModelError(f"{where}: '{field}' must be a non-empty string")
