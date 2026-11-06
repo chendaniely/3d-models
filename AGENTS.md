@@ -1,1 +1,1 @@
-Follow plan-driven-development: kickoff is in progress; the setup answers and open items are in docs/superpowers/specs/2026-11-05-3d-models-qa.md, and the spec, docs/superpowers/specs/2026-11-05-3d-models-design.md, is not written yet.
+Follow plan-driven-development: kickoff is in progress, and the spec is docs/superpowers/specs/2026-11-05-3d-models-design.md.
