@@ -3,7 +3,8 @@
     uv run scripts/privacy.py check
         fail, naming each file, when a file git would commit is an image carrying any metadata
         but a colour profile, is a photo or video format this check can't read inside, or holds
-        a home-folder path (/Users/<name>/ or /home/<name>/)
+        a home-folder path (/Users/<name>/ or /home/<name>/); then the same for every file in
+        the history any ref reaches, since a push sends that too
     uv run scripts/privacy.py strip FILE ...
         rewrite each JPEG, PNG or WebP upright, with no metadata but its colour profile
 
@@ -23,7 +24,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
+from io import BytesIO
+from pathlib import Path, PurePath
 
 from PIL import Image, ImageOps
 
@@ -52,13 +54,14 @@ def committable(root: Path) -> list[Path]:
     return sorted({root / name for name in listed if name and (root / name).is_file()})
 
 
-def image_problem(path: Path) -> str | None:
-    """Why this image can't be committed, or None when it carries nothing but a colour profile."""
+def image_problem(path: PurePath, data: bytes | None = None) -> str | None:
+    """Why this image can't be committed, or None when it carries nothing but a colour profile.
+    data, when given, is the image itself (a blob from the history), read in place of path."""
     suffix = path.suffix.lower()
     if suffix in UNREADABLE:
         return f"a {suffix} file, which this check can't read inside; convert it to JPEG first"
     try:
-        with Image.open(path) as image:
+        with Image.open(path if data is None else BytesIO(data)) as image:
             image.load()
             if getattr(image, "n_frames", 1) > 1:
                 return "more than one frame"
@@ -77,7 +80,11 @@ def image_problem(path: Path) -> str | None:
 
 def path_problem(path: Path) -> str | None:
     """Where this file holds a home-folder path, or None. The path itself is never printed."""
-    data = path.read_bytes()
+    return text_problem(path.read_bytes())
+
+
+def text_problem(data: bytes) -> str | None:
+    """Where these bytes hold a home-folder path, or None. The path itself is never printed."""
     if not HOME.search(data):
         return None
     try:
@@ -98,6 +105,50 @@ def problems(root: Path) -> list[tuple[Path, str]]:
         reason = path_problem(path)
         if reason:
             found.append((path, reason))
+    return found
+
+
+def history(root: Path) -> list[tuple[str, str, bytes]]:
+    """Every file in the history any ref reaches, as (path, blob sha, content); a blob kept
+    under several paths is listed once, under the first path git finds it at."""
+    listed = subprocess.run(
+        ["git", "rev-list", "--objects", "--all"], cwd=root, capture_output=True, check=True
+    ).stdout
+    batch = subprocess.run(
+        ["git", "cat-file", "--batch=%(objectname) %(objecttype) %(objectsize) %(rest)"],
+        input=listed, cwd=root, capture_output=True, check=True,
+    ).stdout  # fmt: skip
+    blobs, at = [], 0
+    while at < len(batch):
+        end = batch.index(b"\n", at)
+        sha, kind, *rest = batch[at:end].split(b" ", 3)
+        start = end + 1
+        if kind == b"missing":
+            at = start
+            continue
+        stop = start + int(rest[0])
+        name = rest[1] if len(rest) > 1 else b""
+        if kind == b"blob" and name:
+            blobs.append((name.decode("utf-8", "replace"), sha.decode(), batch[start:stop]))
+        at = stop + 1  # each object's content ends with a newline
+    return blobs
+
+
+def history_problems(root: Path, reported: dict[str, bytes]) -> list[tuple[str, str, str]]:
+    """(path, blob sha, reason) for each file in the history that couldn't be committed now,
+    leaving out a file the working-tree check already named with this same content."""
+    found = []
+    for name, sha, data in history(root):
+        if reported.get(name) == data:
+            continue
+        path = PurePath(name)
+        if path.suffix.lower() in READABLE | UNREADABLE:
+            reason = image_problem(path, data)
+            if reason:
+                found.append((name, sha, reason))
+        reason = text_problem(data)
+        if reason:
+            found.append((name, sha, reason))
     return found
 
 
@@ -128,9 +179,18 @@ def command_check(root: Path) -> int:
     found = problems(root)
     for path, reason in found:
         print(f"privacy: {path.relative_to(root)}: {reason}", file=sys.stderr)
-    if found:
+    reported = {path.relative_to(root).as_posix(): path.read_bytes() for path, _ in found}
+    in_history = history_problems(root, reported)
+    for name, sha, reason in in_history:
+        print(f"privacy: {name} (in history, {sha[:7]}): {reason}", file=sys.stderr)
+    if in_history:
+        print(
+            "privacy: a push sends the history too; rewriting history to remove it is Dan's call",
+            file=sys.stderr,
+        )
+    if found or in_history:
         return 1
-    print("privacy: no image metadata, unreadable photo format or home-folder path")
+    print("privacy: no image metadata, unreadable photo format or home-folder path, in history too")
     return 0
 
 

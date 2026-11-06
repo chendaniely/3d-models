@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -38,6 +39,15 @@ def photo(path: Path, *, gps: bool = False, orientation: int | None = None, **sa
 def check(repo: Path, capsys) -> tuple[int, str]:
     code = privacy.main(["check"], root=repo)
     return code, capsys.readouterr().err
+
+
+def commit(repo: Path, *paths: str) -> None:
+    """Stage these paths, removals included, and commit them."""
+    subprocess.run(["git", "add", "--", *paths], cwd=repo, check=True)
+    subprocess.run(
+        ["git", "-c", "user.name=t", "-c", "user.email=t@example.invalid", "commit", "-qm", "x"],
+        cwd=repo, check=True,
+    )  # fmt: skip
 
 
 @pytest.mark.parametrize("name", ["print.jpg", "print.png", "print.webp"])
@@ -205,3 +215,43 @@ def test_check_names_a_file_that_is_not_an_image(repo: Path, capsys) -> None:
     code, err = check(repo, capsys)
     assert code == 1
     assert "privacy: fake.jpg: unreadable as an image" in err
+
+
+def test_check_names_a_photo_stripped_after_it_was_committed(repo: Path, capsys) -> None:
+    path = photo(repo / "models" / "coupon" / "photos" / "print.jpg", gps=True)
+    commit(repo, "models")
+    privacy.strip(path)
+    commit(repo, "models")
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert "privacy: models/coupon/photos/print.jpg (in history, " in err
+    assert "): EXIF metadata" in err
+    assert "privacy: models/coupon/photos/print.jpg: " not in err  # the file itself is clean now
+
+
+def test_check_names_a_home_folder_path_committed_then_removed(repo: Path, capsys) -> None:
+    (repo / "notes.md").write_text(f"saved in {HOME}git/x\n", encoding="utf-8")
+    commit(repo, "notes.md")
+    (repo / "notes.md").unlink()
+    commit(repo, "notes.md")
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert "privacy: notes.md (in history, " in err
+    assert "): a home-folder path on line 1" in err
+    assert "rewriting history to remove it is Dan's call" in err
+    assert "someone" not in err
+
+
+def test_check_passes_a_clean_history(repo: Path, capsys) -> None:
+    photo(repo / "models" / "coupon" / "photos" / "print.jpg")
+    (repo / "notes.md").write_text("first\n", encoding="utf-8")
+    commit(repo, "models", "notes.md")
+    (repo / "notes.md").write_text("second\n", encoding="utf-8")
+    commit(repo, "notes.md")
+    assert check(repo, capsys) == (0, "")
+
+
+def test_check_names_a_committed_file_once_when_it_is_still_there(repo: Path, capsys) -> None:
+    (repo / "notes.md").write_text(f"saved in {HOME}git/x\n", encoding="utf-8")
+    commit(repo, "notes.md")
+    assert check(repo, capsys) == (1, "privacy: notes.md: a home-folder path on line 1\n")
