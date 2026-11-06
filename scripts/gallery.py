@@ -18,6 +18,7 @@ from pathlib import Path
 
 from models import ROOT, Model, find_models, read_yml, sizes
 from privacy import READABLE as PHOTOS
+from sitedocs import escaped
 
 REPO_URL = "https://github.com/chendaniely/3d-models"
 LICENCE = (
@@ -25,6 +26,7 @@ LICENCE = (
     f"share it, crediting chendaniely and linking to <{REPO_URL}>; don't sell it or prints of it."
 )
 STATUSES = ("designed", "printed", "in use")
+FREE_TEXT = ("title", "summary", "status", "material", "notes")  # escaped for Quarto, as sitedocs
 DENSITY_G_CM3 = {"PLA": 1.24, "PETG": 1.27}
 
 
@@ -146,7 +148,9 @@ def downloads(model: Model, meta: dict, params: set[str]) -> list[str]:
 
 
 def page(model: Model, meta: dict, evaluation: dict) -> str:
+    meta = meta | {field: escaped(meta[field]) for field in FREE_TEXT if field in meta}
     slug = model.slug
+    alt = meta["title"].replace("[", "\\[").replace("]", "\\]")  # a bracket would end it early
     lines = [
         "---",
         f"title: {quoted(meta['title'])}",
@@ -162,7 +166,7 @@ def page(model: Model, meta: dict, evaluation: dict) -> str:
         f"Drag to turn it, scroll to zoom. **Status:** {meta['status']}. "
         f"**Material:** {meta['material']}.",
         "",
-        f"![{meta['title']}, as SolidCraft draws it]({slug}/{slug}.png)"
+        f"![{alt}, as SolidCraft draws it]({slug}/{slug}.png)"
         f"{{fig-alt={quoted(meta['title'] + ', seen from above at an angle')}}}",
         "",
     ]

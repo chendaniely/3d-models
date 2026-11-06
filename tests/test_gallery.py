@@ -133,6 +133,32 @@ def test_each_photo_s_alt_text_is_its_name_in_words(repo: Path) -> None:
     assert "![on the wall](hook/photos/on_the-wall.png)" in page(repo)
 
 
+SHORTCODE = "{" * 2 + "< meta title >" + "}" * 2  # spelt in parts, so a plan can quote this file
+
+
+def test_notes_holding_a_shortcode_and_a_cell_fence_come_out_escaped(repo: Path) -> None:
+    notes = f"notes: |\n  See {SHORTCODE}.\n\n  ```{{python}}\n  print(1)\n  ```\n"
+    add_model(repo, meta=META.replace("notes: Hang it on a dowel.\n", notes))
+    text = page(repo)
+    assert SHORTCODE not in text
+    assert "See " + "{" * 2 + "</* meta title */>" + "}" * 2 + "." in text
+    assert "```{python}" not in text
+    assert "```python\nprint(1)\n```" in text
+
+
+def test_the_other_free_text_comes_out_escaped(repo: Path) -> None:
+    meta = META.replace("title: Test hook", f"title: Hook {SHORTCODE}")
+    meta = meta.replace("summary: A hook for testing.", f"summary: A hook, {SHORTCODE}.")
+    meta = meta.replace("material: PETG", f"material: PETG {SHORTCODE}")
+    add_model(repo, meta=meta)
+    assert SHORTCODE not in page(repo)
+
+
+def test_a_bracket_in_the_title_stays_inside_the_picture_s_alt_text(repo: Path) -> None:
+    add_model(repo, meta=META.replace("title: Test hook", "title: Hook [v2]"))
+    assert "![Hook \\[v2\\], as SolidCraft draws it](hook/hook.png)" in page(repo)
+
+
 def test_write_removes_the_page_of_a_model_that_is_gone(repo: Path) -> None:
     add_model(repo)
     stale = repo / "website" / "models" / "old.qmd"
