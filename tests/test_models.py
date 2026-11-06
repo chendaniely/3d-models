@@ -120,6 +120,50 @@ def test_check_names_sizes_that_changed(repo: Path, fake_cli: Path, capsys) -> N
     assert "model.yml's sizes changed since its last build" in capsys.readouterr().err
 
 
+TYPO = SIZES.replace("{dowel_d: 25", "{dowel_dd: 25")  # a parameter the design hasn't
+UNKNOWN = (
+    "models: models/clamp/model.yml: size '25 mm' changes 'dowel_dd', which the design has no "
+    "parameter named"
+)
+
+
+def test_build_refuses_a_size_changing_a_parameter_the_design_has_not(
+    repo: Path, fake_cli: Path, capsys
+) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(TYPO, encoding="utf-8")
+    assert models.main(["build"], root=repo) == 1
+    assert UNKNOWN in capsys.readouterr().err
+    assert not (design.parent / "build.json").exists()
+
+
+def test_check_names_a_size_changing_a_parameter_the_design_has_not(
+    repo: Path, fake_cli: Path, capsys
+) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(SIZES, encoding="utf-8")
+    models.main(["build"], root=repo)
+    (design.parent / "model.yml").write_text(TYPO, encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    assert UNKNOWN in capsys.readouterr().err
+    before = len(calls(fake_cli))
+    assert models.main(["build"], root=repo) == 1  # no build fixes a typo: it builds nothing
+    assert UNKNOWN in capsys.readouterr().err
+    assert len(calls(fake_cli)) == before
+
+
+def test_build_takes_a_size_changing_a_parameter_the_design_just_gained(
+    repo: Path, fake_cli: Path
+) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(SIZES, encoding="utf-8")
+    models.main(["build"], root=repo)
+    design.write_text('{"params": ["dowel_d", "ring_d"]}', encoding="utf-8")
+    (design.parent / "model.yml").write_text(SIZES + "  wide: {ring_d: 40 mm}\n", encoding="utf-8")
+    assert models.main(["build"], root=repo) == 0  # the old eval.json, which lacks it, is stale
+    assert models.main(["check"], root=repo) == 0
+
+
 @pytest.mark.parametrize("missing", ["coupon.stl", "coupon.png", "coupon.eval.json", "build.json"])
 def test_check_names_a_missing_built_file(repo: Path, fake_cli: Path, capsys, missing: str) -> None:
     add_design(repo, "coupon")

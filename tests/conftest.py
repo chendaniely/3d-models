@@ -30,7 +30,13 @@ if b"fail" in design.read_bytes():
 if args[0] in ("run", "snapshot"):
     Path(args[args.index("--out") + 1]).write_bytes(b"built from " + design.read_bytes())
 elif args[0] == "eval":
-    Path(args[args.index("--json-out") + 1]).write_text(json.dumps({"bodies": [], "params": []}))
+    try:  # a design's parameters: a JSON design's "params" names, else dowel_d alone
+        names = json.loads(design.read_bytes()).get("params", ["dowel_d"])
+    except ValueError:
+        names = ["dowel_d"]
+    params = [{"name": name, "expression": "1 mm", "unit": "mm", "value": 1.0} for name in names]
+    measured = {"bodies": [], "params": params}
+    Path(args[args.index("--json-out") + 1]).write_text(json.dumps(measured))
 """
 
 

@@ -5,8 +5,9 @@
         (needs solidcraft-cli); refuse, building nothing, while a model is invalid
     uv run scripts/models.py check
         fail, naming each model, when it is invalid (a folder name that can't be a URL, a
-        misnamed or extra design, a model.yml or sizes it can't read: no build fixes these) or
-        stale (a build is missing or doesn't match its design: make models fixes it)
+        misnamed or extra design, a model.yml or sizes it can't read, a size changing a
+        parameter the design hasn't: no build fixes these) or stale (a build is missing or
+        doesn't match its design: make models fixes it)
 
 A model is a folder models/<slug>/ holding the design <slug>.sc. A build writes, beside it:
 <slug>.stl, <slug>.png, <slug>.eval.json (solidcraft-cli eval's measurements), one STL per extra
@@ -118,6 +119,31 @@ def outputs(model: Model) -> list[Path]:
     ]
 
 
+def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:
+    """The first size that changes a parameter the design's eval.json doesn't list, or None.
+    Without this, solidcraft-cli builds the base geometry under the size's name and exits 0."""
+    measured = json.loads(model.built("eval.json").read_text(encoding="utf-8"))
+    names = {param["name"] for param in measured.get("params", [])}
+    for size, changes in wanted.items():
+        for name in changes:
+            if name not in names:
+                return (
+                    f"models/{model.slug}/model.yml: size '{size}' changes '{name}', which the "
+                    "design has no parameter named"
+                )
+    return None
+
+
+def measured_now(model: Model) -> bool:
+    """Whether build.json vouches for the design as it is now, so its eval.json measured it; a
+    design changed since may have gained the parameter a size changes, and its build checks."""
+    try:
+        record = json.loads(model.record.read_text(encoding="utf-8"))
+        return record["sha256"] == sha256(model.design) and model.built("eval.json").is_file()
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        return False
+
+
 def invalid(model: Model) -> str | None:
     """What's wrong with the model that no build can fix, starting with where, or None."""
     where = f"models/{model.slug}"
@@ -129,9 +155,14 @@ def invalid(model: Model) -> str | None:
     if designs != [model.design.name]:
         return f"{where}: the design must be {model.design.name} alone, not {', '.join(designs)}"
     try:
-        sizes(model)
+        wanted = sizes(model)
     except ValueError as error:
         return str(error)
+    if measured_now(model):
+        try:
+            return unknown_parameter(model, wanted)
+        except (json.JSONDecodeError, KeyError, TypeError, AttributeError):
+            return None  # an eval.json it can't read: staleness names it against build.json
     return None
 
 
@@ -177,6 +208,9 @@ def build(model: Model) -> None:
     run("run", "--in", design, "--out", str(model.built("stl")), "--quiet")
     run("snapshot", "--in", design, "--out", str(model.built("png")), *PICTURE)
     run("eval", "--in", design, "--json-out", str(model.built("eval.json")))
+    reason = unknown_parameter(model, wanted_sizes)
+    if reason:
+        raise ValueError(reason)
     for size, changes in wanted_sizes.items():
         script = {
             "commands": [
