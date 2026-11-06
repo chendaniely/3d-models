@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 8: Publish the parts: a mid-phase merge to `main`, open.
+**Now:** Task 9: [Dan] Measure, weigh, and print the coupon, open.
 
 ***
 
@@ -2208,14 +2208,14 @@ Dan asked to see the rail's parts in the live gallery as soon as they're built, 
 sizes, and to retune them after measuring (Phase 2 Q&A 9). Their pages already say which sizes are
 placeholders. `phase-2` carries on after the merge.
 
-- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **1. The files no scan can read, named to Dan:** every STL and PNG the merge adds, listed
+- [x] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **1. The files no scan can read, named to Dan:** every STL and PNG the merge adds, listed
   with `git diff --numstat origin/main..phase-2 | awk '$1 == "-" { print $3 }'` (eighteen: four
   for each dowel part, two for the shade). Show him each picture, and the local render's 3D views
   (`make docs`, then serve `website/_site`); ask, naming each file, whether he OKs it going out.
   His answer goes on the Phase 2 Q&A page, committed as `docs(plan): 🤖 Phase 2 Q&A <N>: <what>`
   with this plan's `Plan:` line, and pushed.
-- [ ] **2. The PR.** Its title, in `.git/PR_TITLE`:
+- [x] **2. The PR.** Its title, in `.git/PR_TITLE`:
   `chore(repo): 🤖 merge the rail's five parts, at placeholder sizes`. Its body, in
   `.git/PR_BODY.md`: what it carries (Tasks 1 to 7), that the sizes are placeholders until Task 10,
   and a section *Files no scan can read*, each by name, saying Dan OKed it (the Q&A answer), then
@@ -2223,13 +2223,13 @@ placeholders. `phase-2` carries on after the merge.
   `Co-Authored-By:`). Scan both: `cat .git/PR_TITLE .git/PR_BODY.md | gitleaks stdin --redact
   --no-banner`, then `gh pr create --base main --head phase-2 --title "$(cat .git/PR_TITLE)"
   --body-file .git/PR_BODY.md`.
-- [ ] **3. The merge,** once every check on the PR's head is green:
+- [x] **3. The merge,** once every check on the PR's head is green:
   `gh pr merge <N> --merge --match-head-commit "$(git rev-parse phase-2)"`, never `--admin`,
   squash, rebase or `--delete-branch`.
-- [ ] **4. After the merge:** CI on `main` deploys; each rail page on
+- [x] **4. After the merge:** CI on `main` deploys; each rail page on
   <https://chendaniely.github.io/3d-models/> answers, its viewer loads in a browser, and the live
   site loads nothing from another host (Task 1).
-- [ ] **5. Close.**
+- [x] **5. Close.**
 
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
     PR's text read for a place, an address, a person or a description of the home),** from
