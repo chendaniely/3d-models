@@ -22,9 +22,11 @@ notes: |
   - **Screws:** two, 110 mm apart: #8 or #10 wood screws into a stud, or 3/16-inch toggle bolts
     in drywall, never plastic plugs, since the top screw is pulled out with about 54 N. For
     1/4-inch toggles, set `screw_d` to 6.6 mm. Each head sinks into a counterbore, and one of the
-    two printed caps beside the block presses in over it.
+    two printed caps beside the block presses in over it. The caps are modelled beside the
+    block, so the size under Measurements includes them; the plate itself is 50 mm wide.
   - **Bolt:** an M6 × 50 mm bolt and a nylon-insert nut, down through the boss and a hole drilled
     through the seated dowel, so it can't pull out or turn.
-  - **Clearance:** the socket is the dowel plus `clearance`, from the fit-test coupon.
+  - **Clearance:** the socket is the dowel plus `clearance`, from the fit-test coupon. The
+    0.4 mm it's saved with is a placeholder until the coupon is printed.
 
   This is a first design, not yet printed or load-tested; its page will say when it has been.
