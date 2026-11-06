@@ -1,0 +1,31 @@
+title: Sconce cord clamp
+summary: >-
+  Clamps anywhere along a dowel and holds a pendant light's cord, so the light hangs straight
+  below the arm at the height you set.
+status: designed
+material: PETG, matte
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: the shelf flat on the bed, the ring above it
+  Layer height: 0.2 mm
+  Walls: 4
+  Infill: 30%
+  Supports: under the ring, from the bed only
+notes: |
+  Slide the clamp onto the dowel, ears to the side you see least, set it where the light should
+  hang, and close the split with an M4 × 30 mm bolt and nut through the ears.
+
+  The light's cord comes along the top of the arm, down the side of the dowel and through the gap
+  under it, then presses in through the slot in the shelf and hangs from the round hole beyond it,
+  straight below the dowel, so the light's weight can't turn the clamp. The slot is 1.5 mm
+  narrower than the cord and the hole 0.6 mm narrower, so the cord grips; pull it through to set
+  the light's height. Ease the hole's edges with a countersink bit, so a swinging light doesn't
+  wear the cord.
+
+  `cord_d` is the cord's diameter: measure yours and set it before printing; 6 mm is a guess.
+  For a flat two-wire cord, the hole and slot need reshaping, not just resizing.
+
+  This is a first design, not yet printed; its page will say when it has been.

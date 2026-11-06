@@ -1,0 +1,383 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 8490.943658431534,
+      "bbox": {
+        "max": [
+          38.0,
+          28.799999999999997,
+          17.799579608937012
+        ],
+        "min": [
+          0.0,
+          -17.799725100595655,
+          -30.700000000000017
+        ]
+      },
+      "center_of_mass": [
+        12.31681286657374,
+        3.0466806616778457,
+        -8.494985566500514
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 67,
+      "face_types": {
+        "cylinder": 7,
+        "plane": 18
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 87,
+        "faces": 31,
+        "shells": 1,
+        "vertices": 58
+      },
+      "mass_g": 22.947491832900784,
+      "material": "Default",
+      "name": "Cord clamp",
+      "vertices": 46,
+      "volume_mm3": 17788.753358837817
+    }
+  ],
+  "body_count": 1,
+  "params": [
+    {
+      "comment": "the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "a snug slide; the bolt closes the split to grip",
+      "error": null,
+      "expression": "0.2 mm",
+      "model": false,
+      "name": "clearance",
+      "unit": "mm",
+      "value": 0.2
+    },
+    {
+      "comment": "plastic around the dowel",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "ring_wall",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the ring's length along the dowel",
+      "error": null,
+      "expression": "20 mm",
+      "model": false,
+      "name": "ring_len",
+      "unit": "mm",
+      "value": 20.0
+    },
+    {
+      "comment": "the gap the bolt closes",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "split",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "each clamping ear's thickness",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "ear_t",
+      "unit": "mm",
+      "value": 6.0
+    },
+    {
+      "comment": "how far the ears stand out from the ring, on its side",
+      "error": null,
+      "expression": "11 mm",
+      "model": false,
+      "name": "ear_len",
+      "unit": "mm",
+      "value": 11.0
+    },
+    {
+      "comment": "clearance for an M4 bolt",
+      "error": null,
+      "expression": "4.4 mm",
+      "model": false,
+      "name": "bolt_d",
+      "unit": "mm",
+      "value": 4.4
+    },
+    {
+      "comment": "the light's cord, measured: 6 mm is a guess until it is",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "cord_d",
+      "unit": "mm",
+      "value": 6.0
+    },
+    {
+      "comment": "room under the dowel for the cord to reach the hole",
+      "error": null,
+      "expression": "cord_d + 4 mm",
+      "model": false,
+      "name": "under_gap",
+      "unit": "mm",
+      "value": 10.0
+    },
+    {
+      "comment": "the hole the cord hangs from: a little tight, so it grips",
+      "error": null,
+      "expression": "cord_d - 0.6 mm",
+      "model": false,
+      "name": "grip_d",
+      "unit": "mm",
+      "value": 5.4
+    },
+    {
+      "comment": "the slot the cord is pressed in through: tighter still",
+      "error": null,
+      "expression": "cord_d - 1.5 mm",
+      "model": false,
+      "name": "slot_w",
+      "unit": "mm",
+      "value": 4.5
+    },
+    {
+      "comment": "how far the cord shelf reaches beyond the ring",
+      "error": null,
+      "expression": "18 mm",
+      "model": false,
+      "name": "shelf_len",
+      "unit": "mm",
+      "value": 18.0
+    },
+    {
+      "comment": "the cord shelf's width",
+      "error": null,
+      "expression": "18 mm",
+      "model": false,
+      "name": "shelf_w",
+      "unit": "mm",
+      "value": 18.0
+    },
+    {
+      "comment": "the cord shelf's thickness",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "shelf_t",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "the web joining the ring to the shelf",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "web_w",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "the ring's bore",
+      "error": null,
+      "expression": "dowel_d + clearance",
+      "model": false,
+      "name": "bore_d",
+      "unit": "mm",
+      "value": 25.599999999999998
+    },
+    {
+      "comment": "the ring's outside diameter",
+      "error": null,
+      "expression": "bore_d + 2 * ring_wall",
+      "model": false,
+      "name": "ring_d",
+      "unit": "mm",
+      "value": 35.599999999999994
+    },
+    {
+      "comment": "the shelf's top face, below the dowel's axis",
+      "error": null,
+      "expression": "-dowel_d / 2 - under_gap",
+      "model": false,
+      "name": "shelf_top",
+      "unit": "mm",
+      "value": -22.7
+    }
+  ],
+  "sketches": [],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 1.911916,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 0.43054200000000004,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 0.34237500000000004,
+      "name": "Box2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 0.386375,
+      "name": "Box3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 127.91487500000001,
+      "name": "Combine1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CombineFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 0.7485,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 0.39175,
+      "name": "Box4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 0.6725,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 0.76975,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 0.779417,
+      "name": "Box5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 11,
+      "ms": 459.862541,
+      "name": "Combine2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CombineFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 8490.943658431534,
+    "edges": 67,
+    "faces": 25,
+    "mass_g": 22.947491832900784,
+    "open_bodies_skipped": 0,
+    "vertices": 46,
+    "volume_mm3": 17788.753358837817
+  }
+}
