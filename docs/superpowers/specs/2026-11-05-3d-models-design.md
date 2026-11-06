@@ -153,19 +153,23 @@ replace it.
 - **The parts** (the agent's): two wall feet, a rail carrier with its wedge, an arm socket with its
   wedge, an arm tip, and the shade; each its own model under `models/`, its name starting `rail-`;
   a wedge and a depth gauge are bodies in their part's design, as the wall block's caps are.
-- **The rail** (Q&A 1): a vertical dowel, its length Dan's cut, held at each end by a wall foot.
+- **The rail** (Q&A 1, 5): a vertical dowel, its length Dan's cut, up to about 48 inches, held at
+  each end by a wall foot; it carries the light's arm and up to two small planters, about 2 kg
+  each when watered.
 - **The wall feet** (the agent's): a closed cup over each end of the rail, so the rail is held
   between them and can't drop or lift out; a bridge standing the rail off the wall, far enough for
   the carrier's back and the cord behind it; a plate whose back has a keyhole slot that hangs on a
   screw head, its depth set by a printed gauge, so no screw shows. The screws are the wall block's
   (D16): #8 or #10 wood screws into a stud, or 3/16-inch toggle anchors. Something hidden from the
   room stops a bump lifting the feet off their screws; how is the builder's. The bottom foot holds
-  the cord behind the rail.
+  the cord behind the rail. Sized for the light and two small planters (Q&A 5).
 - **The rail carrier** (Q&A 1; its shape the agent's): a C-shaped sleeve open toward the wall,
   pushed onto the rail from the front while the rail is up, so pieces can be added or moved
   without taking the rail down; a wedge pushed up from below into the open back, between the rail
   and the sleeve, locks it, out of sight. Its face carries a dovetail running up and down. Long
-  enough to hold the arm at 24 inches without slipping or rocking (S13, S29). If a wedge can't
+  enough to hold the arm at 24 inches without slipping or rocking (S13, S29), and shaped so a
+  sideways bump at the light doesn't turn the arm round the rail (S14), by bearing on the wall or
+  otherwise; how is the builder's (from the builder check). If a wedge can't
   hold a C-shape, the carrier slides on from the rail's end before the rail goes up, a ruling
   logged on Phase 2's Q&A page.
 - **The arm socket** (Q&A 1's "matching joint piece"; its shape the agent's): slides down onto the
@@ -208,7 +212,7 @@ replace it.
 | S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | built |
 | S11 | Dan holds the PLA look-test parts up in the corner: the feet on the rail, the carrier and arm socket on it, the arm, the shade and the light | he decides whether it looks right, before any PETG is printed; nothing but the dowels and the parts shows | Phase 2, the look test | Dan's verdict on Phase 2's Q&A page | planned |
 | S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
-| S13 | the PETG rail parts, with the arm at 24 inches, hold three times the light's weight for 48 hours, mounted as they will be | the tip sag grows by under 3 mm, the carrier slips under 2 mm on the rail, and nothing cracks or pulls out | Phase 2, the load test | the load-test log on the parts' pages | planned |
+| S13 | the PETG rail parts hold for 48 hours, mounted as they will be: the arm at 24 inches with three times the light's weight at its tip, and a second carrier with 12 kg hung from it (three times two watered small planters) | the arm's tilt at its socket adds under 1 mm at the tip, neither carrier slips 2 mm on the rail, the tip's total sag, the wood's creep included, grows by under 5 mm, and nothing cracks or pulls out | Phase 2, the load test | the load-test log on the parts' pages | planned |
 | S14 | the rail light is installed and bumped | the arm doesn't turn on the rail or droop, the feet stay on their screws, and the cord runs along the arm and down behind the rail | Phase 2, the install | Dan's check, with a photo he has looked at | planned |
 | S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8 | `tests/test_cord_clamp.py` | superseded (Phase 2 Q&A 4): Phase 1's part, kept |
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
@@ -285,3 +289,7 @@ replace it.
   screws, the arm on a sliding joint locked by a wedge, the light up to 24 inches out under a PETG
   shade, designed now in Phase 2; Phase 1's two parts kept, superseded (Phase 2 Q&A 1 to 4,
   `684a776` to `09a9f55`).
+- 2026-11-06: the rail carries two small planters too, up to about 48 inches long; the load test
+  judges what the printed parts add (the arm's tilt at its socket, the carriers' slip) and gives
+  the tip's total sag a looser 5 mm, after the builder check found the wood's own creep could use
+  up a 3 mm limit (Phase 2 Q&A 5).
