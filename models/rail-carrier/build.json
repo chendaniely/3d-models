@@ -1,0 +1,20 @@
+{
+  "design": "rail-carrier.sc",
+  "sha256": "0c5a1d7f3430637ac2eb093d1e2b567951edcda639701674e2b06298830d753b",
+  "sizes": {
+    "3/4 in": {
+      "dowel_d": "19.05 mm"
+    },
+    "25 mm": {
+      "dowel_d": "25 mm"
+    }
+  },
+  "solidcraft_cli": "solidcraft-cli 0.30.1",
+  "built": {
+    "rail-carrier.stl": "30b3db4bdb40f91c80ef35952869fcddb312d91118e3180d89e51dd776d3a218",
+    "rail-carrier.png": "2cbdd644af6fadff49212e9f6c3e85284b63462f14b344bd86720cdfa676d44f",
+    "rail-carrier.eval.json": "ad34841be00fe2c616dea5df6794ba7058121f10862318aa4486c0f605eb2062",
+    "rail-carrier-3-4in.stl": "548cc29ec6cccbe8ac776b6740cdeea100a6633a21ed89ff112514cc87d912b1",
+    "rail-carrier-25mm.stl": "210d0a07913ea000c3939c7d730be43fa2bc5cc60b82a38e8c05a262179850ef"
+  }
+}

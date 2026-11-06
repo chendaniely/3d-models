@@ -32,7 +32,7 @@ flowchart TD
 flowchart LR
   push["a push"] --> tests["tests job<br/>make test · lint<br/>models-check · privacy"]
   push --> leaks["leaks job<br/>gitleaks over every commit, merges included"]
-  push --> site["site job<br/>make docs, with lychee"]
+  push --> site["site job<br/>make docs: render, offsite check, lychee"]
   tests --> pagesjob{"on main?"}
   leaks --> pagesjob
   site --> pagesjob
@@ -61,11 +61,6 @@ flowchart LR
   rail -.-> planter
 
   classDef planned stroke-dasharray: 5 5
-  class feet planned
-  class carrier planned
-  class socket planned
-  class tip planned
-  class shade planned
   class planter planned
 ```
 
@@ -80,10 +75,5 @@ flowchart LR
   behind --> foot["the bottom foot's groove · Phase 2"] --> outlet["the outlet"]
 
   classDef planned stroke-dasharray: 5 5
-  class stem planned
-  class keel planned
-  class clips planned
-  class behind planned
-  class foot planned
 ```
 

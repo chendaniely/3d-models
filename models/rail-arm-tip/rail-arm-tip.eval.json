@@ -1,0 +1,971 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 17920.659418912932,
+      "bbox": {
+        "max": [
+          50.00000000000003,
+          19.89983049613556,
+          19.899530012238554
+        ],
+        "min": [
+          -1.743050148661502e-14,
+          -19.89969266864344,
+          -63.399999999972955
+        ]
+      },
+      "center_of_mass": [
+        29.954948004601533,
+        -0.00004905212420264881,
+        -10.813565297368342
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 142,
+      "face_types": {
+        "cylinder": 9,
+        "plane": 42
+      },
+      "faces": 51,
+      "kernel": {
+        "edges": 183,
+        "faces": 67,
+        "shells": 1,
+        "vertices": 119
+      },
+      "mass_g": 66.72852801936561,
+      "material": "Default",
+      "name": "Arm tip",
+      "vertices": 94,
+      "volume_mm3": 51727.541100283415
+    },
+    {
+      "area_mm2": 1123.0936457873518,
+      "bbox": {
+        "max": [
+          -32.4,
+          47.00000000000001,
+          -58.72
+        ],
+        "min": [
+          -40.0,
+          0.0,
+          -63.4
+        ]
+      },
+      "center_of_mass": [
+        -36.2,
+        25.468805704099825,
+        -61.490623885918
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 1.7233471199999997,
+      "material": "Default",
+      "name": "Tip wedge",
+      "vertices": 8,
+      "volume_mm3": 1335.9279999999997
+    },
+    {
+      "area_mm2": 1747.1181337075152,
+      "bbox": {
+        "max": [
+          95.19981511500889,
+          -69.29916007969467,
+          -55.39999999999998
+        ],
+        "min": [
+          64.80015493285336,
+          -104.09897948556637,
+          -63.400000000000055
+        ]
+      },
+      "center_of_mass": [
+        80.00011208624657,
+        -87.87309078379371,
+        -59.40000000014259
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 30,
+      "face_types": {
+        "cylinder": 6,
+        "plane": 6
+      },
+      "faces": 12,
+      "kernel": {
+        "edges": 51,
+        "faces": 19,
+        "shells": 1,
+        "vertices": 34
+      },
+      "mass_g": 2.010128156157389,
+      "material": "Default",
+      "name": "Cord clip 1",
+      "vertices": 20,
+      "volume_mm3": 1558.238880742162
+    },
+    {
+      "area_mm2": 1747.118133707567,
+      "bbox": {
+        "max": [
+          135.1998151150089,
+          -69.29916007935701,
+          -55.40000000028603
+        ],
+        "min": [
+          104.80015493244161,
+          -104.09897948559264,
+          -63.40000000247171
+        ]
+      },
+      "center_of_mass": [
+        120.0001120860526,
+        -87.87309078362378,
+        -59.400000002205026
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 30,
+      "face_types": {
+        "cylinder": 6,
+        "plane": 6
+      },
+      "faces": 12,
+      "kernel": {
+        "edges": 51,
+        "faces": 19,
+        "shells": 1,
+        "vertices": 34
+      },
+      "mass_g": 2.0101281561570277,
+      "material": "Default",
+      "name": "Cord clip 2",
+      "vertices": 20,
+      "volume_mm3": 1558.238880741882
+    },
+    {
+      "area_mm2": 1747.1181337075186,
+      "bbox": {
+        "max": [
+          175.19981511500893,
+          -69.29916007969462,
+          -55.39999999999996
+        ],
+        "min": [
+          144.8001549328534,
+          -104.09897948556636,
+          -63.40000000000005
+        ]
+      },
+      "center_of_mass": [
+        160.00011208624662,
+        -87.87309078379373,
+        -59.40000000014257
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 30,
+      "face_types": {
+        "cylinder": 6,
+        "plane": 6
+      },
+      "faces": 12,
+      "kernel": {
+        "edges": 51,
+        "faces": 19,
+        "shells": 1,
+        "vertices": 34
+      },
+      "mass_g": 2.0101281561574256,
+      "material": "Default",
+      "name": "Cord clip 3",
+      "vertices": 20,
+      "volume_mm3": 1558.2388807421903
+    }
+  ],
+  "body_count": 5,
+  "params": [
+    {
+      "comment": "the rail's and the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "added to the dowel for every bore: the coupon's hole that fit",
+      "error": null,
+      "expression": "0.4 mm",
+      "model": false,
+      "name": "clearance",
+      "unit": "mm",
+      "value": 0.4
+    },
+    {
+      "comment": "every cup's and socket's bore",
+      "error": null,
+      "expression": "dowel_d + clearance",
+      "model": false,
+      "name": "bore_d",
+      "unit": "mm",
+      "value": 25.799999999999997
+    },
+    {
+      "comment": "plastic round the dowel, room above for the wedge's groove",
+      "error": null,
+      "expression": "7 mm",
+      "model": false,
+      "name": "cap_wall",
+      "unit": "mm",
+      "value": 7.0
+    },
+    {
+      "comment": "the cap's outside",
+      "error": null,
+      "expression": "bore_d + 2 * cap_wall",
+      "model": false,
+      "name": "cap_d",
+      "unit": "mm",
+      "value": 39.8
+    },
+    {
+      "comment": "the cap's length along the arm",
+      "error": null,
+      "expression": "50 mm",
+      "model": false,
+      "name": "cap_l",
+      "unit": "mm",
+      "value": 50.0
+    },
+    {
+      "comment": "how far the arm goes into the cap",
+      "error": null,
+      "expression": "42 mm",
+      "model": false,
+      "name": "bore_depth",
+      "unit": "mm",
+      "value": 42.0
+    },
+    {
+      "comment": "the wedge's groove along the top of the bore",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "groove_w",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "each wedge's and its groove's slope, 1 in 25",
+      "error": null,
+      "expression": "0.04",
+      "model": false,
+      "name": "taper",
+      "unit": "",
+      "value": 0.04
+    },
+    {
+      "comment": "the groove's depth above the dowel at the bore's end",
+      "error": null,
+      "expression": "2 mm",
+      "model": false,
+      "name": "room_in",
+      "unit": "mm",
+      "value": 2.0
+    },
+    {
+      "comment": "the wedge's length",
+      "error": null,
+      "expression": "bore_depth + 5 mm",
+      "model": false,
+      "name": "wedge_l",
+      "unit": "mm",
+      "value": 47.0
+    },
+    {
+      "comment": "the wedge's thin end: seated 15 mm short of the bore's end on a nominal dowel",
+      "error": null,
+      "expression": "room_in + clearance / 2 + 15 mm * taper",
+      "model": false,
+      "name": "wedge_in",
+      "unit": "mm",
+      "value": 2.8000000000000003
+    },
+    {
+      "comment": "the light's cord: a guess until it's measured",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "cord_d",
+      "unit": "mm",
+      "value": 6.0
+    },
+    {
+      "comment": "the stem's bore above its grip",
+      "error": null,
+      "expression": "cord_d + 0.5 mm",
+      "model": false,
+      "name": "free_d",
+      "unit": "mm",
+      "value": 6.5
+    },
+    {
+      "comment": "the slot into the free bore: the cord slides in",
+      "error": null,
+      "expression": "cord_d + 0.2 mm",
+      "model": false,
+      "name": "slot_w",
+      "unit": "mm",
+      "value": 6.2
+    },
+    {
+      "comment": "the stem's grip: a hole narrower than the cord",
+      "error": null,
+      "expression": "cord_d - 0.6 mm",
+      "model": false,
+      "name": "grip_d",
+      "unit": "mm",
+      "value": 5.4
+    },
+    {
+      "comment": "the slot the cord is pressed through into the grip",
+      "error": null,
+      "expression": "cord_d - 1.5 mm",
+      "model": false,
+      "name": "press_w",
+      "unit": "mm",
+      "value": 4.5
+    },
+    {
+      "comment": "the grip's length, at the stem's foot",
+      "error": null,
+      "expression": "10 mm",
+      "model": false,
+      "name": "grip_l",
+      "unit": "mm",
+      "value": 10.0
+    },
+    {
+      "comment": "the keel under the cap, round the cord's channel",
+      "error": null,
+      "expression": "cord_d + 6 mm",
+      "model": false,
+      "name": "keel_w",
+      "unit": "mm",
+      "value": 12.0
+    },
+    {
+      "comment": "the keel's underside",
+      "error": null,
+      "expression": "-(bore_d / 2 + cord_d + 4.5 mm)",
+      "model": false,
+      "name": "keel_z",
+      "unit": "mm",
+      "value": -23.4
+    },
+    {
+      "comment": "the keel channel's mouth: the cord snaps in",
+      "error": null,
+      "expression": "cord_d - 1 mm",
+      "model": false,
+      "name": "mouth_w",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the stem down to the light",
+      "error": null,
+      "expression": "22 mm",
+      "model": false,
+      "name": "stem_d",
+      "unit": "mm",
+      "value": 22.0
+    },
+    {
+      "comment": "the stem's length below the keel",
+      "error": null,
+      "expression": "40 mm",
+      "model": false,
+      "name": "stem_l",
+      "unit": "mm",
+      "value": 40.0
+    },
+    {
+      "comment": "the stem's axis along the arm",
+      "error": null,
+      "expression": "cap_l - stem_d / 2 - 3 mm",
+      "model": false,
+      "name": "stem_x",
+      "unit": "mm",
+      "value": 36.0
+    },
+    {
+      "comment": "the stem's foot",
+      "error": null,
+      "expression": "keel_z - stem_l",
+      "model": false,
+      "name": "foot_z",
+      "unit": "mm",
+      "value": -63.4
+    },
+    {
+      "comment": "each lug the shade turns onto",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "lug_w",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "how far each lug stands out from the stem",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "lug_h",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "each lug's height",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "lug_t",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "a cord clip's length along the arm",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "clip_t",
+      "unit": "mm",
+      "value": 8.0
+    }
+  ],
+  "sketches": [
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 12,
+      "name": "Sketch1",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    },
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 14,
+      "name": "Sketch2",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    }
+  ],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 1.45225,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 29.2125,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 192.654042,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 2.1919721280629005,
+            "rotation_rad": 0.0,
+            "strategy": "coplanar_separation",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 367.728333,
+      "name": "Box2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 81.070833,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 65.78370799999999,
+      "name": "Box3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 758.06025,
+      "name": "Box4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 206.141584,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 0.0,
+            "rotation_rad": 2e-6,
+            "strategy": "tool_nudge",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.00019268845680741814
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 1748.990375,
+      "name": "Box5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": "Boolean retry: tool displacement 1.926885e-4 mm, rotation 2.000000e-6 rad"
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 205.234625,
+      "name": "Cylinder5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 11,
+      "ms": 163.56116600000001,
+      "name": "Box6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 12,
+      "ms": 0.154667,
+      "name": "Sketch1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 13,
+      "ms": 287.833542,
+      "name": "Extrude1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 14,
+      "ms": 0.076959,
+      "name": "Sketch2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 15,
+      "ms": 0.44095799999999996,
+      "name": "Extrude2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 16,
+      "ms": 0.626166,
+      "name": "Cylinder6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 17,
+      "ms": 48.098958999999994,
+      "name": "Cylinder7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 18,
+      "ms": 11.109124999999999,
+      "name": "Cylinder8",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 19,
+      "ms": 7.034625,
+      "name": "Box7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 20,
+      "ms": 11.059,
+      "name": "Cylinder9",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 21,
+      "ms": 7.510375,
+      "name": "Box8",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 22,
+      "ms": 0.618417,
+      "name": "Cylinder10",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 23,
+      "ms": 47.54975,
+      "name": "Cylinder11",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 24,
+      "ms": 10.875333,
+      "name": "Cylinder12",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 25,
+      "ms": 6.7075,
+      "name": "Box9",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 26,
+      "ms": 11.531917,
+      "name": "Cylinder13",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 27,
+      "ms": 8.848540999999999,
+      "name": "Box10",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 28,
+      "ms": 0.747625,
+      "name": "Cylinder14",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 29,
+      "ms": 46.437958,
+      "name": "Cylinder15",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 30,
+      "ms": 11.614916,
+      "name": "Cylinder16",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 31,
+      "ms": 6.6297500000000005,
+      "name": "Box11",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 32,
+      "ms": 20.402458,
+      "name": "Cylinder17",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 33,
+      "ms": 11.891375,
+      "name": "Box12",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 24285.107465822883,
+    "edges": 244,
+    "faces": 93,
+    "mass_g": 74.48225960783745,
+    "open_bodies_skipped": 0,
+    "vertices": 162,
+    "volume_mm3": 57738.185742509646
+  }
+}

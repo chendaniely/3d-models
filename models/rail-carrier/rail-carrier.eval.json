@@ -1,0 +1,434 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 29507.256250847127,
+      "bbox": {
+        "max": [
+          23.900000000000148,
+          17.900000000000034,
+          110.00000000000006
+        ],
+        "min": [
+          -30.500000000000057,
+          -17.900000000000002,
+          -2.4424906541753444e-14
+        ]
+      },
+      "center_of_mass": [
+        0.5707683896141229,
+        0.0001840964613274361,
+        55.26367378715753
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 3,
+        "plane": 19
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 66,
+        "faces": 24,
+        "shells": 1,
+        "vertices": 44
+      },
+      "mass_g": 86.82394955425869,
+      "material": "Default",
+      "name": "Carrier",
+      "vertices": 40,
+      "volume_mm3": 67305.38725136333
+    },
+    {
+      "area_mm2": 9393.751675779196,
+      "bbox": {
+        "max": [
+          69.30000000000001,
+          120.0,
+          10.3
+        ],
+        "min": [
+          40.0,
+          0.0,
+          0.0
+        ]
+      },
+      "center_of_mass": [
+        54.650000000000006,
+        66.07594936708861,
+        4.071518987341772
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 35.831556000000006,
+      "material": "Default",
+      "name": "Wedge",
+      "vertices": 8,
+      "volume_mm3": 27776.400000000005
+    }
+  ],
+  "body_count": 2,
+  "params": [
+    {
+      "comment": "the rail's and the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "added to the dowel for every bore: the coupon's hole that fit",
+      "error": null,
+      "expression": "0.4 mm",
+      "model": false,
+      "name": "clearance",
+      "unit": "mm",
+      "value": 0.4
+    },
+    {
+      "comment": "every cup's and socket's bore",
+      "error": null,
+      "expression": "dowel_d + clearance",
+      "model": false,
+      "name": "bore_d",
+      "unit": "mm",
+      "value": 25.799999999999997
+    },
+    {
+      "comment": "the rail's axis from the wall: room behind it for the cord",
+      "error": null,
+      "expression": "32 mm",
+      "model": false,
+      "name": "standoff",
+      "unit": "mm",
+      "value": 32.0
+    },
+    {
+      "comment": "the U's wall",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "wall",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the U's outside radius",
+      "error": null,
+      "expression": "bore_d / 2 + wall",
+      "model": false,
+      "name": "r_o",
+      "unit": "mm",
+      "value": 17.9
+    },
+    {
+      "comment": "between the U's arms and the wall, for a felt or rubber pad on each",
+      "error": null,
+      "expression": "1.5 mm",
+      "model": false,
+      "name": "wall_gap",
+      "unit": "mm",
+      "value": 1.5
+    },
+    {
+      "comment": "the carrier's height: long enough for the arm at 24 inches",
+      "error": null,
+      "expression": "110 mm",
+      "model": false,
+      "name": "carrier_l",
+      "unit": "mm",
+      "value": 110.0
+    },
+    {
+      "comment": "the wedge's groove, cut into each arm",
+      "error": null,
+      "expression": "2 mm",
+      "model": false,
+      "name": "groove_d",
+      "unit": "mm",
+      "value": 2.0
+    },
+    {
+      "comment": "each wedge's and its groove's slope, 1 in 25",
+      "error": null,
+      "expression": "0.04",
+      "model": false,
+      "name": "taper",
+      "unit": "",
+      "value": 0.04
+    },
+    {
+      "comment": "the groove's depth behind the dowel at the carrier's top",
+      "error": null,
+      "expression": "4.5 mm",
+      "model": false,
+      "name": "room_top",
+      "unit": "mm",
+      "value": 4.5
+    },
+    {
+      "comment": "the wedge's length",
+      "error": null,
+      "expression": "carrier_l + 10 mm",
+      "model": false,
+      "name": "wedge_l",
+      "unit": "mm",
+      "value": 120.0
+    },
+    {
+      "comment": "the wedge's thin end: seated 20 mm below the top on a nominal dowel",
+      "error": null,
+      "expression": "room_top + clearance / 2 + 20 mm * taper",
+      "model": false,
+      "name": "wedge_top",
+      "unit": "mm",
+      "value": 5.5
+    },
+    {
+      "comment": "the wedge's width, its wings in the grooves",
+      "error": null,
+      "expression": "bore_d + 2 * groove_d - 0.5 mm",
+      "model": false,
+      "name": "wedge_w",
+      "unit": "mm",
+      "value": 29.299999999999997
+    },
+    {
+      "comment": "the cord's channel behind the wedge, at its narrowest (the carrier's bottom)",
+      "error": null,
+      "expression": "standoff - wall_gap - dowel_d / 2 - room_top - carrier_l * taper",
+      "model": false,
+      "name": "channel",
+      "unit": "mm",
+      "value": 8.9
+    },
+    {
+      "comment": "the dovetail's width where it meets the carrier",
+      "error": null,
+      "expression": "12 mm",
+      "model": false,
+      "name": "dt_base",
+      "unit": "mm",
+      "value": 12.0
+    },
+    {
+      "comment": "the dovetail's width at its face",
+      "error": null,
+      "expression": "18 mm",
+      "model": false,
+      "name": "dt_top",
+      "unit": "mm",
+      "value": 18.0
+    },
+    {
+      "comment": "how far the dovetail stands out",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "dt_h",
+      "unit": "mm",
+      "value": 6.0
+    }
+  ],
+  "sketches": [
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 5,
+      "name": "Sketch1",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    },
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 7,
+      "name": "Sketch2",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    },
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 9,
+      "name": "Sketch3",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    }
+  ],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 1.999541,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 48.3765,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 16.619792,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 13.76175,
+      "name": "Box2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 0.149459,
+      "name": "Sketch1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 47.893917,
+      "name": "Extrude1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 0.08904200000000001,
+      "name": "Sketch2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 2.843590403518335,
+            "rotation_rad": 0.0,
+            "strategy": "coplanar_separation",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 478.866,
+      "name": "Extrude2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 0.10179200000000001,
+      "name": "Sketch3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 0.675625,
+      "name": "Extrude3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 38901.00792662632,
+    "edges": 72,
+    "faces": 28,
+    "mass_g": 122.6555055542587,
+    "open_bodies_skipped": 0,
+    "vertices": 48,
+    "volume_mm3": 95081.78725136333
+  }
+}

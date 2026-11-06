@@ -2,7 +2,7 @@ title: Sconce cord clamp
 summary: >-
   Clamps anywhere along a dowel and holds a pendant light's cord, so the light hangs straight
   below the arm at the height you set.
-status: designed
+status: superseded
 material: PETG, matte
 size: 1 in
 sizes:
@@ -15,6 +15,11 @@ print:
   Infill: 30%
   Supports: under the ring, from the bed only
 notes: |
+  **Superseded** by the grow-light rail, before anything was printed (Phase 2 Q&A 1 to 4): the
+  [wall feet](rail-feet.html), [carrier](rail-carrier.html), [arm socket](rail-arm-socket.html),
+  [arm tip](rail-arm-tip.html) and [shade](rail-shade.html). Kept for anyone who wants an arm
+  straight out of the wall.
+
   Slide the clamp onto the dowel, ears to the side you see least, set it where the light should
   hang, and close the split with an M4 × 30 mm bolt and nut through the ears. Its `clearance`,
   0.2 mm, is a slide fit the bolt closes, unlike the wall block's socket, whose clearance comes

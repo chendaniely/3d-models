@@ -356,3 +356,36 @@ def test_check_refuses_a_shallow_clone(repo: Path, capsys) -> None:
         "privacy: a shallow clone: fetch the whole history (git fetch --unshallow) "
         "so it can be checked\n",
     )
+
+
+@pytest.mark.parametrize("marker", [b"\xdc", b"\xf0"])
+def test_check_names_a_jpeg_segment_it_does_not_allow_without_printing_it(
+    repo: Path, capsys, marker: bytes
+) -> None:
+    path = photo(repo / "print.jpg")
+    text = b"taken at home"  # a DNL or a JPGn segment, which Pillow reads past
+    data = path.read_bytes()
+    path.write_bytes(
+        data[:2] + b"\xff" + marker + (len(text) + 2).to_bytes(2, "big") + text + data[2:]
+    )
+    expected = f"privacy: print.jpg: a JPEG segment it doesn't allow (FF{marker.hex().upper()})\n"
+    assert check(repo, capsys) == (1, expected)
+
+
+@pytest.mark.parametrize("marker", [b"\xe0", b"\xe2", b"\xee"])
+def test_check_names_a_housekeeping_segment_holding_text(repo: Path, capsys, marker: bytes) -> None:
+    path = photo(repo / "print.jpg")
+    text = b"taken at home"  # no JFIF, ICC or Adobe data: Pillow keeps it out of info
+    data = path.read_bytes()
+    path.write_bytes(
+        data[:2] + b"\xff" + marker + (len(text) + 2).to_bytes(2, "big") + text + data[2:]
+    )
+    expected = f"privacy: print.jpg: a JPEG segment it doesn't allow (FF{marker.hex().upper()})\n"
+    assert check(repo, capsys) == (1, expected)
+
+
+def test_check_names_a_file_that_goes_before_it_is_read(
+    repo: Path, capsys, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(privacy, "committable", lambda root: [root / "gone.jpg"])
+    assert check(repo, capsys) == (1, f"privacy: gone.jpg: {privacy.GONE}\n")

@@ -10,7 +10,9 @@ import pytest
 from PIL import Image
 
 import gallery
+import models
 from conftest import add_design
+from sitedocs import escaped
 
 META = """\
 title: Test hook
@@ -154,6 +156,31 @@ def test_the_other_free_text_comes_out_escaped(repo: Path) -> None:
     assert SHORTCODE not in page(repo)
 
 
+def test_print_settings_and_the_size_come_out_escaped(repo: Path) -> None:
+    meta = SIZED.replace("Infill: 20%", f"Infill: 20% {SHORTCODE}")
+    add_model(repo, meta=meta.replace("size: 1 in", f"size: 1 in {SHORTCODE}"))
+    assert SHORTCODE not in page(repo)
+
+
+def test_size_names_and_photo_names_come_out_escaped(repo: Path) -> None:
+    odd = f"25 mm {SHORTCODE}"
+    folder = add_model(repo, meta=SIZED.replace("  25 mm:", f'  "{odd}":'))
+    models.Model(folder).sized(odd).write_bytes(b"solid")
+    (folder / "photos").mkdir()
+    Image.new("RGB", (8, 8)).save(folder / "photos" / f"wall {SHORTCODE}.png")
+    text = page(repo)
+    assert SHORTCODE not in text
+    assert f": for 25 mm {escaped(SHORTCODE)}" in text
+    assert f"![wall {escaped(SHORTCODE)}](hook/photos/wall%20%7B%7B%3C%20meta%20title" in text
+
+
+def test_a_bracket_in_a_photo_s_name_stays_inside_its_alt_text(repo: Path) -> None:
+    folder = add_model(repo)
+    (folder / "photos").mkdir()
+    Image.new("RGB", (8, 8)).save(folder / "photos" / "on the wall [v2].png")
+    assert "![on the wall \\[v2\\]](hook/photos/on%20the%20wall%20%5Bv2%5D.png)" in page(repo)
+
+
 def test_a_bracket_in_the_title_stays_inside_the_picture_s_alt_text(repo: Path) -> None:
     add_model(repo, meta=META.replace("title: Test hook", "title: Hook [v2]"))
     assert "![Hook \\[v2\\], as SolidCraft draws it](hook/hook.png)" in page(repo)
@@ -171,6 +198,11 @@ def test_write_removes_the_page_of_a_model_that_is_gone(repo: Path) -> None:
 def test_a_bar_in_a_print_setting_stays_inside_its_cell(repo: Path) -> None:
     add_model(repo, meta=META.replace("Infill: 20%", "Infill: 20% | gyroid"))
     assert "| Infill | 20% \\| gyroid |" in page(repo)
+
+
+def test_a_superseded_model_keeps_its_page_and_says_so(repo: Path) -> None:
+    add_model(repo, meta=META.replace("status: printed", "status: superseded"))
+    assert "**Status:** superseded." in page(repo)
 
 
 @pytest.mark.parametrize(

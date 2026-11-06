@@ -2,7 +2,7 @@ title: Sconce wall block
 summary: >-
   The wall end of a grow-light sconce: a plate for two hidden screws and a deep socket that holds
   a dowel straight out from the wall, bolted through.
-status: designed
+status: superseded
 material: PETG, matte (never PLA for this part)
 size: 1 in
 sizes:
@@ -15,6 +15,11 @@ print:
   Infill: 40% gyroid
   Supports: under the boss, along its length, from the bed only
 notes: |
+  **Superseded** by the grow-light rail, before anything was printed (Phase 2 Q&A 1 to 4): the
+  [wall feet](rail-feet.html), [carrier](rail-carrier.html), [arm socket](rail-arm-socket.html),
+  [arm tip](rail-arm-tip.html) and [shade](rail-shade.html). Kept for anyone who wants an arm
+  straight out of the wall.
+
   The arm is a straight cantilever: a dowel up to 20 inches long, with the light hanging near its
   end. The socket is 54 mm deep, more than the 51 mm (2 inches) the joint needs to carry the arm's
   bending moment: about 5 N·m with a 1 kg light at 20 inches on a 1-inch dowel.

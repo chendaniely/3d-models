@@ -1,0 +1,428 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 192881.4959895991,
+      "bbox": {
+        "max": [
+          74.90000000000002,
+          74.89999817484235,
+          176.00000000000014
+        ],
+        "min": [
+          -74.89998633044574,
+          -74.89999817484237,
+          -8.228711816393489e-16
+        ]
+      },
+      "center_of_mass": [
+        -0.003118635576559173,
+        0.0018499005070044545,
+        91.1756915979472
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 44,
+      "face_types": {
+        "cone": 2,
+        "cylinder": 11,
+        "plane": 11
+      },
+      "faces": 24,
+      "kernel": {
+        "edges": 102,
+        "faces": 39,
+        "shells": 1,
+        "vertices": 68
+      },
+      "mass_g": 236.62236332759963,
+      "material": "Default",
+      "name": "Shade",
+      "vertices": 36,
+      "volume_mm3": 183428.1886260462
+    }
+  ],
+  "body_count": 1,
+  "params": [
+    {
+      "comment": "the socket's body: a guess until it's measured",
+      "error": null,
+      "expression": "45 mm",
+      "model": false,
+      "name": "socket_d",
+      "unit": "mm",
+      "value": 45.0
+    },
+    {
+      "comment": "the socket's length, its top to where the bulb starts",
+      "error": null,
+      "expression": "60 mm",
+      "model": false,
+      "name": "socket_l",
+      "unit": "mm",
+      "value": 60.0
+    },
+    {
+      "comment": "the bulb's widest: a guess until it's measured",
+      "error": null,
+      "expression": "121 mm",
+      "model": false,
+      "name": "bulb_d",
+      "unit": "mm",
+      "value": 121.0
+    },
+    {
+      "comment": "the bulb's length, from the socket to its face",
+      "error": null,
+      "expression": "100 mm",
+      "model": false,
+      "name": "bulb_l",
+      "unit": "mm",
+      "value": 100.0
+    },
+    {
+      "comment": "air round the lamp: at least 10 mm",
+      "error": null,
+      "expression": "12 mm",
+      "model": false,
+      "name": "gap",
+      "unit": "mm",
+      "value": 12.0
+    },
+    {
+      "comment": "the shade's wall",
+      "error": null,
+      "expression": "2.4 mm",
+      "model": false,
+      "name": "shade_t",
+      "unit": "mm",
+      "value": 2.4
+    },
+    {
+      "comment": "the shade's top, which rests on the stem's lugs",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "top_t",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "the socket's top below the shade's top: the lugs, then air",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "drop",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "the shade's rim below the bulb's face",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "rim",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "each vent through the shade's top",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "vent_d",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "the tip's stem (rail-arm-tip)",
+      "error": null,
+      "expression": "22 mm",
+      "model": false,
+      "name": "stem_d",
+      "unit": "mm",
+      "value": 22.0
+    },
+    {
+      "comment": "each lug on the stem (rail-arm-tip)",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "lug_w",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "how far each lug stands out (rail-arm-tip)",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "lug_h",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "round the stem and through the notches",
+      "error": null,
+      "expression": "0.4 mm",
+      "model": false,
+      "name": "fit",
+      "unit": "mm",
+      "value": 0.4
+    },
+    {
+      "comment": "the shade's inside at its top",
+      "error": null,
+      "expression": "socket_d / 2 + gap",
+      "model": false,
+      "name": "r_top",
+      "unit": "mm",
+      "value": 34.5
+    },
+    {
+      "comment": "the shade's inside round the bulb",
+      "error": null,
+      "expression": "bulb_d / 2 + gap",
+      "model": false,
+      "name": "r_bulb",
+      "unit": "mm",
+      "value": 72.5
+    },
+    {
+      "comment": "the vents' ring in the shade's top, between the stem's notches and the wall",
+      "error": null,
+      "expression": "r_top - vent_d / 2 - 3 mm",
+      "model": false,
+      "name": "vent_r",
+      "unit": "mm",
+      "value": 27.5
+    },
+    {
+      "comment": "where the cone meets the cylinder: the bulb's start",
+      "error": null,
+      "expression": "top_t + drop + socket_l",
+      "model": false,
+      "name": "shoulder_z",
+      "unit": "mm",
+      "value": 71.0
+    },
+    {
+      "comment": "the shade's height",
+      "error": null,
+      "expression": "shoulder_z + bulb_l + rim",
+      "model": false,
+      "name": "height",
+      "unit": "mm",
+      "value": 176.0
+    }
+  ],
+  "sketches": [],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 2.36775,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 104.835,
+      "name": "Cone1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ConeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 138.508459,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 0.0,
+            "rotation_rad": 0.0,
+            "strategy": "refined_tolerance",
+            "tolerance_mm": 0.0025757546504513807,
+            "translation_mm": 0.0
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 316.922125,
+      "name": "Cone2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ConeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 0.0,
+            "rotation_rad": 2e-6,
+            "strategy": "tool_nudge",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0005185141898453707
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 2934.592708,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": "Boolean retry: tool displacement 5.185142e-4 mm, rotation 2.000000e-6 rad"
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 605.010333,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 630.016292,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 595.188166,
+      "name": "Cylinder5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 589.191125,
+      "name": "Cylinder6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 529.715375,
+      "name": "Cylinder7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 11,
+      "ms": 580.9817499999999,
+      "name": "Cylinder8",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 12,
+      "ms": 602.610167,
+      "name": "Cylinder9",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 13,
+      "ms": 567.387625,
+      "name": "Cylinder10",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 192881.4959895991,
+    "edges": 44,
+    "faces": 24,
+    "mass_g": 236.62236332759963,
+    "open_bodies_skipped": 0,
+    "vertices": 36,
+    "volume_mm3": 183428.1886260462
+  }
+}
