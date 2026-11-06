@@ -169,8 +169,8 @@ each can be revisited at Phase 2's start.
 | S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | built |
 | S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 4 | the load-test log on the parts' pages | planned |
 | S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2, Task 5 | Dan's check, with a photo he has looked at | planned |
-| S18 | the light hangs by its cord from the clamp for two days | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 1, Task 8; Phase 2, Task 4 | `tests/test_cord_clamp.py`; the load test's slip measurements | planned |
-| S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | planned |
+| S18 | the light hangs by its cord from the clamp for two days | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 1, Task 8; Phase 2, Task 4 | `tests/test_cord_clamp.py`; the load test's slip measurements | built |
+| S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
 

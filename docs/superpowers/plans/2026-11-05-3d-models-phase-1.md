@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 8: The sconce's cord clamp, open.
+**Now:** waiting on Dan: Task 9, step 1 (Pages: source "GitHub Actions", and the `github-pages` environment's deployment branches set to `main` only).
 
 ***
 
@@ -3621,8 +3621,8 @@ Co-Authored-By: <the model's own line>
   `read_meta` and the page.
 - Produces: the design's parameters `dowel_d`, `clearance` (0.2 mm), `ring_wall`, `ring_len`, `split`, `ear_t`, `ear_len`, `bolt_d` (M4), `cord_d`, `under_gap` (`cord_d + 4 mm`), `grip_d` (`cord_d - 0.6 mm`), `slot_w` (`cord_d - 1.5 mm`), `shelf_len`, `shelf_w`, `shelf_t`, `web_w`, `bore_d`, `ring_d`, `shelf_top`; the body `Cord clamp`.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_cord_clamp.py`:
 
@@ -3668,9 +3668,9 @@ def test_the_shelf_hangs_its_gap_and_thickness_below_the_dowel() -> None:
     assert lowest == pytest.approx(-(p["dowel_d"] / 2 + p["under_gap"] + p["shelf_t"]))
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
   `models/sconce-cord-clamp/sconce-cord-clamp.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to `.git/cord-clamp-script.json`
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to `.git/cord-clamp-script.json`
   (it stays out of the repo: the saved design holds the same feature tree, and
   `solidcraft-cli script` regenerates it):
 
@@ -3996,7 +3996,7 @@ def test_the_shelf_hangs_its_gap_and_thickness_below_the_dowel() -> None:
   From the repo's root: `mkdir -p models/sconce-cord-clamp`, then
   `solidcraft-cli run .git/cord-clamp-script.json --quiet`. Expected: exit 0, and
   `models/sconce-cord-clamp/sconce-cord-clamp.sc` is a few KB of JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/sconce-cord-clamp/model.yml`:
 
@@ -4036,10 +4036,10 @@ notes: |
 
   Then `make models`. Expected: `building models/sconce-cord-clamp (missing …)` and `1 built`. Look at
   `sconce-cord-clamp.png` against the design's description in its notes.
-- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy check is clean over the new files, and the
   render lists the model's page.
-- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the sconce's cord clamp
@@ -4062,7 +4062,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add models/sconce-cord-clamp/sconce-cord-clamp.sc models/sconce-cord-clamp/sconce-cord-clamp.stl models/sconce-cord-clamp/sconce-cord-clamp-3-4in.stl models/sconce-cord-clamp/sconce-cord-clamp-25mm.stl models/sconce-cord-clamp/sconce-cord-clamp.png models/sconce-cord-clamp/sconce-cord-clamp.eval.json models/sconce-cord-clamp/build.json models/sconce-cord-clamp/model.yml tests/test_cord_clamp.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
