@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -65,7 +66,7 @@ def image_problem(path: Path) -> str | None:
                 return "EXIF metadata"
             extra = sorted(set(image.info) - HOUSEKEEPING)
             markers = {marker for marker, _ in getattr(image, "applist", [])}
-    except OSError as error:
+    except (OSError, ValueError, Image.DecompressionBombError) as error:
         return f"unreadable as an image ({error})"
     if extra:
         return f"metadata: {', '.join(extra)}"
@@ -104,16 +105,20 @@ def strip(path: Path) -> None:
     with Image.open(path) as opened:
         image_format = opened.format
         icc = opened.info.get("icc_profile")
+        transparency = opened.info.get("transparency")
         image = ImageOps.exif_transpose(opened)
         image.load()
     image.info = {}  # Pillow writes a JPEG's comment, and EXIF or XMP, from info unless cleared
     options = {"icc_profile": icc} if icc else {}
+    if transparency is not None and image_format in {"PNG", "WEBP"}:
+        options["transparency"] = transparency
     if image_format == "JPEG":
         options |= {"quality": 95, "subsampling": 0}
     handle, temp = tempfile.mkstemp(dir=path.parent, suffix=path.suffix)
     os.close(handle)
     try:
         image.save(temp, format=image_format, **options)
+        shutil.copymode(path, temp)
         os.replace(temp, path)
     finally:
         Path(temp).unlink(missing_ok=True)
@@ -132,10 +137,11 @@ def command_check(root: Path) -> int:
 def command_strip(files: list[Path]) -> int:
     for path in files:
         if path.suffix.lower() not in READABLE:
-            print(f"privacy: {path}: strip takes JPEG, PNG or WebP only", file=sys.stderr)
+            print(f"privacy: {path.name}: strip takes JPEG, PNG or WebP only", file=sys.stderr)
             return 2
+    for path in files:
         strip(path)
-        print(f"stripped {path}")
+        print(f"stripped {path.name}")
     return 0
 
 

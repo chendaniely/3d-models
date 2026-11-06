@@ -123,7 +123,7 @@ def test_check_skips_what_git_ignores(repo: Path, capsys) -> None:
 
 
 @pytest.mark.parametrize("name", ["print.jpg", "print.png", "print.webp"])
-def test_strip_leaves_no_metadata(repo: Path, capsys, name: str) -> None:
+def test_strip_leaves_no_metadata(repo: Path, name: str) -> None:
     path = photo(repo / name, gps=True, **({"xmp": XMP} if name != "print.png" else {}))
     assert privacy.main(["strip", str(path)], root=repo) == 0
     assert privacy.image_problem(path) is None
@@ -158,3 +158,50 @@ def test_strip_refuses_a_heic(repo: Path, capsys) -> None:
     path.write_bytes(b"\x00")
     assert privacy.main(["strip", str(path)], root=repo) == 2
     assert "strip takes JPEG, PNG or WebP only" in capsys.readouterr().err
+
+
+def test_strip_keeps_a_png_s_transparency(repo: Path) -> None:
+    image = Image.new("P", (4, 4), 0)
+    image.putpalette([0, 0, 0, 255, 0, 0] + [0] * 250 * 3)
+    image.putpixel((1, 1), 1)
+    path = repo / "alpha.png"
+    image.save(path, transparency=0)
+    privacy.main(["strip", str(path)], root=repo)
+    assert privacy.image_problem(path) is None
+    with Image.open(path) as stripped:
+        assert stripped.info.get("transparency") is not None
+        assert stripped.convert("RGBA").getpixel((0, 0))[3] == 0
+        assert stripped.convert("RGBA").getpixel((1, 1))[3] == 255
+
+
+def test_strip_checks_every_file_before_rewriting_any(repo: Path, capsys) -> None:
+    good = photo(repo / "good.jpg", comment=b"taken at home")
+    bad = repo / "IMG.heic"
+    bad.write_bytes(b"\x00")
+    before = good.read_bytes()
+    assert privacy.main(["strip", str(good), str(bad)], root=repo) == 2
+    assert good.read_bytes() == before
+
+
+def test_strip_prints_file_names_only(repo: Path, capsys) -> None:
+    path = photo(repo / "sub" / "print.jpg", comment=b"x")
+    privacy.main(["strip", str(path)], root=repo)
+    assert capsys.readouterr().out == "stripped print.jpg\n"
+    bad = repo / "IMG.heic"
+    bad.write_bytes(b"\x00")
+    privacy.main(["strip", str(bad)], root=repo)
+    assert capsys.readouterr().err == "privacy: IMG.heic: strip takes JPEG, PNG or WebP only\n"
+
+
+def test_strip_keeps_the_file_mode(repo: Path) -> None:
+    path = photo(repo / "print.jpg", comment=b"x")
+    path.chmod(0o644)
+    privacy.main(["strip", str(path)], root=repo)
+    assert path.stat().st_mode & 0o777 == 0o644
+
+
+def test_check_names_a_file_that_is_not_an_image(repo: Path, capsys) -> None:
+    (repo / "fake.jpg").write_text("not an image", encoding="utf-8")
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert "privacy: fake.jpg: unreadable as an image" in err
