@@ -13,7 +13,7 @@ from conftest import body, params
 MODELS = Path(__file__).resolve().parent.parent / "models"
 FEET = models.Model(MODELS / "rail-feet")
 COUPON = models.Model(MODELS / "dowel-fit-coupon")
-SCREW_HEAD_MM = 3.0  # a #8 or #10 pan or washer head, and a toggle bolt's
+SCREW_HEAD_MM = 4.0  # a #10 pan or washer head stands about 4 mm, a #8 about 3.6
 
 
 def test_two_feet_and_two_caps_each_one_closed_body() -> None:

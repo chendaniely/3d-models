@@ -117,7 +117,7 @@
     },
     {
       "name": "head_h",
-      "expr": "3 mm",
+      "expr": "4.2 mm",
       "unit": "mm",
       "comment": "a pan or washer head's height",
       "model": false

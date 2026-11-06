@@ -1,6 +1,6 @@
 {
   "design": "rail-feet.sc",
-  "sha256": "965ae64f229e102734392c55b313f875974b3662e1113553c112588da26f294f",
+  "sha256": "e55db720c86f58c1be557305e2961b310b2e1b7e392e50ddaf0a81e033c3ebc8",
   "sizes": {
     "3/4 in": {
       "dowel_d": "19.05 mm"
@@ -11,10 +11,10 @@
   },
   "solidcraft_cli": "solidcraft-cli 0.30.1",
   "built": {
-    "rail-feet.stl": "d45f736949145a053097b168d85163435a3cef7fe01434e3fefafa712821bea1",
-    "rail-feet.png": "b730d49c77fcab1b6ff58b2511e915c5b9fe04c2391dcaa1005c9bb0e9c894d6",
-    "rail-feet.eval.json": "fab0bd44a6466b3be9b9d938ae909f99c49dd9941c387c8247665db86b6d4a91",
-    "rail-feet-3-4in.stl": "b156cb9982355b7413526fc8f602cca9228d81c7b5c16753548c6494ce5b5907",
-    "rail-feet-25mm.stl": "f9cf3b413e2fc15510223d4fd9ac45316bfe1e63e86ad78cafba4421368279e2"
+    "rail-feet.stl": "4b3d1292acca4f26d39760351fcd017843cd8c29b1df361511d638841a4186c3",
+    "rail-feet.png": "63e46f4fa5f16697804f2b86d8371cd0b33c0e06cc1f5ade269879208abbe89d",
+    "rail-feet.eval.json": "17c5d5f74de2adf216c7dad2118650796f76faae2f66fb960a03fcf79ea908e5",
+    "rail-feet-3-4in.stl": "6385928a19be33e6f7303b7378a8abf450f1dfd55b286fcf00114907584d3b07",
+    "rail-feet-25mm.stl": "c7864e42aea7a1de6f16b406ed8f206f4bf67a4e0b54efd813f3698666de0f66"
   }
 }
