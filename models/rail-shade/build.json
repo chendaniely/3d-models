@@ -1,0 +1,11 @@
+{
+  "design": "rail-shade.sc",
+  "sha256": "829c63b41f3586d6e8248895404885bd8a92d0da01feda46a187a084aca26876",
+  "sizes": {},
+  "solidcraft_cli": "solidcraft-cli 0.30.1",
+  "built": {
+    "rail-shade.stl": "ae0ef622ed56ad9f3d3d53397b0824b8331842f46fcfec5d6f0293caa1ed93a2",
+    "rail-shade.png": "e03337c4d48ab2343b536b0e1975ee76adc3d70ccbbeeaf3046b6257b0f053bf",
+    "rail-shade.eval.json": "fbae433540aae617eb8191cbed260d5e4e35a0ee82fd2080dd29e38d53be5a91"
+  }
+}

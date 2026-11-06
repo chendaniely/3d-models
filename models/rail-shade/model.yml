@@ -1,0 +1,30 @@
+title: Rail light shade
+summary: >-
+  A shade for a grow bulb on a pendant socket: it turns onto the arm tip's stem, and the lamp hangs
+  inside it, with air all round and vents in its top.
+status: designed
+material: PETG, matte (never PLA, since it sits by a warm bulb)
+size: for a bulb up to 121 mm across
+print:
+  Orientation: as saved, upside down, its top on the bed
+  Layer height: 0.2 mm
+  Walls: 3
+  Infill: 15% (only the top is solid)
+  Supports: none
+notes: |
+  The light hangs inside the shade on its own cord, gripped in the arm tip's stem. Slide the shade
+  up over the bulb and the socket, its top round the stem and its two notches past the stem's
+  lugs, then turn it a quarter turn: it rests on the lugs. A cone round the socket widens to a
+  cylinder round the bulb, so the shade stays at least 10 mm from the lamp everywhere, and six
+  vents in its top let the heat out.
+
+  - **Its size follows the lamp:** `socket_d`, `socket_l`, `bulb_d` and `bulb_l` are guesses
+    until the Barrina is measured. Set them to your own lamp's, and the shade follows.
+  - **Heat:** a 25 W bulb is more than the 9 or 10 W most printed shades are made for, so this one
+    is PETG, and its gap is a parameter.
+
+  See *Putting the rail together* on the [wall feet](rail-feet.html) page for the order it all
+  goes up in.
+
+  This is a first design, not yet printed or tested with the light on; its page will say when it
+  has been.
