@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 4: The arm socket and its wedge, open.
+**Now:** Task 5: The arm tip, its wedge and the cord clips, open.
 
 ***
 
@@ -1278,6 +1278,8 @@ Co-Authored-By: <the model's own line>
 
 ### Task 4: The arm socket and its wedge
 
+> **Built differently** (closed 2026-11-06; commits 2c3782f, the notes fix after it): the notes say the 7.5 N·m includes the shade and the arm itself (Task 4's review, Minor).
+
 **Tier:** 2 · **Scenarios:** S28, S29, S13
 
 **Files:**
@@ -1292,8 +1294,8 @@ Co-Authored-By: <the model's own line>
   (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the block that slides down the carrier's dovetail and holds the arm level; the parameters and bodies its test names.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing test.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing test.**
 
 `tests/test_rail_arm_socket.py`:
 
@@ -1361,9 +1363,9 @@ def test_the_wedges_groove_leaves_a_wall_above_it() -> None:
     assert p["boss_d"] / 2 - deepest >= 2.0
 ```
 
-- [ ] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
   `models/rail-arm-socket/rail-arm-socket.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to
   `.git/rail-arm-socket-script.json` (it stays out of the repo: the saved design holds the same feature tree):
 
 ```json
@@ -1417,7 +1419,7 @@ def test_the_wedges_groove_leaves_a_wall_above_it() -> None:
   From the repo's root: `mkdir -p models/rail-arm-socket`, then
   `solidcraft-cli run .git/rail-arm-socket-script.json --quiet`. Expected: exit 0, and
   `models/rail-arm-socket/rail-arm-socket.sc` is plain-text JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/rail-arm-socket/model.yml`:
 
@@ -1460,12 +1462,12 @@ notes: |
 
   Then `make models`. Expected: `building models/rail-arm-socket (missing …)` and `1 built`. Look at
   `rail-arm-socket.png` against the notes.
-- [ ] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the line `  class socket planned` ("The rail, part by part"): the
+- [x] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the line `  class socket planned` ("The rail, part by part"): the
   part is built.
-- [ ] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy and offsite checks pass, the render lists
   the model's page.
-- [ ] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the block that slides down the carrier's dovetail and holds the arm level
@@ -1488,7 +1490,7 @@ Co-Authored-By: <the model's own line>
 
   `git add models/rail-arm-socket/rail-arm-socket.sc models/rail-arm-socket/rail-arm-socket.stl models/rail-arm-socket/rail-arm-socket-3-4in.stl models/rail-arm-socket/rail-arm-socket-25mm.stl models/rail-arm-socket/rail-arm-socket.png models/rail-arm-socket/rail-arm-socket.eval.json models/rail-arm-socket/build.json models/rail-arm-socket/model.yml tests/test_rail_arm_socket.py website/architecture.qmd`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'`
   shows the `Plan:` line.
-- [ ] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
@@ -2660,3 +2662,6 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 3, review | Minor | `models/rail-carrier` | `channel` is measured at the carrier's bottom; the wedge's tail below it is thicker, leaving about 7.7 mm to the pads' plane | open |
 | Task 3, review | Minor | `models/rail-carrier` | The wedge meets the round rail on a line; a face hollowed to the dowel's radius would add contact; the load test (Task 12) shows whether it's needed | open |
 | Task 3, review | Minor | `models/rail-carrier` | Literals outside the parameters (the wedge's 20 mm seat, its 40 mm offset); "three sizes" in a test name counts the saved one | open |
+| Task 4, review | Minor | `models/rail-arm-socket` | The slot's flanks aren't parallel to the dovetail's: the side gap is 0.3 mm at the base, 0.19 mm at the tip; the look test (Task 11) checks the fit | open |
+| Task 4, review | Minor | `models/rail-arm-socket` | The boss is wider than the block, so printed on its back it leaves a 3.9 mm ledge the notes' "Supports: none" doesn't mention | open |
+| Task 4, review | Minor | `tests/test_rail_arm_socket.py` | The groove's wall is measured from the dowel's top, not the bore's (0.2 mm apart) | open |
