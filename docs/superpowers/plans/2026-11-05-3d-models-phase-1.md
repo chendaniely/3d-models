@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 2: The rest of the ledger copied into the plan.
+**Now:** Phase end, step 3: The phase-end council.
 
 ***
 
@@ -4137,7 +4137,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 - [x] **1. The final whole-branch review:** Matt Pocock's two-axis `code-review` from
   `git merge-base main HEAD`; one fix dispatch, then one scoped re-review; a ruling on what's left.
   Each fix is its own commit.
-- [ ] **2. The rest of the ledger copied into the plan:** whatever
+- [x] **2. The rest of the ledger copied into the plan:** whatever
   `.superpowers/sdd/2026-11-05-3d-models-phase-1/progress.md` holds that no closing commit
   carries, under its task.
 - [ ] **3. The phase-end council:** four read-only reviewers (goal fit and scenarios,
@@ -4172,6 +4172,63 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   serves its sizes, and its viewer loads (S08, S10).
 
 ***
+
+## The run's ledger
+
+Copied at the phase end (step 2) from `.superpowers/sdd/2026-11-05-3d-models-phase-1/progress.md`,
+which superpowers deletes after the phase: what no closing commit carries. Each task's findings,
+rulings and rounds are in its closing commit.
+
+### The pre-flight scan (2026-11-05)
+
+Every listing was run before the plan was committed: the scratch prototype's full `make check`
+passed, and the repo as it stands after Tasks 1, 4 and 5 was rebuilt from the plan's own staged
+files and passed (tests, lint, privacy, render of the real plans). The rows below record what
+each shared file or interface was checked against.
+
+| Tasks | Shared file or interface | Produced vs consumed | Found |
+|---|---|---|---|
+| 1 → 2, 3, 4 | `Makefile` placeholders `models`, `models-check`, `privacy`, `docs`; `check:` line | T1 writes placeholders and `check: test test-utc lint leaks`; T2/T3/T4 replace their recipe and extend `check` in order | consistent; T4's line is the final one |
+| 4 → 5 | `Makefile` `docs` recipe | T4: sitedocs + render + grep + lychee; T5 adds `gallery.py` after `sitedocs.py` (full recipe given) | consistent |
+| 1 → 2, 3, 4 | `.github/workflows/ci.yml` | T1 tests (test, lint) + leaks jobs; T2 adds `make models-check`, T3 `make privacy` after it; T4 appends site + pages | consistent |
+| 1 → 2–8 | ruff `known-first-party` | conftest, gallery, models, privacy, sitedocs listed from T1 | consistent |
+| 1 → 3 | `.gitignore` (`.playwright-mcp/`, generated site dirs, `*.sc.bak`) | T3's privacy check uses git's ignore rules; `.playwright-mcp/` (untracked now) is ignored from T1 | consistent |
+| 2 → 3 | `tests/conftest.py` `repo` fixture (a git repo) | T3's tests need `git ls-files` | consistent |
+| 2 → 5 | `models.ROOT`, `Model`, `find_models`, `sizes` | gallery imports exactly these | consistent |
+| 2 → 6, 7, 8 | conftest `measured`, `params`, `body`; `models.sizes` | the part tests import them | consistent |
+| 4 → 5 | `website/_quarto.yml`, `styles.css`, `_overview.qmd` | T5 adds resources + Models nav, the viewer CSS, solid gallery edges | consistent |
+| 4 → later docs | `website/design.qmd` lists every doc under `docs/superpowers/` | 6 docs exist at HEAD, 6 listed; new docs (phase-end council, retro, Phase 2 Q&A) add their line | consistent |
+| 6 → 7 | coupon `step` | T7's clearance test reads the coupon's params | consistent |
+| 7 → 8 | wall block `dowel_d`, `sizes` | T8's tests compare against them | consistent |
+
+| Task | Self-consistent? |
+|---|---|
+| 1 | yes: its test lists the placeholder targets its Makefile adds (stage t1 passed) |
+| 2 | yes: tests and models.py from the passing prototype |
+| 3 | yes: tests and privacy.py from the passing prototype |
+| 4 | yes: stage t4 passed tests, lint, privacy, the render of the real plans |
+| 5 | yes: stage t5 passed; one WARN (empty Models listing) is expected until T6 |
+| 6–8 | yes: the prototype built all three designs and passed their tests |
+| 9 | [Dan] settings |
+| 10 | phase end |
+
+### The run's own rulings
+
+- Tasks 7 and 8 wait for Dan — he said, mid-run, he has changes to "the way the dowels mount and clamp to the piece and screw into the wall"; building them first would mean rebuilding them — costs a pause before Task 7, nothing built is lost.
+- pushes are asked for in one request at the stop before Task 7, not at each close — AGENTS.md's interim line forbids a standing OK, and asking eight times would park a vibed run eight times; nothing is pushed without his OK, and each task closes on its local checks until then — costs CI's first run moving later.
+- implementers run on sonnet (the plan holds the code, but each task edits several files, runs make, SolidCraft or npm); reviewers on sonnet, the final whole-branch review on opus — costs little if a task needs more judgment than planned: the review loop escalates.
+
+### Events
+
+- Task 3: fix round 1/1 (5 sent: 1 important transparency lost in strip, 4 minor; commits caddfe1..e837178)
+- Task 7: stopped before its first step: waiting on Dan (Phase 1 Q&A, item 1), wip 75386dd
+- Task 7: resumed: Dan chose to build Tasks 7 and 8 as planned first, changes after (Phase 1 Q&A 1, 7e017c7)
+- Task 6: reopened: CI run 42160736349 on 2e455dd red in the site job (lychee tarball unpacks into a folder; Task 4 listing), 16e968a
+- CI: run 42167784383 on 9763c4a green (tests, leaks, site); Tasks 1-8 closed on CI
+- Dan (Phase 1 Q&A 5): "push merge. do the whole shebang!" — standing push OK through the merge
+- Phase end: Ruling: the merge's wait for Dan's look at the PR's binaries is met by Phase 1 Q&A 2 and 3, where each was named and OKed — costs Dan a binary he would have wanted to look at again if wrong
+- Phase end: Ruling: privacy check extended to the history (spec S03 says before the push it would go out in) — costs a slower check if wrong
+- CI: run 42168278441 on c0fec70: tests job failed in setup-uv (log gone, BlobNotFound); the same pinned action passed in site; rerun of the failed job green — transient; also confirms CI under Task 9's settings (SHA pins required, selected actions, read-only token)
 
 ## Phase-end list
 
