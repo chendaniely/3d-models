@@ -3,7 +3,7 @@
     uv run scripts/privacy.py check
         fail, naming each file, when a file git would commit is an image carrying any metadata
         but a colour profile, is a photo or video format this check can't read inside, or holds
-        a home-folder path (/Users/<name>/ or /home/<name>/); then the same for every file in
+        a home-folder path (/Users/<name> or /home/<name>); then the same for every file in
         the history any ref reaches, since a push sends that too
     uv run scripts/privacy.py strip FILE ...
         rewrite each JPEG, PNG or WebP upright, with no metadata but its colour profile
@@ -42,7 +42,9 @@ HOUSEKEEPING = {
     "transparency", "aspect", "interlace", "loop", "background", "timestamp", "duration",
 }  # fmt: skip
 JPEG_HOUSEKEEPING = {"APP0", "APP2", "APP14"}  # JFIF, the colour profile, Adobe's colour flag
-HOME = re.compile(rb"/(?:Users|home)/[^/\s\"'<>()]+/")
+# A home folder, with or without a slash after it: the name runs to the first character a name
+# can't hold (/, a space, a quote, <, >, a bracket) or to the end, so /Users/<name>/ doesn't match.
+HOME = re.compile(rb"/(?:Users|home)/[^/\s\"'<>()]+")
 
 
 def committable(root: Path) -> list[Path]:

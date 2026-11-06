@@ -269,3 +269,13 @@ def test_check_passes_a_symlink_to_a_file_in_the_repo(repo: Path, capsys) -> Non
     os.symlink("notes.md", repo / "readme.md")
     commit(repo, "notes.md", "readme.md")
     assert check(repo, capsys) == (0, "")
+
+
+def test_check_names_a_symlink_to_a_home_folder_itself(repo: Path, capsys) -> None:
+    os.symlink(HOME.rstrip("/"), repo / "home")
+    assert check(repo, capsys) == (1, "privacy: home: a symlink to a home-folder path\n")
+
+
+def test_check_names_a_line_ending_in_a_home_folder(repo: Path, capsys) -> None:
+    (repo / "notes.md").write_text(f"first\ncd {HOME.rstrip('/')}\n", encoding="utf-8")
+    assert check(repo, capsys) == (1, "privacy: notes.md: a home-folder path on line 2\n")
