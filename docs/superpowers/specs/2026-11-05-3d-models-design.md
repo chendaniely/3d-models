@@ -1,12 +1,14 @@
 # 3d-models: design spec
 
-**Status:** spec drafted 2026-11-05, awaiting Dan's approval · Phase 1 planned · Phase 2 planned
+**Status:** spec drafted 2026-11-05 and revised after the kickoff council, awaiting Dan's approval ·
+Phase 1 planned · Phase 2 planned
 
 Kickoff's answers, with Dan's reasons in his words, are on the
-[Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind Phase 2 are in the
-[kickoff notes](2026-11-05-3d-models-kickoff-notes.md). Dan said "oneshot the rest of the repo", so
-every design call below that he didn't make himself is the agent's, logged on the Q&A page as
-"decided without Dan" (D1 to D12).
+[Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
+[kickoff notes](2026-11-05-3d-models-kickoff-notes.md); the council's review and what became of
+each finding are in the [kickoff council](2026-11-05-3d-models-kickoff-council.md). Dan said
+"oneshot the rest of the repo", so every design call below that he didn't make himself is the
+agent's, logged on the Q&A page as "decided without Dan" (D1 to D19).
 
 ## What this is, and why
 
@@ -14,25 +16,29 @@ A public repo of Dan's 3D-print projects: the SolidCraft designs (`.sc`), the ST
 from them, and a docs site that doubles as a gallery, where each model has a page with a 3D view
 you can turn, its picture, its measurements and the files to download (Q&A answers 3, 4 and 6).
 The projects are vibe coded: an agent builds most models and all the tooling, Dan prints them and
-says what works.
+says what works. Others may print and adapt them, with credit, but not sell them (answer 15).
 
 The first real project is a **wall sconce for a grow light**, made of a wooden dowel and printed
 parts in a Japandi style, in the corner of a room where a monstera and a rubber plant stand. The
-lamp hangs 16 to 20 inches (406 to 508 mm) out from the wall. Dan's doubt, in his words: "not sure
-if it'll look good with 3d printed parts and dowels". The sconce is the start of a dowel system in
-the spirit of Lofted Goods' The Rail, with original designs, none of Lofted Goods' files copied.
+light, Dan's Barrina 25 W grow bulb on a pendant cord, hangs 16 to 20 inches (406 to 508 mm) out
+from the wall from a clamp on the dowel (answer 11). Dan's doubt, in his words: "not sure if it'll
+look good with 3d printed parts and dowels". The sconce is the start of a dowel system in the
+spirit of Lofted Goods' The Rail, with original designs, none of Lofted Goods' files copied. Its
+parts are published as soon as they're designed, in three dowel sizes, so others can print them
+for their own dowels (answers 12 and 14).
 
-**Success:** a visitor finds a model on the site, turns it in the viewer and downloads the STL that
-prints; Dan adds a model by saving a `.sc` and running one command; the sconce holds the lamp, out
-of the way, and looks like it belongs in the room.
+**Success:** a visitor finds a model on the site, turns it in the viewer and downloads the STL for
+their dowel; Dan adds a model by saving a `.sc`, writing its `model.yml` and running one command;
+the sconce holds the light, out of the way, and looks like it belongs in the room.
 
 **Goals**
 
-- One command, `make models`, turns every changed design into its STL, picture and measurements.
-- The site renders every model in a 3D viewer, with the `.stl` and `.sc` files to download.
-- CI refuses a design whose exported files are stale, a photo that carries a GPS location, and a
-  leaked secret.
-- A sconce that passes a 48-hour load test at three times the lamp's weight before it goes up.
+- One command, `make models`, turns every changed design into its STLs, picture and measurements.
+- The site renders every model in a 3D viewer, with an STL per dowel size and the `.sc` to
+  download.
+- CI refuses a stale build, image metadata, a home-folder path and a leaked secret; and each push
+  waits for the same checks locally.
+- A sconce that passes a 48-hour load test at three times the light's weight before it goes up.
 
 **Non-goals**
 
@@ -45,8 +51,8 @@ of the way, and looks like it belongs in the room.
 **Anti-goals** (it would fail even if it worked)
 
 - Anything copied from Lofted Goods, or a page that looks like theirs.
-- A photo that shows where Dan lives: every photo has its GPS data stripped before it's committed
-  (Q&A answer 5).
+- A photo that shows where Dan lives: no metadata, and Dan looks at each before it's staged
+  (answer 5; D14).
 - A sconce that looks printed-and-cheap: glossy plastic, bulky blocks, visible screws, a bare pink
   grow bulb (kickoff notes, *How it can look good*).
 - A load-bearing part printed in PLA (it creeps under a constant load and softens near a warm bulb).
@@ -54,36 +60,42 @@ of the way, and looks like it belongs in the room.
 ## How it's made
 
 - **SolidCraft 0.30.1** designs every model. Agents build models headless with `solidcraft-cli`
-  from a command script, then save the design; Dan opens the same `.sc` in the app (D3). The
-  SolidCraft MCP server isn't set up for this repo yet (a [Dan] step on the Q&A page).
+  from a command script, then save the design; Dan opens the same `.sc` in the app (D3).
 - **Designs are saved as plain-text JSON `.sc` files** (`file.save_as` with `format: json`,
-  `cache: false`): about 2 KB each, readable in a diff, and scanned for leaks like any text (D2).
-- **Built files are committed beside their design:** the STL (binary), the picture (PNG), the
-  measurements (`solidcraft-cli eval`'s JSON) and a build record holding the design's SHA-256 and
-  the CLI's version. Exporting the same design twice gives a byte-different STL, so freshness is
-  judged by the design's hash, never by rebuilding (D2).
-- **Python 3.12+ under uv**, as a uv project (`pyproject.toml`, `uv.lock`): pytest for tests, ruff
-  for lint, PyYAML and Pillow (D10).
+  `cache: false`): a few KB each, readable in a diff, and scanned for leaks like any text (D2).
+- **Built files are committed beside their design:** the STL (binary), one more STL per size the
+  model lists, the picture (PNG), the measurements (`solidcraft-cli eval`'s JSON) and a build
+  record holding the SHA-256 of the design and of every built file, the sizes and the CLI's
+  version. Exporting the same design twice gives a byte-different STL, so freshness is judged by
+  those hashes, never by rebuilding (D2).
+- **Sizes:** a model's `model.yml` may list sizes as parameter changes (`3/4 in: {dowel_d:
+  19.05 mm}`); `make models` exports an STL for each from the one design (answer 14).
+- **Python 3.12 under uv**, as a uv project (`pyproject.toml`, `uv.lock`, `.python-version`):
+  pytest for tests, ruff for lint, PyYAML and Pillow (D10).
 - **The site is Quarto 1.11.6** in `website/`, on GitHub Pages at
-  <https://chendaniely.github.io/3d-models/>, deployed by CI from `main`.
-- **The viewer is three.js 0.187.0** (`STLLoader`, `OrbitControls`), loaded from jsDelivr through an
-  import map, pinned to that version, with no build step (D4).
+  <https://chendaniely.github.io/3d-models/>, deployed by CI from `main`. The design docs reach it
+  as copies with Quarto's syntax escaped, since the plans quote it in their listings (D13).
+- **The viewer is three.js 0.187.0** (`STLLoader`, `OrbitControls`), served from the site itself,
+  copied from npm's package and checked by SHA-256 (D15).
+- **Licence:** CC BY-NC 4.0 for the models, their pictures and the docs; MIT for the code
+  (answer 15).
 
 ### The repo's layout
 
 ```text
 models/<slug>/
-  model.yml           title, summary, status, material, print settings, notes per feature
+  model.yml           title, summary, status, material, size, sizes, print settings, notes
   <slug>.sc           the design (plain-text JSON), the source of truth
-  <slug>.stl          built by make models
+  <slug>.stl          built by make models; <slug>-<size>.stl for each extra size
   <slug>.png          built by make models
   <slug>.eval.json    built by make models: bodies, bounding box, volume, mass, parameters
-  build.json          built by make models: the design's sha256 and the CLI's version
-  photos/             optional: prints and installs, GPS stripped
+  build.json          built by make models: every file's sha256, the sizes, the CLI's version
+  photos/             optional: prints and installs, stripped and looked at first
 scripts/models.py     build | check
-scripts/gallery.py    write | check-site: the model pages, and the rendered site's check
-scripts/photos.py     check | strip
-website/              the Quarto site; website/models/ is generated by `gallery.py write`
+scripts/privacy.py    check | strip: image metadata, unreadable formats, home-folder paths
+scripts/sitedocs.py   the design docs copied into the site, Quarto's syntax escaped
+scripts/gallery.py    the model pages
+website/              the Quarto site; website/superpowers/ and website/models/ are generated
 tests/                pytest
 ```
 
@@ -91,67 +103,77 @@ tests/                pytest
 
 | Target | What it does |
 |---|---|
-| `make models` | rebuilds each model whose design's hash differs from its `build.json` (needs SolidCraft) |
-| `make models-check` | fails, naming each model, when a design has no build or a stale one |
-| `make photos` | fails, naming each file, when an image anywhere in the repo carries GPS data, or is a HEIC |
+| `make models` | rebuilds each model whose design, sizes or built files differ from its `build.json` (needs SolidCraft) |
+| `make models-check` | fails, naming each model, when a build is missing or stale, or a design is misnamed |
+| `make privacy` | fails, naming each file, on image metadata, a photo format it can't read inside, or a home-folder path, in anything git would commit |
 | `make test`, `make test-utc`, `make lint` | pytest; pytest under `TZ=UTC`; ruff check and format check |
-| `make docs` | writes the gallery pages, renders the site, fails on an unresolved link |
-| `make check` | test, test-utc, lint, models-check, photos, leaks, docs |
+| `make docs` | copies the docs, writes the model pages, renders the site, fails on an unresolved link, runs lychee where installed |
+| `make check` | test, test-utc, lint, models-check, privacy, leaks, docs |
+
+Every push waits for `make leaks privacy` and Dan's OK while the repo has no hooks (`AGENTS.md`).
 
 ### The site
 
 Home (the README, then the overview diagram), **Models** (a card per model: picture, title,
-summary), one page per model (the 3D viewer, the picture, the measurements, print settings, the
-downloads), Architecture (every diagram), Design (the spec, plans and Q&A pages, each through a
-`.md` wrapper), Changelog, and How we work (`AGENTS.md`). Diagrams by link only:
+summary), one page per model (the 3D viewer, the picture, notes, photos, print settings,
+measurements, parameters, a download per size with a note on which parameters to change, the
+licence), Architecture (every diagram), Design (the spec, plans, Q&A pages and council reports),
+Changelog, and How we work (`AGENTS.md`). Diagrams by link only:
 [Architecture](https://chendaniely.github.io/3d-models/architecture.html).
 
 ## Outline
 
 | Phase | Goal | Done means |
 |---|---|---|
-| 1: the repo | the pipeline from design to gallery, guarded by CI, with a first model | a model page on the live site turns the dowel fit-test coupon in 3D and downloads its STL; CI runs every check |
-| 2: the wall sconce | a grow-light sconce Dan is happy to look at, proven safe before it goes up | the sconce is on the wall holding the lamp, after a passed load test, its models and photos on the site |
+| 1: the repo and the first models | the pipeline from design to gallery, guarded by CI, with the coupon and the sconce's parts designed | the live site turns the coupon, the wall block and the cord clamp in 3D and downloads each in three sizes; CI runs every check |
+| 2: the wall sconce | the parts tuned to Dan's measurements, judged by eye, proven by a load test, and installed | the sconce is on the wall holding the light, after a passed load test, its pages saying so |
 
-### Phase 2's design calls
+### The sconce's design calls
 
-All the agent's, from the kickoff notes; each can be revisited at Phase 2's start.
+All the agent's, from the kickoff notes and the council, but for the clamp (Dan's, answer 11);
+each can be revisited at Phase 2's start.
 
-- **A 1-inch (25.4 mm) dowel** (D5): 4.5 mm long-term sag at 20 inches with a 1 kg lamp, a 21×
-  strength margin, and the same size as The Rail.
-- **A straight cantilever** (D6): the cleanest line; the knee brace waits in Later, in case the
-  load test fails.
-- **A stand-alone wall block** (D7), not a Rail attachment: a plate with two screws at least
-  100 mm apart vertically, into a stud or toggle anchors (the top screw's pull is about 54 N); a
-  socket at least 51 mm (2 inches) deep; a steel pin through the dowel.
-- **A look test first** (D8): the wall block printed in PLA and held up in the corner with the
-  dowel, before any load-bearing print, so Dan's doubt is settled cheaply.
-- **PETG, matte,** for every load-bearing part (D9), printed on its side so the layers run along the
-  socket, never across it.
-- **A cord clamp, Dan's ask** (Q&A answer 11): a split ring that grips the dowel anywhere along it,
-  tightened by one M4 bolt, with a shelf under the dowel; the light's cord presses into a slot
-  narrower than itself and hangs from a hole beyond it, straight below the arm, so the light can't
-  turn the clamp. The light is Dan's Barrina 25 W PAR38 grow bulb on its 16.4 ft pendant cord.
+- **Saved at 1 inch (25.4 mm)** (D5): 4.5 mm long-term sag at 20 inches with a 1 kg light, a 21×
+  strength margin, and the same size as The Rail; STLs for 3/4 inch and 25 mm too (answer 14).
+- **A straight cantilever** (D6): the cleanest line; the knee brace waits in Later (S15).
+- **A stand-alone wall block** (D7, D16): a plate with two screws 110 mm apart, at least 100 mm, into
+  a stud or 3/16-inch toggle anchors (the top screw's pull is about 54 N); their heads sunk in
+  counterbores under printed caps; a socket 54 mm deep, more than 2 inches; an M6 bolt and
+  nylon-insert nut through the boss and the dowel.
+- **A cord clamp** (answer 11, D17): a split ring that grips the dowel anywhere along it, closed by
+  an M4 bolt through two ears on its side, with a web down to a shelf a cord's width below the
+  dowel. The light's cord passes under the dowel, presses in through a slot 1.5 mm narrower than
+  itself and hangs from a hole 0.6 mm narrower, straight below the dowel, so it grips and the light
+  can't turn the clamp.
+- **The coupon decides the fit:** `dowel_d` stays the dowel's nominal size, and the socket's
+  `clearance` is the coupon's hole that fit, printed on its edge as the sockets print.
+- **A look test first** (D8): both parts printed in PLA and held up in the corner with the dowel
+  and the light, before any load-bearing print. Rounded edges wait for its verdict (D18, S22).
+- **PETG, matte,** for every load-bearing part (D9), the wall block printed on its side so the
+  layers run along the socket.
 
 ## Scenarios
 
 | ID | Situation | Expected | Phase and task | Proof | Status |
 |---|---|---|---|---|---|
-| S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | the STL, PNG, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | planned |
-| S02 | a design changes and `make models` isn't run | `make check` and CI fail, naming the stale model | Phase 1, Task 2 | `tests/test_models.py` | planned |
-| S03 | a JPEG, PNG or WebP with GPS data, or any HEIC, is added anywhere in the repo | `make check` and CI fail, naming the file; `scripts/photos.py strip` fixes it | Phase 1, Task 3 | `tests/test_photos.py` | planned |
-| S04 | a commit carries a secret | CI's leaks job fails | Phase 1, Task 1 | CI's `leaks` job | planned |
-| S05 | a push to `phase-1` | CI runs the tests (also under `TZ=UTC`), lint, the model and photo checks, the leak scan and the site's render and link check | Phase 1, Task 1 and Task 4 | a green CI run | planned |
-| S06 | a doc under `docs/superpowers/` has no wrapper on the site | `make check` and CI fail, naming it | Phase 1, Task 4 | `tests/test_site.py` | planned |
+| S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | its STLs, picture, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | planned |
+| S02 | a design changes and `make models` isn't run, or a built file isn't the one recorded | `make check` and CI fail, naming the model and why | Phase 1, Task 2 | `tests/test_models.py` | planned |
+| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo | `make privacy` fails, naming it, before the push it would go out in; `scripts/privacy.py strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | planned |
+| S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | planned |
+| S05 | a push to `phase-1` | CI runs the tests, lint, the model and privacy checks, the leak scan and the site's render and offline link check | Phase 1, Tasks 1 to 4 | a green CI run | planned |
+| S06 | a doc under `docs/superpowers/` quotes Quarto's syntax, or isn't on the Design page | it renders as text; a doc missing from the Design page fails `make check` | Phase 1, Task 4 | `tests/test_site.py` | planned |
 | S07 | a visitor opens the site's Models page | a card per model, with its picture, title and summary, linking to its page | Phase 1, Task 5 | `tests/test_gallery.py` | planned |
-| S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, measurements and print settings are there; the `.stl` and `.sc` download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser at the phase end | planned |
-| S09 | Dan prints the dowel fit-test coupon and tries his dowel in each hole | each hole is labelled by its clearance (+0.2, +0.4, +0.6, +0.8 mm), and the page says how to read the result | Phase 1, Task 6 | `tests/test_coupon.py` | planned |
-| S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 4 | the live URL serves the new build | planned |
-| S11 | Dan holds the PLA look-test wall block and the dowel up in the corner | he decides whether it looks right before any PETG is printed | Phase 2 | Dan's verdict on Phase 2's Q&A page | planned |
-| S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart, the clearance the coupon picked | Phase 2 | `tests/test_wall_block.py` | planned |
-| S13 | the PETG wall block and a 20-inch dowel hold three times the lamp's weight for 48 hours | the tip sag grows by under 3 mm and nothing cracks | Phase 2 | the load-test log on the model's page | planned |
-| S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2 | Dan's check, with a photo (GPS stripped) | planned |
-| S18 | Dan clamps the cord clamp on the dowel and presses the light's cord into it | the light hangs straight below the arm at the height he set, and neither the cord nor the clamp slips under its weight | Phase 2 | `tests/test_cord_clamp.py`; Dan's check at the look test | planned |
+| S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser at the phase end | planned |
+| S09 | Dan prints the coupon on its edge and tries his dowel in each hole | each hole is marked by its clearance in dots, and the page says how to read the result | Phase 1, Task 6; Phase 2, Task 1 | `tests/test_coupon.py` | planned |
+| S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | planned |
+| S11 | Dan holds the PLA look-test parts, the dowel and the light up in the corner | he decides whether it looks right, the visible hardware included, before any PETG is printed | Phase 2, Task 3 | Dan's verdict on Phase 2's Q&A page | planned |
+| S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | planned |
+| S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 4 | the load-test log on the parts' pages | planned |
+| S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2, Task 5 | Dan's check, with a photo he has looked at | planned |
+| S18 | the light hangs by its cord from the clamp for two days | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 1, Task 8; Phase 2, Task 4 | `tests/test_cord_clamp.py`; the load test's slip measurements | planned |
+| S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | planned |
+| S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | planned |
+| S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | planned |
 
 ### Later
 
@@ -160,23 +182,25 @@ All the agent's, from the kickoff notes; each can be revisited at Phase 2's star
 | S15 | the load test fails, or the sag looks wrong | a knee-brace kit: a diagonal dowel meeting the arm about 12 inches out | optional | only needed if the straight arm fails (D6) |
 | S16 | Dan wants a wall planter or a second arm | it reuses the wall block and dowel joints | optional | after the sconce proves the joints |
 | S17 | Dan saves a design from the app in its default zip format | `make models-check` warns, so designs stay plain text | optional | the first app-saved design shows whether it's needed |
+| S22 | the look test calls the square edges cheap | every visible edge rounded to one radius, a parameter | optional | a fillet picked by its edge's position may break the size exports; the look test decides (D18) |
 
 ## Open items and risks
 
-- **[Dan] The lamp kit's weight and its cord's diameter.** The numbers assume 1 kg; one listing
-  gives the Barrina kit, cord and timer included, as 1.7 lb (0.77 kg). The clamp's `cord_d` is a
-  6 mm guess until the cord is measured. Phase 2's first task waits on both.
+- **[Dan] The light's weight, its cord and the wall.** The numbers assume 1 kg; one listing gives
+  the Barrina kit, cord and timer included, as 1.7 lb (0.77 kg). The clamp's `cord_d` is a 6 mm
+  guess, and the cord may be flat. Phase 2's first task asks.
 - **[Dan] SolidCraft's save folder:** add this repo to the SolidCraft MCP server's `--allow-path`
   so live sessions can save here. Headless builds don't need it.
-- **[Dan] The `vibe-coded` topic** on the GitHub repo.
-- **[Dan] GitHub settings:** Pages source "GitHub Actions", the ruleset on `main`, merge commits
-  only (a Phase 1 task).
+- **[Dan] The `vibe-coded` topic** and the website field: drafted in Phase 1's settings task.
+- **[Dan] GitHub settings:** Pages, Actions permissions, the ruleset on `main`, merge commits only
+  (Phase 1, Task 9).
 - **Binary files can't be leak-scanned:** STL and PNG files are listed in each phase PR for Dan to
   check by eye, so a PR that adds them waits for him even though the mode is fully vibed.
 - **No hooks yet:** plan-driven-development's hooks and leak check aren't built, so every push waits
-  for Dan's OK after `make leaks` passes, and there is no standing push OK.
-- **jsDelivr is a third party:** if it's down, the viewer is blank but the picture and downloads
-  still work.
+  for Dan's OK after `make leaks privacy` passes, and there is no standing push OK.
+- **lychee runs in CI only:** it isn't installed on Dan's machine, and running a downloaded copy
+  was refused in this session; installing it locally is Dan's call (Phase 1's phase-end list).
+- **The parts are untested designs** until Phase 2's look and load tests; their pages say so.
 - **Prior work outside this repo:** a PythonSCAD grow-light stand from 2026-10-16 in Dan's
   `~/temp/pythonscad_lamp`; not used here, but worth a look at Phase 2's start.
 
@@ -187,4 +211,9 @@ All the agent's, from the kickoff notes; each can be revisited at Phase 2's star
 - 2026-11-05: everything reaches `main` through Phase 1's PR; the mode is fully vibed (Q&A answers 9
   and 10, `76c6b8c`, `6e0bf3e`).
 - 2026-11-05: the light hangs from a printed clamp on the dowel, holding its cord, in place of an end
-  cap (Q&A answer 11).
+  cap (Q&A answer 11, `88bc417`).
+- 2026-11-05: the dowel parts are designed in Phase 1 and published with a dowel-size parameter;
+  the test GPS values replaced before any push (Q&A answers 12 and 13, `0abe755`).
+- 2026-11-05: ready-made STLs for 3/4 inch, 25 mm and 1 inch (Q&A answer 14, `351878b`).
+- 2026-11-05: CC BY-NC 4.0 for the models, pictures and docs, MIT for the code (Q&A answer 15,
+  `647e01f`).

@@ -11,14 +11,16 @@ Japandi style, holding a lamp 16 to 20 inches out from a corner wall.
 can turn, its picture, its measurements and print settings, and the `.stl` and `.sc` files to
 download.
 
-**Status:** Phase 1 (the build pipeline, the site and a first model) is being built on `phase-1`;
-the gallery and the `make` targets below arrive when it merges.
+**Status:** Phase 1 (the build pipeline, the site, the fit-test coupon and the sconce's parts) is
+being built on `phase-1`; the gallery and the `make` targets below arrive when it merges.
 
 ## Using a model
 
 Download the `.stl` from the model's page, or from `models/<slug>/` here, and slice it with your
 own printer's settings; the model's page says which material, orientation and supports it needs.
-The `.sc` file opens in SolidCraft, where every dimension is a named parameter you can change.
+The dowel parts come in STLs for 3/4-inch, 25 mm and 1-inch dowels. The `.sc` file opens in
+SolidCraft, where every dimension is a named parameter you can change, the dowel's diameter
+included.
 
 ## Working on it
 
@@ -27,7 +29,7 @@ Every command is a `make` target; `make help` lists them.
 ```bash
 make help     # list the targets
 make models   # rebuild each changed design's STL, picture and measurements (needs SolidCraft)
-make check    # everything CI runs: tests, lint, the model and photo checks, the leak scan, the site
+make check    # everything CI runs: tests, lint, the model and privacy checks, the leak scan, the site
 make docs     # render the site into website/_site
 ```
 
@@ -43,3 +45,10 @@ follows are in `AGENTS.md`.
 
 The models are original designs. The dowel system is inspired by Lofted Goods'
 [The Rail](https://loftedgoods.com/); none of their files are used here.
+
+## Licence
+
+The models, their pictures and the docs are
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): print them, change them and share
+them, crediting chendaniely and linking here, but don't sell them or prints of them
+(`LICENSE-MODELS.md`). The code is MIT (`LICENSE`).

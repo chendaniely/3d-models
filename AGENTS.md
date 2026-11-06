@@ -10,18 +10,20 @@ out the phase branch. Attended: phase PRs and the fifth stop wait for Dan; fully
 merges and decides. Made from plan-driven-development a558635.
 
 Until the hooks and the leak check exist, `make hooks` installs nothing and there is no denylist:
-every push waits for Dan's OK, after `make leaks` passes, and there is no standing push OK. Text
-that leaves without git is scanned by `gitleaks stdin --redact --no-banner` alone, and
-`docs/agents/close-task.txt` and `wip.txt` are this project's own, written from
-`scripts/commitmsg.py`'s headings.
+every push waits for Dan's OK, after `make leaks privacy` passes (once `make privacy` exists;
+`make leaks` alone before it), the request naming every binary file the push adds, and there is
+no standing push OK. Text that leaves without git is scanned by `gitleaks stdin --redact
+--no-banner` alone, and `docs/agents/close-task.txt` and `wip.txt` are this project's own, written
+from `scripts/commitmsg.py`'s headings.
 
 ## Commands
 
 Through the `Makefile` (`make help`): `make hooks`, `make check`, `make test`, `make test-utc`,
 `make lint`, `make leaks`, and `make docs` on a site project. Name targets, never raw commands; a
 command anyone runs more than once becomes a target. This project adds `make models` (rebuild each
-changed design; needs SolidCraft), `make models-check` and `make photos`; `make check` runs all but
-`make models`, which CI can't.
+changed design; needs SolidCraft), `make models-check` and `make privacy` (image metadata,
+unreadable photo formats, home-folder paths); `make check` runs all but `make models`, which CI
+can't.
 
 ## Resume
 
@@ -224,8 +226,8 @@ its list; diagrams never wait. Keep this table true, and extend it as files appe
 | a part or a path: a service, port, account or link | the Architecture diagrams |
 | a task's state | the plan's boxes and Now; the spec's status line and scenario statuses |
 | a design (`models/<slug>/<slug>.sc`) | its built files, from `make models` |
-| a doc under `docs/superpowers/` added | its wrapper under `website/superpowers/` and its line on the Design page |
-| a photo added under `models/` | nothing: its GPS data is stripped (`scripts/photos.py strip`) before it's staged |
+| a doc under `docs/superpowers/` added | its line on the Design page (`website/design.qmd`); `make docs` copies it into the site |
+| a photo added under `models/<slug>/photos/` | nothing: it's stripped (`scripts/privacy.py strip`), and Dan has looked at it and OKed it by name, before it's staged |
 
 Never read or create the leak-check denylist: `make hooks` proves it exists and parses. A leak
 finding is recorded by its kind and `file:line` only, never its excerpt.

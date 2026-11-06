@@ -167,4 +167,46 @@ scope, the [Dan] tasks as separate gates.
 
 ## Decisions
 
-Written after the reports above were committed.
+Written after the reports above were committed (`26ca9cc`). Each claim was checked against the
+code or the docs it cites; every one held. The fixes were built and tested in a scratch copy of the
+repo before the plans were rewritten: 89 tests, lint, the leak scan, all three models in all three
+sizes, and the real plans rendered without error. "Fixed" means fixed in the revised spec and
+plans; nothing here is built in the repo yet.
+
+| Finding | Severity | Decision |
+|---|---|---|
+| Reliability 1 | Critical | Fixed: `scripts/sitedocs.py` copies each doc into the site with Quarto's syntax escaped (D13); the real plans render |
+| Goal fit 1 | Important | Fixed: the clamp's shelf sits `cord_d + 4 mm` below the dowel, its hole and slot narrower than the cord, its ears on the side (D17); a countersink eases the hole's edges; Phase 2 asks if the cord is flat and what the hanging system is |
+| Goal fit 2 | Important | Fixed: the load test hangs the weight by the cord through the grip and measures slip; S18's proof says so |
+| Goal fit 3, reliability 6 | Important | Fixed: the coupon prints on its edge, holes horizontal; the wall block's supports line corrected |
+| Goal fit 4, reliability 5 | Important | Fixed: `dowel_d` stays the nominal size; the tests check the clamp matches the wall block and the clearance is one of the coupon's |
+| Goal fit 5, simplicity 2 | Important | Partly fixed: counterbored screws under printed caps, an M6 bolt in place of the pin, the clamp's bolt on its side (D16, D17); rounded edges wait for the look test (D18, Later S22) |
+| Goal fit 6 | Important | Fixed: every push waits for `make leaks privacy`; Dan looks at each stripped photo before it's staged; S03 reworded (D14) |
+| Goal fit 7 | Important | Dan's: CC BY-NC 4.0 for models and docs, MIT for code (answer 15); `LICENSE`, `LICENSE-MODELS.md`, and a line on each model's page |
+| Goal fit 8, reliability 8 | Important | Fixed: `screw_d` 5 mm (#8, #10, 3/16-inch toggles), 6.6 mm for 1/4-inch; Phase 2 sets it per anchor and load-tests a drywall mount in an offcut |
+| Reliability 2 | Important | Fixed: `build.json` records every built file's SHA-256, and the check compares them |
+| Reliability 3 | Important | Fixed: the check fails on a design not named exactly after its folder |
+| Reliability 4 | Important | Fixed: the gallery copies `photos/` and shows them |
+| Reliability 7 | Important | Fixed with goal fit 1 and 2 |
+| Security F1 | Important | Fixed: `scripts/privacy.py`'s allow-list (D14), a test per case raised |
+| Security F2 | Important | Fixed: Dan's look at each photo, named; each push OK names the binaries it adds; the room recorded as measurements |
+| Security F3 | Important | Fixed: `make privacy` refuses a home-folder path in anything git would commit, naming the line, never the path |
+| Security F4 | Important | Fixed with Dan's OK: 0°N 0°E, the unpushed commit amended (answer 13) |
+| Security F5 | Important | Fixed: every action pinned to a commit SHA (D19); the settings task asks for the SHA-pin policy |
+| Security tiers | | Accepted: Phase 1's coupon task is Tier 1; Phase 2's photo steps are Tier 1; Task 5's checklist gets a line for the import map |
+| Goal fit 9 to 12 | Minor | Fixed: S10 proven at the phase end; every Phase 2 scenario names its task; D11 superseded by D14; S13 at the installed length; the README shows a `model.yml` |
+| Reliability 9 | Minor | Partly fixed: Python pinned to 3.12; lychee runs in CI only, since running a downloaded copy was refused in this session (phase-end list; Dan's call) |
+| Reliability 10 to 13 | Minor | Fixed: bare booleans refused; the record deleted and the design hashed before a build; `strip` writes through a temporary file; `--force` cut; no image count expected; the pin replaced by a bolt |
+| Security F6 to F8 | Minor | Fixed: three.js served from the site (D15); `make leaks` scans merge commits; the settings task adds the environment's branch rule, a read-only token and an allow-list |
+| Simplicity 1 | Important | Fixed: `check-site` cut; lychee installed in CI before `make docs`, its action dropped (D19) |
+| Simplicity 3 | Minor | Fixed: the helpers moved into `conftest.py`; the per-model staleness checks dropped |
+| Simplicity 4 | Minor | Partly fixed: the change-detector test cut; the placeholder targets kept, since `make help` must list every target `AGENTS.md` names from the first task |
+| Simplicity 5 | Minor | Fixed: CI runs the suite once; `make check` keeps the UTC run |
+| Simplicity 6 | Minor | Declined: Dependabot's `uv` entry stays, grouped into one PR a month, because Pillow reads images and its security fixes matter (the security lens weighs it so) |
+| Simplicity 7 | Minor | Declined for now: the diagram zoom is plan-driven-development's standard site kit; on the phase-end list |
+| Simplicity 8 | Minor | Fixed: `--force` cut |
+| Simplicity 9 | Minor | Superseded by goal fit 1's redesign |
+| Simplicity 10 | Minor | Declined: plan-driven-development's plans reference requires each close step's message written out |
+
+Two changes came from Dan while the council ran, not from it: the dowel parts move into Phase 1
+(answer 12), in three sizes (answer 14).
