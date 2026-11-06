@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 1: The final whole-branch review.
+**Now:** Phase end, step 2: The rest of the ledger copied into the plan.
 
 ***
 
@@ -4134,7 +4134,7 @@ Each step is one box; each ends with its commit (`docs(plan): 🤖 phase end ste
 did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase end`), which ticks its box and sets **Now** to
 `Phase end, step K+1: <title>.` Resume at the first unticked box; never re-run a ticked one.
 
-- [ ] **1. The final whole-branch review:** Matt Pocock's two-axis `code-review` from
+- [x] **1. The final whole-branch review:** Matt Pocock's two-axis `code-review` from
   `git merge-base main HEAD`; one fix dispatch, then one scoped re-review; a ruling on what's left.
   Each fix is its own commit.
 - [ ] **2. The rest of the ledger copied into the plan:** whatever
@@ -4180,3 +4180,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
 | kickoff council, simplicity 7 | Minor | `website/_diagram-zoom.html` | kept as the skill's standard site kit; drop it if it never earns its 50 lines | open |
 | kickoff council, reliability 9 | Minor | `Makefile` | lychee isn't installed on Dan's machine, so `make docs` skips it locally and only CI runs it; installing it is Dan's call | open |
 | Task 6, Spec review | Minor | `models/dowel-fit-coupon/model.yml` | the STL lies flat as modelled; the page could say to stand it on its edge in the slicer, not only that it prints that way | fixed by the final review's fix pass |
+| final review's re-review, b | Minor | `scripts/privacy.py` | the history pass can't tell a symlink's blob from a file's: a committed `alias.jpg -> real.jpg` fails as "unreadable as an image" (fails closed; no symlinks in the repo) | open |
+| final review's re-review, d | Minor | `scripts/privacy.py` | in a shallow clone the history pass sees only what was fetched; a `git rev-parse --is-shallow-repository` guard would keep it closed if CI's `fetch-depth: 0` is ever dropped | open |
+| final review's re-review, e | Minor | `scripts/privacy.py` | `rev-list` names each blob once, so identical bytes under an image path and a text path get only one of the two checks (contrived) | open |
+| final review's re-review, f | Minor | spec, `AGENTS.md`, Phase 2 plan | incomplete, not false: the spec's `make privacy` row and S03 don't mention the history check or `make strip`; its `make models-check` row doesn't mention an invalid `model.yml`; `AGENTS.md`'s Commands paragraph doesn't list `make strip`; Phase 2's per-task push lines name the older gate | open |
