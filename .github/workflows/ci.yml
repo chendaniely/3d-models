@@ -26,7 +26,9 @@ jobs:
           fetch-depth: 0 # make privacy checks the whole history
           persist-credentials: false
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
-      - run: uv sync --frozen
+        with:
+          version: "0.13.6"
+      - run: uv sync --locked
       - run: make test
       - run: make lint
       - run: make models-check
@@ -58,6 +60,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.6"
       - uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
         with:
           version: 1.11.6
@@ -70,7 +74,7 @@ jobs:
           tar -xzf lychee.tar.gz lychee-x86_64-unknown-linux-gnu/lychee
           sudo install -m 755 lychee-x86_64-unknown-linux-gnu/lychee /usr/local/bin/lychee
           rm -r lychee-x86_64-unknown-linux-gnu lychee.tar.gz
-      - run: uv sync --frozen
+      - run: uv sync --locked
       - run: make docs
       - if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
