@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 PR open (#1) · Phase 2 planned
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · Phase 2 started 2026-11-06: Dan's changes to the parts being asked (Phase 2 Q&A)
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -170,7 +170,7 @@ each can be revisited at Phase 2's start.
 | S07 | a visitor opens the site's Models page | a card per model, with its picture, title and summary, linking to its page | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser after the merge (Phase 1, Task 10, step 9) | built |
 | S09 | Dan is about to print the coupon (Phase 1's part; printing it is S26) | each hole is marked by its clearance in dots, and the page says how to print it and read the result | Phase 1, Task 6 | `tests/test_coupon.py` | built |
-| S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | planned |
+| S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | built |
 | S11 | Dan holds the PLA look-test parts, the dowel and the light up in the corner | he decides whether it looks right, the visible hardware included, before any PETG is printed | Phase 2, Task 4 | Dan's verdict on Phase 2's Q&A page | planned |
 | S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | built |
 | S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 5 | the load-test log on the parts' pages | planned |

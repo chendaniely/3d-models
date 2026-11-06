@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 9: After the merge.
+**Now:** Phase 1 merged (`746ce34`, 2026-11-05); Phase 2 is next.
 
 ***
 
@@ -4168,8 +4168,9 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   Dan's look at them first (`AGENTS.md`, *Stops*). Ruling: Dan looked at and OKed each binary file
   by name when it was pushed (Phase 1 Q&A 2 and 3), so that wait is met for Phase 1; a phase-end
   step that adds a new binary would need his look again.
-- [ ] **9. After the merge:** each model's page on <https://chendaniely.github.io/3d-models/>
-  serves its sizes, and its viewer loads (S08, S10).
+- [x] **9. After the merge:** each model's page on <https://chendaniely.github.io/3d-models/>
+  serves its sizes, and its viewer loads (S08, S10). Done 2026-11-06: CI on `746ce34` deployed;
+  each model's page and every size's STL answer 200, and the viewer loaded in a browser.
 
 ***
 
