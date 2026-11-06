@@ -8,7 +8,8 @@ flowchart LR
   ci["CI on every push<br/>tests · lint · models-check · privacy · leaks · site"]
   gallery["make docs<br/>doc copies + model pages + Quarto"]
   pages["GitHub Pages<br/>the gallery and its 3D viewer"]
-  sconce["the sconce tuned, load-tested and installed<br/>Phase 2"]
+  railparts["the grow-light rail's five parts<br/>Phase 2"]
+  railup["the rail look- and load-tested, and installed<br/>Phase 2"]
 
   design --> build --> built
   built --> ci
@@ -16,8 +17,9 @@ flowchart LR
   built --> gallery
   yml --> gallery
   gallery --> pages
-  built -.-> sconce
+  built -.-> railparts -.-> railup
 
   classDef planned stroke-dasharray: 5 5
-  class sconce planned
+  class railparts planned
+  class railup planned
 ```

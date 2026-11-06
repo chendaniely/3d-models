@@ -858,3 +858,58 @@ decisions, not transcripts, except the pre-written commit bodies (finding 1) and
 - Task 2's close "Forward" list is long but each item is a real dependency from a measurement to a parameter;
   a table would read better but decides nothing new.
 - `offsite.py`'s CSS pass is the only part that would have caught the Google fonts leak; keep.
+
+## Decisions
+
+Written after the reports above were committed (`5ea5ced`). Each claim was checked against the plan
+and the parts it cites; the reliability and goal-fit reviewers' mechanical numbers were re-derived
+where a fix depended on them. "Fixed" means fixed in the phase start commit, and every changed
+listing was run again: in a fresh clone of `phase-2`, Task 2's patch alone passes `make check`
+(158 tests), and with Tasks 3 to 8 applied `make check` passes (211 tests twice, 8 models, the
+render and the offsite check); every dowel part's bodies close at 3/4 inch.
+
+| Finding | Severity | Decision |
+|---|---|---|
+| Goal fit 1, reliability 1: the rail can be lifted, and the top foot then comes off its keyhole | Critical | Fixed: both feet screwed behind the rail under caps, the top cup deep, a screw up through the bottom cup's floor into the rail's end; no keyhole, no gauge. Logged as Phase 2 Q&A, decided without Dan 1; a new scenario, S32 |
+| Goal fit 2: the lamp hung as a pendant below the stem, not inside a shade fixed under the tip | Important | Fixed: the shade's top turns onto two lugs at the stem's foot, and the lamp hangs inside it on its gripped cord, as Q&A 3 and the spec say |
+| Goal fit 3: the privacy task came before Dan's measurements | Important | Fixed: measuring is Task 1 again (Q&A 4); the coupon prints while he measures |
+| Goal fit 4: the shade's gap was checked only at its two ends | Important | Fixed: a cone round the socket widens to a cylinder round the bulb, so the gap holds along the lamp's length; Task 1 measures the socket's and the bulb's lengths |
+| Goal fit 5, reliability 6: the pages didn't say how the rail goes together, or where the top screw goes | Important | Fixed: *Putting the rail together* on the wall feet's page, with the top screw's place (the rail's length less 77.5 mm, within 5.5 mm), which a test holds to the parameters; the other pages point to it, and Tasks 9 and 11 follow it |
+| Goal fit 6, reliability 11: the socket's and the tip's wedges could bottom out on an undersized dowel; the carrier's test left out the clearance | Important | Fixed: each wedge seats further from its bore's end, and Tasks 4, 5 and 6 test it at -0.5, 0 and +0.5 mm with the clearance in the sum |
+| Goal fit 7, reliability 9 and 12: the load test couldn't read its tilt mark, or hang the 12 kg, and the rail's own bending fell into the tilt | Important | Fixed: the tilt read with a dial indicator from a straightedge clamped to the rail, so the rail's bending falls out; the 12 kg hangs from a dowel stub in a second arm socket, 100 mm out; every wedge tapped home with a mallet |
+| Goal fit 8: S27 was retired, but the stem's grip is a cord clamp | Important | Fixed: S27 proves the stem's grip (decided without Dan 2); a tighter or longer grip joins the load test's remedies |
+| Goal fit 9, reliability 5 and 7: Task 1 didn't measure the dowel's real size, the screws' heads, or resize the cord's groove | Important | Fixed: Task 1 asks each, and its close rewrites `cord_w`, `cord_depth`, `head_h` and the rest; Task 6's test holds the cord's room behind the rail against `cord_d` |
+| Goal fit 10, reliability 16: the screw behind the rail shows from an angle | Important | Fixed: a printed cap over each screw, as the wall block's |
+| Reliability 2: a 0.3 mm gap can't stop the arm turning round the rail | Important | Fixed: the carrier's arms stop 1.5 mm short of the wall, with a 3 mm felt or rubber pad on each; the floor's screw stops the rail turning |
+| Reliability 3: the arm socket printed upright bends across its layers | Important | Fixed: it prints on its back |
+| Reliability 4: the carrier's wedge bends across its layers | Important | Fixed: thicker (`room_top` 4.5 mm), and printed flat; the cord's channel behind it stays at least 7 mm, which a test holds |
+| Reliability 8: the stem grips the cord along 42 mm through a rigid slot | Important | Fixed: a 10 mm grip band at the stem's foot, a free bore and an easy slot above it |
+| Security 1: the offsite check failed open and missed most ways a page loads | Important | Fixed: it parses pages and their inline styles and scripts, reads style sheets and scripts' imports, and fails on a missing or empty site; sixteen shapes tested |
+| Security 2: text could hide in a JFIF, colour-profile or Adobe segment | Important | Fixed: each must hold its own data, the JFIF and Adobe ones once; text in the scan's coded data or a profile's own text is named as out of reach, left to `make strip` and Dan's look |
+| Security 3: a photo's link target went onto the page raw | Important | Fixed: quoted, and its alt text's brackets escaped |
+| Security 4, goal fit 12: an empty `{{PHOTO}}` placeholder in the constraints | Important | Fixed |
+| Simplicity 1: about 350 lines of repeated close, push and commit text | Important | Declined: `references/plans.md` requires each commit and close message written out in full, since a subagent sees only the plan and its dispatch |
+| Simplicity 2: three identical clips could be one body | Important | Declined: three in the STL print as one plate; one body would need copying in the slicer |
+| Simplicity 3: fold Task 8 into Task 7, or make it Tier 3 | Important | Declined: it changes code with a test (Tier 2), and a reviewer could pass the shade and reject it |
+| Simplicity 4: shared and tautological tests | Important | In part: the gauge and its test went with the redesign; each task keeps its own test file, and `bore_d`'s check stays, since Task 1's close rewrites that expression |
+| Goal fit 11: scenario rows and closes didn't agree | Minor | Fixed: S28 is Tasks 3 to 6 and turns built at Task 6; S26, S31 and S32 named at their closes; S12, S18 and S27 point at their tasks |
+| Goal fit 13, reliability 21: a doubled line in Task 3's commit; the diagram's caption | Minor | Fixed |
+| Goal fit 14: the look test didn't light the bulb | Minor | Fixed: a few minutes, no longer |
+| Goal fit 15: 550 mm isn't 21 11/16 inches | Minor | Fixed: 21 5/8 |
+| Goal fit 16: nothing held the cord in the keel | Minor | Fixed: its mouth is narrower than the cord |
+| Goal fit 17: a spring toggle loose in the keyhole | Minor | Gone with the keyhole: both feet clamp their screws |
+| Goal fit 18: the coupon's notes said every socket prints horizontal | Minor | Fixed in Task 3 |
+| Goal fit 19: the spec's PythonSCAD stand wasn't looked at | Minor | The phase-end list |
+| Reliability 10: Task 2's Step 2 expected output | Minor | Fixed: the collection error |
+| Reliability 13: the dovetail's play | Minor | The look test checks it; `fit` goes to 0.2 mm if the socket rocks |
+| Reliability 14: a 3/4-inch arm sags three times as much | Minor | Fixed: a line on the socket's and the tip's pages |
+| Reliability 15: nothing tied the carrier's standoff to the feet's | Minor | Fixed: a test; the socket's unused `standoff` dropped |
+| Reliability 17: supports would fill the tip's cord channel | Minor | Fixed: its print settings block them there |
+| Reliability 18: how to get the carrier's wedge out | Minor | Fixed: in its notes and the feet's |
+| Reliability 19: the clearance rewrite leaves a stale sentence | Minor | Fixed: Task 1's close rewrites it |
+| Reliability 20: the shade's wall thinned toward the rim | Minor | Fixed: the inner and outer profiles are parallel |
+| Security 5: the vanished-file handling's edges | Minor | Fixed: the symlink read and the history's list sit inside the same guard |
+| Security 6: the home's privacy in Tasks 9 to 11 | Minor | Fixed: the Q&A sentence in Task 11, a reading of the added text in each Tier 3 review, photos named for the parts |
+| Security 7: Tier 2 isn't "no safety role" | Minor | Fixed: one line in the Global Constraints |
+| Security 8: a photo suffix the check doesn't list | Minor | The phase-end list |
+| Simplicity 5 to 9 | Minor | Declined: the offsite tests grew instead (security 1); Task 1 stays one task; six explicit vents ran as listed; explicit `git add` lists; Step 3's paragraph tells a reviewer what the patch does |
