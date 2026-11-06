@@ -17,7 +17,7 @@ flowchart LR
   built --> gallery
   yml --> gallery
   gallery --> pages
-  built -.-> railparts -.-> railup
+  built --> railparts -.-> railup
 
   classDef planned stroke-dasharray: 5 5
   class railup planned

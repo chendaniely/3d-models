@@ -51,7 +51,7 @@ You need [uv](https://docs.astral.sh/uv/), [Quarto](https://quarto.org/) 1.11.6,
    ```yaml
    title: Wall hook
    summary: One sentence, shown on the gallery's card.
-   status: designed          # designed, printed or in use
+   status: designed          # designed, printed, in use or superseded
    material: PETG
    size: 1 in                # with sizes below: the size the design is saved at
    sizes:                    # optional: one more STL for each, by changing parameters
