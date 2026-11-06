@@ -38,3 +38,52 @@ flowchart LR
   site --> pagesjob
   pagesjob -- yes --> deploy["pages job<br/>deploy to GitHub Pages"]
 ```
+
+## The rail, part by part
+
+```{mermaid}
+%%| fig-cap: "The grow-light rail, from the wall to the light: what holds what. Solid: built. Dashed: planned, labelled with the phase that brings it."
+flowchart LR
+  wall["the wall<br/>a stud, or toggle bolts"]
+  feet["rail-feet<br/>both screwed behind the rail, under caps;<br/>the rail screwed down in the bottom cup<br/>Phase 2"]
+  rail["the rail<br/>a dowel, up to 48 in"]
+  carrier["rail-carrier<br/>a U pushed on from the front,<br/>wedged behind the rail, padded off the wall<br/>Phase 2"]
+  socket["rail-arm-socket<br/>down the carrier's dovetail;<br/>the arm wedged in it<br/>Phase 2"]
+  arm["the arm<br/>a dowel, 550 mm"]
+  tip["rail-arm-tip<br/>wedged on the arm's end;<br/>its stem grips the cord<br/>Phase 2"]
+  light["the Barrina<br/>hanging inside the shade on its cord"]
+  shade["rail-shade<br/>PETG, turned onto the stem's lugs;<br/>10 mm of air round the lamp<br/>Phase 2"]
+  planter["a planter adapter<br/>on a second carrier, Later (S16)"]
+
+  wall --> feet --> rail --> carrier --> socket --> arm --> tip --> light
+  tip --> shade
+  shade --- light
+  rail -.-> planter
+
+  classDef planned stroke-dasharray: 5 5
+  class feet planned
+  class carrier planned
+  class socket planned
+  class tip planned
+  class shade planned
+  class planter planned
+```
+
+## The light's cord
+
+```{mermaid}
+%%| fig-cap: "The cord is pressed in from the side everywhere it goes, since its plug and timer won't pass a hole. Dashed: planned, labelled with the phase that brings it."
+flowchart LR
+  socketcord["the socket"] --> stem["up the tip's stem,<br/>gripped · Phase 2"] --> keel["along the tip's keel · Phase 2"]
+  keel --> clips["under the arm,<br/>in three clips · Phase 2"] --> joint["round the joint"]
+  joint --> behind["down behind the rail,<br/>through each carrier's channel · Phase 2"]
+  behind --> foot["the bottom foot's groove · Phase 2"] --> outlet["the outlet"]
+
+  classDef planned stroke-dasharray: 5 5
+  class stem planned
+  class keel planned
+  class clips planned
+  class behind planned
+  class foot planned
+```
+

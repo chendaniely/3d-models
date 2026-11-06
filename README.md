@@ -4,15 +4,17 @@
 from them. Most are vibe coded: an agent builds the design and the tooling, and a person prints it
 and says what works.
 
-The first project is a wall sconce for a grow light: a 1-inch wooden dowel and printed parts, in a
-Japandi style, holding a lamp 16 to 20 inches out from a corner wall.
+The first project is a grow-light rail: 1-inch wooden dowels and printed parts, in a Japandi style.
+A vertical rail stands on two wall feet with no screw in sight, and an arm wedged onto it holds the
+light up to 24 inches out from a corner wall, under a printed shade.
 
 **Gallery:** <https://chendaniely.github.io/3d-models/>. Every model has a page with a 3D view you
 can turn, its picture, its measurements and print settings, and the `.stl` and `.sc` files to
 download.
 
 **Status:** Phase 1 has merged: the gallery is live, with the fit-test coupon and the sconce's
-wall block and cord clamp, not yet printed. Phase 2 tunes, prints, tests and installs the sconce.
+wall block and cord clamp. Phase 2, under way, replaces those two with the rail's five parts, then
+prints, tests and installs them.
 
 ## Using a model
 

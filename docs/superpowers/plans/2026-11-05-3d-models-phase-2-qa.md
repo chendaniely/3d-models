@@ -1,0 +1,40 @@
+# 3d-models Phase 2: questions and answers
+
+Questions that came up in Phase 2, each with Dan's answer in his words. Phase 1's are on
+[Phase 1's Q&A page](2026-11-05-3d-models-phase-1-qa.md), kickoff's on the
+[kickoff Q&A page](../specs/2026-11-05-3d-models-qa.md).
+
+## Dan's changes to the parts (2026-11-06)
+
+After Phase 1 merged, Dan brought his changes to how the dowel mounts forward, before anything is
+printed. His reference is LoftedGoods' Rail v2 and its Grow Light for the Rail, on Thangs, in his
+words: "each piece slides into the rail and is held by a wedge piece, so it has a clean look.
+things then mount onto the rail using some kind of matching joint piece. i'm hoping to have a lamp
+that looks like his grow light setup but i need the light to reach out farther". Both of those
+models are members-only downloads, and neither page states a licence, so this project's parts are
+its own design using the same ideas (wall feet, a wedge, a sliding joint), not his files, and they
+won't fit his pieces. His light asks for 9 or 10 W bulbs; Dan's Barrina is 25 W.
+
+The batch: (1) what the light's arm attaches to; (2) how far out the light reaches; (3) a printed
+shade or the bare bulb; (4) when the redesign happens.
+
+| # | Question | Answer | Dan's reason, in his words |
+|---|---|---|---|
+| 1 | Scenario: Dan hangs the light above his plants. What does its arm attach to? | A vertical dowel rail on two wall feet whose screws are hidden, like LoftedGoods'; the light's arm attaches with a slide-on joint locked by a wedge, so its height adjusts, and planters can share the rail. Not chosen: the arm straight out of one wall foot (today's layout, restyled), or a horizontal rail along the wall | The recommended option; his reason is his message above. |
+| 2 | Scenario: Dan cuts the arm's dowel and slides the light's joint onto the rail. How far from the wall should the light hang? | Up to 24 inches (about 60 cm), past the spec's 16 to 20: the joint gets a longer sleeve to resist the extra pull, and the load test is done at 24 inches. Not chosen: 16 to 20 inches as the spec says (the recommended option), or about 12 inches | Not the recommended option; no reason given. |
+| 3 | Scenario: the arm is up and Dan looks at the end where the light is. What does he see? | A printed shade fixed under the arm's tip, like LoftedGoods': the bulb inside it with an air gap of at least 10 mm and vents at the top, printed in PETG for the 25 W bulb's heat, the cord running back along the arm to the rail; its size waits on Dan's measurement of the bulb (Task 1). Not chosen: the bare bulb hanging on its cord from a slide-on hanger, or the socket held rigid under the tip with no shade | The recommended option; no reason given beyond his message above ("a lamp that looks like his grow light setup"). |
+| 4 | Scenario: Phase 2 starts tomorrow. When does the rail redesign happen? | Now, in Phase 2, replacing Phase 1 Q&A 4's "after the look test": Phase 2's plan is rewritten at its start; measuring the dowel and the bulb and printing the coupon stay first; the wall feet, the sliding joint and its wedge, the arm's tip and the shade replace "tune the parts"; then the look test, a load test at 24 inches and the install. Phase 1's wall block and cord clamp stay in the repo, marked superseded. Not chosen: a look test of today's parts first, or a Phase 3 of its own | The recommended option; no reason given. |
+| 5 | Scenario: the rail is on the wall and the light is up. What else hangs on it, and how long is the rail? (The spec's builder check asked: the feet were sized for the light alone.) | The light and up to two small planters, about 2 kg each when watered, on a rail up to about 48 inches held by two feet; the feet are sized for that total, and the load test hangs it. Not chosen: the light alone on a 36-inch rail, or a rail up to 72 inches with several planters and a third foot | The recommended option; no reason given. |
+| 6 | Scenario: Dan has read the revised spec (`796dbb1`, `62d8997`) and the agent's calls listed for him: seven `rail-` parts; the feet's closed cups, keyholes, depth gauge and hidden stop against lifting; the carrier on from the front with its wedge behind the rail, or from the rail's end if that can't hold; the arm socket 51 mm deep with its own wedge; the shade's 10 mm gap, vents and 60 °C rule (S30); the load test's marks (S13); Phase 1's parts kept, superseded. What happens next? | Approved as written: Phase 2's plan is rewritten for the rail at its start, its council reads it, and the run goes on, Dan's measurements and the coupon first. Not chosen: changing something first, or measuring before approving | The recommended option; no reason given. |
+| 7 | Scenario: `phase-2` has 8 unpushed doc commits, and Phase 2 will add many more. How should pushes work this phase? | A standing OK: every commit pushed to `phase-2` from now until Phase 2's merge, each after `make leaks privacy models-check` passes; the phase's STLs and pictures still wait for Dan's look by name before its PR merges. Not chosen: asking at each push, or holding everything to the phase's end | The recommended option; no reason given. |
+| 8 | Before Task 1 starts, Dan asked for everything on `phase-2` to reach `main` (his instruction, not a scenario question) | A mid-phase PR from `phase-2` into `main`, merged once CI is green: the spec, the Q&A page, the rewritten plan, the council and the new diagrams go live on the site; no binary file goes with it. `phase-2` carries on afterwards, and the phase still ends with its own PR | "let's currently make sure everythign is on main before we build the next phase. so i can view everythign rendered" |
+
+## Decided without Dan
+
+The mode is fully vibed, so a change to one of Dan's decisions or an approved design call is ruled
+on, logged here, and named in the next briefing.
+
+| # | Decision | Why | What it costs if wrong |
+|---|---|---|---|
+| 1 | The wall feet have no keyhole and no depth gauge, which the calls Dan approved in answer 6 listed. Each foot is screwed through its plate where the rail stands in front of the screw, under a printed cap; the top cup is deep, so the rail lifts into it past the bottom cup's rim; and a screw up through the bottom cup's floor into the rail's end holds the rail down. | The phase-start council found a keyhole only stops a foot dropping. Lifting a carrier or a planter raised the rail, pushed the top foot up off its screw, and the rail could then lean off the wall with the light on it (critical: goal fit 1, reliability 1). | Two small round caps show behind the rail, where a keyhole showed nothing; the look test (Task 9) judges them. |
+| 2 | Scenario S27 proves the arm tip's stem: the light hangs by its cord from the stem's grip for 48 hours, at three times its weight, and slips under 2 mm. | Answer 4 retired S27 with the cord clamp, but the stem's grip is a cord clamp too, and the load test already judges it (goal fit 8). | Nothing: it restores a check. |
