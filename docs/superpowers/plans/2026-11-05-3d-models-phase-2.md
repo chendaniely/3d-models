@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 7: Mark Phase 1's parts superseded, open.
+**Now:** Task 8: Publish the parts: a mid-phase merge to `main`, open.
 
 ***
 
@@ -2035,6 +2035,10 @@ Co-Authored-By: <the model's own line>
 
 ### Task 7: Mark Phase 1's parts superseded
 
+> **Built differently** (closed 2026-11-06; commits 6e5388d, 22a3f99): the README's model example lists the fourth status too, and the overview's edge to the rail's parts is solid (Task 7's review).
+
+**Ruling:** the controller built this task itself, without an implementer subagent: a four-file patch the plan holds whole. Costs if wrong: none the review didn't cover.
+
 **Tier:** 2 · **Scenarios:** S12, S18 (superseded), S28
 
 Phase 1's wall block and cord clamp stay in the repo, marked superseded, their pages pointing at
@@ -2048,8 +2052,8 @@ the rail's parts (Phase 2 Q&A 4). The gallery takes a fourth status for it.
 - Consumes: Task 9's `gallery.py`; Tasks 2 to 6's pages, which the notes link.
 - Produces: `gallery.STATUSES` with `superseded`.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: The test, the code and the notes, as one patch.** Write it to `.git/task8.patch`:
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: The test, the code and the notes, as one patch.** Write it to `.git/task8.patch`:
 
 ```diff
 diff --git a/models/sconce-cord-clamp/model.yml b/models/sconce-cord-clamp/model.yml
@@ -2133,16 +2137,16 @@ index 8235bf9..56e9642 100644
      [
 ```
 
-- [ ] **Step 2: Run the test; watch it fail.** `git apply --include='tests/*' .git/task8.patch`,
+- [x] **Step 2: Run the test; watch it fail.** `git apply --include='tests/*' .git/task8.patch`,
   then `make test`. Expected: `test_a_superseded_model_keeps_its_page_and_says_so` fails, the
   gallery naming `'status' must be one of designed, printed, in use`.
-- [ ] **Step 3: The code and the notes.** `git apply --exclude='tests/*' .git/task8.patch`.
-- [ ] **Step 4: The overview diagram.** In `website/_overview.qmd`, delete the line
+- [x] **Step 3: The code and the notes.** `git apply --exclude='tests/*' .git/task8.patch`.
+- [x] **Step 4: The overview diagram.** In `website/_overview.qmd`, delete the line
   `  class railparts planned`: the rail's five parts are built.
-- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice;
+- [x] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice;
   the two parts' builds still match (only their pages' text changed); the render resolves the
   notes' links to the five rail pages.
-- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(gallery): 🤖 mark Phase 1's wall block and cord clamp superseded
@@ -2162,7 +2166,7 @@ Co-Authored-By: <the model's own line>
   `git add scripts/gallery.py tests/test_gallery.py models/sconce-wall-block/model.yml models/sconce-cord-clamp/model.yml website/_overview.qmd`,
   then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the
   `Plan:` line.
-- [ ] **Step 7: Review, look forward, close.**
+- [x] **Step 7: Review, look forward, close.**
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec; fix Critical and
     Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
@@ -2677,3 +2681,4 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 6, review | Minor | `tests/test_rail_shade.py` | The notches' fit round the stem's lugs is untested | open |
 | Task 6, review | Minor | `models/rail-shade` | Its picture shows the open rim, not the top with its notches and vents | open |
 | Task 6, review | Minor | `models/rail-shade/model.yml` | The notes don't say the shade needs a bed about 155 mm across | open |
+| Task 7, review | Minor | `models/sconce-*/model.yml` | The superseded notes cite "Phase 2 Q&A 1 to 4" on a public gallery page, reachable only through the Design page | open |
