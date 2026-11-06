@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 in progress on `phase-1` · Phase 2 planned
+**Status:** spec approved 2026-11-05 · Phase 1 PR open (#1) · Phase 2 planned
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the

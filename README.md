@@ -11,8 +11,8 @@ Japandi style, holding a lamp 16 to 20 inches out from a corner wall.
 can turn, its picture, its measurements and print settings, and the `.stl` and `.sc` files to
 download.
 
-**Status:** Phase 1 (the build pipeline, the site, the fit-test coupon and the sconce's parts) is
-being built on `phase-1`; the gallery and the `make` targets below arrive when it merges.
+**Status:** Phase 1 has merged: the gallery is live, with the fit-test coupon and the sconce's
+wall block and cord clamp, not yet printed. Phase 2 tunes, prints, tests and installs the sconce.
 
 ## Using a model
 
