@@ -85,6 +85,7 @@ def test_every_page_carries_the_licence(repo: Path) -> None:
     text = page(repo)
     assert "## Licence" in text
     assert "[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)" in text
+    assert "crediting chendaniely and linking to <https://github.com/chendaniely/3d-models>" in text
 
 
 def test_a_model_with_sizes_offers_an_stl_for_each(repo: Path) -> None:
@@ -109,8 +110,15 @@ def test_photos_are_published_on_the_page(repo: Path) -> None:
     (folder / "photos").mkdir()
     Image.new("RGB", (8, 8)).save(folder / "photos" / "installed.jpg")
     text = page(repo)
-    assert "## Photos\n\n![](hook/photos/installed.jpg)" in text
+    assert "## Photos\n\n![installed](hook/photos/installed.jpg)" in text
     assert (repo / "website" / "models" / "hook" / "photos" / "installed.jpg").is_file()
+
+
+def test_each_photo_s_alt_text_is_its_name_in_words(repo: Path) -> None:
+    folder = add_model(repo)
+    (folder / "photos").mkdir()
+    Image.new("RGB", (8, 8)).save(folder / "photos" / "on_the-wall.png")
+    assert "![on the wall](hook/photos/on_the-wall.png)" in page(repo)
 
 
 def test_write_removes_the_page_of_a_model_that_is_gone(repo: Path) -> None:
@@ -163,3 +171,22 @@ def test_write_names_a_model_never_built(repo: Path, capsys) -> None:
     (folder / "hook.eval.json").unlink()
     assert gallery.main([], root=repo) == 1
     assert "gallery: models/hook: no hook.eval.json; run make models" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    ("meta", "missing"),
+    [(META, "hook.stl"), (META, "hook.png"), (META, "hook.sc"), (SIZED, "hook-25mm.stl")],
+)
+def test_write_names_a_missing_built_file_and_keeps_the_old_pages(
+    repo: Path, capsys, meta: str, missing: str
+) -> None:
+    folder = add_model(repo, meta=meta)
+    (folder / missing).unlink()
+    if missing == "hook.sc":
+        (folder / "hook-old.sc").write_text("{}", encoding="utf-8")  # still a model folder
+    old = repo / "website" / "models" / "old.qmd"
+    old.parent.mkdir(parents=True)
+    old.write_text("old", encoding="utf-8")
+    assert gallery.main([], root=repo) == 1
+    assert f"gallery: models/hook: no {missing}; run make models" in capsys.readouterr().err
+    assert old.exists()

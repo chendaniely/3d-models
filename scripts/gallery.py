@@ -17,15 +17,15 @@ import sys
 from pathlib import Path
 
 from models import ROOT, Model, find_models, read_yml, sizes
+from privacy import READABLE as PHOTOS
 
 REPO_URL = "https://github.com/chendaniely/3d-models"
 LICENCE = (
     "[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): print it, change it and "
-    "share it, crediting chendaniely and linking here; don't sell it or prints of it."
+    f"share it, crediting chendaniely and linking to <{REPO_URL}>; don't sell it or prints of it."
 )
 STATUSES = ("designed", "printed", "in use")
 DENSITY_G_CM3 = {"PLA": 1.24, "PETG": 1.27}
-PHOTOS = {".jpg", ".jpeg", ".png", ".webp"}
 
 
 class ModelError(ValueError):
@@ -81,6 +81,12 @@ def photos(model: Model) -> list[Path]:
     if not folder.is_dir():
         return []
     return sorted(p for p in folder.iterdir() if p.suffix.lower() in PHOTOS)
+
+
+def copied(model: Model, meta: dict) -> list[Path]:
+    """Every built file a model's page copies beside it, photos aside."""
+    files = [model.built("stl"), model.built("png"), model.design]
+    return files + [model.sized(size) for size in meta["sizes"]]
 
 
 def quoted(text: str) -> str:
@@ -161,7 +167,10 @@ def page(model: Model, meta: dict, evaluation: dict) -> str:
     shots = photos(model)
     if shots:
         lines += ["## Photos", ""]
-        lines += [f"![]({slug}/photos/{shot.name})" for shot in shots]
+        lines += [
+            f"![{shot.stem.replace('-', ' ').replace('_', ' ')}]({slug}/photos/{shot.name})"
+            for shot in shots
+        ]
         lines.append("")
     if meta.get("print"):
         lines += ["## Printing", "", "| Setting | Value |", "|---|---|"]
@@ -190,6 +199,10 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     try:
         pages = [(m, read_meta(m)) for m in models]
         pages = [(m, meta, page(m, meta, read_eval(m))) for m, meta in pages]
+        for model, meta, _ in pages:
+            for source in copied(model, meta):
+                if not source.is_file():
+                    raise ModelError(f"models/{model.slug}: no {source.name}; run make models")
     except ModelError as error:
         print(f"gallery: {error}", file=sys.stderr)
         return 1
@@ -199,9 +212,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         (out / f"{model.slug}.qmd").write_text(text, encoding="utf-8")
         files = out / model.slug
         files.mkdir()
-        copied = [model.built("stl"), model.built("png"), model.design]
-        copied += [model.sized(size) for size in meta["sizes"]]
-        for source in copied:
+        for source in copied(model, meta):
             shutil.copy2(source, files / source.name)
         if photos(model):
             (files / "photos").mkdir()
