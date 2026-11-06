@@ -41,9 +41,9 @@ toggle bolts.
 2. **A metric 25 mm dowel bought in place of 1 inch:** the 25 mm coupon and the 25 mm STLs, which
    Phase 1 already exports; `clearance` from that coupon.
 3. **Drywall with no stud where the block goes:** toggle anchors, load-tested in a drywall offcut
-   (Task 4), never plugs.
+   (Task 5), never plugs.
 4. **The cord slipping through the clamp over days:** the load test hangs through the cord grip
-   and measures slip (Task 4, S18).
+   and measures slip (Task 5, S27).
 5. **A photo that shows the street outside the window:** Dan's look at each stripped photo before
    it's staged (every photo step).
 
@@ -51,11 +51,15 @@ toggle bolts.
 
 ### Task 1: [Dan] Measure, weigh, and print the coupon
 
-**Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S09, S12, S18
+**Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S26, S12
 
 Runs in Dan's home. **Now** reads `waiting on Dan: <the step>` until each answer is in. The steps
 are asked by *Asking Dan*, one at a time.
 
+- [ ] **0. Changes you already know:** before anything is printed or tuned, what you already
+  know you'll change in how the dowel mounts and clamps to the parts and how the block screws to
+  the wall (Phase 1 Q&A 1 and 4). Each one known now goes into Task 2 with the measurements, so the
+  look test (Task 4) judges the changed shape; the rest wait for the look test.
 - [ ] **1. Weigh the light:** the Barrina bulb with its socket, cord and timer, on a kitchen
   scale. The numbers assume 1 kg; above that, the agent re-runs the kickoff notes' sag and anchor
   numbers before Task 2.
@@ -67,7 +71,8 @@ are asked by *Asking Dan*, one at a time.
 - [ ] **5. The wall,** as measurements: the block's height from the floor and distance from the
   corner; the wall's material; a stud there or not; and so the anchor (#8 or #10 wood screws, or
   3/16- or 1/4-inch toggle bolts).
-- [ ] **6. Record and close.** Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 record <what>` with this plan's `Plan:` line; the page gets its Design-page line in its first commit. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. Then the close:
+- [ ] **6. Record and close.** The coupon's `model.yml` becomes `status: printed` (Tier 3), with the
+  hole that fit in its notes. Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 record <what>` with this plan's `Plan:` line; the page gets its Design-page line in its first commit. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. Then the close:
 
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Task 2 turns these answers into parameters.
@@ -94,7 +99,7 @@ are asked by *Asking Dan*, one at a time.
     ```
 
   - **Push,** once Dan has OKed it, the request naming every binary file the push adds
-    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-2`.
+    (`AGENTS.md`'s interim line): `make leaks privacy models-check`, then `git push origin phase-2`.
     The task is closed once CI on the closing commit, or a later one, is green; until a
     push, the local checks are the gate.
 
@@ -102,7 +107,7 @@ are asked by *Asking Dan*, one at a time.
 
 ### Task 2: Tune the parts to Dan's answers
 
-**Tier:** 2 · **Scenarios:** S12, S18
+**Tier:** 2 · **Scenarios:** S12, S27
 
 **Files:**
 - Modify: `models/sconce-wall-block/sconce-wall-block.sc`, `models/sconce-cord-clamp/sconce-cord-clamp.sc`
@@ -153,7 +158,7 @@ Co-Authored-By: <the model's own line>
 - [ ] **Step 5: Review, look forward, close.**
 
   - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 3 prints these designs.
+  - **Forward:** Task 4 prints these designs.
   - **Docs:** each part's page says what it's tuned to.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -177,18 +182,55 @@ Co-Authored-By: <the model's own line>
     ```
 
   - **Push,** once Dan has OKed it, the request naming every binary file the push adds
-    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-2`.
+    (`AGENTS.md`'s interim line): `make leaks privacy models-check`, then `git push origin phase-2`.
     The task is closed once CI on the closing commit, or a later one, is green; until a
     push, the local checks are the gate.
 
 ***
 
-### Task 3: [Dan] The look test
+### Task 3: Close the photo gaps before the first photo
+
+**Tier:** 1 (if wrong, a photo of Dan's home carries what it shouldn't onto a public repo) ·
+**Scenarios:** S03, S20
+
+Phase 1's end left these for here, before Task 4's first photo (Phase 1 plan, phase-end step 4).
+Its listings are written and run at Phase 2's start, against the code Phase 1 built, as every
+Phase 2 listing is.
+
+**Files:**
+- Modify: `scripts/privacy.py`, `tests/test_privacy.py`, `scripts/gallery.py`, `tests/test_gallery.py`
+
+**Interfaces:**
+- Consumes: Phase 1's `privacy.image_problem`, `jpeg_end` and `problems`; `gallery.page` and
+  `sitedocs.escaped`.
+- Produces: the same functions, stricter.
+
+- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **Step 1: The failing tests:** a JPEG holding a segment of a type Pillow skips (a DNL, `FFDC`,
+  with text in it) fails `check`; a file that vanishes or can't be read between listing and reading
+  is "unreadable", not a traceback; a print setting, a size name and a photo's file name holding a
+  shortcode or a `{python}` cell fence come out escaped on the page.
+- [ ] **Step 2: Run them; watch them fail.** `make test`.
+- [ ] **Step 3: The code:** the JPEG walk accepts only the markers a picture needs (SOF, DHT, DQT,
+  DRI, SOS, the restart markers, APP0, APP2, APP14, COM, which the metadata check already names)
+  and names any other by its marker, as PNG chunks are named; the read sits inside the `OSError`
+  handling; the gallery passes print settings, `size`, the size names and photo alt text through
+  `sitedocs.escaped`.
+- [ ] **Step 4: Run the checks; they pass.** `make check`.
+- [ ] **Step 5: Commit,** `fix(privacy): 🤖 refuse JPEG segments a picture doesn't need, and escape every model field`,
+  its body naming the Phase 1 end-step-4 review that found them.
+- [ ] **Step 6: Review, look forward, close,** at Tier 1, the security checklist included.
+
+***
+
+### Task 4: [Dan] The look test
 
 **Tier:** none: Dan's verdict, recorded by the agent; Tier 1 if a photo is committed ·
-**Scenarios:** S11, S18
+**Scenarios:** S11, S27
 
-Settles "not sure if it'll look good with 3d printed parts and dowels" for a few grams of PLA (D8).
+Settles "not sure if it'll look good with 3d printed parts and dowels" for a few grams of PLA (D8). It
+judges the shape as built, with any changes Dan named at Task 1; the changes he names here go
+into a revision of both parts before Task 5's PETG print.
 
 - [ ] **1. Print both parts in PLA,** in the colour the real ones will be, and the wall block's
   caps.
@@ -206,14 +248,14 @@ Settles "not sure if it'll look good with 3d printed parts and dowels" for a few
 - [ ] **5. Close.**
 
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; with a photo, Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 4 prints the PETG parts.
+  - **Forward:** Task 5 prints the PETG parts.
   - **Docs:** the parts' notes say the look test passed, or what changed.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 3: [Dan] The look test
+    docs(plan): 🤖 close Task 4: [Dan] The look test
 
     <what the task built, and why, in a few lines>
 
@@ -225,20 +267,20 @@ Settles "not sure if it'll look good with 3d printed parts and dowels" for a few
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 3
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
     Co-Authored-By: <the model's own line>
     ```
 
   - **Push,** once Dan has OKed it, the request naming every binary file the push adds
-    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-2`.
+    (`AGENTS.md`'s interim line): `make leaks privacy models-check`, then `git push origin phase-2`.
     The task is closed once CI on the closing commit, or a later one, is green; until a
     push, the local checks are the gate.
 
 ***
 
-### Task 4: [Dan] The load test
+### Task 5: [Dan] The load test
 
-**Tier:** none: Dan runs it; the agent records it (Tier 3) · **Scenarios:** S13, S18
+**Tier:** none: Dan runs it; the agent records it (Tier 3) · **Scenarios:** S13, S27
 
 - [ ] **1. Print both parts in PETG,** matte, with each page's print settings.
 - [ ] **2. Set up the test** somewhere a fall breaks nothing, mounted the way it will be: into a
@@ -249,7 +291,7 @@ Settles "not sure if it'll look good with 3d printed parts and dowels" for a few
   Measure at 0, 24 and 48 hours: the clamp's height above the floor or bench, and how far the
   mark has moved.
 - [ ] **4. The result:** passes when the sag grows by under 3 mm, the cord slips under 2 mm, and
-  nothing cracks or pulls out (S13, S18). Recorded on the Q&A page in Dan's words; the agent adds
+  nothing cracks or pulls out (S13, S27). Recorded on the Q&A page in Dan's words; the agent adds
   a "Load test" section to the wall block's and the clamp's notes, sets both parts'
   `status: printed`, and commits:
 
@@ -259,7 +301,7 @@ docs(models): 🤖 record the sconce's load test
 <the load, the arm's length, the mounting, the three heights and slips, and
 the result, from the Q&A page>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
 Co-Authored-By: <the model's own line>
 ```
 
@@ -268,14 +310,14 @@ Co-Authored-By: <the model's own line>
 - [ ] **5. Close.**
 
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 5 installs what passed.
+  - **Forward:** Task 6 installs what passed.
   - **Docs:** both parts' pages carry the load test.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 4: [Dan] The load test
+    docs(plan): 🤖 close Task 5: [Dan] The load test
 
     <what the task built, and why, in a few lines>
 
@@ -287,18 +329,18 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 4
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
     Co-Authored-By: <the model's own line>
     ```
 
   - **Push,** once Dan has OKed it, the request naming every binary file the push adds
-    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-2`.
+    (`AGENTS.md`'s interim line): `make leaks privacy models-check`, then `git push origin phase-2`.
     The task is closed once CI on the closing commit, or a later one, is green; until a
     push, the local checks are the gate.
 
 ***
 
-### Task 5: [Dan] Install it
+### Task 6: [Dan] Install it
 
 **Tier:** none: Dan installs it; the agent records it, Tier 1 for the photo · **Scenarios:** S14
 
@@ -315,7 +357,7 @@ docs(models): 🤖 the sconce is installed
 
 <how it was fixed to the wall, and Dan's words on how it looks>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 6
 Co-Authored-By: <the model's own line>
 ```
 
@@ -329,7 +371,7 @@ Co-Authored-By: <the model's own line>
     scenario statuses (`built`). The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 5: [Dan] Install it
+    docs(plan): 🤖 close Task 6: [Dan] Install it
 
     <what the task built, and why, in a few lines>
 
@@ -341,18 +383,18 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 5
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 6
     Co-Authored-By: <the model's own line>
     ```
 
   - **Push,** once Dan has OKed it, the request naming every binary file the push adds
-    (`AGENTS.md`'s interim line): `make leaks privacy`, then `git push origin phase-2`.
+    (`AGENTS.md`'s interim line): `make leaks privacy models-check`, then `git push origin phase-2`.
     The task is closed once CI on the closing commit, or a later one, is green; until a
     push, the local checks are the gate.
 
 ***
 
-### Task 6: Phase end
+### Task 7: Phase end
 
 The same nine steps as Phase 1's Task 10, each one box ending in its commit
 (`docs(plan): 🤖 phase end step K: <what it did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Phase end`), resumed at the

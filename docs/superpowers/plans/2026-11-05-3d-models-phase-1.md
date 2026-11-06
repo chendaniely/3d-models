@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 5: The forward look.
+**Now:** Phase end, step 6: The retro.
 
 ***
 
@@ -4147,7 +4147,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   decision.
 - [x] **4. The phase-end list worked through:** each item fixed in its own commit at its tier, or
   moved to the spec's Later with a reason; missing docs written; built parts solid in the diagrams.
-- [ ] **5. The forward look:** Phase 2's plan rewritten to fit what was built; its listings run
+- [x] **5. The forward look:** Phase 2's plan rewritten to fit what was built; its listings run
   against this code where they can.
 - [ ] **6. The retro:** `docs/superpowers/plans/2026-11-05-3d-models-phase-1-retro.md` (departures,
   items carried forward, metrics per tier, starting over), with its Design-page line; the retuning

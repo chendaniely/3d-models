@@ -163,7 +163,7 @@ each can be revisited at Phase 2's start.
 |---|---|---|---|---|---|
 | S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | its STLs, picture, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | built |
 | S02 | a design changes and `make models` isn't run, or a built file isn't the one recorded | `make check` and CI fail, naming the model and why | Phase 1, Task 2 | `tests/test_models.py` | built |
-| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo, or is still in a commit the history holds | `make privacy` fails, naming it, before the push it would go out in, the history's copies included; `make strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | built |
+| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo, or is still in a commit the history holds | `make privacy` fails, naming it, before the push it would go out in, the history's copies included; `make strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3; Phase 2, Task 3 | `tests/test_privacy.py` | built |
 | S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | built |
 | S05 | a push to `phase-1` | CI runs the tests, lint, the model and privacy checks, the leak scan and the site's render and offline link check | Phase 1, Tasks 1 to 4 | a green CI run | built |
 | S06 | a doc under `docs/superpowers/` quotes Quarto's syntax, or isn't on the Design page | it renders as text; a doc missing from the Design page fails `make check` | Phase 1, Task 4 | `tests/test_site.py` | built |
@@ -171,16 +171,16 @@ each can be revisited at Phase 2's start.
 | S08 | a visitor opens a model's page | the STL turns in a 3D viewer (drag to rotate, scroll to zoom); the picture, notes, photos, measurements and print settings are there; the files download | Phase 1, Task 5 | `tests/test_gallery.py`; the live page checked in a browser after the merge (Phase 1, Task 10, step 9) | built |
 | S09 | Dan is about to print the coupon (Phase 1's part; printing it is S26) | each hole is marked by its clearance in dots, and the page says how to print it and read the result | Phase 1, Task 6 | `tests/test_coupon.py` | built |
 | S10 | `main` gets a merge | CI deploys the site to Pages | Phase 1, Task 10, step 9 | the live URL serves the new build | planned |
-| S11 | Dan holds the PLA look-test parts, the dowel and the light up in the corner | he decides whether it looks right, the visible hardware included, before any PETG is printed | Phase 2, Task 3 | Dan's verdict on Phase 2's Q&A page | planned |
+| S11 | Dan holds the PLA look-test parts, the dowel and the light up in the corner | he decides whether it looks right, the visible hardware included, before any PETG is printed | Phase 2, Task 4 | Dan's verdict on Phase 2's Q&A page | planned |
 | S12 | the wall block's parameters change | the socket stays at least 51 mm deep, the screws at least 100 mm apart and sunk under caps, the clearance one of the coupon's | Phase 1, Task 7; Phase 2, Task 2 | `tests/test_wall_block.py` | built |
-| S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 4 | the load-test log on the parts' pages | planned |
-| S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2, Task 5 | Dan's check, with a photo he has looked at | planned |
+| S13 | the PETG wall block and the arm at its installed length hold three times the light's weight for 48 hours, mounted as it will be | the tip sag grows by under 3 mm, and nothing cracks or pulls out | Phase 2, Task 5 | the load-test log on the parts' pages | planned |
+| S14 | the sconce is installed and bumped | it doesn't twist; the cord runs along the arm to the cord clamp | Phase 2, Task 6 | Dan's check, with a photo he has looked at | planned |
 | S18 | the cord clamp is designed to hold the light by its cord (Phase 1's part; the two days' hang is S27) | the slot and the hole are narrower than the cord, so it grips, and the cord has room to pass under the dowel to its hole | Phase 1, Task 8 | `tests/test_cord_clamp.py` | built |
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
 | S26 | Dan prints the coupon on its edge and tries his dowel in each hole (S09's Phase 2 part) | the hole his dowel goes into by hand, all the way, gives the dowel parts' `clearance` | Phase 2, Task 1 | his result on Phase 2's Q&A page | planned |
-| S27 | the light hangs by its cord from the clamp for two days (S18's Phase 2 part) | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 2, Task 4 | the load test's slip measurements | planned |
+| S27 | the light hangs by its cord from the clamp for two days (S18's Phase 2 part) | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 2, Task 5 | the load test's slip measurements | planned |
 
 ### Later
 
