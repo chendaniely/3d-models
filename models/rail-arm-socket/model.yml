@@ -15,11 +15,11 @@ print:
   Infill: 40% gyroid
   Supports: none; the slot's far wall bridges
 notes: |
-  The arm is a second dowel: cut to 550 mm, it puts the light 24 inches (610 mm) from the wall.
-  Its end goes 54 mm into the socket, more than the 51 mm (2 inches) the joint needs: about
-  7.5 N·m with a 1 kg light at 24 inches. Tap the wedge in along the top of the arm until it's
-  tight; the groove's slope matches it, so it presses the arm down along its length. Pull it out
-  by its thick end.
+  The arm is a second dowel: cut to 550 mm, it puts the light 24 inches (610 mm) from the wall. Its
+  end goes 54 mm into the socket, more than the 51 mm (2 inches) the joint needs: about 7.5 N·m with
+  a 1 kg light at 24 inches, the shade and the arm itself included. Tap the wedge in along the top
+  of the arm until it's tight; the groove's slope matches it, so it presses the arm down along its
+  length. Pull it out by its thick end.
 
   - **The dovetail slot** is open at the bottom and closed at the top: slide the socket down the
     carrier's dovetail until its top rests on the dovetail's end.
