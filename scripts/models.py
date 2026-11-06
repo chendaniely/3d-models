@@ -5,9 +5,9 @@
         (needs solidcraft-cli); refuse, building nothing, while a model is invalid
     uv run scripts/models.py check
         fail, naming each model, when it is invalid (a folder name that can't be a URL, a
-        misnamed or extra design, a model.yml or sizes it can't read, a size changing a
-        parameter the design hasn't: no build fixes these) or stale (a build is missing or
-        doesn't match its design: make models fixes it)
+        misnamed or extra design, a model.yml or sizes it can't read, sizes giving one file name
+        or none, a size changing a parameter the design hasn't: no build fixes these) or stale
+        (a build is missing or doesn't match its design: make models fixes it)
 
 A model is a folder models/<slug>/ holding the design <slug>.sc. A build writes, beside it:
 <slug>.stl, <slug>.png, <slug>.eval.json (solidcraft-cli eval's measurements), one STL per extra
@@ -119,6 +119,26 @@ def outputs(model: Model) -> list[Path]:
     ]
 
 
+def clashing_sizes(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:
+    """Sizes whose file name is empty, or the same as another's ('3/4 in' and '3-4 in'), named;
+    or None. Either would build one size's STL over another's, or as <slug>-.stl."""
+    by_name: dict[str, list[str]] = {}
+    for size in wanted:
+        by_name.setdefault(size_name(size), []).append(size)
+    where = f"models/{model.slug}/model.yml"
+    for name, group in sorted(by_name.items()):
+        listed = " and ".join(f"'{size}'" for size in group)
+        noun, verb = ("size", "gives") if len(group) == 1 else ("sizes", "give")
+        if not name:  # sorted first
+            return (
+                f"{where}: {noun} {listed} {verb} an empty file name: a size needs a letter or a "
+                "digit"
+            )
+        if len(group) > 1:
+            return f"{where}: sizes {listed} give the same file name, {model.slug}-{name}.stl"
+    return None
+
+
 def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:
     """The first size that changes a parameter the design's eval.json doesn't list, or None.
     Without this, solidcraft-cli builds the base geometry under the size's name and exits 0."""
@@ -158,6 +178,9 @@ def invalid(model: Model) -> str | None:
         wanted = sizes(model)
     except ValueError as error:
         return str(error)
+    clash = clashing_sizes(model, wanted)
+    if clash:
+        return clash
     if measured_now(model):
         try:
             return unknown_parameter(model, wanted)

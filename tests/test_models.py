@@ -164,6 +164,33 @@ def test_build_takes_a_size_changing_a_parameter_the_design_just_gained(
     assert models.main(["check"], root=repo) == 0
 
 
+@pytest.mark.parametrize(
+    ("yml", "message"),
+    [
+        (
+            "sizes:\n  3/4 in: {dowel_d: 19.05 mm}\n  3-4 in: {dowel_d: 19 mm}\n",
+            "models: models/clamp/model.yml: sizes '3/4 in' and '3-4 in' give the same file "
+            "name, clamp-3-4in.stl\n",
+        ),
+        (
+            "sizes:\n  '!!': {dowel_d: 19 mm}\n",
+            "models: models/clamp/model.yml: size '!!' gives an empty file name: a size needs a "
+            "letter or a digit\n",
+        ),
+    ],
+)
+def test_build_and_check_refuse_sizes_whose_file_names_collide_or_are_empty(
+    repo: Path, fake_cli: Path, capsys, yml: str, message: str
+) -> None:
+    design = add_design(repo, "clamp")
+    (design.parent / "model.yml").write_text(yml, encoding="utf-8")
+    assert models.main(["check"], root=repo) == 1
+    assert capsys.readouterr().err == message
+    assert models.main(["build"], root=repo) == 1
+    assert capsys.readouterr().err == message
+    assert calls(fake_cli) == []
+
+
 @pytest.mark.parametrize("missing", ["coupon.stl", "coupon.png", "coupon.eval.json", "build.json"])
 def test_check_names_a_missing_built_file(repo: Path, fake_cli: Path, capsys, missing: str) -> None:
     add_design(repo, "coupon")
