@@ -340,3 +340,19 @@ def test_check_names_a_blob_a_tag_points_at_directly(repo: Path, capsys) -> None
     assert code == 1
     assert f"privacy: {blob[:7]} (in history, {blob[:7]}): a home-folder path on line 1" in err
     assert "someone" not in err
+
+
+def test_check_refuses_a_shallow_clone(repo: Path, capsys) -> None:
+    for text in ("first\n", "second\n"):  # two commits, so a depth of one leaves one out
+        (repo / "notes.md").write_text(text, encoding="utf-8")
+        commit(repo, "notes.md")
+    clone = repo.parent / "clone"
+    subprocess.run(
+        ["git", "clone", "-q", "--depth", "1", repo.as_uri(), str(clone)], check=True
+    )  # fmt: skip
+    code, err = check(clone, capsys)
+    assert (code, err) == (
+        1,
+        "privacy: a shallow clone: fetch the whole history (git fetch --unshallow) "
+        "so it can be checked\n",
+    )

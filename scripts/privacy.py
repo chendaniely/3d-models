@@ -4,7 +4,8 @@
         fail, naming each file, when a file git would commit is an image carrying any metadata
         but a colour profile, is a photo or video format this check can't read inside, or holds
         a home-folder path (/Users/<name> or /home/<name>); then the same for every file in
-        the history any ref reaches, since a push sends that too
+        the history any ref reaches, since a push sends that too (a shallow clone fails: its
+        history is only what was fetched)
     uv run scripts/privacy.py strip FILE ...
         rewrite each JPEG, PNG or WebP upright, with no metadata but its colour profile
 
@@ -224,6 +225,14 @@ def history(root: Path) -> list[tuple[str, str, bytes]]:
     return blobs
 
 
+def shallow(root: Path) -> bool:
+    """Whether this is a shallow clone, whose history pass would see only what was fetched."""
+    return subprocess.run(
+        ["git", "rev-parse", "--is-shallow-repository"],
+        cwd=root, capture_output=True, check=True, text=True,
+    ).stdout.strip() == "true"  # fmt: skip
+
+
 def history_problems(root: Path, reported: dict[str, bytes]) -> list[tuple[str, str, str]]:
     """(path, blob sha, reason) for each file in the history that couldn't be committed now,
     leaving out a file the working-tree check already named with this same content."""
@@ -270,6 +279,13 @@ def command_check(root: Path) -> int:
     found = problems(root)
     for path, reason in found:
         print(f"privacy: {path.relative_to(root)}: {reason}", file=sys.stderr)
+    if shallow(root):
+        print(
+            "privacy: a shallow clone: fetch the whole history (git fetch --unshallow) "
+            "so it can be checked",
+            file=sys.stderr,
+        )
+        return 1
     reported = {path.relative_to(root).as_posix(): committed_bytes(path) for path, _ in found}
     in_history = history_problems(root, reported)
     for name, sha, reason in in_history:
