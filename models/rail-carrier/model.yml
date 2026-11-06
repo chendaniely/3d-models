@@ -1,0 +1,37 @@
+title: Rail carrier
+summary: >-
+  A sleeve that pushes onto the rail from the front and locks with a wedge behind the rail, with a
+  dovetail on its face for the light's arm or a planter.
+status: designed
+material: PETG, matte (never PLA for this part)
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: as saved, the carrier standing on its end; the wedge flat, the face that meets the rail on the bed
+  Layer height: 0.2 mm
+  Walls: 5
+  Infill: 40% gyroid
+  Supports: none
+notes: |
+  The carrier is a U that opens toward the wall: push it onto the mounted rail from the front at
+  the height you want, then tap the wedge up from below, into the groove behind the rail, with a
+  mallet. The groove and the wedge share a 1-in-25 slope, so the wedge's face stays flat against
+  the rail all the way along; once it's tapped home, the arm's weight pulling the carrier down only
+  tightens it. To move it, push the wedge down from above with a thin punch, through the channel
+  behind the rail.
+
+  - **The pads:** the U's arms stop 1.5 mm short of the wall; a 3 mm self-adhesive felt or rubber
+    pad on each arm's end bears on the wall, so a push at the light can't turn the arm round the
+    rail. The cord runs down the channel between the arms, behind the wedge.
+  - **The dovetail** on its face takes the arm socket, and later a planter adapter: either slides
+    down it from above.
+  - **The wedge** prints flat, so the rail bends it along its layers.
+  - **Clearance:** the bore is the dowel plus `clearance`, from the fit-test coupon. The 0.4 mm
+    it's saved with is a placeholder until the coupon is printed.
+
+  See *Putting the rail together* on the [wall feet](rail-feet.html) page for the order it all
+  goes up in.
+
+  This is a first design, not yet printed or load-tested; its page will say when it has been.
