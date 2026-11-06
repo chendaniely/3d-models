@@ -61,7 +61,6 @@ flowchart LR
   rail -.-> planter
 
   classDef planned stroke-dasharray: 5 5
-  class socket planned
   class tip planned
   class shade planned
   class planter planned
