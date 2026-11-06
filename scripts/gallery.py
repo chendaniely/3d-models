@@ -15,6 +15,7 @@ import json
 import shutil
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 from models import ROOT, Model, find_models, read_yml, sizes
 from privacy import READABLE as PHOTOS
@@ -26,7 +27,7 @@ LICENCE = (
     f"share it, crediting chendaniely and linking to <{REPO_URL}>; don't sell it or prints of it."
 )
 STATUSES = ("designed", "printed", "in use")
-FREE_TEXT = ("title", "summary", "status", "material", "notes")  # escaped for Quarto, as sitedocs
+FREE_TEXT = ("title", "summary", "status", "material", "size", "notes")  # escaped, as sitedocs
 DENSITY_G_CM3 = {"PLA": 1.24, "PETG": 1.27}
 
 
@@ -123,7 +124,7 @@ def downloads(model: Model, meta: dict, params: set[str]) -> list[str]:
     if meta["sizes"]:
         lines.append(f"- [{slug}.stl]({slug}/{slug}.stl): the mesh to slice, for {meta['size']}")
         lines += [
-            f"- [{model.sized(size).name}]({slug}/{model.sized(size).name}): for {size}"
+            f"- [{model.sized(size).name}]({slug}/{model.sized(size).name}): for {escaped(size)}"
             for size in meta["sizes"]
         ]
     else:
@@ -175,14 +176,17 @@ def page(model: Model, meta: dict, evaluation: dict) -> str:
     shots = photos(model)
     if shots:
         lines += ["## Photos", ""]
-        lines += [
-            f"![{shot.stem.replace('-', ' ').replace('_', ' ')}]({slug}/photos/{shot.name})"
-            for shot in shots
-        ]
+        for shot in shots:
+            alt = escaped(shot.stem.replace("-", " ").replace("_", " "))
+            alt = alt.replace("[", "\\[").replace("]", "\\]")  # a bracket would end it early
+            lines.append(f"![{alt}]({slug}/photos/{quote(shot.name)})")
         lines.append("")
     if meta.get("print"):
         lines += ["## Printing", "", "| Setting | Value |", "|---|---|"]
-        lines += [f"| {cell(key)} | {cell(value)} |" for key, value in meta["print"].items()]
+        lines += [
+            f"| {cell(escaped(str(key)))} | {cell(escaped(str(value)))} |"
+            for key, value in meta["print"].items()
+        ]
         lines.append("")
     rows = measurements(evaluation)
     if rows:

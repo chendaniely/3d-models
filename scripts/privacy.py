@@ -46,6 +46,18 @@ HOUSEKEEPING = {
     "transparency", "aspect", "interlace", "loop", "background", "timestamp", "duration",
 }  # fmt: skip
 JPEG_HOUSEKEEPING = {"APP0", "APP2", "APP14"}  # JFIF, the colour profile, Adobe's colour flag
+# the segments a picture needs, by marker: frames and their tables, scans, quantization, restart
+# intervals; and the comment and APPn segments, which Pillow reads and the metadata check names
+JPEG_SEGMENTS = (
+    (set(range(0xC0, 0xD0)) - {0xC8}) | {0xDA, 0xDB, 0xDD, 0xFE} | set(range(0xE0, 0xF0))
+)
+# the housekeeping APPn segments, by what each must start with and its fixed length (None: any,
+# and as many as the colour profile needs); anything else in one of them could be text
+JPEG_HOUSEKEEPING_SEGMENTS = {
+    0xE0: (b"JFIF\x00", 16),
+    0xE2: (b"ICC_PROFILE\x00", None),
+    0xEE: (b"Adobe", 14),
+}
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 PNG_CHUNKS = {
     b"IHDR", b"PLTE", b"IDAT", b"IEND", b"tRNS", b"iCCP", b"sRGB", b"gAMA", b"cHRM", b"pHYs",
@@ -54,6 +66,7 @@ PNG_CHUNKS = {
 WEBP_CHUNKS = {b"VP8 ", b"VP8L", b"VP8X", b"ALPH", b"ICCP", b"ANIM", b"ANMF"}
 AFTER_END = "bytes after the image's end"
 CUT_SHORT = "unreadable as an image (cut short or malformed)"
+GONE = "unreadable (it went, or can't be opened, while being checked)"
 # A home folder, with or without a slash after it: the name runs to the first character a name
 # can't hold (/, a space, a quote, <, >, a bracket) or to the end, so /Users/<name>/ doesn't match.
 HOME = re.compile(rb"/(?:Users|home)/[^/\s\"'<>()]+")
@@ -90,6 +103,16 @@ def png_problem(data: bytes) -> str | None:
 def jpeg_end(data: bytes) -> int | None:
     """Where the JPEG's end-of-image marker (FFD9) ends, walking its segments and scans, so an
     FFD9 inside a segment (a thumbnail's) or a second JPEG appended isn't taken for it."""
+    return jpeg_walk(data)[0]
+
+
+def jpeg_walk(data: bytes) -> tuple[int | None, int | None]:
+    """jpeg_end's walk: where the image ends, and the first segment's marker a picture doesn't
+    need (a DNL or a JPGn), or a JFIF, ICC or Adobe segment holding anything but its own data,
+    all of which Pillow reads past. Text inside the scan's coded data, or in a colour profile's
+    own text, is out of its reach: make strip re-encodes a photo, and Dan looks at it."""
+    stray = None
+    seen: set[int] = set()
     at = 2  # past the start-of-image marker
     while at < len(data) and data[at] == 0xFF:
         while at < len(data) and data[at] == 0xFF:  # a marker may follow any number of fill bytes
@@ -98,18 +121,31 @@ def jpeg_end(data: bytes) -> int | None:
             return None
         marker, at = data[at], at + 1
         if marker == 0xD9:
-            return at
+            return at, stray
+        if marker not in JPEG_SEGMENTS and not 0xD0 <= marker <= 0xD7 and stray is None:
+            stray = marker  # TEM, a DNL, a JPGn, a reserved marker
         if 0xD0 <= marker <= 0xD7 or marker == 0x01:  # restart markers and TEM stand alone
             continue
-        at += int.from_bytes(data[at : at + 2], "big")  # the segment, its length included
+        length = int.from_bytes(data[at : at + 2], "big")  # the segment's, its length included
+        if marker in JPEG_HOUSEKEEPING_SEGMENTS and stray is None:
+            magic, fixed = JPEG_HOUSEKEEPING_SEGMENTS[marker]
+            again = fixed is not None and marker in seen
+            if (
+                again
+                or not data[at + 2 : at + length].startswith(magic)
+                or fixed not in (None, length)
+            ):
+                stray = marker
+            seen.add(marker)
+        at += length
         if marker == 0xDA:  # start of scan: its coded data runs to the next marker but a restart
             while (at := data.find(b"\xff", at)) != -1 and at + 1 < len(data):
                 if data[at + 1] != 0x00 and not 0xD0 <= data[at + 1] <= 0xD7:
                     break
                 at += 2  # a stuffed FF00, or a restart marker inside the scan
             else:
-                return None
-    return None
+                return None, stray
+    return None, stray
 
 
 def webp_problem(data: bytes) -> str | None:
@@ -131,7 +167,9 @@ def structure_problem(data: bytes) -> str | None:
     if data.startswith(PNG_SIGNATURE):
         return png_problem(data)
     if data.startswith(b"\xff\xd8"):
-        end = jpeg_end(data)
+        end, stray = jpeg_walk(data)
+        if stray is not None:
+            return f"a JPEG segment it doesn't allow (FF{stray:02X})"
         return CUT_SHORT if end is None else AFTER_END if end < len(data) else None
     if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
         return webp_problem(data)
@@ -186,17 +224,16 @@ def text_problem(data: bytes) -> str | None:
 def problems(root: Path) -> list[tuple[Path, str]]:
     found = []
     for path in committable(root):
-        if path.is_symlink():  # never followed: git commits the target's path, not the file
-            if HOME.search(committed_bytes(path)):
-                found.append((path, "a symlink to a home-folder path"))
-            continue
-        if path.suffix.lower() in READABLE | UNREADABLE:
-            reason = image_problem(path)
-            if reason:
-                found.append((path, reason))
-        reason = path_problem(path)
-        if reason:
-            found.append((path, reason))
+        try:  # a file can go, or lose its permissions, between the listing and the read
+            if path.is_symlink():  # never followed: git commits the target's path, not the file
+                linked = HOME.search(committed_bytes(path))
+                reasons = ["a symlink to a home-folder path" if linked else None]
+            else:
+                image = path.suffix.lower() in READABLE | UNREADABLE
+                reasons = [image_problem(path) if image else None, path_problem(path)]
+        except OSError:
+            reasons = [GONE]
+        found += [(path, reason) for reason in reasons if reason]
     return found
 
 
@@ -286,7 +323,13 @@ def command_check(root: Path) -> int:
             file=sys.stderr,
         )
         return 1
-    reported = {path.relative_to(root).as_posix(): committed_bytes(path) for path, _ in found}
+    reported = {}
+    for path, reason in found:
+        try:
+            if reason != GONE:
+                reported[path.relative_to(root).as_posix()] = committed_bytes(path)
+        except OSError:  # gone since: the history pass still checks every blob under its name
+            continue
     in_history = history_problems(root, reported)
     for name, sha, reason in in_history:
         print(f"privacy: {name} (in history, {sha[:7]}): {reason}", file=sys.stderr)

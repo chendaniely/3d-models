@@ -32,7 +32,8 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: [cosmo, theme.scss]
+    html-math-method: plain
     css: styles.css
     toc: true
     mermaid:

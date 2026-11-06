@@ -118,7 +118,7 @@ tests/                pytest
 | `make strip FILES=…` | rewrites each JPEG, PNG or WebP named upright, with no metadata but its colour profile; then you look at it |
 | `make leaks` | gitleaks over every commit, merges included |
 | `make test`, `make test-utc`, `make lint` | pytest; pytest under `TZ=UTC`; ruff check and format check |
-| `make docs` | copies the docs, writes the model pages, renders the site, fails on an unresolved link, runs lychee where installed |
+| `make docs` | copies the docs, writes the model pages, renders the site, fails on an unresolved link or anything it loads from another host, runs lychee where installed |
 | `make check` | test, test-utc, lint, models-check, privacy, leaks, docs |
 | `make hooks` | installs nothing: no hooks yet |
 | `make help` | lists the targets |

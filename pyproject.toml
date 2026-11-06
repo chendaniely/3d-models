@@ -32,4 +32,4 @@ extend-exclude = ["scripts/commitmsg.py", "*.md", "website/_site", "website/.qua
 select = ["E", "F", "I", "B", "UP"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["conftest", "gallery", "models", "privacy", "sitedocs"]
+known-first-party = ["conftest", "gallery", "models", "offsite", "privacy", "sitedocs"]

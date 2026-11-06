@@ -37,12 +37,13 @@ privacy: ## Fail on image metadata, a photo format the check can't read, or a ho
 strip: ## Strip a photo's metadata, then look at it: make strip FILES="a.jpg b.png"
 	uv run --frozen scripts/privacy.py strip $(FILES)
 
-docs: ## Render the site into website/_site, failing on a broken link
+docs: ## Render the site into website/_site, failing on a broken link or a load from another host
 	uv run --frozen scripts/sitedocs.py
 	uv run --frozen scripts/gallery.py
 	@set -o pipefail; quarto render website 2>&1 | tee website/.render.log
 	@if grep -q 'Unable to resolve link target' website/.render.log; then \
 	  echo "docs: an unresolved link, above"; exit 1; fi
+	uv run --frozen scripts/offsite.py website/_site
 	@if command -v lychee >/dev/null; then lychee --offline --no-progress website/_site; \
 	else echo "lychee isn't installed: the offline link check runs in CI"; fi
 
