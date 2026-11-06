@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 5: The arm tip, its wedge and the cord clips, open.
+**Now:** Task 6: The shade, open.
 
 ***
 
@@ -1527,6 +1527,8 @@ Co-Authored-By: <the model's own line>
 
 ### Task 5: The arm tip, its wedge and the cord clips
 
+> **Built differently** (closed 2026-11-06; commits 2d16404, 3cf3181): the stem's wide slot starts 0.25 mm above its grip band, since sharing that plane with the free bore left 16 stray triangles in the 25 mm STL; a new test, `tests/test_meshes.py`, checks every built STL is watertight; the clips go on from above, loops down, in the tip's notes and the feet's step 9 (Task 5's review, Important 1 and 2).
+
 **Tier:** 2 · **Scenarios:** S28, S14, S27
 
 **Files:**
@@ -1541,8 +1543,8 @@ Co-Authored-By: <the model's own line>
   (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the cap on the arm's end, its stem that grips the cord and takes the shade, and three clips; the parameters and bodies its test names.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing test.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing test.**
 
 `tests/test_rail_arm_tip.py`:
 
@@ -1619,9 +1621,9 @@ def test_the_wedges_groove_leaves_a_wall_above_it() -> None:
     assert p["cap_d"] / 2 - deepest >= 2.0
 ```
 
-- [ ] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
   `models/rail-arm-tip/rail-arm-tip.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to
   `.git/rail-arm-tip-script.json` (it stays out of the repo: the saved design holds the same feature tree):
 
 ```json
@@ -1701,7 +1703,7 @@ def test_the_wedges_groove_leaves_a_wall_above_it() -> None:
   From the repo's root: `mkdir -p models/rail-arm-tip`, then
   `solidcraft-cli run .git/rail-arm-tip-script.json --quiet`. Expected: exit 0, and
   `models/rail-arm-tip/rail-arm-tip.sc` is plain-text JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/rail-arm-tip/model.yml`:
 
@@ -1749,12 +1751,12 @@ notes: |
 
   Then `make models`. Expected: `building models/rail-arm-tip (missing …)` and `1 built`. Look at
   `rail-arm-tip.png` against the notes.
-- [ ] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the line `  class tip planned` ("The rail, part by part") and the lines `  class stem planned`, `  class keel planned` and `  class clips planned` ("The light's cord"): the
+- [x] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the line `  class tip planned` ("The rail, part by part") and the lines `  class stem planned`, `  class keel planned` and `  class clips planned` ("The light's cord"): the
   part is built.
-- [ ] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy and offsite checks pass, the render lists
   the model's page.
-- [ ] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the cap on the arm's end, its stem that grips the cord and takes the shade, and three clips
@@ -1776,7 +1778,7 @@ Co-Authored-By: <the model's own line>
 
   `git add models/rail-arm-tip/rail-arm-tip.sc models/rail-arm-tip/rail-arm-tip.stl models/rail-arm-tip/rail-arm-tip-3-4in.stl models/rail-arm-tip/rail-arm-tip-25mm.stl models/rail-arm-tip/rail-arm-tip.png models/rail-arm-tip/rail-arm-tip.eval.json models/rail-arm-tip/build.json models/rail-arm-tip/model.yml tests/test_rail_arm_tip.py website/architecture.qmd`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'`
   shows the `Plan:` line.
-- [ ] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
@@ -2665,3 +2667,7 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 4, review | Minor | `models/rail-arm-socket` | The slot's flanks aren't parallel to the dovetail's: the side gap is 0.3 mm at the base, 0.19 mm at the tip; the look test (Task 11) checks the fit | open |
 | Task 4, review | Minor | `models/rail-arm-socket` | The boss is wider than the block, so printed on its back it leaves a 3.9 mm ledge the notes' "Supports: none" doesn't mention | open |
 | Task 4, review | Minor | `tests/test_rail_arm_socket.py` | The groove's wall is measured from the dowel's top, not the bore's (0.2 mm apart) | open |
+| Task 5, review | Minor | `models/rail-arm-tip/model.yml` | "Supports from the bed only" can't reach inside the cap's horizontal bore, whose arch prints unsupported | open |
+| Task 5, review | Minor | `models/rail-arm-tip` | The clips' rings ignore `clearance`, and are three copied blocks with literals | open |
+| Task 5, review | Minor | `tests/test_rail_arm_tip.py` | The test holds the cord's sizes, not its built path through the keel and the stem | open |
+| Task 5, review | Minor | `models/rail-arm-tip` | 1.5 mm of plastic between the keel's channel and the bore | open |
