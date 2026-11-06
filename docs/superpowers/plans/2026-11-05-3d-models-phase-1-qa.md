@@ -6,3 +6,4 @@ Questions that came up while Phase 1 ran, each with Dan's answer in his words. K
 | # | Question | Answer | Dan's reason, in his words |
 |---|---|---|---|
 | 1 | Dan's changes to the sconce's parts, before Tasks 7 and 8 build them: he said, mid-run, "once you're done with everythign let me know there are some changes i want to make with the way the dowels mound and clap to the pice and screw into the wall" | Build Tasks 7 and 8 as planned first; his changes come afterwards, as a revision of both parts | No reason given (not the recommended option, which was to describe them before the build). |
+| 2 | Pushing `phase-1` after Task 6: 16 commits, adding the coupon's three STLs and its PNG, which both Task 6 reviewers inspected | Pushed then, after `make leaks privacy` passed; later pushes still ask | No reason given (the recommended option). |
