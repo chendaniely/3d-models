@@ -11,8 +11,11 @@
 A photo's location hides in EXIF's GPS block, in XMP text (plain or compressed), in IPTC and in
 PNG text chunks; a camera's serial number and its owner's name hide beside it. Rather than hunt
 for each, the check allows nothing but a colour profile and the format's own housekeeping, and
-refuses the formats it can't read inside (HEIC, AVIF, RAW, video). What a photo shows (a window's
-view, a street, a face) no check can see: Dan looks at each before it's staged.
+refuses the formats it can't read inside (HEIC, AVIF, RAW, video). Since Pillow reads past a
+chunk it doesn't know and stops at the image's end, the file's own structure is checked first: a
+PNG or WebP may hold only the chunks a picture needs, and no image anything after its end. What a
+photo shows (a window's view, a street, a face) no check can see: Dan looks at each before it's
+staged.
 """
 
 from __future__ import annotations
@@ -42,6 +45,14 @@ HOUSEKEEPING = {
     "transparency", "aspect", "interlace", "loop", "background", "timestamp", "duration",
 }  # fmt: skip
 JPEG_HOUSEKEEPING = {"APP0", "APP2", "APP14"}  # JFIF, the colour profile, Adobe's colour flag
+PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+PNG_CHUNKS = {
+    b"IHDR", b"PLTE", b"IDAT", b"IEND", b"tRNS", b"iCCP", b"sRGB", b"gAMA", b"cHRM", b"pHYs",
+    b"sBIT", b"bKGD",
+}  # fmt: skip
+WEBP_CHUNKS = {b"VP8 ", b"VP8L", b"VP8X", b"ALPH", b"ICCP", b"ANIM", b"ANMF"}
+AFTER_END = "bytes after the image's end"
+CUT_SHORT = "unreadable as an image (cut short or malformed)"
 # A home folder, with or without a slash after it: the name runs to the first character a name
 # can't hold (/, a space, a quote, <, >, a bracket) or to the end, so /Users/<name>/ doesn't match.
 HOME = re.compile(rb"/(?:Users|home)/[^/\s\"'<>()]+")
@@ -62,14 +73,82 @@ def committed_bytes(path: Path) -> bytes:
     return os.fsencode(os.readlink(path)) if path.is_symlink() else path.read_bytes()
 
 
+def png_problem(data: bytes) -> str | None:
+    """A chunk outside PNG_CHUNKS, or anything after IEND's CRC. Names the chunk's type only."""
+    at = len(PNG_SIGNATURE)
+    while at + 8 <= len(data):
+        length, kind = int.from_bytes(data[at : at + 4], "big"), data[at + 4 : at + 8]
+        if kind not in PNG_CHUNKS:
+            return f"a PNG chunk it doesn't allow ({kind.decode('ascii', 'replace')})"
+        at += 12 + length  # length, type, data, CRC
+        if kind == b"IEND":
+            return AFTER_END if at < len(data) else CUT_SHORT if at > len(data) else None
+    return CUT_SHORT
+
+
+def jpeg_end(data: bytes) -> int | None:
+    """Where the JPEG's end-of-image marker (FFD9) ends, walking its segments and scans, so an
+    FFD9 inside a segment (a thumbnail's) or a second JPEG appended isn't taken for it."""
+    at = 2  # past the start-of-image marker
+    while at < len(data) and data[at] == 0xFF:
+        while at < len(data) and data[at] == 0xFF:  # a marker may follow any number of fill bytes
+            at += 1
+        if at >= len(data):
+            return None
+        marker, at = data[at], at + 1
+        if marker == 0xD9:
+            return at
+        if 0xD0 <= marker <= 0xD7 or marker == 0x01:  # restart markers and TEM stand alone
+            continue
+        at += int.from_bytes(data[at : at + 2], "big")  # the segment, its length included
+        if marker == 0xDA:  # start of scan: its coded data runs to the next marker but a restart
+            while (at := data.find(b"\xff", at)) != -1 and at + 1 < len(data):
+                if data[at + 1] != 0x00 and not 0xD0 <= data[at + 1] <= 0xD7:
+                    break
+                at += 2  # a stuffed FF00, or a restart marker inside the scan
+            else:
+                return None
+    return None
+
+
+def webp_problem(data: bytes) -> str | None:
+    """A RIFF size that isn't the file's length, or a chunk outside WEBP_CHUNKS."""
+    size = int.from_bytes(data[4:8], "little") + 8
+    if size != len(data):
+        return AFTER_END if size < len(data) else CUT_SHORT
+    at = 12
+    while at + 8 <= len(data):
+        kind, length = data[at : at + 4], int.from_bytes(data[at + 4 : at + 8], "little")
+        if kind not in WEBP_CHUNKS:
+            return f"a WebP chunk it doesn't allow ({kind.decode('ascii', 'replace')})"
+        at += 8 + length + (length & 1)  # a chunk of odd length has a pad byte
+    return None if at == len(data) else CUT_SHORT
+
+
+def structure_problem(data: bytes) -> str | None:
+    """What the file holds that Pillow would read past: checked on the bytes, before Pillow."""
+    if data.startswith(PNG_SIGNATURE):
+        return png_problem(data)
+    if data.startswith(b"\xff\xd8"):
+        end = jpeg_end(data)
+        return CUT_SHORT if end is None else AFTER_END if end < len(data) else None
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return webp_problem(data)
+    return "unreadable as an image (not a JPEG, PNG or WebP inside)"
+
+
 def image_problem(path: PurePath, data: bytes | None = None) -> str | None:
     """Why this image can't be committed, or None when it carries nothing but a colour profile.
     data, when given, is the image itself (a blob from the history), read in place of path."""
     suffix = path.suffix.lower()
     if suffix in UNREADABLE:
         return f"a {suffix} file, which this check can't read inside; convert it to JPEG first"
+    data = Path(path).read_bytes() if data is None else data
+    reason = structure_problem(data)
+    if reason:
+        return reason
     try:
-        with Image.open(path if data is None else BytesIO(data)) as image:
+        with Image.open(BytesIO(data)) as image:
             image.load()
             if getattr(image, "n_frames", 1) > 1:
                 return "more than one frame"

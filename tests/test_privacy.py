@@ -57,12 +57,20 @@ def test_check_passes_an_image_with_no_metadata(repo: Path, capsys, name: str) -
     assert check(repo, capsys) == (0, "")
 
 
-@pytest.mark.parametrize("name", ["print.jpg", "PRINT.JPG", "print.png", "print.webp"])
-def test_check_names_a_photo_with_a_gps_block(repo: Path, capsys, name: str) -> None:
+@pytest.mark.parametrize(
+    ("name", "reason"),
+    [
+        ("print.jpg", "EXIF metadata"),
+        ("PRINT.JPG", "EXIF metadata"),
+        ("print.png", "a PNG chunk it doesn't allow (eXIf)"),
+        ("print.webp", "a WebP chunk it doesn't allow (EXIF)"),
+    ],
+)
+def test_check_names_a_photo_with_a_gps_block(repo: Path, capsys, name: str, reason: str) -> None:
     photo(repo / "models" / "coupon" / "photos" / name, gps=True)
     code, err = check(repo, capsys)
     assert code == 1
-    assert f"privacy: models/coupon/photos/{name}: EXIF metadata" in err
+    assert f"privacy: models/coupon/photos/{name}: {reason}" in err
 
 
 def test_check_names_a_camera_serial_without_any_gps(repo: Path, capsys) -> None:
@@ -75,27 +83,56 @@ def test_check_names_a_camera_serial_without_any_gps(repo: Path, capsys) -> None
 
 
 @pytest.mark.parametrize(
-    ("name", "save"),
+    ("name", "save", "reason"),
     [
-        ("xmp.jpg", {"xmp": XMP}),
-        ("comment.jpg", {"comment": b"taken at home"}),
-        ("xmp.webp", {"xmp": XMP}),
+        ("xmp.jpg", {"xmp": XMP}, "metadata"),
+        ("comment.jpg", {"comment": b"taken at home"}, "metadata"),
+        ("xmp.webp", {"xmp": XMP}, "a WebP chunk it doesn't allow (XMP )"),
     ],
 )
-def test_check_names_xmp_and_comments(repo: Path, capsys, name: str, save: dict) -> None:
+def test_check_names_xmp_and_comments(
+    repo: Path, capsys, name: str, save: dict, reason: str
+) -> None:
     photo(repo / name, **save)
     code, err = check(repo, capsys)
     assert code == 1
-    assert f"privacy: {name}: metadata" in err
+    assert f"privacy: {name}: {reason}" in err
 
 
 def test_check_names_xmp_hidden_in_a_compressed_png_chunk(repo: Path, capsys) -> None:
     info = PngImagePlugin.PngInfo()
     info.add_itxt("XML:com.adobe.xmp", XMP.decode(), zip=True)
     photo(repo / "print.png", pnginfo=info)
-    code, err = check(repo, capsys)
-    assert code == 1
-    assert "privacy: print.png: metadata: XML:com.adobe.xmp" in err
+    assert check(repo, capsys) == (1, "privacy: print.png: a PNG chunk it doesn't allow (iTXt)\n")
+
+
+def test_check_names_a_png_chunk_it_does_not_allow_without_printing_it(repo: Path, capsys) -> None:
+    info = PngImagePlugin.PngInfo()
+    info.add(b"prVt", b"taken at home")  # a private chunk Pillow reads past and drops
+    photo(repo / "print.png", pnginfo=info)
+    assert check(repo, capsys) == (1, "privacy: print.png: a PNG chunk it doesn't allow (prVt)\n")
+
+
+@pytest.mark.parametrize("name", ["print.jpg", "print.png", "print.webp"])
+def test_check_names_bytes_after_the_image_s_end(repo: Path, capsys, name: str) -> None:
+    path = photo(repo / name)
+    path.write_bytes(path.read_bytes() + b"taken at home")
+    assert check(repo, capsys) == (1, f"privacy: {name}: bytes after the image's end\n")
+
+
+def test_check_names_a_second_jpeg_after_the_first_s_end(repo: Path, capsys) -> None:
+    path = photo(repo / "print.jpg")
+    hidden = photo(repo.parent / "hidden.jpg", gps=True)  # outside the repo: only its bytes go in
+    path.write_bytes(path.read_bytes() + hidden.read_bytes())
+    assert check(repo, capsys) == (1, "privacy: print.jpg: bytes after the image's end\n")
+
+
+def test_check_names_an_image_that_is_not_a_jpeg_png_or_webp_inside(repo: Path, capsys) -> None:
+    Image.new("RGB", (40, 20)).save(repo / "print.png", format="PPM")  # Pillow reads it, no info
+    assert check(repo, capsys) == (
+        1,
+        "privacy: print.png: unreadable as an image (not a JPEG, PNG or WebP inside)\n",
+    )
 
 
 def test_check_names_a_second_frame(repo: Path, capsys) -> None:
@@ -228,6 +265,18 @@ def test_check_names_a_photo_stripped_after_it_was_committed(repo: Path, capsys)
     assert "privacy: models/coupon/photos/print.jpg (in history, " in err
     assert "): EXIF metadata" in err
     assert "privacy: models/coupon/photos/print.jpg: " not in err  # the file itself is clean now
+
+
+def test_check_names_bytes_after_an_image_s_end_in_history(repo: Path, capsys) -> None:
+    path = photo(repo / "print.png")
+    path.write_bytes(path.read_bytes() + b"taken at home")
+    commit(repo, "print.png")
+    path.unlink()
+    commit(repo, "print.png")
+    code, err = check(repo, capsys)
+    assert code == 1
+    assert "privacy: print.png (in history, " in err
+    assert "): bytes after the image's end" in err
 
 
 def test_check_names_a_home_folder_path_committed_then_removed(repo: Path, capsys) -> None:
