@@ -1,0 +1,673 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 13283.782024667755,
+      "bbox": {
+        "max": [
+          16.899988814070422,
+          20.0,
+          52.0
+        ],
+        "min": [
+          -32.00000000000002,
+          -20.0,
+          -6.661338147750945e-15
+        ]
+      },
+      "center_of_mass": [
+        -15.609460829250185,
+        0.6585676766628621,
+        19.260703214492548
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 46,
+      "face_types": {
+        "cylinder": 6,
+        "plane": 16
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 69,
+        "faces": 28,
+        "shells": 1,
+        "vertices": 46
+      },
+      "mass_g": 47.414012804809666,
+      "material": "Default",
+      "name": "Bottom foot",
+      "vertices": 34,
+      "volume_mm3": 36755.04868589897
+    },
+    {
+      "area_mm2": 22494.094910512817,
+      "bbox": {
+        "max": [
+          16.89998881407044,
+          90.0,
+          91.0
+        ],
+        "min": [
+          -32.000000000000014,
+          50.0,
+          -1.5321077739827107e-14
+        ]
+      },
+      "center_of_mass": [
+        -15.59298562190071,
+        69.99999199652555,
+        38.317055000250555
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 30,
+      "face_types": {
+        "cylinder": 4,
+        "plane": 11
+      },
+      "faces": 15,
+      "kernel": {
+        "edges": 45,
+        "faces": 19,
+        "shells": 1,
+        "vertices": 30
+      },
+      "mass_g": 98.88374272083506,
+      "material": "Default",
+      "name": "Top foot",
+      "vertices": 22,
+      "volume_mm3": 76654.06412467833
+    },
+    {
+      "area_mm2": 235.23068232103765,
+      "bbox": {
+        "max": [
+          50.199919692308846,
+          -6.800122810872338,
+          2.0
+        ],
+        "min": [
+          39.800080307691154,
+          -17.199877189127665,
+          0.0
+        ]
+      },
+      "center_of_mass": [
+        45.0,
+        -12.000000000000004,
+        1.0
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 2,
+      "face_types": {
+        "cylinder": 1,
+        "plane": 2
+      },
+      "faces": 3,
+      "kernel": {
+        "edges": 6,
+        "faces": 4,
+        "shells": 1,
+        "vertices": 4
+      },
+      "mass_g": 0.2191536984681282,
+      "material": "Default",
+      "name": "Cap 1",
+      "vertices": 2,
+      "volume_mm3": 169.8865879597893
+    },
+    {
+      "area_mm2": 235.2306823210375,
+      "bbox": {
+        "max": [
+          50.19991969230885,
+          17.199877189127665,
+          2.0
+        ],
+        "min": [
+          39.800080307691154,
+          6.800122810872338,
+          0.0
+        ]
+      },
+      "center_of_mass": [
+        45.0,
+        12.000000000000004,
+        1.0
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 2,
+      "face_types": {
+        "cylinder": 1,
+        "plane": 2
+      },
+      "faces": 3,
+      "kernel": {
+        "edges": 6,
+        "faces": 4,
+        "shells": 1,
+        "vertices": 4
+      },
+      "mass_g": 0.21915369846812854,
+      "material": "Default",
+      "name": "Cap 2",
+      "vertices": 2,
+      "volume_mm3": 169.88658795978955
+    }
+  ],
+  "body_count": 4,
+  "params": [
+    {
+      "comment": "the rail's and the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "added to the dowel for every bore: the coupon's hole that fit",
+      "error": null,
+      "expression": "0.4 mm",
+      "model": false,
+      "name": "clearance",
+      "unit": "mm",
+      "value": 0.4
+    },
+    {
+      "comment": "every cup's and socket's bore",
+      "error": null,
+      "expression": "dowel_d + clearance",
+      "model": false,
+      "name": "bore_d",
+      "unit": "mm",
+      "value": 25.799999999999997
+    },
+    {
+      "comment": "the rail's axis from the wall: room behind it for the cord",
+      "error": null,
+      "expression": "32 mm",
+      "model": false,
+      "name": "standoff",
+      "unit": "mm",
+      "value": 32.0
+    },
+    {
+      "comment": "plastic round each cup",
+      "error": null,
+      "expression": "4 mm",
+      "model": false,
+      "name": "cup_wall",
+      "unit": "mm",
+      "value": 4.0
+    },
+    {
+      "comment": "a cup's outside",
+      "error": null,
+      "expression": "bore_d + 2 * cup_wall",
+      "model": false,
+      "name": "cup_od",
+      "unit": "mm",
+      "value": 33.8
+    },
+    {
+      "comment": "a cup's closed end",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "floor_t",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "how far the rail stands in the bottom cup",
+      "error": null,
+      "expression": "25 mm",
+      "model": false,
+      "name": "low_depth",
+      "unit": "mm",
+      "value": 25.0
+    },
+    {
+      "comment": "the top cup's depth: the rail lifts into it past the bottom cup's rim",
+      "error": null,
+      "expression": "64 mm",
+      "model": false,
+      "name": "high_depth",
+      "unit": "mm",
+      "value": 64.0
+    },
+    {
+      "comment": "the least the rail's top stays in the top cup",
+      "error": null,
+      "expression": "25 mm",
+      "model": false,
+      "name": "insert_min",
+      "unit": "mm",
+      "value": 25.0
+    },
+    {
+      "comment": "how far the rail must rise to clear the bottom cup's rim",
+      "error": null,
+      "expression": "low_depth + 3 mm",
+      "model": false,
+      "name": "lift_room",
+      "unit": "mm",
+      "value": 28.0
+    },
+    {
+      "comment": "the plate on the wall",
+      "error": null,
+      "expression": "10 mm",
+      "model": false,
+      "name": "plate_t",
+      "unit": "mm",
+      "value": 10.0
+    },
+    {
+      "comment": "the plate's width",
+      "error": null,
+      "expression": "40 mm",
+      "model": false,
+      "name": "plate_w",
+      "unit": "mm",
+      "value": 40.0
+    },
+    {
+      "comment": "each plate beyond its cup, behind the rail, where its screw goes",
+      "error": null,
+      "expression": "22 mm",
+      "model": false,
+      "name": "tab_h",
+      "unit": "mm",
+      "value": 22.0
+    },
+    {
+      "comment": "each plate's screw hole: #8 or #10 wood screws, 3/16 in toggle bolts",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "screw_d",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the counterbore round each screw's head",
+      "error": null,
+      "expression": "10.5 mm",
+      "model": false,
+      "name": "head_d",
+      "unit": "mm",
+      "value": 10.5
+    },
+    {
+      "comment": "a pan or washer head's height",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "head_h",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "a printed cap's height, pressed in over the head",
+      "error": null,
+      "expression": "2 mm",
+      "model": false,
+      "name": "cap_h",
+      "unit": "mm",
+      "value": 2.0
+    },
+    {
+      "comment": "the counterbore's depth: the head, then its cap",
+      "error": null,
+      "expression": "head_h + cap_h",
+      "model": false,
+      "name": "head_depth",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the bottom cup's floor: a hole for a #6 screw up into the rail's end",
+      "error": null,
+      "expression": "4 mm",
+      "model": false,
+      "name": "pin_d",
+      "unit": "mm",
+      "value": 4.0
+    },
+    {
+      "comment": "the counterbore under the floor for that screw's head",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "pin_head_d",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "that counterbore's depth",
+      "error": null,
+      "expression": "3 mm",
+      "model": false,
+      "name": "pin_head_h",
+      "unit": "mm",
+      "value": 3.0
+    },
+    {
+      "comment": "the cord's groove up the back of the bottom foot",
+      "error": null,
+      "expression": "7 mm",
+      "model": false,
+      "name": "cord_w",
+      "unit": "mm",
+      "value": 7.0
+    },
+    {
+      "comment": "the groove's depth: at least the cord's thickness and 1 mm",
+      "error": null,
+      "expression": "7 mm",
+      "model": false,
+      "name": "cord_depth",
+      "unit": "mm",
+      "value": 7.0
+    },
+    {
+      "comment": "the cord groove's centre, beside the screw",
+      "error": null,
+      "expression": "-9.5 mm",
+      "model": false,
+      "name": "cord_y",
+      "unit": "mm",
+      "value": -9.5
+    },
+    {
+      "comment": "the top screw goes the rail's length less this above the bottom screw",
+      "error": null,
+      "expression": "low_depth + high_depth + tab_h - (lift_room + high_depth - insert_min) / 2",
+      "model": false,
+      "name": "spacing_less",
+      "unit": "mm",
+      "value": 77.5
+    },
+    {
+      "comment": "how far either way the top screw may be off",
+      "error": null,
+      "expression": "(high_depth - insert_min - lift_room) / 2",
+      "model": false,
+      "name": "spacing_tol",
+      "unit": "mm",
+      "value": 5.5
+    },
+    {
+      "comment": "the top foot sits beside the bottom foot, for printing",
+      "error": null,
+      "expression": "70 mm",
+      "model": false,
+      "name": "top_y",
+      "unit": "mm",
+      "value": 70.0
+    }
+  ],
+  "sketches": [],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 3.017083,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 49.726082999999996,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 208.645417,
+      "name": "Box2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 28.316666,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 120.303333,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 105.236333,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 0.7479589999999999,
+      "name": "Cylinder5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 29.893875,
+      "name": "Box3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 104.16041700000001,
+      "name": "Box4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 14.849,
+      "name": "Cylinder6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 0.0,
+            "rotation_rad": 0.0,
+            "strategy": "refined_tolerance",
+            "tolerance_mm": 0.05472808502159898,
+            "translation_mm": 0.0
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 11,
+      "ms": 263.61758299999997,
+      "name": "Cylinder7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 12,
+      "ms": 152.236041,
+      "name": "Cylinder8",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 13,
+      "ms": 161.46408300000002,
+      "name": "Cylinder9",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 14,
+      "ms": 212.202375,
+      "name": "Cylinder10",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 15,
+      "ms": 120.838417,
+      "name": "Box5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 16,
+      "ms": 0.8477089999999999,
+      "name": "Cylinder11",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 17,
+      "ms": 1.1834580000000001,
+      "name": "Cylinder12",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 36248.338299822644,
+    "edges": 80,
+    "faces": 43,
+    "mass_g": 146.73606292258097,
+    "open_bodies_skipped": 0,
+    "vertices": 60,
+    "volume_mm3": 113748.88598649687
+  }
+}

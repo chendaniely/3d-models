@@ -1,0 +1,53 @@
+title: Rail wall feet
+summary: >-
+  The two feet that hold a vertical dowel rail off the wall: a closed cup over each end of the
+  rail, their screws hidden behind it under caps.
+status: designed
+material: PETG, matte (never PLA for these parts)
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: as saved, each foot on its cup's closed end (the top foot upside down); the caps flat
+  Layer height: 0.2 mm
+  Walls: 5
+  Infill: 40% gyroid
+  Supports: none
+notes: |
+  The rail is a dowel up to about 48 inches long, standing 32 mm off the wall so the light's cord
+  can run behind it. Each foot is screwed to the wall through its plate where the rail stands in
+  front of the screw, and a printed cap presses in over the head: #8 or #10 pan-head wood screws
+  into a stud, or 3/16-inch toggle bolts in drywall, never plastic plugs. The top cup is deep, so
+  the rail lifts into it past the bottom cup's rim; a #6 × 3/4-inch screw up through the bottom
+  cup's floor into the rail's end then holds it down, so lifting a planter or the light can't
+  raise it, and it can't turn.
+
+  **Putting the rail together,** from the wall out. The light's cord goes in first, since its plug
+  won't pass through a hole:
+
+  1. Cut the rail. The top screw goes the rail's length less 77.5 mm above the bottom screw,
+     plumb, within 5.5 mm either way.
+  2. Press the cord into the groove up the bottom foot's back, screw the foot on, and press a cap
+     in over the screw.
+  3. Screw the top foot on, and press its cap in.
+  4. Push the rail's top up into the top cup, swing its foot over the bottom cup, and let it down.
+     Drill a 2 mm pilot into the rail's end through the floor's hole, and drive the #6 screw.
+  5. Lay the cord down behind the rail before any carrier goes on below the light.
+  6. Stick a 3 mm felt or rubber pad on the end of each carrier's two arms, push the carrier onto
+     the rail at its height, and tap its wedge up from below with a mallet.
+  7. Slide the arm socket down the carrier's dovetail, push in the arm (550 mm puts the light
+     24 inches out), and tap its wedge in along the arm's top.
+  8. Push the tip onto the arm's end, its stem down, and tap its wedge in.
+  9. Snap the clips on under the arm; press the cord into them, into the keel and into the stem,
+     and slide it in the stem's grip to set the light's height.
+  10. Slide the shade up over the bulb, its notches past the stem's lugs, and turn it a quarter
+      turn.
+
+  To move a carrier, push its wedge down from above with a thin punch, through the channel behind
+  the rail; pull the socket's and the tip's wedges out by their thick ends.
+
+  - **Clearance:** the bore is the dowel plus `clearance`, from the fit-test coupon. The 0.4 mm
+    it's saved with is a placeholder until the coupon is printed.
+
+  This is a first design, not yet printed or load-tested; its page will say when it has been.

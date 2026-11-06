@@ -61,7 +61,6 @@ flowchart LR
   rail -.-> planter
 
   classDef planned stroke-dasharray: 5 5
-  class feet planned
   class carrier planned
   class socket planned
   class tip planned
@@ -84,6 +83,5 @@ flowchart LR
   class keel planned
   class clips planned
   class behind planned
-  class foot planned
 ```
 

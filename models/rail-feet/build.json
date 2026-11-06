@@ -1,0 +1,20 @@
+{
+  "design": "rail-feet.sc",
+  "sha256": "965ae64f229e102734392c55b313f875974b3662e1113553c112588da26f294f",
+  "sizes": {
+    "3/4 in": {
+      "dowel_d": "19.05 mm"
+    },
+    "25 mm": {
+      "dowel_d": "25 mm"
+    }
+  },
+  "solidcraft_cli": "solidcraft-cli 0.30.1",
+  "built": {
+    "rail-feet.stl": "d45f736949145a053097b168d85163435a3cef7fe01434e3fefafa712821bea1",
+    "rail-feet.png": "b730d49c77fcab1b6ff58b2511e915c5b9fe04c2391dcaa1005c9bb0e9c894d6",
+    "rail-feet.eval.json": "fab0bd44a6466b3be9b9d938ae909f99c49dd9941c387c8247665db86b6d4a91",
+    "rail-feet-3-4in.stl": "b156cb9982355b7413526fc8f602cca9228d81c7b5c16753548c6494ce5b5907",
+    "rail-feet-25mm.stl": "f9cf3b413e2fc15510223d4fd9ac45316bfe1e63e86ad78cafba4421368279e2"
+  }
+}

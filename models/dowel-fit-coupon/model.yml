@@ -17,9 +17,10 @@ print:
 notes: |
   Dowels sold as one size vary by about half a millimetre, and printers print holes a little
   small, so the hole a dowel needs is found by trying it. Print the coupon for your dowel's size,
-  standing on its edge: the dowel parts' sockets print with their holes horizontal, and a
-  horizontal hole comes out a little smaller and less round than a vertical one. The dots beside
-  each hole say how much wider than the dowel it is:
+  standing on its edge: the sockets that hold an arm print with their holes horizontal, and a
+  horizontal hole comes out a little smaller and less round than a vertical one. The rail's feet
+  and carrier print theirs upright, a little closer to size, and their wedge or their slack takes
+  that up. The dots beside each hole say how much wider than the dowel it is:
 
   | Dots | Clearance | For a 1-inch dowel |
   |---|---|---|
