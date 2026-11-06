@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 6: The dowel fit-test coupon, open (reopened: CI red on its push).
+**Now:** Task 7: The sconce's wall block, open.
 
 ***
 
@@ -1372,7 +1372,10 @@ Co-Authored-By: <the model's own line>
 
 ### Task 4: The docs site
 
-> **Built differently** (closed 2026-11-05; commits 21822a8, 218d074): one file more,
+> **Built differently** (closed 2026-11-05; commits 21822a8, 218d074, 26c4f5f): CI's lychee step
+> extracts `lychee-x86_64-unknown-linux-gnu/lychee`, the path the release tarball really uses (the
+> listing's `lychee` failed CI's first run; escaped from this task, fixed under Task 6's reopen). One
+> file more,
 > `website/.gitignore`, which Quarto's render writes (its own `/.quarto/` and `*.quarto_ipynb`
 > lines) whenever it's missing; committed, as Quarto's practice, so checkouts stay clean. The
 > listing stays as planned.
@@ -3088,7 +3091,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add models/dowel-fit-coupon/dowel-fit-coupon.sc models/dowel-fit-coupon/dowel-fit-coupon.stl models/dowel-fit-coupon/dowel-fit-coupon-3-4in.stl models/dowel-fit-coupon/dowel-fit-coupon-25mm.stl models/dowel-fit-coupon/dowel-fit-coupon.png models/dowel-fit-coupon/dowel-fit-coupon.eval.json models/dowel-fit-coupon/build.json models/dowel-fit-coupon/model.yml tests/test_coupon.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone. Tier 1 (the first real `solidcraft-cli` output in the repo): before staging, `make privacy` passes over the new files, and the picture is looked at.
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
