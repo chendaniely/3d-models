@@ -195,7 +195,8 @@ Settles "not sure if it'll look good with 3d printed parts and dowels" for a few
 - [ ] **2. Hold it up:** the wall block against the wall where it will go, the dowel in its
   socket, the clamp on the dowel, the light's cord through the clamp and the light hanging from
   it.
-- [ ] **3. The verdict,** asked as a scenario: A, it looks right, print it in PETG; B, it looks
+- [ ] **3. The verdict, and Dan's changes,** asked as a scenario (Phase 1 Q&A 4: his changes to how
+  the dowel mounts and clamps to the parts, and how the block screws to the wall, come here): A, it looks right, print it in PETG; B, it looks
   right with changes (which: edges, size, the visible bolt and screws, the ears' side); C, it
   doesn't work, and why. Recorded with Dan's words. Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 record <what>` with this plan's `Plan:` line; the page gets its Design-page line in its first commit. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. B or C changes a design: the
   agent revises Phase 1's listings for that part in this plan, reopens Task 2 for the change, and
