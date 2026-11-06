@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 7: The sconce's wall block, open.
+**Now:** Task 6: The dowel fit-test coupon, open (reopened: CI red on its push).
 
 ***
 
@@ -3088,7 +3088,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add models/dowel-fit-coupon/dowel-fit-coupon.sc models/dowel-fit-coupon/dowel-fit-coupon.stl models/dowel-fit-coupon/dowel-fit-coupon-3-4in.stl models/dowel-fit-coupon/dowel-fit-coupon-25mm.stl models/dowel-fit-coupon/dowel-fit-coupon.png models/dowel-fit-coupon/dowel-fit-coupon.eval.json models/dowel-fit-coupon/build.json models/dowel-fit-coupon/model.yml tests/test_coupon.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [x] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone. Tier 1 (the first real `solidcraft-cli` output in the repo): before staging, `make privacy` passes over the new files, and the picture is looked at.
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
