@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 1: The Python toolchain and CI, open.
+**Now:** Task 2: `make models` and `make models-check`, open.
 
 ***
 
@@ -80,8 +80,8 @@ S05
   that fail with "not built yet"; CI jobs `tests` and `leaks`; ruff's first-party modules
   `conftest`, `gallery`, `models`, `privacy`, `sitedocs`.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the uv project.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the uv project.**
 
 `pyproject.toml`:
 
@@ -127,7 +127,7 @@ known-first-party = ["conftest", "gallery", "models", "privacy", "sitedocs"]
   `uv sync --frozen`. Expected: CPython 3.12, and `pillow`, `pytest`, `pyyaml` and `ruff` in
   `.venv`.
 
-- [ ] **Step 2: Write the failing test.**
+- [x] **Step 2: Write the failing test.**
 
 `tests/test_makefile.py`:
 
@@ -155,9 +155,9 @@ def test_help_lists_every_target() -> None:
     assert set(TARGETS) <= listed, sorted(set(TARGETS) - listed)
 ```
 
-- [ ] **Step 3: Run it; watch it fail.** `uv run --frozen pytest -q tests/test_makefile.py`.
+- [x] **Step 3: Run it; watch it fail.** `uv run --frozen pytest -q tests/test_makefile.py`.
   Expected: `AssertionError: ['models', 'models-check', 'privacy']`.
-- [ ] **Step 4: Write the Makefile,** the whole file:
+- [x] **Step 4: Write the Makefile,** the whole file:
 
 `Makefile`:
 
@@ -220,9 +220,9 @@ website/.render.log
 *.sc.bak
 ```
 
-- [ ] **Step 5: Run the checks; they pass.** `make test`, then `make lint`. Expected: `1 passed`;
+- [x] **Step 5: Run the checks; they pass.** `make test`, then `make lint`. Expected: `1 passed`;
   `All checks passed!` and `files already formatted`.
-- [ ] **Step 6: Write CI and Dependabot.**
+- [x] **Step 6: Write CI and Dependabot.**
 
 `.github/workflows/ci.yml`:
 
@@ -304,9 +304,9 @@ updates:
   `gh api repos/<owner>/<repo>/commits/<tag> --jq .sha`; recheck them if a tag is older than this
   plan. Check both files parse: `uv run --frozen python -c "import yaml; [yaml.safe_load(open(f))
   for f in ('.github/workflows/ci.yml', '.github/dependabot.yml')]"`. Expected: no output.
-- [ ] **Step 7: Run every check; they pass.** `make check`. Expected: the test twice, lint, then
+- [x] **Step 7: Run every check; they pass.** `make check`. Expected: the test twice, lint, then
   gitleaks' `no leaks found`.
-- [ ] **Step 8: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 8: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 build(repo): 🤖 add the uv project, make test and lint, and CI
@@ -328,7 +328,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add pyproject.toml .python-version uv.lock Makefile .gitignore tests/test_makefile.py .github/workflows/ci.yml .github/dependabot.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 9: Review, look forward, close.**
+- [x] **Step 9: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Tasks 2 to 5 replace this task's placeholder targets; check their Consumes lines.

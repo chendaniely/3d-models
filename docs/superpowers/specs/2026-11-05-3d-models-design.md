@@ -158,7 +158,7 @@ each can be revisited at Phase 2's start.
 | S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | its STLs, picture, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | planned |
 | S02 | a design changes and `make models` isn't run, or a built file isn't the one recorded | `make check` and CI fail, naming the model and why | Phase 1, Task 2 | `tests/test_models.py` | planned |
 | S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo | `make privacy` fails, naming it, before the push it would go out in; `scripts/privacy.py strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | planned |
-| S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | planned |
+| S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | built |
 | S05 | a push to `phase-1` | CI runs the tests, lint, the model and privacy checks, the leak scan and the site's render and offline link check | Phase 1, Tasks 1 to 4 | a green CI run | planned |
 | S06 | a doc under `docs/superpowers/` quotes Quarto's syntax, or isn't on the Design page | it renders as text; a doc missing from the Design page fails `make check` | Phase 1, Task 4 | `tests/test_site.py` | planned |
 | S07 | a visitor opens the site's Models page | a card per model, with its picture, title and summary, linking to its page | Phase 1, Task 5 | `tests/test_gallery.py` | planned |
