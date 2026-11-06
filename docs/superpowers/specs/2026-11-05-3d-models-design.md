@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 4), waiting on Dan's approval · Phase 2 started 2026-11-06
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 started 2026-11-06
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -293,3 +293,4 @@ replace it.
   judges what the printed parts add (the arm's tilt at its socket, the carriers' slip) and gives
   the tip's total sag a looser 5 mm, after the builder check found the wood's own creep could use
   up a 3 mm limit (Phase 2 Q&A 5).
+- 2026-11-06: the revision approved as written (Phase 2 Q&A 6).
