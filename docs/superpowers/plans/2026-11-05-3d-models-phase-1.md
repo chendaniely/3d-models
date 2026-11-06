@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 7: The sconce's wall block, open.
+**Now:** Task 8: The sconce's cord clamp, open.
 
 ***
 
@@ -3139,8 +3139,8 @@ Co-Authored-By: <the model's own line>
   `read_meta` and the page.
 - Produces: the design's parameters `dowel_d`, `clearance`, `socket_depth` (54 mm), `boss_wall`, `plate_t`, `plate_w`, `screw_spacing` (110 mm), `plate_h`, `screw_d`, `head_d`, `head_depth`, `cap_h`, `bolt_d`, `socket_d`, `boss_d`; the bodies `Wall block`, `Cap 1` and `Cap 2`.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_wall_block.py`:
 
@@ -3200,9 +3200,9 @@ def test_the_block_reaches_its_socket_depth_out_from_the_wall() -> None:
     assert bbox["max"][0] - bbox["min"][0] == pytest.approx(p["plate_t"] + p["socket_depth"])
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: `FileNotFoundError` for
   `models/sconce-wall-block/sconce-wall-block.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to `.git/wall-block-script.json`
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to `.git/wall-block-script.json`
   (it stays out of the repo: the saved design holds the same feature tree, and
   `solidcraft-cli script` regenerates it):
 
@@ -3509,7 +3509,7 @@ def test_the_block_reaches_its_socket_depth_out_from_the_wall() -> None:
   From the repo's root: `mkdir -p models/sconce-wall-block`, then
   `solidcraft-cli run .git/wall-block-script.json --quiet`. Expected: exit 0, and
   `models/sconce-wall-block/sconce-wall-block.sc` is a few KB of JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/sconce-wall-block/model.yml`:
 
@@ -3548,10 +3548,10 @@ notes: |
 
   Then `make models`. Expected: `building models/sconce-wall-block (missing …)` and `1 built`. Look at
   `sconce-wall-block.png` against the design's description in its notes.
-- [ ] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 5: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy check is clean over the new files, and the
   render lists the model's page.
-- [ ] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 6: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the sconce's wall block
@@ -3573,7 +3573,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add models/sconce-wall-block/sconce-wall-block.sc models/sconce-wall-block/sconce-wall-block.stl models/sconce-wall-block/sconce-wall-block-3-4in.stl models/sconce-wall-block/sconce-wall-block-25mm.stl models/sconce-wall-block/sconce-wall-block.png models/sconce-wall-block/sconce-wall-block.eval.json models/sconce-wall-block/build.json models/sconce-wall-block/model.yml tests/test_wall_block.py`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 7: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2: Matt Pocock's `code-review`, two axes in two subagents; fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
