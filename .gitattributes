@@ -1,0 +1,2 @@
+# build.json records each design's and built file's sha256: git never rewrites their bytes
+models/** -text

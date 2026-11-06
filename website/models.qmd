@@ -1,0 +1,12 @@
+---
+title: "Models"
+listing:
+  contents: models/*.qmd
+  type: grid
+  sort: title
+  fields: [image, title, description]
+  image-height: 220px
+---
+
+Every model has a page with a 3D view you can turn, its print settings, its measurements, and the
+`.stl` and `.sc` files to download.

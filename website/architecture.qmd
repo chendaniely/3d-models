@@ -1,0 +1,40 @@
+---
+title: "Architecture"
+---
+
+Every diagram for this project lives on this page; other pages link here. Solid parts are built;
+dashed parts are planned, labelled with the phase that brings them. Click a diagram to open it
+full-screen.
+
+## Overview
+
+{{< include _overview.qmd >}}
+
+## Building a model
+
+```{mermaid}
+%%| fig-cap: "make models rebuilds only a model whose design, sizes or built files differ from its build record."
+flowchart TD
+  start["make models"] --> each{"for each models/&lt;slug&gt;/&lt;slug&gt;.sc"}
+  each --> hash{"the design, its sizes and its built files<br/>match build.json?"}
+  hash -- yes --> skip["left alone"]
+  hash -- "no, or no build yet" --> run["solidcraft-cli run → &lt;slug&gt;.stl"]
+  run --> snap["solidcraft-cli snapshot → &lt;slug&gt;.png"]
+  snap --> evaluate["solidcraft-cli eval → &lt;slug&gt;.eval.json"]
+  evaluate --> sized["for each extra size in model.yml:<br/>a parameter change → &lt;slug&gt;-&lt;size&gt;.stl"]
+  sized --> record["build.json: every file's sha256, the sizes, the CLI's version"]
+```
+
+## Checks and the deploy
+
+```{mermaid}
+%%| fig-cap: "CI runs on every push; only main deploys."
+flowchart LR
+  push["a push"] --> tests["tests job<br/>make test · lint<br/>models-check · privacy"]
+  push --> leaks["leaks job<br/>gitleaks over every commit, merges included"]
+  push --> site["site job<br/>make docs, with lychee"]
+  tests --> pagesjob{"on main?"}
+  leaks --> pagesjob
+  site --> pagesjob
+  pagesjob -- yes --> deploy["pages job<br/>deploy to GitHub Pages"]
+```

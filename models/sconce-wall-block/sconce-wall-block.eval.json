@@ -1,0 +1,468 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 29111.805038536222,
+      "bbox": {
+        "max": [
+          64.0,
+          25.0,
+          70.0
+        ],
+        "min": [
+          -4.884981369701667e-15,
+          -25.0,
+          -70.0
+        ]
+      },
+      "center_of_mass": [
+        15.118503440598253,
+        1.998172952165884e-9,
+        6.457706762819799e-9
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 28,
+      "face_types": {
+        "cylinder": 8,
+        "plane": 10
+      },
+      "faces": 18,
+      "kernel": {
+        "edges": 60,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 40
+      },
+      "mass_g": 130.15174196078144,
+      "material": "Default",
+      "name": "Wall block",
+      "vertices": 24,
+      "volume_mm3": 100892.82322541195
+    },
+    {
+      "area_mm2": 231.35103092040168,
+      "bbox": {
+        "max": [
+          5.149920464498175,
+          40.14987837000143,
+          -67.99999999999997
+        ],
+        "min": [
+          -5.149920464498175,
+          29.85012162999856,
+          -70.00000000000004
+        ]
+      },
+      "center_of_mass": [
+        1.9773469272516763e-15,
+        35.0,
+        -69.00000000000001
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 2,
+      "face_types": {
+        "cylinder": 1,
+        "plane": 2
+      },
+      "faces": 3,
+      "kernel": {
+        "edges": 6,
+        "faces": 4,
+        "shells": 1,
+        "vertices": 4
+      },
+      "mass_g": 0.21495946625817036,
+      "material": "Default",
+      "name": "Cap 1",
+      "vertices": 2,
+      "volume_mm3": 166.63524516137235
+    },
+    {
+      "area_mm2": 231.3510309204016,
+      "bbox": {
+        "max": [
+          5.149920464498174,
+          55.14987837000144,
+          -67.99999999999996
+        ],
+        "min": [
+          -5.149920464498174,
+          44.850121629998576,
+          -70.00000000000009
+        ]
+      },
+      "center_of_mass": [
+        5.151295780041851e-16,
+        50.0,
+        -69.00000000000003
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 2,
+      "face_types": {
+        "cylinder": 1,
+        "plane": 2
+      },
+      "faces": 3,
+      "kernel": {
+        "edges": 6,
+        "faces": 4,
+        "shells": 1,
+        "vertices": 4
+      },
+      "mass_g": 0.2149594662581704,
+      "material": "Default",
+      "name": "Cap 2",
+      "vertices": 2,
+      "volume_mm3": 166.63524516137238
+    }
+  ],
+  "body_count": 3,
+  "params": [
+    {
+      "comment": "the arm's dowel: 1 inch as saved; the page offers 3/4 in and 25 mm",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "added to the dowel for the socket: the coupon's hole that fit",
+      "error": null,
+      "expression": "0.4 mm",
+      "model": false,
+      "name": "clearance",
+      "unit": "mm",
+      "value": 0.4
+    },
+    {
+      "comment": "at least 51 mm (2 inches), so the joint carries the arm's moment",
+      "error": null,
+      "expression": "54 mm",
+      "model": false,
+      "name": "socket_depth",
+      "unit": "mm",
+      "value": 54.0
+    },
+    {
+      "comment": "plastic around the socket",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "boss_wall",
+      "unit": "mm",
+      "value": 6.0
+    },
+    {
+      "comment": "the wall plate's thickness, behind the socket",
+      "error": null,
+      "expression": "10 mm",
+      "model": false,
+      "name": "plate_t",
+      "unit": "mm",
+      "value": 10.0
+    },
+    {
+      "comment": "the wall plate's width",
+      "error": null,
+      "expression": "50 mm",
+      "model": false,
+      "name": "plate_w",
+      "unit": "mm",
+      "value": 50.0
+    },
+    {
+      "comment": "at least 100 mm between the screws, so the top one pulls under 54 N",
+      "error": null,
+      "expression": "110 mm",
+      "model": false,
+      "name": "screw_spacing",
+      "unit": "mm",
+      "value": 110.0
+    },
+    {
+      "comment": "the wall plate's height",
+      "error": null,
+      "expression": "screw_spacing + 30 mm",
+      "model": false,
+      "name": "plate_h",
+      "unit": "mm",
+      "value": 140.0
+    },
+    {
+      "comment": "fits #8 and #10 wood screws and 3/16 in toggle bolts; 6.6 mm for 1/4 in",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "screw_d",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the counterbore that sinks each screw's head below the face",
+      "error": null,
+      "expression": "10.5 mm",
+      "model": false,
+      "name": "head_d",
+      "unit": "mm",
+      "value": 10.5
+    },
+    {
+      "comment": "the counterbore's depth: a screw head, then a cap",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "head_depth",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "a printed cap's height, pressed in over the screw head",
+      "error": null,
+      "expression": "2 mm",
+      "model": false,
+      "name": "cap_h",
+      "unit": "mm",
+      "value": 2.0
+    },
+    {
+      "comment": "clearance for an M6 bolt through the boss and the dowel",
+      "error": null,
+      "expression": "6.6 mm",
+      "model": false,
+      "name": "bolt_d",
+      "unit": "mm",
+      "value": 6.6
+    },
+    {
+      "comment": "the socket's diameter",
+      "error": null,
+      "expression": "dowel_d + clearance",
+      "model": false,
+      "name": "socket_d",
+      "unit": "mm",
+      "value": 25.799999999999997
+    },
+    {
+      "comment": "the boss around the socket",
+      "error": null,
+      "expression": "socket_d + 2 * boss_wall",
+      "model": false,
+      "name": "boss_d",
+      "unit": "mm",
+      "value": 37.8
+    }
+  ],
+  "sketches": [],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 0.82825,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 2.0617080000000003,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 35.969500000000004,
+      "name": "Combine1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CombineFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 0.7585,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 0.7535000000000001,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 0.77525,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 1.12575,
+      "name": "Cylinder5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 0.809209,
+      "name": "Cylinder6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 0.8105,
+      "name": "Cylinder7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [
+          {
+            "face_shift_mm": 3.706405854733127,
+            "rotation_rad": 0.0,
+            "strategy": "coplanar_separation",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0
+          },
+          {
+            "face_shift_mm": 3.706405854733127,
+            "rotation_rad": 0.0,
+            "strategy": "coplanar_separation",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0
+          },
+          {
+            "face_shift_mm": 3.706405854733127,
+            "rotation_rad": 0.0,
+            "strategy": "coplanar_separation",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0
+          },
+          {
+            "face_shift_mm": 3.706405854733127,
+            "rotation_rad": 0.0,
+            "strategy": "coplanar_separation",
+            "tolerance_mm": 0.0,
+            "translation_mm": 0.0
+          }
+        ],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 11789.092667,
+      "name": "Combine2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CombineFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 11,
+      "ms": 0.795625,
+      "name": "Cylinder8",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 12,
+      "ms": 0.7886660000000001,
+      "name": "Cylinder9",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 29574.507100377028,
+    "edges": 32,
+    "faces": 24,
+    "mass_g": 130.58166089329777,
+    "open_bodies_skipped": 0,
+    "vertices": 28,
+    "volume_mm3": 101226.0937157347
+  }
+}

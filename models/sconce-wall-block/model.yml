@@ -1,0 +1,32 @@
+title: Sconce wall block
+summary: >-
+  The wall end of a grow-light sconce: a plate for two hidden screws and a deep socket that holds
+  a dowel straight out from the wall, bolted through.
+status: designed
+material: PETG, matte (never PLA for this part)
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: on its side, a long edge of the plate on the bed, so the layers run along the socket
+  Layer height: 0.2 mm
+  Walls: 5
+  Infill: 40% gyroid
+  Supports: under the boss, along its length, from the bed only
+notes: |
+  The arm is a straight cantilever: a dowel up to 20 inches long, with the light hanging near its
+  end. The socket is 54 mm deep, more than the 51 mm (2 inches) the joint needs to carry the arm's
+  bending moment: about 5 N·m with a 1 kg light at 20 inches on a 1-inch dowel.
+
+  - **Screws:** two, 110 mm apart: #8 or #10 wood screws into a stud, or 3/16-inch toggle bolts
+    in drywall, never plastic plugs, since the top screw is pulled out with about 54 N. For
+    1/4-inch toggles, set `screw_d` to 6.6 mm. Each head sinks into a counterbore, and one of the
+    two printed caps beside the block presses in over it. The caps are modelled beside the
+    block, so the size under Measurements includes them; the plate itself is 50 mm wide.
+  - **Bolt:** an M6 × 50 mm bolt and a nylon-insert nut, down through the boss and a hole drilled
+    through the seated dowel, so it can't pull out or turn.
+  - **Clearance:** the socket is the dowel plus `clearance`, from the fit-test coupon. The
+    0.4 mm it's saved with is a placeholder until the coupon is printed.
+
+  This is a first design, not yet printed or load-tested; its page will say when it has been.
