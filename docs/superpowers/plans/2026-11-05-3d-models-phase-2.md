@@ -28,7 +28,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 3: The rail carrier and its wedge, open.
+**Now:** Task 4: The arm socket and its wedge, open.
 
 ***
 
@@ -1024,6 +1024,10 @@ Co-Authored-By: <the model's own line>
 
 ### Task 3: The rail carrier and its wedge
 
+> **Built differently** (closed 2026-11-06; commits 0182054, 68f412b): the test's comment on a dowel off its size says the coupon picks its clearance and `wedge_top` follows it, so the seat depends on the offset alone (Task 3's review, Important).
+
+**Ruling:** S28's "a dowel 0.5 mm over or under" means a dowel off its size with the clearance the coupon picks for it, since the wedges' thin ends follow `clearance`; S28's wording says so. Costs if wrong: a dowel the coupon can't fit (over 0.8 mm off) isn't covered, and needs a wider coupon.
+
 **Tier:** 2 · **Scenarios:** S28, S29, S14
 
 **Files:**
@@ -1038,8 +1042,8 @@ Co-Authored-By: <the model's own line>
   (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
 - Produces: the U that pushes onto the rail from the front, and its wedge; the parameters and bodies its test names.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing test.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing test.**
 
 `tests/test_rail_carrier.py`:
 
@@ -1112,9 +1116,9 @@ def test_the_cord_fits_behind_the_wedge_down_to_the_carriers_bottom() -> None:
     assert params(CARRIER)["channel"] >= 7.0
 ```
 
-- [ ] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
+- [x] **Step 2: Run it; watch it fail.** `make test`. Expected: `FileNotFoundError` for
   `models/rail-carrier/rail-carrier.eval.json`.
-- [ ] **Step 3: Build the design.** Write SolidCraft's command script to
+- [x] **Step 3: Build the design.** Write SolidCraft's command script to
   `.git/rail-carrier-script.json` (it stays out of the repo: the saved design holds the same feature tree):
 
 ```json
@@ -1162,7 +1166,7 @@ def test_the_cord_fits_behind_the_wedge_down_to_the_carriers_bottom() -> None:
   From the repo's root: `mkdir -p models/rail-carrier`, then
   `solidcraft-cli run .git/rail-carrier-script.json --quiet`. Expected: exit 0, and
   `models/rail-carrier/rail-carrier.sc` is plain-text JSON.
-- [ ] **Step 4: Write its page's text.**
+- [x] **Step 4: Write its page's text.**
 
 `models/rail-carrier/model.yml`:
 
@@ -1208,12 +1212,12 @@ notes: |
 
   Then `make models`. Expected: `building models/rail-carrier (missing …)` and `1 built`. Look at
   `rail-carrier.png` against the notes.
-- [ ] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the lines `  class carrier planned` ("The rail, part by part") and `  class behind planned` ("The light's cord"): the
+- [x] **Step 5: The diagrams.** In `website/architecture.qmd`, delete the lines `  class carrier planned` ("The rail, part by part") and `  class behind planned` ("The light's cord"): the
   part is built.
-- [ ] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 6: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   every model's build matches its design, the privacy and offsite checks pass, the render lists
   the model's page.
-- [ ] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 7: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the U that pushes onto the rail from the front, and its wedge
@@ -1237,7 +1241,7 @@ Co-Authored-By: <the model's own line>
 
   `git add models/rail-carrier/rail-carrier.sc models/rail-carrier/rail-carrier.stl models/rail-carrier/rail-carrier-3-4in.stl models/rail-carrier/rail-carrier-25mm.stl models/rail-carrier/rail-carrier.png models/rail-carrier/rail-carrier.eval.json models/rail-carrier/build.json models/rail-carrier/model.yml tests/test_rail_carrier.py website/architecture.qmd`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'`
   shows the `Plan:` line.
-- [ ] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
+- [x] **Step 8: Review, look forward, close.** The review looks at the picture and the page's
   viewer, not the `.sc` alone.
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
@@ -1343,7 +1347,10 @@ def test_the_arm_goes_in_at_least_two_inches_with_the_coupons_clearance() -> Non
 
 @pytest.mark.parametrize("off", [-0.5, 0.0, 0.5])
 def test_a_dowel_half_a_millimetre_off_still_seats_the_wedge_inside(off: float) -> None:
-    p = params(SOCKET)  # the wedge pushes the arm down, so the gap gains clearance / 2
+    # A dowel off its size gets the clearance the coupon picks for it (S28), and wedge_in follows
+    # clearance, so the seat depends on the offset alone; the wedge pushes the arm down, so the
+    # gap gains clearance / 2.
+    p = params(SOCKET)
     short_of_end = (p["wedge_in"] - p["room_in"] - p["clearance"] / 2 + off) / p["taper"]
     assert 0 < short_of_end < p["socket_depth"] - 10.0
 
@@ -1597,6 +1604,8 @@ def test_every_part_prints_from_the_same_bed() -> None:
 
 @pytest.mark.parametrize("off", [-0.5, 0.0, 0.5])
 def test_a_dowel_half_a_millimetre_off_still_seats_the_wedge_inside(off: float) -> None:
+    # A dowel off its size gets the clearance the coupon picks for it (S28), and wedge_in follows
+    # clearance, so the seat depends on the offset alone; the gap gains clearance / 2.
     p = params(TIP)
     short_of_end = (p["wedge_in"] - p["room_in"] - p["clearance"] / 2 + off) / p["taper"]
     assert 0 < short_of_end < p["bore_depth"] - 10.0
@@ -2647,3 +2656,7 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 2, review | Minor | `models/rail-feet` | 0.75 mm of plastic between the cord's groove and each screw's counterbore | open |
 | Task 2, review | Minor | `models/rail-feet` | The caps hold by a press fit alone, with no catch; the look test (Task 11) checks them | open |
 | Task 2, review | Minor | `tests/test_rail_feet.py` | The test holds the parameters, not the built cuts: a design with the floor's hole or the groove deleted would pass | open |
+| Task 3, review | Minor | `tests/test_rail_carrier.py` | The groove's and the wedge's shared slope is held by the parameter alone, not the built geometry | open |
+| Task 3, review | Minor | `models/rail-carrier` | `channel` is measured at the carrier's bottom; the wedge's tail below it is thicker, leaving about 7.7 mm to the pads' plane | open |
+| Task 3, review | Minor | `models/rail-carrier` | The wedge meets the round rail on a line; a face hollowed to the dowel's radius would add contact; the load test (Task 12) shows whether it's needed | open |
+| Task 3, review | Minor | `models/rail-carrier` | Literals outside the parameters (the wedge's 20 mm seat, its 40 mm offset); "three sizes" in a test name counts the saved one | open |
