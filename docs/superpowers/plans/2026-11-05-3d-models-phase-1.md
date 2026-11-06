@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 4: The phase-end list worked through.
+**Now:** Phase end, step 5: The forward look.
 
 ***
 
@@ -4145,7 +4145,7 @@ did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-1.md Phase 
   `docs/superpowers/plans/2026-11-05-3d-models-phase-1-end-council.md`, with its Design-page line
   and nothing that quotes Quarto's syntax; each claim checked; each finding a severity and a
   decision.
-- [ ] **4. The phase-end list worked through:** each item fixed in its own commit at its tier, or
+- [x] **4. The phase-end list worked through:** each item fixed in its own commit at its tier, or
   moved to the spec's Later with a reason; missing docs written; built parts solid in the diagrams.
 - [ ] **5. The forward look:** Phase 2's plan rewritten to fit what was built; its listings run
   against this code where they can.
@@ -4234,10 +4234,10 @@ each shared file or interface was checked against.
 
 | Source | Severity | File | Item | Status |
 |---|---|---|---|---|
-| kickoff council, simplicity 7 | Minor | `website/_diagram-zoom.html` | kept as the skill's standard site kit; drop it if it never earns its 50 lines | open |
-| kickoff council, reliability 9 | Minor | `Makefile` | lychee isn't installed on Dan's machine, so `make docs` skips it locally and only CI runs it; installing it is Dan's call | open |
-| Task 6, Spec review | Minor | `models/dowel-fit-coupon/model.yml` | the STL lies flat as modelled; the page could say to stand it on its edge in the slicer, not only that it prints that way | fixed by the final review's fix pass |
-| final review's re-review, b | Minor | `scripts/privacy.py` | the history pass can't tell a symlink's blob from a file's: a committed `alias.jpg -> real.jpg` fails as "unreadable as an image" (fails closed; no symlinks in the repo) | open |
-| final review's re-review, d | Minor | `scripts/privacy.py` | in a shallow clone the history pass sees only what was fetched; a `git rev-parse --is-shallow-repository` guard would keep it closed if CI's `fetch-depth: 0` is ever dropped | open |
-| final review's re-review, e | Minor | `scripts/privacy.py` | `rev-list` names each blob once, so identical bytes under an image path and a text path get only one of the two checks (contrived) | open |
-| final review's re-review, f | Minor | spec, `AGENTS.md`, Phase 2 plan | incomplete, not false: the spec's `make privacy` row and S03 don't mention the history check or `make strip`; its `make models-check` row doesn't mention an invalid `model.yml`; `AGENTS.md`'s Commands paragraph doesn't list `make strip`; Phase 2's per-task push lines name the older gate | open |
+| kickoff council, simplicity 7 | Minor | `website/_diagram-zoom.html` | kept as the skill's standard site kit; drop it if it never earns its 50 lines | declined: the skill's standard site kit (Phase 1 end council, simplicity) |
+| kickoff council, reliability 9 | Minor | `Makefile` | lychee isn't installed on Dan's machine, so `make docs` skips it locally and only CI runs it; installing it is Dan's call | Dan's: installing lychee locally; CI runs it |
+| Task 6, Spec review | Minor | `models/dowel-fit-coupon/model.yml` | the STL lies flat as modelled; the page could say to stand it on its edge in the slicer, not only that it prints that way | fixed in 7abc1ad |
+| final review's re-review, b | Minor | `scripts/privacy.py` | the history pass can't tell a symlink's blob from a file's: a committed `alias.jpg -> real.jpg` fails as "unreadable as an image" (fails closed; no symlinks in the repo) | Later, S25 |
+| final review's re-review, d | Minor | `scripts/privacy.py` | in a shallow clone the history pass sees only what was fetched; a `git rev-parse --is-shallow-repository` guard would keep it closed if CI's `fetch-depth: 0` is ever dropped | fixed in bf9f2d9 |
+| final review's re-review, e | Minor | `scripts/privacy.py` | `rev-list` names each blob once, so identical bytes under an image path and a text path get only one of the two checks (contrived) | Later, S25 |
+| final review's re-review, f | Minor | spec, `AGENTS.md`, Phase 2 plan | incomplete, not false: the spec's `make privacy` row and S03 don't mention the history check or `make strip`; its `make models-check` row doesn't mention an invalid `model.yml`; `AGENTS.md`'s Commands paragraph doesn't list `make strip`; Phase 2's per-task push lines name the older gate | fixed in 1dc2db5 |
