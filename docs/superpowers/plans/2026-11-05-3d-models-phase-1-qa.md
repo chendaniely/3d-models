@@ -1,0 +1,8 @@
+# 3d-models Phase 1: questions and answers
+
+Questions that came up while Phase 1 ran, each with Dan's answer in his words. Kickoff's are on the
+[kickoff Q&A page](../specs/2026-11-05-3d-models-qa.md).
+
+| # | Question | Answer | Dan's reason, in his words |
+|---|---|---|---|
+| 1 | Dan's changes to the sconce's parts, before Tasks 7 and 8 build them: he said, mid-run, "once you're done with everythign let me know there are some changes i want to make with the way the dowels mound and clap to the pice and screw into the wall" | waiting on Dan | |
