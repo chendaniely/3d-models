@@ -61,7 +61,6 @@ flowchart LR
   rail -.-> planter
 
   classDef planned stroke-dasharray: 5 5
-  class tip planned
   class shade planned
   class planter planned
 ```
@@ -77,8 +76,5 @@ flowchart LR
   behind --> foot["the bottom foot's groove · Phase 2"] --> outlet["the outlet"]
 
   classDef planned stroke-dasharray: 5 5
-  class stem planned
-  class keel planned
-  class clips planned
 ```
 

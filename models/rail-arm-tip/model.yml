@@ -1,0 +1,39 @@
+title: Rail arm tip
+summary: >-
+  The cap on the end of the light's arm: a wedge locks it on, its stem grips the light's cord and
+  takes the shade; with three clips that hold the cord under the arm.
+status: designed
+material: PETG, matte (never PLA for this part)
+size: 1 in
+sizes:
+  3/4 in: {dowel_d: 19.05 mm}
+  25 mm: {dowel_d: 25 mm}
+print:
+  Orientation: as saved, the stem's foot on the bed; the wedge and the clips flat
+  Layer height: 0.2 mm
+  Walls: 5
+  Infill: 40% gyroid
+  Supports: under the cap, from the bed only; block them from the keel's channel, whose ceiling bridges
+notes: |
+  The cord is never threaded, since its plug and timer won't go through a hole: it's pressed in
+  from the side everywhere it goes.
+
+  - **The wedge:** push the tip onto the arm's end, its stem down, and tap the wedge in along the
+    arm's top; pull it out by its thick end.
+  - **The stem:** press the cord in through the slot at its back. A 10 mm band at the stem's foot,
+    narrower than the cord, grips it and holds the light at the height you set.
+  - **The lugs** at the stem's foot take the shade: its notches go past them, and a quarter turn
+    holds it.
+  - **The keel** under the cap carries the cord from under the arm to the stem; its mouth is
+    narrower than the cord, so the cord snaps in.
+  - **The clips** snap onto the arm from below, and the cord presses into the loop under each.
+  - **The cord's size:** `cord_d` is a 6 mm guess until it's measured; the grip, the slots and
+    the keel follow it.
+  - **A 3/4-inch arm** sags about three times as much as a 1-inch one: keep it short.
+  - **Clearance:** the bore is the dowel plus `clearance`, from the fit-test coupon. The 0.4 mm
+    it's saved with is a placeholder until the coupon is printed.
+
+  See *Putting the rail together* on the [wall feet](rail-feet.html) page for the order it all
+  goes up in.
+
+  This is a first design, not yet printed or load-tested; its page will say when it has been.
