@@ -1,0 +1,25 @@
+```{mermaid}
+%%| fig-cap: "From a design to the gallery. Solid: built. Dashed: planned, labelled with the phase that brings it."
+flowchart LR
+  design["models/&lt;slug&gt;/&lt;slug&gt;.sc<br/>the design, plain-text JSON"]
+  yml["model.yml<br/>title, summary, print settings"]
+  build["make models<br/>solidcraft-cli on Dan's machine"]
+  built["an STL per size · PNG · eval.json · build.json<br/>committed beside the design"]
+  ci["CI on every push<br/>tests · lint · models-check · privacy · leaks · site"]
+  gallery["make docs<br/>doc copies + Quarto"]
+  modelpages["model pages + 3D viewer<br/>Phase 1, Task 5"]
+  pages["GitHub Pages<br/>the gallery and its 3D viewer"]
+  sconce["the wall sconce's models<br/>Phase 2"]
+
+  design --> build --> built
+  built --> ci
+  design --> ci
+  built -.-> modelpages
+  yml -.-> modelpages
+  modelpages -.-> gallery
+  gallery --> pages
+  sconce -.-> design
+
+  classDef planned stroke-dasharray: 5 5
+  class sconce,modelpages planned
+```

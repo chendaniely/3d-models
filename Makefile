@@ -35,6 +35,11 @@ privacy: ## Fail on image metadata, a photo format the check can't read, or a ho
 	uv run --frozen scripts/privacy.py check
 
 docs: ## Render the site into website/_site, failing on a broken link
-	@echo "not built yet: Phase 1, Task 4 sets it"; exit 1
+	uv run --frozen scripts/sitedocs.py
+	@set -o pipefail; quarto render website 2>&1 | tee website/.render.log
+	@if grep -q 'Unable to resolve link target' website/.render.log; then \
+	  echo "docs: an unresolved link, above"; exit 1; fi
+	@if command -v lychee >/dev/null; then lychee --offline --no-progress website/_site; \
+	else echo "lychee isn't installed: the offline link check runs in CI"; fi
 
-check: test test-utc lint models-check privacy leaks ## Everything CI runs, and the suite under UTC
+check: test test-utc lint models-check privacy leaks docs ## Everything CI runs, and the suite under UTC

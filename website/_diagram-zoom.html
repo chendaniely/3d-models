@@ -1,0 +1,23 @@
+<script>
+// Click or tap a diagram to open it full-screen; click again, or press Escape, to close it.
+document.addEventListener("DOMContentLoaded", () => {
+  const close = () => document.querySelector(".mermaid-zoom-overlay")?.remove();
+  document.addEventListener("keydown", (event) => event.key === "Escape" && close());
+  const ready = setInterval(() => {
+    const diagrams = document.querySelectorAll(".cell-output-display svg, pre.mermaid svg");
+    if (!diagrams.length) return;
+    clearInterval(ready);
+    diagrams.forEach((svg) => {
+      svg.classList.add("mermaid-zoomable");
+      svg.addEventListener("click", () => {
+        const overlay = document.createElement("div");
+        overlay.className = "mermaid-zoom-overlay";
+        overlay.appendChild(svg.cloneNode(true));
+        overlay.addEventListener("click", close);
+        document.body.appendChild(overlay);
+      });
+    });
+  }, 200);
+  setTimeout(() => clearInterval(ready), 10000);
+});
+</script>

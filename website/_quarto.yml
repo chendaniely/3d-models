@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "3d-models"
+  description: "SolidCraft models and the STL files exported from them, with a 3D view of each."
+  site-url: https://chendaniely.github.io/3d-models/
+  repo-url: https://github.com/chendaniely/3d-models
+  page-navigation: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: architecture.qmd
+        text: Architecture
+      - href: design.qmd
+        text: Design
+      - href: changelog.md
+        text: Changelog
+      - href: how-we-work.md
+        text: How we work
+    right:
+      - icon: github
+        href: https://github.com/chendaniely/3d-models
+        aria-label: The repo on GitHub
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    mermaid:
+      theme: neutral
+    include-after-body: _diagram-zoom.html

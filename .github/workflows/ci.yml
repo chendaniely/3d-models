@@ -49,3 +49,43 @@ jobs:
           rm gitleaks gitleaks.tar.gz
       - run: make leaks
 
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+        with:
+          version: 1.11.6
+      - name: Install lychee 0.24.2, checked against its published checksum
+        run: |
+          curl -sSfL -o lychee.tar.gz \
+            https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2/lychee-x86_64-unknown-linux-gnu.tar.gz
+          echo "1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a  lychee.tar.gz" |
+            sha256sum --check --strict -
+          tar -xzf lychee.tar.gz lychee
+          sudo install -m 755 lychee /usr/local/bin/lychee
+          rm lychee lychee.tar.gz
+      - run: uv sync --frozen
+      - run: make docs
+      - if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: website/_site
+
+  pages:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: [tests, leaks, site]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

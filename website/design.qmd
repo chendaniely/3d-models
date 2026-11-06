@@ -1,0 +1,18 @@
+---
+title: "Design"
+---
+
+How this project was planned, and how the build departed from the plan. Each page here is the file
+under `docs/superpowers/` in the repo, shown as it is.
+
+## Kickoff
+
+- [The design spec](superpowers/specs/2026-11-05-3d-models-design.md)
+- [Kickoff's questions and answers](superpowers/specs/2026-11-05-3d-models-qa.md)
+- [Kickoff's notes: the sconce's feasibility](superpowers/specs/2026-11-05-3d-models-kickoff-notes.md)
+- [The kickoff council's review](superpowers/specs/2026-11-05-3d-models-kickoff-council.md)
+
+## Plans
+
+- [Phase 1: the repo](superpowers/plans/2026-11-05-3d-models-phase-1.md)
+- [Phase 2: the wall sconce](superpowers/plans/2026-11-05-3d-models-phase-2.md)

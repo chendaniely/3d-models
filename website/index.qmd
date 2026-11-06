@@ -1,0 +1,12 @@
+---
+pagetitle: "3d-models"
+toc: false
+---
+
+{{< include /../README.md >}}
+
+## How it fits together
+
+{{< include _overview.qmd >}}
+
+Every diagram is on the [Architecture](architecture.qmd) page.
