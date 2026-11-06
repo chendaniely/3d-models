@@ -19,9 +19,12 @@ from pathlib import Path
 SCHEME = r"(?:[a-z][a-z0-9+.-]*:)?//"  # http://, https://, //host, or any scheme with a host
 REMOTE = re.compile(r"^\s*" + SCHEME, re.IGNORECASE)
 CSS_REMOTE = re.compile(r"(?:url\(|image-set\(|@import)\s*[\"']?\s*" + SCHEME, re.IGNORECASE)
-JS_REMOTE = re.compile(r"(?:\bimport\s*\(|\bfrom)\s*[\"'`]\s*" + SCHEME, re.IGNORECASE)
+JS_REMOTE = re.compile(r"(?:\bimport\s*\(?|\bfrom)\s*[\"'`]\s*" + SCHEME, re.IGNORECASE)
 LOADS = {  # each tag, and the attributes that make the browser fetch by itself
-    "script": ("src",),
+    "script": ("src", "href", "xlink:href"),
+    "body": ("background",),
+    "table": ("background",),
+    "td": ("background",),
     "img": ("src", "srcset"),
     "source": ("src", "srcset"),
     "iframe": ("src",),
@@ -39,7 +42,7 @@ LOADS = {  # each tag, and the attributes that make the browser fetch by itself
     "feimage": ("href", "xlink:href"),
 }
 QUIET_LINKS = {"alternate", "author", "bookmark", "canonical", "external", "help", "license", "me"}
-REFRESH_URL = re.compile(r"url\s*=\s*['\"]?\s*" + SCHEME, re.IGNORECASE)
+REFRESH_URL = re.compile(r"^\s*[\d.]*\s*[;,]\s*(?:url\s*=\s*)?['\"]?\s*" + SCHEME, re.IGNORECASE)
 
 
 def remote_srcset(value: str) -> bool:
@@ -66,7 +69,7 @@ class Page(HTMLParser):
         if CSS_REMOTE.search(values.get("style", "")):
             self.found = True
         if tag == "meta" and values.get("http-equiv", "").lower() == "refresh":
-            self.found = self.found or bool(REFRESH_URL.search(values.get("content", "")))
+            self.found = self.found or bool(REFRESH_URL.match(values.get("content", "")))
         self.inside = tag if tag in ("style", "script") else None
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:

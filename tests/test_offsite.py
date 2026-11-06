@@ -42,6 +42,10 @@ PAGE = "<html><body><p>Hi</p>{}</body></html>"
         ("site_libs/theme.min.css", '@import"https://fonts.example.com/css2?family=Sans";'),
         ("site_libs/theme.min.css", "body{background:image-set('https://example.com/b.png' 1x)}"),
         ("site_libs/app.js", 'import { x } from "https://cdn.example.net/x.js";'),
+        ("site_libs/side.js", "import 'https://cdn.example.net/side-effect.js';"),
+        ("index.html", PAGE.format('<svg><script href="https://example.com/s.js"></script></svg>')),
+        ("index.html", PAGE.format('<meta http-equiv="refresh" content="0;https://example.com/">')),
+        ("index.html", PAGE.format('<table background="https://example.com/t.png"></table>')),
     ],
 )
 def test_a_load_from_another_host_is_named(tmp_path: Path, capsys, name: str, text: str) -> None:

@@ -174,6 +174,13 @@ def test_size_names_and_photo_names_come_out_escaped(repo: Path) -> None:
     assert f"![wall {escaped(SHORTCODE)}](hook/photos/wall%20%7B%7B%3C%20meta%20title" in text
 
 
+def test_a_bracket_in_a_photo_s_name_stays_inside_its_alt_text(repo: Path) -> None:
+    folder = add_model(repo)
+    (folder / "photos").mkdir()
+    Image.new("RGB", (8, 8)).save(folder / "photos" / "on the wall [v2].png")
+    assert "![on the wall \\[v2\\]](hook/photos/on%20the%20wall%20%5Bv2%5D.png)" in page(repo)
+
+
 def test_a_bracket_in_the_title_stays_inside_the_picture_s_alt_text(repo: Path) -> None:
     add_model(repo, meta=META.replace("title: Test hook", "title: Hook [v2]"))
     assert "![Hook \\[v2\\], as SolidCraft draws it](hook/hook.png)" in page(repo)
