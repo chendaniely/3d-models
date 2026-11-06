@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
 
@@ -255,3 +256,16 @@ def test_check_names_a_committed_file_once_when_it_is_still_there(repo: Path, ca
     (repo / "notes.md").write_text(f"saved in {HOME}git/x\n", encoding="utf-8")
     commit(repo, "notes.md")
     assert check(repo, capsys) == (1, "privacy: notes.md: a home-folder path on line 1\n")
+
+
+def test_check_names_a_symlink_to_a_home_folder_path(repo: Path, capsys) -> None:
+    os.symlink(f"{HOME}notes.md", repo / "notes.md")  # git commits the target's path as text
+    commit(repo, "notes.md")
+    assert check(repo, capsys) == (1, "privacy: notes.md: a symlink to a home-folder path\n")
+
+
+def test_check_passes_a_symlink_to_a_file_in_the_repo(repo: Path, capsys) -> None:
+    (repo / "notes.md").write_text("first\n", encoding="utf-8")
+    os.symlink("notes.md", repo / "readme.md")
+    commit(repo, "notes.md", "readme.md")
+    assert check(repo, capsys) == (0, "")

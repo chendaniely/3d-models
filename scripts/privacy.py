@@ -46,12 +46,18 @@ HOME = re.compile(rb"/(?:Users|home)/[^/\s\"'<>()]+/")
 
 
 def committable(root: Path) -> list[Path]:
-    """Every file git would commit: tracked, or untracked and not ignored."""
+    """Every file git would commit: tracked, or untracked and not ignored; symlinks included."""
     listed = subprocess.run(
         ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
         cwd=root, capture_output=True, check=True,
     ).stdout.decode("utf-8").split("\0")  # fmt: skip
-    return sorted({root / name for name in listed if name and (root / name).is_file()})
+    paths = (root / name for name in listed if name)
+    return sorted({path for path in paths if path.is_symlink() or path.is_file()})
+
+
+def committed_bytes(path: Path) -> bytes:
+    """What git commits for this file: a symlink's own target path, never what it points at."""
+    return os.fsencode(os.readlink(path)) if path.is_symlink() else path.read_bytes()
 
 
 def image_problem(path: PurePath, data: bytes | None = None) -> str | None:
@@ -98,6 +104,10 @@ def text_problem(data: bytes) -> str | None:
 def problems(root: Path) -> list[tuple[Path, str]]:
     found = []
     for path in committable(root):
+        if path.is_symlink():  # never followed: git commits the target's path, not the file
+            if HOME.search(committed_bytes(path)):
+                found.append((path, "a symlink to a home-folder path"))
+            continue
         if path.suffix.lower() in READABLE | UNREADABLE:
             reason = image_problem(path)
             if reason:
@@ -179,7 +189,7 @@ def command_check(root: Path) -> int:
     found = problems(root)
     for path, reason in found:
         print(f"privacy: {path.relative_to(root)}: {reason}", file=sys.stderr)
-    reported = {path.relative_to(root).as_posix(): path.read_bytes() for path, _ in found}
+    reported = {path.relative_to(root).as_posix(): committed_bytes(path) for path, _ in found}
     in_history = history_problems(root, reported)
     for name, sha, reason in in_history:
         print(f"privacy: {name} (in history, {sha[:7]}): {reason}", file=sys.stderr)
