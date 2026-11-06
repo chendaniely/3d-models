@@ -190,9 +190,9 @@ each can be revisited at Phase 2's start.
   guess, and the cord may be flat. Phase 2's first task asks.
 - **[Dan] SolidCraft's save folder:** add this repo to the SolidCraft MCP server's `--allow-path`
   so live sessions can save here. Headless builds don't need it.
-- **[Dan] The `vibe-coded` topic** and the website field: drafted in Phase 1's settings task.
-- **[Dan] GitHub settings:** Pages, Actions permissions, the ruleset on `main`, merge commits only
-  (Phase 1, Task 9).
+- **The `vibe-coded` topic** and the website field: set in Phase 1's settings task.
+- **GitHub settings:** applied in Phase 1's Task 9, with Dan's OK (Phase 1 Q&A 6): Pages from
+  GitHub Actions, Actions limited and SHA-pinned, merge commits only, a ruleset on `main`.
 - **Binary files can't be leak-scanned:** STL and PNG files are listed in each phase PR for Dan to
   check by eye, so a PR that adds them waits for him even though the mode is fully vibed.
 - **No hooks yet:** plan-driven-development's hooks and leak check aren't built, so every push waits

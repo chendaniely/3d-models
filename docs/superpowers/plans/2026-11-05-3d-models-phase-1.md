@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** waiting on Dan: Task 9, step 1 (Pages: source "GitHub Actions", and the `github-pages` environment's deployment branches set to `main` only).
+**Now:** Phase end, step 1: The final whole-branch review.
 
 ***
 
@@ -4105,22 +4105,22 @@ Runs on <https://github.com/chendaniely/3d-models/settings>, by Dan, one step at
 *Asking Dan*. **Now** reads `waiting on Dan: <the step>` until each is done. The agent runs the
 security checklist over these settings, one line each, in the close.
 
-- [ ] **1. Pages:** Settings → Pages → Source: "GitHub Actions"; then Settings → Environments →
+- [x] **1. Pages:** Settings → Pages → Source: "GitHub Actions"; then Settings → Environments →
   `github-pages` → deployment branches: `main` only.
-- [ ] **2. Actions:** Settings → Actions → General: workflow permissions "Read repository
+- [x] **2. Actions:** Settings → Actions → General: workflow permissions "Read repository
   contents"; allow only GitHub's own actions and these: `astral-sh/setup-uv`,
   `quarto-dev/quarto-actions/setup`; require actions pinned to a full commit SHA, where offered.
-- [ ] **3. Merge commits only:** Settings → General → Pull Requests: allow merge commits, its
+- [x] **3. Merge commits only:** Settings → General → Pull Requests: allow merge commits, its
   message the PR title and description; squash and rebase merging off.
-- [ ] **4. A ruleset on `main`:** Settings → Rules → Rulesets → New branch ruleset, target the
+- [x] **4. A ruleset on `main`:** Settings → Rules → Rulesets → New branch ruleset, target the
   default branch: require a pull request; require the status checks `tests`, `leaks` and `site`;
   block force pushes and deletion; bypass list "For pull requests only" (so the agent's pushes,
   made with Dan's login, aren't exempt). Classic branch protection instead, if rulesets aren't
   offered.
-- [ ] **5. The website field and topics:** the agent drafts
+- [x] **5. The website field and topics:** the agent drafts
   `gh repo edit --homepage https://chendaniely.github.io/3d-models/ --add-topic 3d-printing
   --add-topic solidcraft --add-topic vibe-coded`; Dan runs it, or says the agent may.
-- [ ] **6. Close:** the agent ticks these boxes and sets **Now** to the phase end, in
+- [x] **6. Close:** the agent ticks these boxes and sets **Now** to the phase end, in
   `docs(plan): 🤖 close Task 9: The GitHub settings` (every heading `none` but `Rulings:`, which
   names anything Dan chose differently, and `Rounds:`, the checklist), with this plan's `Plan:`
   line.
