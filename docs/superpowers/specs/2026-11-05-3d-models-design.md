@@ -157,7 +157,7 @@ each can be revisited at Phase 2's start.
 |---|---|---|---|---|---|
 | S01 | Dan saves a new or changed `.sc` under `models/<slug>/` and runs `make models` | its STLs, picture, measurements and build record appear beside it; unchanged models are left alone | Phase 1, Task 2 | `tests/test_models.py` | built |
 | S02 | a design changes and `make models` isn't run, or a built file isn't the one recorded | `make check` and CI fail, naming the model and why | Phase 1, Task 2 | `tests/test_models.py` | built |
-| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo | `make privacy` fails, naming it, before the push it would go out in; `scripts/privacy.py strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | planned |
+| S03 | an image with any metadata but a colour profile, or a HEIC, video or RAW file, is added anywhere in the repo | `make privacy` fails, naming it, before the push it would go out in; `scripts/privacy.py strip` fixes a JPEG, PNG or WebP | Phase 1, Task 3 | `tests/test_privacy.py` | built |
 | S04 | a commit carries a secret | `make leaks` and CI's leaks job fail, merge commits included | Phase 1, Task 1 | CI's `leaks` job | built |
 | S05 | a push to `phase-1` | CI runs the tests, lint, the model and privacy checks, the leak scan and the site's render and offline link check | Phase 1, Tasks 1 to 4 | a green CI run | planned |
 | S06 | a doc under `docs/superpowers/` quotes Quarto's syntax, or isn't on the Design page | it renders as text; a doc missing from the Design page fails `make check` | Phase 1, Task 4 | `tests/test_site.py` | planned |
@@ -172,7 +172,7 @@ each can be revisited at Phase 2's start.
 | S18 | the light hangs by its cord from the clamp for two days | neither the cord nor the clamp slips: under 2 mm at the cord's mark | Phase 1, Task 8; Phase 2, Task 4 | `tests/test_cord_clamp.py`; the load test's slip measurements | planned |
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | planned |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | planned |
-| S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | planned |
+| S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
 
 ### Later
 

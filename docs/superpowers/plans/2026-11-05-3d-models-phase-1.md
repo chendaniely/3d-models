@@ -22,7 +22,7 @@ GitHub Pages, gitleaks 8.30.1, lychee 0.24.2.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 3: The privacy guard, `make privacy`, open.
+**Now:** Task 4: The docs site, open.
 
 ***
 
@@ -945,6 +945,13 @@ Co-Authored-By: <the model's own line>
 
 ### Task 3: The privacy guard, `make privacy`
 
+> **Built differently** (closed 2026-11-05; commits caddfe1, e837178): `strip` keeps a PNG's
+> transparency (the listing cleared it with the rest of the image's info, so a transparent PNG
+> came back opaque), checks every file's format before rewriting any, prints only file names,
+> and keeps the file's mode; the check names a huge or malformed image instead of raising. Found
+> by the task's Standards review. The listing stays as planned.
+
+
 **Tier:** 1 (if wrong, a photo shows where Dan lives, or a path names his machine) ·
 **Scenarios:** S03, S21
 
@@ -960,8 +967,8 @@ Co-Authored-By: <the model's own line>
   `main(argv: list[str] | None = None, root: Path = ROOT) -> int` with subcommands `check` and
   `strip FILE ...`.
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_privacy.py`:
 
@@ -1128,9 +1135,9 @@ def test_strip_refuses_a_heic(repo: Path, capsys) -> None:
     assert "strip takes JPEG, PNG or WebP only" in capsys.readouterr().err
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
+- [x] **Step 2: Run them; watch them fail.** `make test`. Expected: a collection error,
   `ModuleNotFoundError: No module named 'privacy'`.
-- [ ] **Step 3: Write the guard.**
+- [x] **Step 3: Write the guard.**
 
 `scripts/privacy.py`:
 
@@ -1305,9 +1312,9 @@ check: test test-utc lint models-check privacy leaks ## Everything CI runs, and 
 
   In `.github/workflows/ci.yml`'s `tests` job, after `- run: make models-check`, add
   `      - run: make privacy`.
-- [ ] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 4: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   `privacy: no image metadata, unreadable photo format or home-folder path`, `no leaks found`.
-- [ ] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 5: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(privacy): 🤖 refuse image metadata and home-folder paths
@@ -1330,7 +1337,7 @@ Co-Authored-By: <the model's own line>
 ```
 
   `git add scripts/privacy.py tests/test_privacy.py Makefile .github/workflows/ci.yml`, then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the `Plan:` line.
-- [ ] **Step 6: Review, look forward, close.**
+- [x] **Step 6: Review, look forward, close.**
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
   - **Forward:** Tasks 6 to 8 commit SolidCraft's first real outputs, which this check scans; Phase 2's photo steps run `privacy.py strip`.
