@@ -1,11 +1,11 @@
 {
   "design": "dowel-taper-card.sc",
-  "sha256": "4ebca7ccad9ac6757478e69a5ba9a501f12af8ad3b4d4e5338c446d4f74113fd",
+  "sha256": "49ef4221d7a0f975ea3ddaa7472007d7526fe8875784f977331b951a87256432",
   "sizes": {},
   "solidcraft_cli": "solidcraft-cli 0.30.1",
   "built": {
-    "dowel-taper-card.stl": "dd5eae6b5a31f6d2861ca76f9a66e6ab7ec2f269a8e79a70bcfef9062a0d60d5",
-    "dowel-taper-card.png": "6e64e41d3b808a374bf7d7dea14e6ed4d63fe8f84ae3912504061f40dcb24d74",
-    "dowel-taper-card.eval.json": "f908db90db74bf5849c8a16884e0de59c3886331845b0ade281163f4c882b798"
+    "dowel-taper-card.stl": "ec8d0b8cfbe22310c883bd0681875b5d3be78a54e717e7664151e2e9077937fb",
+    "dowel-taper-card.png": "ccea569ace0eb05311184e361db770a6582bf40501f7459c960f8855f17e0120",
+    "dowel-taper-card.eval.json": "6226529a377d50be4436e220b596385ca2b6cf9101cba9020e1325e9560e5b72"
   }
 }

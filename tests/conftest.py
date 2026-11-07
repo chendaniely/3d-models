@@ -83,8 +83,15 @@ def body(model, name: str) -> dict:
     return next(b for b in measured(model)["bodies"] if b["name"] == name)
 
 
-def engraved(model) -> list[tuple[str, float, float, float]]:
-    """Every text a model's design engraves: (its words, x, y, height), from the saved design."""
+def standing_on(model, base: str) -> list[dict]:
+    """Every body but a model's base: its raised words and ticks, each its own closed body standing
+    on the base's top (SolidCraft joins many small solids slowly)."""
+    return [b for b in measured(model)["bodies"] if b["name"] != base]
+
+
+def lettering(model) -> list[tuple[str, float, float, float]]:
+    """Every text a model's design letters, raised or cut: (its words, x, y, height), from the saved
+    design."""
     found = []
 
     def walk(node) -> None:

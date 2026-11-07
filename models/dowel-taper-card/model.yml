@@ -5,12 +5,17 @@ summary: >-
 status: designed
 material: PLA
 print:
-  Orientation: flat, as saved, the engraved face up
+  Orientation: flat, as saved, the numbers up
   Layer height: 0.2 mm
   Walls: 3
   Infill: 15%
   Supports: none
   Hole compensation: none (in Bambu Studio, X-Y hole and contour compensation both 0)
+  Second colour: >-
+    optional, one filament change: the card is 4.0 mm thick and only its ticks and numbers stand above
+    that, so in Bambu Studio's preview, add a filament change (or, without an AMS, a pause to
+    swap the spool by hand) at the first layer above 4.0 mm, 4.2 mm at 0.2 mm layers. Black,
+    then white, gives white ticks and numbers on a black card
 notes: |
   A dowel sold as 1 inch can be 25.0 mm, or a little oval, and sanding and a finish change it
   again by tenths of a millimetre. The card reads its real diameter, at the store or at home.

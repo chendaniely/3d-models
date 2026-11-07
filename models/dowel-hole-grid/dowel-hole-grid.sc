@@ -77,7 +77,7 @@
       "name": "band",
       "expr": "8 mm",
       "unit": "mm",
-      "comment": "the strip under each row where the holes' sizes are engraved",
+      "comment": "the strip under each row where the holes' sizes stand",
       "model": false
     },
     {
@@ -89,16 +89,16 @@
     },
     {
       "name": "thick",
-      "expr": "6 mm",
+      "expr": "4 mm",
       "unit": "mm",
-      "comment": "the tile's thickness, so each hole is this deep",
+      "comment": "the tile's thickness, so each hole is this deep: stiff, quick to print",
       "model": false
     },
     {
-      "name": "engrave",
-      "expr": "0.6 mm",
+      "name": "relief",
+      "expr": "0.8 mm",
       "unit": "mm",
-      "comment": "how deep the words are cut",
+      "comment": "how far the words stand off the top: a second colour from the layer above thick",
       "model": false
     },
     {
@@ -127,7 +127,7 @@
     {
       "name": "label",
       "text": "1 in",
-      "comment": "the size's name, engraved on the tile"
+      "comment": "the size's name, raised on the tile"
     }
   ],
   "features": [
@@ -12121,6 +12121,36 @@
       "id": 10,
       "name": "Extrude1",
       "suppressed": false,
+      "body_names": [
+        "Lettering",
+        "Lettering (2)",
+        "Lettering (3)",
+        "Lettering (4)",
+        "Lettering (5)",
+        "Lettering (6)",
+        "Lettering (7)",
+        "Lettering (8)",
+        "Lettering (9)",
+        "Lettering (10)",
+        "Lettering (11)",
+        "Lettering (12)",
+        "Lettering (13)",
+        "Lettering (14)",
+        "Lettering (15)",
+        "Lettering (16)",
+        "Lettering (17)",
+        "Lettering (18)",
+        "Lettering (19)",
+        "Lettering (20)",
+        "Lettering (21)",
+        "Lettering (22)",
+        "Lettering (23)",
+        "Lettering (24)",
+        "Lettering (25)",
+        "Lettering (26)",
+        "Lettering (27)",
+        "Lettering (28)"
+      ],
       "param_names": [
         "d19"
       ],
@@ -12130,14 +12160,11 @@
         "type": "all"
       },
       "extent": {
-        "distance": "engrave",
+        "distance": "relief",
         "convention": "total_distance",
-        "direction": "negative"
+        "direction": "positive"
       },
-      "operation": "cut",
-      "targets": [
-        "Tile"
-      ]
+      "operation": "new_body"
     }
   ],
   "next_id": 11,

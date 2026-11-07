@@ -1,5 +1,5 @@
 """The hole grid (S34): a tile for each dowel size from 1/2 to 2 inches, its six holes from
-0.6 mm under the size to 0.4 mm over, each engraved with its own diameter."""
+0.6 mm under the size to 0.4 mm over, each marked with its own diameter in raised numbers."""
 
 from __future__ import annotations
 
@@ -10,15 +10,16 @@ from pathlib import Path
 import pytest
 
 import models
-from conftest import body, engraved, params
+from conftest import body, lettering, params, standing_on
 
 GRID = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-hole-grid")
 PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
 OFFSETS = [-0.6, -0.4, -0.2, 0.0, 0.2, 0.4]
+LAYER_MM = 0.2  # the page's layer height: the colour change falls between two layers
 
 
 def label(size: Fraction) -> str:
-    """The name engraved on a tile: '1/2 in', '1 in', '1 1/8 in'."""
+    """The name on a tile: '1/2 in', '1 in', '1 1/8 in'."""
     whole, part = divmod(size, 1)
     words = [str(whole)] if whole else []
     if part:
@@ -73,13 +74,38 @@ def test_it_is_one_closed_tile_with_its_holes_and_a_ring_hole() -> None:
     holes = sum(math.pi * (p[f"h{i}"] / 2) ** 2 for i in range(1, 7))
     ring = math.pi * (p["ring_d"] / 2) ** 2
     solid = (p["tile_l"] * p["tile_w"] - holes - ring) * p["thick"]
-    engraved = solid - tile["volume_mm3"]
-    assert 0 < engraved < 0.05 * p["tile_l"] * p["tile_w"] * p["engrave"]
+    assert tile["volume_mm3"] == pytest.approx(solid, rel=1e-3)  # each hole a faceted circle
+    raised = sum(each["volume_mm3"] for each in standing_on(GRID, "Tile"))
+    assert 0 < raised < 0.05 * p["tile_l"] * p["tile_w"] * p["relief"]
 
 
-def test_each_holes_diameter_is_engraved_just_under_it_and_clear_of_the_next() -> None:
+def test_only_its_numbers_and_size_stand_above_its_top() -> None:
+    """So one filament change at the first layer above the top prints them, and nothing else, in a
+    second colour (Phase 2 Q&A 13)."""
+    p, raised = params(GRID), standing_on(GRID, "Tile")
+    assert len(raised) > 20  # each digit and point its own body
+    for each in raised:
+        low, high = each["bbox"]["min"], each["bbox"]["max"]
+        assert each["closed"]
+        assert low[2] == pytest.approx(p["thick"])
+        assert high[2] == pytest.approx(p["thick"] + p["relief"])
+        assert 0 <= low[0] and high[0] <= p["tile_l"] and 0 <= low[1] and high[1] <= p["tile_w"]
+
+
+def test_it_is_4_mm_thick_and_its_numbers_stand_0_8_mm_proud_on_whole_layers() -> None:
+    """Thin enough to print quickly and stiff enough in hand (Phase 2 Q&A 14), each hole 4 mm
+    deep; its numbers stand on its top, so one filament change there prints them in a second
+    colour (Q&A 13)."""
     p = params(GRID)
-    labels = {words: (x, y, height) for words, x, y, height in engraved(GRID)}
+    assert p["thick"] == pytest.approx(4.0)
+    assert p["relief"] == pytest.approx(0.8)
+    for height in (p["thick"], p["relief"]):
+        assert height / LAYER_MM == pytest.approx(round(height / LAYER_MM))
+
+
+def test_each_holes_diameter_is_marked_just_under_it_and_clear_of_the_next() -> None:
+    p = params(GRID)
+    labels = {words: (x, y, height) for words, x, y, height in lettering(GRID)}
     below_top = p["band"] + p["pitch"] / 2 + p["h6"] / 2  # the top of the lower row's widest hole
     for i in range(6):
         row, col = divmod(i, 3)  # row 0 on top
@@ -102,3 +128,5 @@ def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:
         assert f"| {at} | {offset} mm | {hole} mm |" in meta["notes"]
     assert "goes through no hole" in meta["notes"]
     assert meta["print"]["Orientation"].startswith("flat")
+    second = meta["print"]["Second colour"]
+    assert "one filament change" in second and f"{params(GRID)['thick']:.1f} mm" in second

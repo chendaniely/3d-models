@@ -3010,6 +3010,30 @@ measures, and it's tried once the dowel is sanded and finished (decided without 
   `test_words_in_neighbouring_rows_are_at_least_2_mm_apart`, each word reaching from a tenth of
   its height under its baseline to a tenth over its height; in `tests/test_dowel_hole_grid.py`,
   each lower-row number 2 mm inside the tile's edge.
+- [x] **0b. The gauges' numbers raised, for a second colour, and both 4 mm thick** (Q&A 13 and
+  14), Tier 3 as step 0a (the windows, the taper, the ticks' places and the holes don't change).
+  In `.git/gauges.py`: `engrave` becomes `raise_up`, extruding the words and ticks `relief`
+  (0.8 mm) up from the top as bodies of their own (`"operation": "new"`, each named
+  `Lettering`), where it cut `engrave` (0.6 mm) down; each gauge's `thick` is 4 mm, from 6. Each
+  page's print settings gain a `Second colour` line: one filament change at the first layer above
+  4.0 mm. `tests/conftest.py`'s `engraved` is `lettering`, and `standing_on(model, base)` gives
+  the bodies above the base. New tests: `test_it_is_4_mm_thick_and_its_lettering_stands_0_8_mm_proud_on_whole_layers`,
+  the grid's `test_it_is_4_mm_thick_and_its_numbers_stand_0_8_mm_proud_on_whole_layers` (each
+  height a whole number of 0.2 mm layers, so the change falls between two),
+  `test_only_its_ticks_and_numbers_stand_above_its_top` and the grid's
+  `test_only_its_numbers_and_size_stand_above_its_top` (every other body closed, from `thick` to
+  `thick + relief`, inside the base's outline); each base is `thick` tall and its volume the
+  gauge less its holes, the lettering's under 5% of a full layer; each page names the change.
+  They failed first: `assert 6.0 == 4.0`, `KeyError: 'relief'` and `KeyError: 'Second colour'`.
+  > **Built differently** (this step): the lettering was first joined to each body, as Task 9's
+  > engraving was cut. The card's 162 words and ticks still hadn't joined after over half an hour
+  > (a quarter of them took 85 s, nearly all in the boolean, and each batch joined after another
+  > took longer: 1.4, 7.3, then 19.2 s for ten); `solid.emboss` gave the same body as slowly, and
+  > cutting the top away round them failed as one profile past about 56 words ("invalid
+  > whole-source profile holes") and ran past nine minutes in three. As bodies of their own they
+  > take 3 s for both gauges, and `make models` replays each design three times. A slicer prints
+  > an STL's touching shells as one part; `tests/test_meshes.py` still finds every edge shared by
+  > two triangles.
 - [ ] **1. Weigh the light:** the Barrina with its socket, cord and timer, on a kitchen scale.
   The parts assume 1 kg; above that, the agent re-runs the carrier's and the socket's moment
   (about 7.5 N·m at 24 inches), and Task 11 lengthens `carrier_l` or `socket_depth`.

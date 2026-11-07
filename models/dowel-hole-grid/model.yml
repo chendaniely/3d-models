@@ -19,17 +19,22 @@ sizes:
   1-7/8 in: {dowel_d: 47.625 mm, label: 1 7/8 in}
   2 in: {dowel_d: 50.8 mm, label: 2 in}
 print:
-  Orientation: flat, as saved, the engraved face up, so the holes print upright, the closest to size a printer prints them
+  Orientation: flat, as saved, the numbers up, so the holes print upright, the closest to size a printer prints them
   Layer height: 0.2 mm
   Walls: 3
   Infill: 15%
   Supports: none
   Hole compensation: none (in Bambu Studio, X-Y hole and contour compensation both 0)
+  Second colour: >-
+    optional, one filament change: the tile is 4.0 mm thick and only its numbers and its size
+    stand above that, so in Bambu Studio's preview, add a filament change (or, without an AMS, a
+    pause to swap the spool by hand) at the first layer above 4.0 mm, 4.2 mm at 0.2 mm layers.
+    Black, then white, gives white numbers on a black tile
 notes: |
   Print the tiles for the sizes you'll look at: several fit on one plate, or one up to 1 inch with
   the [taper card](dowel-taper-card.html), and a key ring through
   their corner holes keeps them together. Each tile is one dowel size, its name on the top strip,
-  and its six holes go up by 0.2 mm, each with its own diameter engraved just under it, rounded to
+  and its six holes go up by 0.2 mm, each with its own diameter raised just under it, rounded to
   0.1 mm:
 
   | Hole | From the size | For a 1-inch dowel |

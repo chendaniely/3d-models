@@ -10,12 +10,13 @@ from pathlib import Path
 import pytest
 
 import models
-from conftest import body, engraved, params
+from conftest import body, lettering, params, standing_on
 
 CARD = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-taper-card")
 GRID = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-hole-grid")
 PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
 SPACING_MM = 5.0  # room a slicer keeps between two parts, and here off the plate's edges too
+LAYER_MM = 0.2  # the page's layer height: the colour change falls between two layers
 
 
 def reach(rate: float) -> tuple[float, float]:
@@ -46,12 +47,12 @@ def test_ticks_half_a_millimetre_apart_are_over_4_mm_apart_on_the_card() -> None
 
 
 def sizes_read(p: dict[str, float]) -> list[tuple[int, float, float]]:
-    """Each size engraved on the card, from its saved design: (its window, the diameter it names
+    """Each size lettered on the card, from its saved design: (its window, the diameter it names
     in millimetres, where along the card it's centred). The small window's millimetres are above
     it, the large one's inches below it; between the windows, a whole number over 2 is the large
     window's millimetres and anything else the small one's inches."""
     found = []
-    for words, x, y, _ in engraved(CARD):
+    for words, x, y, _ in lettering(CARD):
         if words in ("mm", "in"):
             continue
         inches = float(sum(Fraction(w) for w in words.split())) * 25.4
@@ -66,7 +67,7 @@ def sizes_read(p: dict[str, float]) -> list[tuple[int, float, float]]:
     return found
 
 
-def test_each_size_is_engraved_where_a_dowel_of_that_size_stops_and_can_reach() -> None:
+def test_each_size_is_marked_where_a_dowel_of_that_size_stops_and_can_reach() -> None:
     p = params(CARD)
     lo, hi = reach(p["rate"])
     read = sizes_read(p)
@@ -90,6 +91,30 @@ def test_it_is_one_closed_card_that_fits_the_printers_plate() -> None:
     assert p["card_l"] <= PLATE_MM and p["card_w"] <= PLATE_MM
 
 
+def test_only_its_ticks_and_numbers_stand_above_its_top() -> None:
+    """So one filament change at the first layer above the top prints all of them, and nothing
+    else, in a second colour (Phase 2 Q&A 13)."""
+    p, raised = params(CARD), standing_on(CARD, "Card")
+    assert len(raised) > 100  # each digit, slash and tick its own body
+    for each in raised:
+        low, high = each["bbox"]["min"], each["bbox"]["max"]
+        assert each["closed"]
+        assert low[2] == pytest.approx(p["thick"])
+        assert high[2] == pytest.approx(p["thick"] + p["relief"])
+        assert 0 <= low[0] and high[0] <= p["card_l"] and 0 <= low[1] and high[1] <= p["card_w"]
+
+
+def test_it_is_4_mm_thick_and_its_lettering_stands_0_8_mm_proud_on_whole_layers() -> None:
+    """Thin enough to print quickly and stiff enough in hand (Phase 2 Q&A 14); its ticks and
+    numbers stand on its top, so one filament change there prints them in a second colour (Q&A
+    13)."""
+    p = params(CARD)
+    assert p["thick"] == pytest.approx(4.0)
+    assert p["relief"] == pytest.approx(0.8)
+    for height in (p["thick"], p["relief"]):
+        assert height / LAYER_MM == pytest.approx(round(height / LAYER_MM))
+
+
 def test_the_card_and_a_one_inch_tile_share_the_printers_plate() -> None:
     """Dan prints both at once (Phase 2 Q&A 12): the card along the plate, the tile beside it."""
     card, tile = params(CARD), params(GRID)
@@ -99,14 +124,14 @@ def test_the_card_and_a_one_inch_tile_share_the_printers_plate() -> None:
 
 
 def word_box(y: float, height: float) -> tuple[float, float]:
-    """How far an engraved word reaches across the card, from its baseline: a fraction's slash
+    """How far a word reaches across the card, from its baseline: a fraction's slash
     dips a little under it, an i's dot rises a little over its height."""
     return y - 0.1 * height, y + 1.1 * height
 
 
 def test_every_word_is_at_least_2_mm_inside_the_cards_long_edges() -> None:
     p = params(CARD)
-    for words, _, y, height in engraved(CARD):
+    for words, _, y, height in lettering(CARD):
         low, high = word_box(y, height)
         assert low >= 2.0 and high <= p["card_w"] - 2.0, words
 
@@ -114,7 +139,7 @@ def test_every_word_is_at_least_2_mm_inside_the_cards_long_edges() -> None:
 def test_words_in_neighbouring_rows_are_at_least_2_mm_apart() -> None:
     """Between the windows, the large one's millimetres rise toward the small one's inches; a
     narrower strip there must not run one row into the other."""
-    found = engraved(CARD)
+    found = lettering(CARD)
     for words, x, y, height in found:
         for other, x2, y2, height2 in found:
             # within 20 mm along (the widest word, 1 7/8, is about 16 mm), and over 2 mm above:
@@ -123,12 +148,13 @@ def test_words_in_neighbouring_rows_are_at_least_2_mm_apart() -> None:
                 assert word_box(y2, height2)[0] - word_box(y, height)[1] >= 2.0, (words, other)
 
 
-def test_its_volume_is_the_card_less_its_windows_and_a_shallow_engraving() -> None:
+def test_its_volume_is_the_card_less_its_windows_plus_its_raised_lettering() -> None:
     p = params(CARD)
     windows = p["len"] * (p["w1_n"] + p["w1_w"] + p["w2_n"] + p["w2_w"]) / 2 * p["thick"]
     solid = p["card_l"] * p["card_w"] * p["thick"] - windows
-    engraved = solid - body(CARD, "Card")["volume_mm3"]
-    assert 0 < engraved < 0.05 * p["card_l"] * p["card_w"] * p["engrave"]
+    assert body(CARD, "Card")["volume_mm3"] == pytest.approx(solid, rel=1e-4)
+    raised = sum(each["volume_mm3"] for each in standing_on(CARD, "Card"))
+    assert 0 < raised < 0.05 * p["card_l"] * p["card_w"] * p["relief"]
 
 
 def test_its_page_says_how_to_read_it_and_to_check_it_with_a_coin() -> None:
@@ -137,3 +163,5 @@ def test_its_page_says_how_to_read_it_and_to_check_it_with_a_coin() -> None:
     for words in ("touches both sides", "a quarter turn", "23.88 mm", "24.26 mm"):
         assert words in meta["notes"]
     assert meta["print"]["Orientation"].startswith("flat")
+    second = meta["print"]["Second colour"]
+    assert "one filament change" in second and f"{params(CARD)['thick']:.1f} mm" in second
