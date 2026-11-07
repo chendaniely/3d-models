@@ -149,8 +149,11 @@ def parameter_names(model: Model) -> set[str]:
         design = json.loads(model.design.read_text(encoding="utf-8"))
     except ValueError:
         return names
-    texts = design.get("text_params", []) if isinstance(design, dict) else []
-    return names | {param["name"] for param in texts}
+    texts = design.get("text_params") if isinstance(design, dict) else None
+    if not isinstance(texts, list):
+        return names
+    named = [text.get("name") for text in texts if isinstance(text, dict)]
+    return names | {name for name in named if isinstance(name, str)}
 
 
 def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:

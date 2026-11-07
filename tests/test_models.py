@@ -180,6 +180,19 @@ def test_build_takes_a_size_changing_a_text_parameter_only_the_design_lists(
 
 
 @pytest.mark.parametrize(
+    "text", ["not JSON", '{"text_params": "label"}', '{"text_params": [{"text": "1 in"}]}']
+)
+def test_build_refuses_a_text_parameter_a_design_does_not_list_readably(
+    repo: Path, fake_cli: Path, capsys, text: str
+) -> None:
+    design = add_design(repo, "tile", text)
+    sizes = "sizes:\n  1/2 in: {label: 1/2 in}\n"
+    (design.parent / "model.yml").write_text(sizes, encoding="utf-8")
+    assert models.main(["build"], root=repo) == 1
+    assert "changes 'label', which the design has no parameter named" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
     ("yml", "message"),
     [
         (
