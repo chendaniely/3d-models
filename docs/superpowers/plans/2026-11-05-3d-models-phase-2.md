@@ -13,9 +13,10 @@ rail, a carrier wedged onto the rail with the light's arm on its dovetail, the l
 inches out inside a PETG shade; each part printed in PLA and judged by eye, then in PETG and
 load-tested, then installed. The parts are built first at placeholder sizes and published to the
 live gallery, then retuned to Dan's measurements and published again (Q&A 9); the photo and site
-gaps Phase 1 left are closed first.
+gaps Phase 1 left are closed first, and two gauges, printed in PLA, measure the dowels at the
+store (Q&A 11).
 
-**Architecture:** five new models under `models/`, each a parametric SolidCraft design built by
+**Architecture:** five new models under `models/`, and two gauges, each a parametric SolidCraft design built by
 Phase 1's `make models` in three dowel sizes, with a test that holds its fit and its numbers to
 the spec; two Tier 1 fixes to the privacy check and the site; and Dan's tasks (measure, look test,
 load test, install), whose answers the agent records and turns into parameters.
@@ -28,7 +29,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 9: [Dan] Measure, weigh, and print the coupon, open.
+**Now:** Task 9: The store gauges: a taper card and a hole grid, open.
 
 ***
 
@@ -44,16 +45,16 @@ pendant cord.
 - The rail can't be lifted out of its feet: a screw up through the bottom cup's floor holds it.
 - The light's cord is never threaded through a hole: its plug and timer won't pass. Every part
   takes it pressed in from the side.
-- Every part with a dowel is saved at 1 inch (25.4 mm) and lists `3/4 in` (19.05 mm) and `25 mm`
-  as sizes; `clearance` is one of the coupon's (0.4 mm, a placeholder until Task 10).
+- Every rail part with a dowel is saved at 1 inch (25.4 mm) and lists `3/4 in` (19.05 mm) and `25 mm`
+  as sizes; `clearance` is one of the coupon's (0.4 mm, a placeholder until Task 11).
 - The parts and the shade are PETG, matte, never PLA (D9; Phase 2 Q&A 3); PLA only for the look
-  test (D8).
+  test (D8) and the store gauges (Q&A 11).
 - Screws go into a stud or toggle anchors, never plastic plugs.
 - A photo: Strip it first, `make strip FILES=<file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged.
 - Each design's command script stays in `.git/`, out of the repo; the saved `.sc` holds the same
   feature tree.
 - The tiers judge the code and the docs. The parts' physical strength is proven by the load test
-  (Task 12), not by a tier: a Tier 2 part task still holds a light over people's heads.
+  (Task 13), not by a tier: a Tier 2 part task still holds a light over people's heads.
 
 ## Review Focus
 
@@ -61,14 +62,14 @@ pendant cord.
    the side (the stem's slot, the keel's mouth, the clips' loops, the bottom foot's groove, the
    carrier's channel); Task 5's test holds the slots against the cord and the cord's room behind
    the rail.
-2. **A lamp bigger than the guesses:** Task 9 measures the socket and the bulb, and Task 10
+2. **A lamp bigger than the guesses:** Task 10 measures the socket and the bulb, and Task 11
    retunes the shade; Task 6's test holds 10 mm of air round each.
 3. **A dowel half a millimetre over or under its size:** each wedge's travel covers it; Tasks 3, 4
    and 6 test it at -0.5, 0 and +0.5 mm.
 4. **A carrier, a planter or the arm lifted:** the rail can't rise, held by the screw through the
-   bottom cup's floor (Task 2's test; Task 13's check).
+   bottom cup's floor (Task 2's test; Task 14's check).
 5. **Drywall with no stud where a foot goes:** 3/16-inch toggle bolts, which clamp each foot's
-   plate; Task 9 measures the heads, and the load test (Task 12) mounts as it will be.
+   plate; Task 10 measures the heads, and the load test (Task 13) mounts as it will be.
 
 ***
 
@@ -697,7 +698,7 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security
     checklist, one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test's photo (Task 11) is the first the check meets.
+  - **Forward:** the look test's photo (Task 12) is the first the check meets.
   - **Docs:** Step 4; S31 `built`, S03 stays `built`. After the merge, the phase end's step 9 looks
     at the live site's network log too.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
@@ -742,7 +743,7 @@ Co-Authored-By: <the model's own line>
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
   parameters, where its test checks them against its own. It's built at the placeholder sizes
-  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
+  (Phase 2 Q&A 9); Task 11 retunes it to Task 10's measurements.
 - Produces: the two feet that hold the rail off the wall, and their caps; the parameters and bodies its test names.
 
 - [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -992,8 +993,8 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
-    (Task 11) prints it.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 11 retunes it; the look test
+    (Task 12) prints it.
   - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 5.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -1039,7 +1040,7 @@ Co-Authored-By: <the model's own line>
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
   parameters, where its test checks them against its own. It's built at the placeholder sizes
-  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
+  (Phase 2 Q&A 9); Task 11 retunes it to Task 10's measurements.
 - Produces: the U that pushes onto the rail from the front, and its wedge; the parameters and bodies its test names.
 
 - [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1246,8 +1247,8 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
-    (Task 11) prints it.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 11 retunes it; the look test
+    (Task 12) prints it.
   - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 5.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -1291,7 +1292,7 @@ Co-Authored-By: <the model's own line>
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
   parameters, where its test checks them against its own. It's built at the placeholder sizes
-  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
+  (Phase 2 Q&A 9); Task 11 retunes it to Task 10's measurements.
 - Produces: the block that slides down the carrier's dovetail and holds the arm level; the parameters and bodies its test names.
 
 - [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1495,8 +1496,8 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
-    (Task 11) prints it.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 11 retunes it; the look test
+    (Task 12) prints it.
   - **Docs:** the diagrams (Step 5); S28 stays `planned` until Task 5.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -1540,7 +1541,7 @@ Co-Authored-By: <the model's own line>
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
   parameters, where its test checks them against its own. It's built at the placeholder sizes
-  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
+  (Phase 2 Q&A 9); Task 11 retunes it to Task 10's measurements.
 - Produces: the cap on the arm's end, its stem that grips the cord and takes the shade, and three clips; the parameters and bodies its test names.
 
 - [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -1783,8 +1784,8 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
-    (Task 11) prints it.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 11 retunes it; the look test
+    (Task 12) prints it.
   - **Docs:** the diagrams (Step 5); S28 `built`: the four dowel parts are built at all three sizes.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -1828,7 +1829,7 @@ Co-Authored-By: <the model's own line>
 - Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
   conftest helpers `params`, `body` and `measured`; the coupon's `step`; the earlier rail parts'
   parameters, where its test checks them against its own. It's built at the placeholder sizes
-  (Phase 2 Q&A 9); Task 10 retunes it to Task 9's measurements.
+  (Phase 2 Q&A 9); Task 11 retunes it to Task 10's measurements.
 - Produces: the PETG shade the lamp hangs inside; the parameters and bodies its test names.
 
 - [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -2003,8 +2004,8 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec, per Phase 1's retro;
     fix Critical and Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 10 retunes it; the look test
-    (Task 11) prints it.
+  - **Forward:** Task 7 links its page; Task 8 publishes it; Task 11 retunes it; the look test
+    (Task 12) prints it.
   - **Docs:** the diagrams (Step 5); S30 stays `planned` until the load test.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -2049,7 +2050,7 @@ the rail's parts (Phase 2 Q&A 4). The gallery takes a fourth status for it.
   `models/sconce-cord-clamp/model.yml`, `website/_overview.qmd`
 
 **Interfaces:**
-- Consumes: Task 9's `gallery.py`; Tasks 2 to 6's pages, which the notes link.
+- Consumes: Task 1's `gallery.py`; Tasks 2 to 6's pages, which the notes link.
 - Produces: `gallery.STATUSES` with `superseded`.
 
 - [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
@@ -2217,7 +2218,7 @@ placeholders. `phase-2` carries on after the merge.
   with this plan's `Plan:` line, and pushed.
 - [x] **2. The PR.** Its title, in `.git/PR_TITLE`:
   `chore(repo): 🤖 merge the rail's five parts, at placeholder sizes`. Its body, in
-  `.git/PR_BODY.md`: what it carries (Tasks 1 to 7), that the sizes are placeholders until Task 10,
+  `.git/PR_BODY.md`: what it carries (Tasks 1 to 7), that the sizes are placeholders until Task 11,
   and a section *Files no scan can read*, each by name, saying Dan OKed it (the Q&A answer), then
   the Claude Code line and the trailer paragraph (`Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 8` and
   `Co-Authored-By:`). Scan both: `cat .git/PR_TITLE .git/PR_BODY.md | gitleaks stdin --redact
@@ -2234,7 +2235,7 @@ placeholders. `phase-2` carries on after the merge.
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
     PR's text read for a place, an address, a person or a description of the home),** from
     `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 10 retunes the parts and publishes them again.
+  - **Forward:** Task 11 retunes the parts and publishes them again.
   - **Docs:** none; the spec's status line names the merge.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
@@ -2263,65 +2264,706 @@ placeholders. `phase-2` carries on after the merge.
 
 ***
 
-### Task 9: [Dan] Measure, weigh, and print the coupon
+### Task 9: The store gauges: a taper card and a hole grid
 
-**Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S26, S30
+**Tier:** 2 · **Scenarios:** S33, S34
 
-Runs in Dan's home. **Now** reads `waiting on Dan: <the step>` until each answer is in. The steps
-are asked by *Asking Dan*, one at a time, after the list. Dan's changes to the parts are settled
-(Phase 2 Q&A 1 to 7), so this is measurements only; the parts are already built at placeholder
-sizes (Q&A 9), and Task 10 retunes them. Start the coupon's print first (step 9): it runs while he
-measures.
+Dan asked for a gauge to carry to the store, to read the dowels from 1/2 to 2 inches before he
+buys them, printed on his Bambu P2S (a plate 256 mm square), and chose two (Phase 2 Q&A 11): a
+taper card that reads any dowel's real diameter, and a hole grid of each size in 0.2 mm steps.
+Both are PLA, printed flat, their words and ticks engraved 0.6 mm into the top in SolidCraft's
+built-in font (its regular face: it has no bold). The grid is one tile, built for every 1/8 inch
+from 1/2 to 2 inches through `sizes`, its size's name a text parameter and each hole's diameter a
+`number()` of its own parameter, so each size's tile is labelled right. The question offered the
+grid's holes marked by dots; each is engraved with its own diameter instead, which says more.
+Neither gauge sets the parts' fit: the coupon does, on the finished dowel (decided without Dan, 3).
+The controller builds this task itself from the listings below, as in Task 7, since they were
+run whole in a scratch clone.
 
-- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **1. Weigh the light:** the Barrina with its socket, cord and timer, on a kitchen scale.
-  The parts assume 1 kg; above that, the agent re-runs the carrier's and the socket's moment
-  (about 7.5 N·m at 24 inches), and Task 10 lengthens `carrier_l` or `socket_depth`.
-- [ ] **2. The bulb:** its widest diameter, and its length from where it meets the socket to its
-  face.
-- [ ] **3. The socket:** its body's widest diameter, and its length from where the cord goes in
-  to where the bulb starts.
-- [ ] **4. The cord:** round or flat; its diameter, or its width and thickness, just above the
-  socket, with calipers.
-- [ ] **5. The heat:** the bulb on for an hour, then its hottest surface with a thermometer (an
-  infrared one, or a kitchen probe held against it).
-- [ ] **6. The screws:** which ones (#8 or #10 wood screws into a stud, or 3/16-inch toggle
-  bolts); their heads' diameter and height, and the shank's; each a pan or washer head, since a
-  flat (countersunk) head won't sit in the counterbores.
-- [ ] **7. The dowels:** the size bought (1 inch, 25 mm or 3/4 inch) and the wood; the rail's
-  real diameter with calipers, across two directions; the rail's length, up to about 48 inches,
-  and the arm's, 550 mm for the light at 24 inches.
-- [ ] **8. The wall,** as measurements: its material, and whether a stud is where the feet go.
-- [ ] **9. Print the coupon** for that size, standing on its edge (its page's print settings),
-  and try the dowel in each hole: which hole, by its dots, is the tightest it goes into by hand,
-  all the way (S26)? If every 1-inch hole is loose, the dowel is really 25 mm: print the 25 mm
-  coupon, and build the parts at 25 mm.
-- [ ] **10. Record and close.** Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 Phase 2 Q&A <N>: <what>` with this plan's `Plan:` line. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. The coupon's `model.yml` becomes `status: printed`
-  (Tier 3), with the hole that fit in its notes. Then the forward rewrite, named under
-  `Forward:`: Task 10's retune scripts and notes, filled in with these values, part by part:
-  - `clearance` (the coupon's `step` times the dots that fit) in the four dowel parts, and the sentence in
-    each of their notes that calls 0.4 mm a placeholder;
-  - the screws in the feet: `screw_d` and `head_d` at least 0.4 mm over the shank's and the head's,
-    and `head_h` the head's height;
-  - the cord: `cord_d` in the tip, and in the feet `cord_w` and `cord_depth` at least the cord and
-    1 mm (a flat cord: the tip's slots and grip reshaped, a ruling);
-  - the lamp in the shade: `socket_d`, `socket_l`, `bulb_d` and `bulb_l`;
-  - over 60 °C at step 5: the shade's `gap` grows, decided with Dan (the spec's design calls);
-  - over 1 kg at step 1: the carrier and the socket, as step 1 says.
+**Files:**
+- Create: `models/dowel-taper-card/` and `models/dowel-hole-grid/`: each `.sc` (by SolidCraft,
+  from the scripts below), `model.yml`, and its built files by `make models` (the card's `.stl`,
+  `.png`, `.eval.json` and `build.json`; the grid's the same, and twelve sized STLs, from
+  `dowel-hole-grid-1-2in.stl` to `dowel-hole-grid-2in.stl`); `tests/test_dowel_taper_card.py`,
+  `tests/test_dowel_hole_grid.py`
+- Modify: `scripts/models.py` and `tests/test_models.py` (a size may change a text parameter: the
+  grid's label), `website/_overview.qmd` (the gauges' node turns solid), `README.md` (its status)
 
-  The close:
+**Interfaces:**
+- Consumes: Phase 1's `make models`, `models.Model`, `models.sizes`, `models.read_yml` and the
+  conftest helpers `params` and `body`.
+- Produces: the two gauges' pages and STLs; Task 10's step 7 reads the dowels with them.
+  `models.parameter_names(model) -> set[str]`: the numbers eval.json lists and the texts only the
+  design lists (SolidCraft's eval leaves text parameters out, so `make models` refused a size
+  changing one).
 
-  - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
-    added Q&A and notes text read for a place, an address, a person or a description of the
-    home),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 10's scripts and notes take these values (above).
-  - **Docs:** the coupon's page says it's printed and which hole fit; S26 `built`.
+- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **Step 1: Write the failing tests.**
+
+`tests/test_dowel_taper_card.py`:
+
+```python
+"""The taper card (S33): two tapered windows that read a dowel's real diameter, from 1/2 to 2
+inches, where it stops, in millimetres and in inch sizes."""
+
+from __future__ import annotations
+
+import math
+from pathlib import Path
+
+import pytest
+
+import models
+from conftest import body, params
+
+CARD = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-taper-card")
+PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
+
+
+def test_its_windows_read_every_dowel_from_half_an_inch_to_two_inches() -> None:
+    p = params(CARD)
+    assert p["w1_n"] <= 12.7 - 1.0  # 1/2 inch, a millimetre in from the narrow end
+    assert p["w2_w"] >= 50.8 + 1.0  # 2 inches, a millimetre in from the wide end
+    assert p["w2_n"] < p["w1_w"]  # they overlap, so no size falls between them
+
+
+def test_a_tenth_of_a_millimetre_is_a_millimetre_along_each_window() -> None:
+    p = params(CARD)
+    assert p["rate"] == pytest.approx(0.1)
+    assert p["len"] == pytest.approx((p["w1_w"] - p["w1_n"]) / p["rate"])
+    assert p["len"] == pytest.approx((p["w2_w"] - p["w2_n"]) / p["rate"])
+
+
+def test_its_ticks_sit_where_a_round_dowel_touches_the_slanted_sides() -> None:
+    p = params(CARD)
+    assert p["cos_a"] == pytest.approx(1 / math.sqrt(1 + (p["rate"] / 2) ** 2))
+
+
+def test_it_is_one_closed_card_that_fits_the_printers_plate() -> None:
+    p, card = params(CARD), body(CARD, "Card")
+    assert card["closed"]
+    low, high = card["bbox"]["min"], card["bbox"]["max"]
+    assert [high[i] - low[i] for i in range(3)] == pytest.approx(
+        [p["card_l"], p["card_w"], p["thick"]]
+    )
+    assert p["card_l"] <= PLATE_MM and p["card_w"] <= PLATE_MM
+
+
+def test_its_volume_is_the_card_less_its_windows_and_a_shallow_engraving() -> None:
+    p = params(CARD)
+    windows = p["len"] * (p["w1_n"] + p["w1_w"] + p["w2_n"] + p["w2_w"]) / 2 * p["thick"]
+    solid = p["card_l"] * p["card_w"] * p["thick"] - windows
+    engraved = solid - body(CARD, "Card")["volume_mm3"]
+    assert 0 < engraved < 0.05 * p["card_l"] * p["card_w"] * p["engrave"]
+
+
+def test_its_page_says_how_to_read_it_and_to_check_it_with_a_coin() -> None:
+    meta = models.read_yml(CARD)
+    assert meta["material"].startswith("PLA")
+    for words in ("touches both sides", "a quarter turn", "23.88 mm", "24.26 mm"):
+        assert words in meta["notes"]
+    assert meta["print"]["Orientation"].startswith("flat")
+```
+
+`tests/test_dowel_hole_grid.py`:
+
+```python
+"""The hole grid (S34): a tile for each dowel size from 1/2 to 2 inches, its six holes from
+0.6 mm under the size to 0.4 mm over, each engraved with its own diameter."""
+
+from __future__ import annotations
+
+import math
+from fractions import Fraction
+from pathlib import Path
+
+import pytest
+
+import models
+from conftest import body, params
+
+GRID = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-hole-grid")
+PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
+OFFSETS = [-0.6, -0.4, -0.2, 0.0, 0.2, 0.4]
+
+
+def label(size: Fraction) -> str:
+    """The name engraved on a tile: '1/2 in', '1 in', '1 1/8 in'."""
+    whole, part = divmod(size, 1)
+    words = [str(whole)] if whole else []
+    if part:
+        words.append(f"{part.numerator}/{part.denominator}")
+    return " ".join(words) + " in"
+
+
+def listed_as(size: Fraction) -> str:
+    """Its name in model.yml's sizes, a mixed number hyphenated so its file name reads well:
+    '1-1/8 in' gives dowel-hole-grid-1-1-8in.stl."""
+    return label(size).replace(" ", "-", 1) if size > 1 and size.denominator > 1 else label(size)
+
+
+def test_it_is_saved_for_a_one_inch_dowel_in_steps_of_a_fifth_of_a_millimetre() -> None:
+    p = params(GRID)
+    assert p["dowel_d"] == pytest.approx(25.4)
+    assert p["step"] == pytest.approx(0.2)
+
+
+def test_its_six_holes_run_from_point_six_under_the_size_to_point_four_over() -> None:
+    p = params(GRID)
+    assert [p[f"h{i}"] - p["dowel_d"] for i in range(1, 7)] == pytest.approx(OFFSETS)
+
+
+def test_it_comes_in_every_eighth_of_an_inch_from_a_half_to_two() -> None:
+    eighths = [Fraction(k, 8) for k in range(4, 17) if k != 8]  # 1 inch is the saved size
+    listed = models.sizes(GRID)
+    assert list(listed) == [listed_as(size) for size in eighths]
+    for size in eighths:
+        changes = listed[listed_as(size)]
+        assert float(changes["dowel_d"].removesuffix(" mm")) == pytest.approx(float(size) * 25.4)
+        assert changes["label"] == label(size)
+
+
+def test_even_the_two_inch_tile_fits_the_printers_plate() -> None:
+    p = params(GRID)
+    assert p["pitch"] == pytest.approx(p["h6"] + p["wall"])
+    assert p["tile_l"] == pytest.approx(3 * p["pitch"] + p["wall"])
+    assert p["tile_w"] == pytest.approx(2 * p["band"] + 2 * p["pitch"] + p["head"])
+    pitch = 50.8 + OFFSETS[-1] + p["wall"]
+    assert 3 * pitch + p["wall"] <= PLATE_MM
+    assert 2 * p["band"] + 2 * pitch + p["head"] <= PLATE_MM
+
+
+def test_it_is_one_closed_tile_with_its_holes_and_a_ring_hole() -> None:
+    p, tile = params(GRID), body(GRID, "Tile")
+    assert tile["closed"]
+    low, high = tile["bbox"]["min"], tile["bbox"]["max"]
+    assert [high[i] - low[i] for i in range(3)] == pytest.approx(
+        [p["tile_l"], p["tile_w"], p["thick"]]
+    )
+    holes = sum(math.pi * (p[f"h{i}"] / 2) ** 2 for i in range(1, 7))
+    ring = math.pi * (p["ring_d"] / 2) ** 2
+    solid = (p["tile_l"] * p["tile_w"] - holes - ring) * p["thick"]
+    engraved = solid - tile["volume_mm3"]
+    assert 0 < engraved < 0.05 * p["tile_l"] * p["tile_w"] * p["engrave"]
+
+
+def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:
+    meta = models.read_yml(GRID)
+    assert meta["material"].startswith("PLA")
+    for at, offset, hole in [("top left", "-0.6", "24.8"), ("bottom left", "0", "25.4"),
+                             ("bottom right", "+0.4", "25.8")]:  # fmt: skip
+        assert f"| {at} | {offset} mm | {hole} mm |" in meta["notes"]
+    assert meta["print"]["Orientation"].startswith("flat")
+```
+
+In `tests/test_models.py`, before the parametrized test of clashing sizes:
+
+```python
+def test_build_takes_a_size_changing_a_text_parameter_only_the_design_lists(
+    repo: Path, fake_cli: Path
+) -> None:
+    # solidcraft-cli's eval lists number parameters alone; a text one is in the design's text_params
+    design = add_design(
+        repo, "tile", '{"params": ["dowel_d"], "text_params": [{"name": "label", "text": "1 in"}]}'
+    )
+    (design.parent / "model.yml").write_text(
+        "sizes:\n  1/2 in: {dowel_d: 12.7 mm, label: 1/2 in}\n", encoding="utf-8"
+    )
+    assert models.main(["build"], root=repo) == 0
+    assert (design.parent / "tile-1-2in.stl").exists()
+    assert models.main(["check"], root=repo) == 0
+```
+
+- [ ] **Step 2: Run them; watch them fail.** `uv run --frozen pytest -q
+  tests/test_dowel_taper_card.py tests/test_dowel_hole_grid.py tests/test_models.py`. Expected:
+  `13 failed, 34 passed`: nine with `FileNotFoundError` for a gauge's `.eval.json`, two with
+  `KeyError: 'material'`, one listing no sizes, and the text parameter's with `assert 1 == 0`, its
+  stderr "size '1/2 in' changes 'label', which the design has no parameter named".
+- [ ] **Step 3a: The text parameters.** In `scripts/models.py`, `unknown_parameter` takes its
+  names from a new `parameter_names`; replace its head, down to its `for` line, with:
+
+```python
+def parameter_names(model: Model) -> set[str]:
+    """A design's parameters: the numbers its eval.json lists, and the texts (a label it
+    engraves) that only the design itself lists, under text_params."""
+    measured = json.loads(model.built("eval.json").read_text(encoding="utf-8"))
+    names = {param["name"] for param in measured.get("params", [])}
+    try:
+        design = json.loads(model.design.read_text(encoding="utf-8"))
+    except ValueError:
+        return names
+    texts = design.get("text_params", []) if isinstance(design, dict) else []
+    return names | {param["name"] for param in texts}
+
+
+def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:
+    """The first size that changes a parameter the design doesn't have, or None. Without this,
+    solidcraft-cli builds the base geometry under the size's name and exits 0."""
+    names = parameter_names(model)
+    for size, changes in wanted.items():
+```
+
+  Then `uv run --frozen pytest -q tests/test_models.py` passes.
+- [ ] **Step 3b: Build the designs.** Write this script to `.git/gauges.py`, run
+  `uv run --no-project python .git/gauges.py .`, then `solidcraft-cli run
+  .git/dowel-taper-card-script.json --quiet` (about two minutes: the engraving) and
+  `solidcraft-cli run .git/dowel-hole-grid-script.json --quiet`; each saves its `.sc`.
+
+```python
+# /// script
+# requires-python = ">=3.12"
+# ///
+"""The store gauges' design scripts (Phase 2, Task 9): writes .git/<slug>-script.json in the repo
+root given as argv[1], for the taper card and the hole grid; each saves models/<slug>/<slug>.sc.
+Millimetres; each gauge lies flat, its top face at z = thick, its words and ticks engraved there.
+The card's ticks are placed here, from its windows' sizes: change those and run this again."""
+
+import json
+import math
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+
+def P(name, expr, comment, unit=None):
+    p = {"name": name, "expression": expr, "comment": comment}
+    if unit is not None:
+        p["unit"] = unit
+    return {"command": "parameters.add", "params": p}
+
+
+def poly(points):
+    return {"command": "sketch.line", "params": {"points": points, "closed": True}}
+
+
+def text(words, x, y, height, align="center", expression=False):
+    p = {"at": [x, y], "height": height, "align": align}
+    p["text_expression" if expression else "text"] = words
+    return {"command": "sketch.text", "params": p}
+
+
+def engrave(target, items, top="thick"):
+    return [
+        {"command": "sketch.create", "params": {"plane": "XY", "offset": top}},
+        *items,
+        {"command": "sketch.finish", "params": {}},
+        {
+            "command": "solid.extrude",
+            "params": {
+                "distance": "engrave",
+                "direction": "negative",
+                "operation": "cut",
+                "targets": [target],
+            },
+        },
+    ]
+
+
+def save(slug):
+    return {
+        "command": "file.save_as",
+        "params": {"path": f"models/{slug}/{slug}.sc", "format": "json", "cache": False},
+    }
+
+
+def r(v):
+    return round(v, 3)
+
+
+# ---- the taper card ----------------------------------------------------------------------------
+
+RATE, END, RIGHT, BAND, MID = 0.1, 8.0, 16.0, 20.0, 30.0
+W1, W2 = (11.0, 33.0), (31.0, 53.0)
+COS_A = 1 / math.sqrt(1 + (RATE / 2) ** 2)
+AXIS2 = BAND + W2[1] / 2
+AXIS1 = BAND + W2[1] + MID + W1[1] / 2
+GAP, LONG, SHORT, TICK_W = 0.4, 5.0, 3.0, 0.6
+NUM_H, INCH_H = 5.0, 5.0
+
+
+def x_at(d, w_n):
+    """Where along the card a dowel of diameter d stops: the window there is d cos(a) wide, its
+    half-angle a, so the dowel's two contact points sit on this line."""
+    return END + (d * COS_A - w_n) / RATE
+
+
+def half_width(x, w_n):
+    return (w_n + (x - END) * RATE) / 2
+
+
+def inch(frac):
+    whole, rest = divmod(frac, 1)
+    if rest == 0:
+        return f"{whole}"
+    words = f"{rest.numerator}/{rest.denominator}"
+    return f"{whole} {words}" if whole else words
+
+
+def scale(axis, w, side_mm, numbers_to):
+    """Ticks every 0.5 mm with numbers on one edge, every 1/8 inch with fractions on the other."""
+    w_n, w_w = w
+    items = []
+    sign = side_mm  # +1: the mm scale on the window's upper edge
+    d = math.ceil(w_n / COS_A * 2) / 2
+    while d * COS_A <= w_w:
+        x = x_at(d, w_n)
+        edge = axis + sign * half_width(x, w_n)
+        length = LONG if d == int(d) else SHORT
+        y0, y1 = edge + sign * GAP, edge + sign * (GAP + length)
+        lo, hi = min(y0, y1), max(y0, y1)
+        items.append(
+            poly(
+                [
+                    [r(x - TICK_W / 2), r(lo)],
+                    [r(x + TICK_W / 2), r(lo)],
+                    [r(x + TICK_W / 2), r(hi)],
+                    [r(x - TICK_W / 2), r(hi)],
+                ]
+            )
+        )
+        if d == int(d) and d <= numbers_to:
+            base = edge + sign * (GAP + LONG + 1.5) - (NUM_H if sign < 0 else 0)
+            items.append(text(str(int(d)), r(x), r(base), NUM_H))
+        d += 0.5
+    # inches, on the other edge
+    k = math.ceil(w_n / COS_A / 25.4 * 8)
+    while (k / 8 * 25.4) * COS_A <= w_w:
+        d_in = k / 8 * 25.4
+        x = x_at(d_in, w_n)
+        edge = axis - sign * half_width(x, w_n)
+        y0, y1 = edge - sign * GAP, edge - sign * (GAP + LONG)
+        lo, hi = min(y0, y1), max(y0, y1)
+        items.append(
+            poly(
+                [
+                    [r(x - TICK_W / 2), r(lo)],
+                    [r(x + TICK_W / 2), r(lo)],
+                    [r(x + TICK_W / 2), r(hi)],
+                    [r(x - TICK_W / 2), r(hi)],
+                ]
+            )
+        )
+        base = edge - sign * (GAP + LONG + 1.5) - (INCH_H if sign > 0 else 0)
+        items.append(text(inch(Fraction(k, 8)), r(x), r(base), INCH_H))
+        k += 1
+    # the units, past the wide end
+    for s, word in ((sign, "mm"), (-sign, "in")):
+        edge = axis + s * w_w / 2
+        base = edge + s * (GAP + LONG + 1.5) - (NUM_H if s < 0 else 0)
+        items.append(text(word, END + (w_w - w_n) / RATE + 3, r(base), NUM_H, align="left"))
+    return items
+
+
+def window(axis_name, n):
+    return [
+        {"command": "sketch.create", "params": {"plane": "XY", "offset": "-1 mm"}},
+        poly(
+            [
+                ["end", f"{axis_name} - w{n}_n / 2"],
+                ["end + len", f"{axis_name} - w{n}_w / 2"],
+                ["end + len", f"{axis_name} + w{n}_w / 2"],
+                ["end", f"{axis_name} + w{n}_n / 2"],
+            ]
+        ),
+        {"command": "sketch.finish", "params": {}},
+        {
+            "command": "solid.extrude",
+            "params": {"distance": "thick + 2 mm", "operation": "cut", "targets": ["Card"]},
+        },
+    ]
+
+
+def taper_card():
+    slug = "dowel-taper-card"
+    cmds = [
+        P("rate", str(RATE), "how much wider each window gets per millimetre along it", unit=""),
+        P("w1_n", f"{W1[0]} mm", "the small window's narrow end"),
+        P("w1_w", f"{W1[1]} mm", "the small window's wide end"),
+        P("w2_n", f"{W2[0]} mm", "the large window's narrow end: it overlaps the small one's top"),
+        P("w2_w", f"{W2[1]} mm", "the large window's wide end"),
+        P("len", "(w1_w - w1_n) / rate", "each window's length; the two are the same"),
+        P(
+            "cos_a",
+            "cos(atan(rate / 2))",
+            "a dowel stops where the window is its diameter times this: the ticks sit there",
+            unit="",
+        ),
+        P("end", f"{END} mm", "plastic past each window's narrow end"),
+        P("right", f"{RIGHT} mm", "plastic past each window's wide end, where the units are"),
+        P("band", f"{BAND} mm", "plastic outside each window, holding its ticks and numbers"),
+        P("mid", f"{MID} mm", "plastic between the windows, holding two scales"),
+        P("thick", "6 mm", "the card's thickness"),
+        P("engrave", "0.6 mm", "how deep the ticks and numbers are cut"),
+        P("card_l", "end + len + right", "the card's length"),
+        P("card_w", "2 * band + w1_w + mid + w2_w", "the card's width"),
+        P("axis2", "band + w2_w / 2", "the large window's centre line"),
+        P("axis1", "band + w2_w + mid + w1_w / 2", "the small window's centre line"),
+        {
+            "command": "solid.box",
+            "params": {
+                "length": "card_l",
+                "width": "card_w",
+                "height": "thick",
+                "corner": [0, 0, 0],
+                "body_name": "Card",
+            },
+        },
+        *window("axis1", 1),
+        *window("axis2", 2),
+        *engrave("Card", scale(AXIS1, W1, +1, 32) + scale(AXIS2, W2, +1, 52)),
+        save(slug),
+    ]
+    return slug, cmds
+
+
+# ---- the hole grid: one tile per dowel size ----------------------------------------------------
+
+OFFSETS = (-3, -2, -1, 0, 1, 2)
+
+
+def hole_grid():
+    slug = "dowel-hole-grid"
+    cmds = [
+        P(
+            "dowel_d",
+            "25.4 mm",
+            "the dowel size this tile checks: 1 inch as saved; the page "
+            "offers every 1/8 inch from 1/2 to 2",
+        ),
+        P("label", "1 in", "the size's name, engraved on the tile", unit="text"),
+        P("step", "0.2 mm", "between one hole and the next"),
+    ]
+    for i, k in enumerate(OFFSETS, 1):
+        sign = "+" if k >= 0 else "-"
+        cmds.append(
+            P(
+                f"h{i}",
+                f"dowel_d {sign} {abs(k)} * step",
+                f"hole {i}: {k * 0.2:+.1f} mm from the size" if k else f"hole {i}: the size itself",
+            )
+        )
+    cmds += [
+        P("wall", "4 mm", "plastic between neighbouring holes"),
+        P("pitch", "h6 + wall", "centre to centre between holes, along and across"),
+        P("band", "8 mm", "the strip under each row where the holes' sizes are engraved"),
+        P("head", "12 mm", "the strip along the top with the size's name and the ring hole"),
+        P("thick", "6 mm", "the tile's thickness, so each hole is this deep"),
+        P("engrave", "0.6 mm", "how deep the words are cut"),
+        P("ring_d", "5 mm", "the hole for a key ring, to carry the tiles together"),
+        P("tile_l", "3 * pitch + wall", "the tile's length"),
+        P("tile_w", "2 * band + 2 * pitch + head", "the tile's width"),
+        {
+            "command": "solid.box",
+            "params": {
+                "length": "tile_l",
+                "width": "tile_w",
+                "height": "thick",
+                "corner": [0, 0, 0],
+                "body_name": "Tile",
+            },
+        },
+    ]
+    words = []
+    for i in range(6):
+        row, col = divmod(i, 3)  # row 0 on top: the three smallest
+        x = f"wall / 2 + pitch / 2 + {col} * pitch"
+        y = "band + pitch / 2" if row == 1 else "2 * band + 1.5 * pitch"
+        cmds.append(
+            {
+                "command": "solid.cylinder",
+                "params": {
+                    "diameter": f"h{i + 1}",
+                    "height": "thick + 2 mm",
+                    "base": [x, y, "-1 mm"],
+                    "axis": "Z",
+                    "operation": "cut",
+                    "targets": ["Tile"],
+                },
+            }
+        )
+        base = "1.2 mm" if row == 1 else "band + pitch + 1.2 mm"
+        words.append(text(f"number(h{i + 1}, 1)", x, base, 5.5, expression=True))
+    cmds.append(
+        {
+            "command": "solid.cylinder",
+            "params": {
+                "diameter": "ring_d",
+                "height": "thick + 2 mm",
+                "base": ["tile_l - wall - ring_d / 2", "tile_w - head / 2", "-1 mm"],
+                "axis": "Z",
+                "operation": "cut",
+                "targets": ["Tile"],
+            },
+        }
+    )
+    words.append(text("label", "wall", "tile_w - head + 2.5 mm", 7, align="left", expression=True))
+    cmds += engrave("Tile", words)
+    cmds.append(save(slug))
+    return slug, cmds
+
+
+if __name__ == "__main__":
+    root = Path(sys.argv[1])
+    for slug, cmds in (taper_card(), hole_grid()):
+        (root / "models" / slug).mkdir(parents=True, exist_ok=True)
+        out = root / ".git" / f"{slug}-script.json"
+        out.write_text(json.dumps({"commands": cmds}, indent=1) + "\n")
+        print(out, len(cmds))
+```
+
+- [ ] **Step 4: Write their pages.**
+
+`models/dowel-taper-card/model.yml`:
+
+```yaml
+title: Dowel taper card
+summary: >-
+  A card with two tapered windows that reads a dowel's real diameter, from 1/2 to 2 inches, in
+  millimetres and in inch sizes: slide it along the dowel until it stops.
+status: designed
+material: PLA
+print:
+  Orientation: flat, as saved, the engraved face up
+  Layer height: 0.2 mm
+  Walls: 3
+  Infill: 15%
+  Supports: none
+  Hole compensation: none (in Bambu Studio, X-Y hole and contour compensation both 0)
+notes: |
+  A dowel sold as 1 inch can be 25.0 mm, or a little oval, and sanding and a finish change it
+  again by tenths of a millimetre. The card reads its real diameter, at the store or at home.
+
+  1. **Put the dowel through** the window its size falls in, at the wide end: the narrow window
+     reads 11 to 33 mm (1/2 to 1 1/4 inches), the wide one 31 to 53 mm (1 1/4 to 2 inches).
+  2. **Slide the card** until the dowel touches both sides of the window. Don't push hard: the
+     sides give a little, and the card then reads small.
+  3. **Read the tick where it touches.** Millimetres along one side, a tick every 0.5 mm and the
+     whole millimetres numbered; inch sizes along the other, every 1/8 inch. The window narrows
+     0.1 mm for each millimetre along it, so ticks 0.5 mm apart are 5 mm apart on the card, and
+     a tenth of a millimetre is a millimetre between them.
+  4. **Turn the dowel a quarter turn** and read again: the two readings differ by how oval it is.
+
+  A round dowel touches the window's slanted sides a little ahead of its centre, where the window
+  is its diameter times 0.99875 (`cos_a`); the ticks are drawn there.
+
+  **Check the card with a coin** before trusting it to a tenth: lay the card flat, drop a coin
+  into a window and slide it until it touches both sides. A coin's diameter is set by its mint:
+  a Canadian quarter is 23.88 mm, a loonie 26.5 mm and a toonie 28.0 mm; a US quarter is
+  24.26 mm and a nickel 21.21 mm. A printer prints a window a little narrow, so a coin that
+  reads 0.1 mm over means every reading is 0.1 mm over: take that off each one.
+
+  The [hole grid](dowel-hole-grid.html) answers the same question in 0.2 mm steps, by the
+  smallest hole a dowel goes through. Neither decides how a part fits: the
+  [fit-test coupon](dowel-fit-coupon.html) does, on the finished dowel.
+```
+
+`models/dowel-hole-grid/model.yml`:
+
+```yaml
+title: Dowel hole grid
+summary: >-
+  A tile for each dowel size from 1/2 to 2 inches, with six holes from 0.6 mm under the size to
+  0.4 mm over: the smallest hole a dowel goes through gives its real diameter, to 0.2 mm.
+status: designed
+material: PLA
+size: 1 in
+sizes:
+  1/2 in: {dowel_d: 12.7 mm, label: 1/2 in}
+  5/8 in: {dowel_d: 15.875 mm, label: 5/8 in}
+  3/4 in: {dowel_d: 19.05 mm, label: 3/4 in}
+  7/8 in: {dowel_d: 22.225 mm, label: 7/8 in}
+  1-1/8 in: {dowel_d: 28.575 mm, label: 1 1/8 in}
+  1-1/4 in: {dowel_d: 31.75 mm, label: 1 1/4 in}
+  1-3/8 in: {dowel_d: 34.925 mm, label: 1 3/8 in}
+  1-1/2 in: {dowel_d: 38.1 mm, label: 1 1/2 in}
+  1-5/8 in: {dowel_d: 41.275 mm, label: 1 5/8 in}
+  1-3/4 in: {dowel_d: 44.45 mm, label: 1 3/4 in}
+  1-7/8 in: {dowel_d: 47.625 mm, label: 1 7/8 in}
+  2 in: {dowel_d: 50.8 mm, label: 2 in}
+print:
+  Orientation: flat, as saved, the engraved face up, so the holes print upright, the closest to size a printer prints them
+  Layer height: 0.2 mm
+  Walls: 3
+  Infill: 15%
+  Supports: none
+  Hole compensation: none (in Bambu Studio, X-Y hole and contour compensation both 0)
+notes: |
+  Print the tiles for the sizes you'll look at: several fit on one plate, and a key ring through
+  their corner holes keeps them together. Each tile is one dowel size, its name on the top strip,
+  and its six holes go up by 0.2 mm, each engraved with its own diameter:
+
+  | Hole | From the size | For a 1-inch dowel |
+  |---|---|---|
+  | top left | -0.6 mm | 24.8 mm |
+  | top middle | -0.4 mm | 25.0 mm |
+  | top right | -0.2 mm | 25.2 mm |
+  | bottom left | 0 mm | 25.4 mm |
+  | bottom middle | +0.2 mm | 25.6 mm |
+  | bottom right | +0.4 mm | 25.8 mm |
+
+  Push the dowel into each hole, the smallest first. The first it goes through without forcing
+  gives its diameter to 0.2 mm: a 1-inch dowel that goes through 25.2 but not 25.0 is between
+  25.0 and 25.2 mm. Try again a quarter turn round: an oval dowel goes through one way and not
+  the other. A dowel that goes through every hole is more than 0.6 mm under its size: try the
+  tile one size down.
+
+  Printed holes come out a little small, so the grid reads a dowel a little large: by as much as
+  the [taper card](dowel-taper-card.html), checked against a coin, reads over. Neither decides
+  how a part fits: the [fit-test coupon](dowel-fit-coupon.html) does, on the finished dowel.
+```
+
+- [ ] **Step 5: Build them.** `make models` (about eight minutes: the card's engraving is slow to
+  export, draw and measure). Look at both pictures, and at the 1/2-inch and 2-inch tiles in a
+  slicer or SolidCraft: every number readable, nothing running into a hole or a window.
+- [ ] **Step 6: The docs.** In `website/_overview.qmd`, the edge `  built -.-> gauges` becomes
+  `  built --> gauges` and the line `  class gauges planned` goes;
+  in `README.md`, the status's second sentence reads "Phase 2, under way, replaces those two with
+  the rail's five parts, then prints, tests and installs them; two gauges, a taper card and a hole
+  grid, measure the dowels at the store first."
+- [ ] **Step 7: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+  the thirteen new ones included, and every built STL is watertight (`tests/test_meshes.py`).
+- [ ] **Step 8: Commit.** Write the message to `.git/COMMIT_MSG`:
+
+```text
+feat(models): 🤖 add the taper card and the hole grid, gauges for the store
+
+Dan asked for a gauge to carry to the store, to read the dowels from 1/2
+to 2 inches before buying, and chose two (Phase 2 Q&A 11). The taper
+card's two windows narrow 0.1 mm for each millimetre along them, so a
+dowel stops at its diameter, engraved to the half millimetre, with its
+inch size on the other side; a coin checks the card. The hole grid is one
+tile per eighth of an inch from 1/2 to 2, six holes 0.2 mm apart, each
+engraved with its diameter; every tile fits the P2S's plate. Both are
+PLA, printed flat.
+
+The tile's name is a text parameter, which SolidCraft's eval leaves out,
+so make models refused the sizes that change it: it now takes a design's
+text parameters from the design itself (models.parameter_names).
+
+The new tests failed first: 13 failed, with FileNotFoundError for each
+gauge's eval.json, and "size '1/2 in' changes 'label', which the design
+has no parameter named".
+
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 9
+Co-Authored-By: <the model's own line>
+```
+
+  `git add models/dowel-taper-card models/dowel-hole-grid tests/test_dowel_taper_card.py tests/test_dowel_hole_grid.py scripts/models.py tests/test_models.py website/_overview.qmd README.md`,
+  then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the
+  `Plan:` line.
+- [ ] **Step 9: Review, look forward, close.** The review looks at the pictures and the pages too.
+
+  - **Review (Tier 2: one reviewer under Standards and Spec, as Tasks 2 to 7 had; re-review only
+    if a fix changes behaviour beyond its finding),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** Task 10's step 7 uses the gauges; nothing else consumes them.
+  - **Docs:** Step 6; S33 and S34 `built`; the STLs and pictures reach the live gallery with
+    Task 11's publish, named to Dan there.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 9: [Dan] Measure, weigh, and print the coupon
+    docs(plan): 🤖 close Task 9: The store gauges: a taper card and a hole grid
 
     <what the task built, and why, in a few lines>
 
@@ -2329,7 +2971,7 @@ measures.
     Rulings: <filled at the close, or none>
     Phase-end: <filled at the close, or none>
     Forward: <filled at the close, or none>
-    Tier: 3
+    Tier: 2
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
@@ -2343,7 +2985,94 @@ measures.
 
 ***
 
-### Task 10: Retune the parts to Dan's measurements, and publish them again
+### Task 10: [Dan] Measure, weigh, and print the coupon
+
+**Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S26, S30
+
+Runs in Dan's home. **Now** reads `waiting on Dan: <the step>` until each answer is in. The steps
+are asked by *Asking Dan*, one at a time, after the list. Dan's changes to the parts are settled
+(Phase 2 Q&A 1 to 7), so this is measurements only; the parts are already built at placeholder
+sizes (Q&A 9), and Task 11 retunes them. Start the coupon's print first (step 9): it runs while he
+measures, and it's tried once the dowel is sanded and finished (decided without Dan, 3).
+
+- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [ ] **1. Weigh the light:** the Barrina with its socket, cord and timer, on a kitchen scale.
+  The parts assume 1 kg; above that, the agent re-runs the carrier's and the socket's moment
+  (about 7.5 N·m at 24 inches), and Task 11 lengthens `carrier_l` or `socket_depth`.
+- [ ] **2. The bulb:** its widest diameter, and its length from where it meets the socket to its
+  face.
+- [ ] **3. The socket:** its body's widest diameter, and its length from where the cord goes in
+  to where the bulb starts.
+- [ ] **4. The cord:** round or flat; its diameter, or its width and thickness, just above the
+  socket, with calipers.
+- [ ] **5. The heat:** the bulb on for an hour, then its hottest surface with a thermometer (an
+  infrared one, or a kitchen probe held against it).
+- [ ] **6. The screws:** which ones (#8 or #10 wood screws into a stud, or 3/16-inch toggle
+  bolts); their heads' diameter and height, and the shank's; each a pan or washer head, since a
+  flat (countersunk) head won't sit in the counterbores.
+- [ ] **7. The dowels,** read at the store with the taper card and the hole grid (Task 9), after
+  the card's coin check: the size bought and the wood; each dowel's real diameter, twice, a
+  quarter turn apart; the rail's length, up to about 48 inches, and the arm's, 550 mm for the
+  light at 24 inches. Then the sanding and the finish: the grits, the finish and its coats, and
+  the diameter again on the card once it's dry. Wax stays off the rail where a carrier clamps:
+  the wedges hold by friction.
+- [ ] **8. The wall,** as measurements: its material, and whether a stud is where the feet go.
+- [ ] **9. The coupon,** printed for that size standing on its edge (its page's print settings)
+  while he measures, and tried on the dowel once it's sanded and finished (decided without Dan,
+  3): which hole, by its dots, is the tightest the finished dowel goes into by hand, all the way
+  (S26)? If every 1-inch hole is loose, the dowel is really 25 mm: print the 25 mm coupon, and
+  build the parts at 25 mm. A dowel of another size gets the coupon, and the parts, saved at its
+  diameter from the card (a ruling).
+- [ ] **10. Record and close.** Each answer goes on the Phase 2 Q&A page, `docs/superpowers/plans/2026-11-05-3d-models-phase-2-qa.md`, in Dan's words, committed as `docs(plan): 🤖 Phase 2 Q&A <N>: <what>` with this plan's `Plan:` line. The room is recorded as measurements (heights, distances, the wall's material), never a description of the home: the Q&A pages are published. The coupon's `model.yml` becomes `status: printed`
+  (Tier 3), with the hole that fit in its notes. Then the forward rewrite, named under
+  `Forward:`: Task 11's retune scripts and notes, filled in with these values, part by part:
+  - `clearance` (the coupon's `step` times one more than the dots that fit: a hole looser than
+    the tightest, decided without Dan, 3) in the four dowel parts, its comment saying so, and the sentence in
+    each of their notes that calls 0.4 mm a placeholder;
+  - the dowel: another size than 1 inch sets `dowel_d` in the four dowel parts, saved at it;
+  - the screws in the feet: `screw_d` and `head_d` at least 0.4 mm over the shank's and the head's,
+    and `head_h` the head's height;
+  - the cord: `cord_d` in the tip, and in the feet `cord_w` and `cord_depth` at least the cord and
+    1 mm (a flat cord: the tip's slots and grip reshaped, a ruling);
+  - the lamp in the shade: `socket_d`, `socket_l`, `bulb_d` and `bulb_l`;
+  - over 60 °C at step 5: the shade's `gap` grows, decided with Dan (the spec's design calls);
+  - over 1 kg at step 1: the carrier and the socket, as step 1 says.
+
+  The close:
+
+  - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks; and the
+    added Q&A and notes text read for a place, an address, a person or a description of the
+    home),** from `$(cat .git/TASK_BASE)`.
+  - **Forward:** Task 11's scripts and notes take these values (above).
+  - **Docs:** the coupon's page says it's printed and which hole fit; S26 `built`.
+  - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
+    Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
+    scenario statuses. The message, from `docs/agents/close-task.txt`:
+
+    ```text
+    docs(plan): 🤖 close Task 10: [Dan] Measure, weigh, and print the coupon
+
+    <what the task built, and why, in a few lines>
+
+    Drift: <filled at the close, or none>
+    Rulings: <filled at the close, or none>
+    Phase-end: <filled at the close, or none>
+    Forward: <filled at the close, or none>
+    Tier: 3
+    Rounds: <filled at the close>
+    Findings: <filled at the close, or none>
+
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+    Co-Authored-By: <the model's own line>
+    ```
+
+  - **Push** under the standing OK (Phase 2 Q&A 7): `make leaks privacy models-check`, then
+    `git push origin phase-2`. The task is closed once CI on the closing commit, or a later one,
+    is green.
+
+***
+
+### Task 11: Retune the parts to Dan's measurements, and publish them again
 
 **Tier:** 2 · **Scenarios:** S28, S26, S30
 
@@ -2352,12 +3081,12 @@ measures.
   `make models`), their `model.yml` notes
 
 **Interfaces:**
-- Consumes: Task 9's answers; Tasks 2 to 6's designs and tests; Task 8's publishing steps.
+- Consumes: Task 10's answers; Tasks 2 to 6's designs and tests; Task 8's publishing steps.
 - Produces: the five parts at Dan's sizes, live again.
 
 - [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **Step 1: The parameter changes,** one command script per part, `.git/<slug>-retune.json`,
-  each a `parameters.change` per value Task 9's close names for that part, then the save. Task
+  each a `parameters.change` per value Task 10's close names for that part, then the save. Task
   9's close writes each script here, its values filled in (a forward rewrite); the shape, for the
   feet:
 
@@ -2389,7 +3118,7 @@ feat(models): 🤖 retune the rail's parts to Dan's measurements
 
 <each value changed, with the Q&A answer it came from>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 11
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2402,14 +3131,14 @@ Co-Authored-By: <the model's own line>
 
   - **Review (Tier 2, one reviewer under both headings, Standards and Spec; fix Critical and
     Important; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** the look test (Task 11) prints these.
-  - **Docs:** each page gives its measured values; S28 stays `built`; S26 `built` at Task 9.
+  - **Forward:** the look test (Task 12) prints these.
+  - **Docs:** each page gives its measured values; S28 stays `built`; S26 `built` at Task 10.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 10: Retune the parts to Dan's measurements, and publish them again
+    docs(plan): 🤖 close Task 11: Retune the parts to Dan's measurements, and publish them again
 
     <what the task built, and why, in a few lines>
 
@@ -2421,7 +3150,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 10
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 11
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2431,7 +3160,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 11: [Dan] The look test
+### Task 12: [Dan] The look test
 
 **Tier:** none: Dan's verdict, recorded by the agent; Tier 1 if a photo is committed ·
 **Scenarios:** S11, S29
@@ -2464,14 +3193,14 @@ PLA (D8), and the joint by hand.
     added text read for a place, an address, a person or a description of the home; with a photo,
     Tier 1: Matt Pocock's `code-review`, two axes in two subagents, plus the security checklist,
     one line per item; at most one re-review),** from `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 12 prints the PETG parts.
+  - **Forward:** Task 13 prints the PETG parts.
   - **Docs:** each part's notes say the look test passed, or what changed; S11 and S29 `built`.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 11: [Dan] The look test
+    docs(plan): 🤖 close Task 12: [Dan] The look test
 
     <what the task built, and why, in a few lines>
 
@@ -2483,7 +3212,7 @@ PLA (D8), and the joint by hand.
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 11
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 12
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2493,7 +3222,7 @@ PLA (D8), and the joint by hand.
 
 ***
 
-### Task 12: [Dan] The load test
+### Task 13: [Dan] The load test
 
 **Tier:** none: Dan runs it; the agent records it (Tier 3) · **Scenarios:** S13, S27, S30
 
@@ -2505,7 +3234,7 @@ PLA (D8), and the joint by hand.
   its feet and screwed down through the bottom cup's floor; the arm (550 mm) on its carrier, the
   tip on its end; the second socket on the second carrier, a 150 mm stub of dowel wedged in it.
   Every wedge tapped home with a mallet. Note the rail's length and each carrier's height.
-- [ ] **3. Load it:** three times the light's weight (Task 9's answer) hung from the tip by the
+- [ ] **3. Load it:** three times the light's weight (Task 10's answer) hung from the tip by the
   light's cord through the stem's grip, not from the tip; 12 kg (three times two watered small
   planters) hung from the stub 100 mm out from the carrier. Mark the cord where it leaves the grip,
   and each carrier's top edge on the rail.
@@ -2533,7 +3262,7 @@ docs(models): 🤖 record the rail's load test
 <the loads, the arm's length, the mounting, the readings at 0, 24 and 48
 hours, the shade's temperature, and the result, from the Q&A page>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 12
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 13
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2545,14 +3274,14 @@ Co-Authored-By: <the model's own line>
   - **Review (Tier 3: a self-review under Standards and Spec, plus the mechanical checks, and the
     added text read for a place, an address, a person or a description of the home),** from
     `$(cat .git/TASK_BASE)`.
-  - **Forward:** Task 13 installs what passed.
+  - **Forward:** Task 14 installs what passed.
   - **Docs:** each part's page carries the load test; S13, S27 and S30 `built`.
   - **Close,** its own commit: this task's boxes ticked, **Now** set to the next task, any
     Built differently and Ruling lines, deferred findings on the phase-end list, the spec's
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 12: [Dan] The load test
+    docs(plan): 🤖 close Task 13: [Dan] The load test
 
     <what the task built, and why, in a few lines>
 
@@ -2564,7 +3293,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 12
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 13
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2574,7 +3303,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 13: [Dan] Install it
+### Task 14: [Dan] Install it
 
 **Tier:** none: Dan installs it; the agent records it, Tier 1 for the photo · **Scenarios:** S14, S32
 
@@ -2593,7 +3322,7 @@ docs(models): 🤖 the grow-light rail is installed
 <how it was fixed to the wall, the rail's length, and Dan's words on how it
 looks>
 
-Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 13
+Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 14
 Co-Authored-By: <the model's own line>
 ```
 
@@ -2611,7 +3340,7 @@ Co-Authored-By: <the model's own line>
     scenario statuses. The message, from `docs/agents/close-task.txt`:
 
     ```text
-    docs(plan): 🤖 close Task 13: [Dan] Install it
+    docs(plan): 🤖 close Task 14: [Dan] Install it
 
     <what the task built, and why, in a few lines>
 
@@ -2623,7 +3352,7 @@ Co-Authored-By: <the model's own line>
     Rounds: <filled at the close>
     Findings: <filled at the close, or none>
 
-    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 13
+    Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Task 14
     Co-Authored-By: <the model's own line>
     ```
 
@@ -2633,7 +3362,7 @@ Co-Authored-By: <the model's own line>
 
 ***
 
-### Task 14: Phase end
+### Task 15: Phase end
 
 The same nine steps as Phase 1's Task 10, each one box ending in its commit
 (`docs(plan): 🤖 phase end step K: <what it did>`, with `Plan: docs/superpowers/plans/2026-11-05-3d-models-phase-2.md Phase end`), resumed at the
@@ -2664,13 +3393,13 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 1, Standards 3 and 4 | Minor | `scripts/offsite.py` | A URL a browser normalises (a backslash for a slash, a tab inside the scheme, `https:/host`) or CSS escapes and comments (`u\72l(`, `url(/**/…)`) pass; none can come from Quarto's output | open |
 | Task 1, Spec 2 | Minor | `scripts/offsite.py` | A script's `fetch(` or `importScripts(`, an import map, and JSON files aren't read; the phase end's network-log look covers them | open |
 | Task 2, review | Minor | `models/rail-feet` | 0.75 mm of plastic between the cord's groove and each screw's counterbore | open |
-| Task 2, review | Minor | `models/rail-feet` | The caps hold by a press fit alone, with no catch; the look test (Task 11) checks them | open |
+| Task 2, review | Minor | `models/rail-feet` | The caps hold by a press fit alone, with no catch; the look test (Task 12) checks them | open |
 | Task 2, review | Minor | `tests/test_rail_feet.py` | The test holds the parameters, not the built cuts: a design with the floor's hole or the groove deleted would pass | open |
 | Task 3, review | Minor | `tests/test_rail_carrier.py` | The groove's and the wedge's shared slope is held by the parameter alone, not the built geometry | open |
 | Task 3, review | Minor | `models/rail-carrier` | `channel` is measured at the carrier's bottom; the wedge's tail below it is thicker, leaving about 7.7 mm to the pads' plane | open |
-| Task 3, review | Minor | `models/rail-carrier` | The wedge meets the round rail on a line; a face hollowed to the dowel's radius would add contact; the load test (Task 12) shows whether it's needed | open |
+| Task 3, review | Minor | `models/rail-carrier` | The wedge meets the round rail on a line; a face hollowed to the dowel's radius would add contact; the load test (Task 13) shows whether it's needed | open |
 | Task 3, review | Minor | `models/rail-carrier` | Literals outside the parameters (the wedge's 20 mm seat, its 40 mm offset); "three sizes" in a test name counts the saved one | open |
-| Task 4, review | Minor | `models/rail-arm-socket` | The slot's flanks aren't parallel to the dovetail's: the side gap is 0.3 mm at the base, 0.19 mm at the tip; the look test (Task 11) checks the fit | open |
+| Task 4, review | Minor | `models/rail-arm-socket` | The slot's flanks aren't parallel to the dovetail's: the side gap is 0.3 mm at the base, 0.19 mm at the tip; the look test (Task 12) checks the fit | open |
 | Task 4, review | Minor | `models/rail-arm-socket` | The boss is wider than the block, so printed on its back it leaves a 3.9 mm ledge the notes' "Supports: none" doesn't mention | open |
 | Task 4, review | Minor | `tests/test_rail_arm_socket.py` | The groove's wall is measured from the dowel's top, not the bore's (0.2 mm apart) | open |
 | Task 5, review | Minor | `models/rail-arm-tip/model.yml` | "Supports from the bed only" can't reach inside the cap's horizontal bore, whose arch prints unsupported | open |
