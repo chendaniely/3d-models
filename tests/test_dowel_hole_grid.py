@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 import models
-from conftest import body, params
+from conftest import body, engraved, params
 
 GRID = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-hole-grid")
 PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
@@ -77,10 +77,26 @@ def test_it_is_one_closed_tile_with_its_holes_and_a_ring_hole() -> None:
     assert 0 < engraved < 0.05 * p["tile_l"] * p["tile_w"] * p["engrave"]
 
 
+def test_each_holes_diameter_is_engraved_just_under_it_and_clear_of_the_next() -> None:
+    p = params(GRID)
+    labels = {words: (x, y, height) for words, x, y, height in engraved(GRID)}
+    below_top = p["band"] + p["pitch"] / 2 + p["h6"] / 2  # the top of the lower row's widest hole
+    for i in range(6):
+        row, col = divmod(i, 3)  # row 0 on top
+        d = p[f"h{i + 1}"]
+        x, y, height = labels[f"{d:.1f}"]
+        centre_y = 2 * p["band"] + 1.5 * p["pitch"] if row == 0 else p["band"] + p["pitch"] / 2
+        assert x == pytest.approx(p["wall"] / 2 + p["pitch"] / 2 + col * p["pitch"])
+        assert 0 < centre_y - d / 2 - (y + height) <= 2.0  # just under its own hole
+        if row == 0:
+            assert y - below_top >= 5.0  # and well above the hole under it
+
+
 def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:
     meta = models.read_yml(GRID)
     assert meta["material"].startswith("PLA")
     for at, offset, hole in [("top left", "-0.6", "24.8"), ("bottom left", "0", "25.4"),
                              ("bottom right", "+0.4", "25.8")]:  # fmt: skip
         assert f"| {at} | {offset} mm | {hole} mm |" in meta["notes"]
+    assert "goes through no hole" in meta["notes"]
     assert meta["print"]["Orientation"].startswith("flat")

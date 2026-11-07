@@ -1,12 +1,12 @@
 {
   "bodies": [
     {
-      "area_mm2": 15769.189520782089,
+      "area_mm2": 16564.39173473281,
       "bbox": {
         "max": [
           93.39999999999999,
-          87.60000000000001,
-          6.000000000000005
+          91.60000000000001,
+          6.000000000000004
         ],
         "min": [
           0.0,
@@ -15,31 +15,30 @@
         ]
       },
       "center_of_mass": [
-        46.378756654227466,
-        45.13986807828665,
-        2.990464133851498
+        46.40057431054431,
+        46.49666858805362,
+        2.9911118215235395
       ],
       "closed": true,
       "density_g_cm3": 1.29,
-      "edges": 1412,
+      "edges": 1391,
       "face_types": {
-        "cylinder": 262,
-        "other": 48,
-        "plane": 200,
-        "sphere": 1
+        "cylinder": 254,
+        "other": 50,
+        "plane": 200
       },
-      "faces": 511,
+      "faces": 504,
       "kernel": {
         "edges": 1482,
         "faces": 532,
         "shells": 1,
         "vertices": 988
       },
-      "mass_g": 39.685216861716505,
+      "mass_g": 42.5768915519121,
       "material": "Default",
       "name": "Tile",
-      "vertices": 946,
-      "volume_mm3": 30763.734001330624
+      "vertices": 932,
+      "volume_mm3": 33005.34228830395
     }
   ],
   "body_count": 1,
@@ -137,11 +136,11 @@
     {
       "comment": "the strip under each row where the holes' sizes are engraved",
       "error": null,
-      "expression": "8 mm",
+      "expression": "10 mm",
       "model": false,
       "name": "band",
       "unit": "mm",
-      "value": 8.0
+      "value": 10.0
     },
     {
       "comment": "the strip along the top with the size's name and the ring hole",
@@ -195,7 +194,7 @@
       "model": false,
       "name": "tile_w",
       "unit": "mm",
-      "value": 87.6
+      "value": 91.6
     }
   ],
   "sketches": [
@@ -217,7 +216,7 @@
       },
       "error": null,
       "id": 1,
-      "ms": 0.72375,
+      "ms": 11.310458,
       "name": "Box1",
       "rolled_back": false,
       "suppressed": false,
@@ -231,7 +230,7 @@
       },
       "error": null,
       "id": 2,
-      "ms": 9.914084,
+      "ms": 11.268125,
       "name": "Cylinder1",
       "rolled_back": false,
       "suppressed": false,
@@ -245,7 +244,7 @@
       },
       "error": null,
       "id": 3,
-      "ms": 9.618417,
+      "ms": 11.746042,
       "name": "Cylinder2",
       "rolled_back": false,
       "suppressed": false,
@@ -259,7 +258,7 @@
       },
       "error": null,
       "id": 4,
-      "ms": 9.057374999999999,
+      "ms": 20.245165999999998,
       "name": "Cylinder3",
       "rolled_back": false,
       "suppressed": false,
@@ -273,7 +272,7 @@
       },
       "error": null,
       "id": 5,
-      "ms": 9.77,
+      "ms": 13.480708,
       "name": "Cylinder4",
       "rolled_back": false,
       "suppressed": false,
@@ -287,7 +286,7 @@
       },
       "error": null,
       "id": 6,
-      "ms": 11.676874999999999,
+      "ms": 13.120166000000001,
       "name": "Cylinder5",
       "rolled_back": false,
       "suppressed": false,
@@ -301,7 +300,7 @@
       },
       "error": null,
       "id": 7,
-      "ms": 11.843875,
+      "ms": 13.321791,
       "name": "Cylinder6",
       "rolled_back": false,
       "suppressed": false,
@@ -315,7 +314,7 @@
       },
       "error": null,
       "id": 8,
-      "ms": 16.490042,
+      "ms": 36.201667,
       "name": "Cylinder7",
       "rolled_back": false,
       "suppressed": false,
@@ -329,7 +328,7 @@
       },
       "error": null,
       "id": 9,
-      "ms": 9.434667000000001,
+      "ms": 12.929625,
       "name": "Sketch1",
       "rolled_back": false,
       "suppressed": false,
@@ -343,7 +342,7 @@
       },
       "error": null,
       "id": 10,
-      "ms": 3266.699125,
+      "ms": 3256.9665419999997,
       "name": "Extrude1",
       "rolled_back": false,
       "suppressed": false,
@@ -352,12 +351,12 @@
     }
   ],
   "total": {
-    "area_mm2": 15769.189520782089,
-    "edges": 1412,
-    "faces": 511,
-    "mass_g": 39.685216861716505,
+    "area_mm2": 16564.39173473281,
+    "edges": 1391,
+    "faces": 504,
+    "mass_g": 42.5768915519121,
     "open_bodies_skipped": 0,
-    "vertices": 946,
-    "volume_mm3": 30763.734001330624
+    "vertices": 932,
+    "volume_mm3": 33005.34228830395
   }
 }

@@ -16,17 +16,19 @@ notes: |
   again by tenths of a millimetre. The card reads its real diameter, at the store or at home.
 
   1. **Put the dowel through** the window its size falls in, at the wide end: the narrow window
-     reads 11 to 33 mm (1/2 to 1 1/4 inches), the wide one 31 to 53 mm (1 1/4 to 2 inches).
+     reads 12 to 34 mm (1/2 to 1 1/4 inches), the wide one 32 to 52 mm (1 1/4 to 2 inches).
   2. **Slide the card** until the dowel touches both sides of the window. Don't push hard: the
      sides give a little, and the card then reads small.
   3. **Read the tick where it touches.** Millimetres along one side, a tick every 0.5 mm and the
      whole millimetres numbered; inch sizes along the other, every 1/8 inch. The window narrows
-     0.1 mm for each millimetre along it, so ticks 0.5 mm apart are 5 mm apart on the card, and
-     a tenth of a millimetre is a millimetre between them.
+     0.11 mm for each millimetre along it, so ticks 0.5 mm apart are 4.5 mm apart on the card,
+     and a tenth of a millimetre is about a millimetre between them.
   4. **Turn the dowel a quarter turn** and read again: the two readings differ by how oval it is.
 
   A round dowel touches the window's slanted sides a little ahead of its centre, where the window
-  is its diameter times 0.99875 (`cos_a`); the ticks are drawn there.
+  is its diameter times 0.9985 (`cos_a`); the ticks are drawn there. Its round side reaches on
+  past them both ways, by about half its diameter, so each window runs on past its scale at both
+  ends: a dowel at the first or last tick still clears the window's end.
 
   **Check the card with a coin** before trusting it to a tenth: lay the card flat, drop a coin
   into a window and slide it until it touches both sides. A coin's diameter is set by its mint:

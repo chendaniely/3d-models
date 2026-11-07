@@ -81,3 +81,21 @@ def params(model) -> dict[str, float]:
 def body(model, name: str) -> dict:
     """One body of a model, by its name in the design."""
     return next(b for b in measured(model)["bodies"] if b["name"] == name)
+
+
+def engraved(model) -> list[tuple[str, float, float, float]]:
+    """Every text a model's design engraves: (its words, x, y, height), from the saved design."""
+    found = []
+
+    def walk(node) -> None:
+        if isinstance(node, dict):
+            if node.get("type") == "text" and "at" in node:
+                found.append((node["text"], node["at"][0], node["at"][1], node["height"]))
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    walk(json.loads(model.design.read_text(encoding="utf-8")))
+    return found

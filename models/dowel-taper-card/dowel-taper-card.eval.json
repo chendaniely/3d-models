@@ -1,11 +1,11 @@
 {
   "bodies": [
     {
-      "area_mm2": 61254.863060774805,
+      "area_mm2": 64594.76515279178,
       "bbox": {
         "max": [
-          244.0,
-          156.0,
+          251.27272727272728,
+          161.0,
           6.0000000000000036
         ],
         "min": [
@@ -15,31 +15,31 @@
         ]
       },
       "center_of_mass": [
-        116.92149893039827,
-        81.71337431270038,
-        2.987566981748481
+        119.53304867365422,
+        84.05272213389442,
+        2.9880398658893874
       ],
       "closed": true,
       "density_g_cm3": 1.29,
-      "edges": 9030,
+      "edges": 9354,
       "face_types": {
-        "cylinder": 1199,
-        "other": 363,
-        "plane": 1740,
-        "sphere": 2
+        "cylinder": 1289,
+        "other": 356,
+        "plane": 1769,
+        "sphere": 1
       },
-      "faces": 3304,
+      "faces": 3415,
       "kernel": {
-        "edges": 9201,
-        "faces": 3361,
+        "edges": 9492,
+        "faces": 3461,
         "shells": 1,
-        "vertices": 6134
+        "vertices": 6328
       },
-      "mass_g": 184.78525616687907,
+      "mass_g": 196.15210499079313,
       "material": "Default",
       "name": "Card",
-      "vertices": 6020,
-      "volume_mm3": 143244.38462548764
+      "vertices": 6236,
+      "volume_mm3": 152055.8953417001
     }
   ],
   "body_count": 1,
@@ -47,11 +47,11 @@
     {
       "comment": "how much wider each window gets per millimetre along it",
       "error": null,
-      "expression": "0.1",
+      "expression": "0.11",
       "model": false,
       "name": "rate",
       "unit": "",
-      "value": 0.1
+      "value": 0.11
     },
     {
       "comment": "the small window's narrow end",
@@ -65,29 +65,29 @@
     {
       "comment": "the small window's wide end",
       "error": null,
-      "expression": "33.0 mm",
+      "expression": "36.0 mm",
       "model": false,
       "name": "w1_w",
       "unit": "mm",
-      "value": 33.0
+      "value": 36.0
     },
     {
       "comment": "the large window's narrow end: it overlaps the small one's top",
       "error": null,
-      "expression": "31.0 mm",
+      "expression": "30.0 mm",
       "model": false,
       "name": "w2_n",
       "unit": "mm",
-      "value": 31.0
+      "value": 30.0
     },
     {
       "comment": "the large window's wide end",
       "error": null,
-      "expression": "53.0 mm",
+      "expression": "55.0 mm",
       "model": false,
       "name": "w2_w",
       "unit": "mm",
-      "value": 53.0
+      "value": 55.0
     },
     {
       "comment": "each window's length; the two are the same",
@@ -96,7 +96,7 @@
       "model": false,
       "name": "len",
       "unit": "mm",
-      "value": 220.0
+      "value": 227.27272727272728
     },
     {
       "comment": "a dowel stops where the window is its diameter times this: the ticks sit there",
@@ -105,7 +105,7 @@
       "model": false,
       "name": "cos_a",
       "unit": "",
-      "value": 0.9987523388778446
+      "value": 0.9984909228570087
     },
     {
       "comment": "plastic past each window's narrow end",
@@ -168,7 +168,7 @@
       "model": false,
       "name": "card_l",
       "unit": "mm",
-      "value": 244.0
+      "value": 251.27272727272728
     },
     {
       "comment": "the card's width",
@@ -177,7 +177,7 @@
       "model": false,
       "name": "card_w",
       "unit": "mm",
-      "value": 156.0
+      "value": 161.0
     },
     {
       "comment": "the large window's centre line",
@@ -186,7 +186,7 @@
       "model": false,
       "name": "axis2",
       "unit": "mm",
-      "value": 46.5
+      "value": 47.5
     },
     {
       "comment": "the small window's centre line",
@@ -195,7 +195,7 @@
       "model": false,
       "name": "axis1",
       "unit": "mm",
-      "value": 119.5
+      "value": 123.0
     }
   ],
   "sketches": [
@@ -218,11 +218,11 @@
       "visible": false
     },
     {
-      "curves": 3055,
-      "dof": 816,
+      "curves": 3152,
+      "dof": 800,
       "id": 6,
       "name": "Sketch3",
-      "profiles": 292,
+      "profiles": 295,
       "status": "solved",
       "visible": false
     }
@@ -235,7 +235,7 @@
       },
       "error": null,
       "id": 1,
-      "ms": 0.7362920000000001,
+      "ms": 3.3479170000000003,
       "name": "Box1",
       "rolled_back": false,
       "suppressed": false,
@@ -249,7 +249,7 @@
       },
       "error": null,
       "id": 2,
-      "ms": 0.144458,
+      "ms": 2.9965,
       "name": "Sketch1",
       "rolled_back": false,
       "suppressed": false,
@@ -263,7 +263,7 @@
       },
       "error": null,
       "id": 3,
-      "ms": 3.166,
+      "ms": 8.860666,
       "name": "Extrude1",
       "rolled_back": false,
       "suppressed": false,
@@ -277,7 +277,7 @@
       },
       "error": null,
       "id": 4,
-      "ms": 0.047875,
+      "ms": 0.08612500000000001,
       "name": "Sketch2",
       "rolled_back": false,
       "suppressed": false,
@@ -291,7 +291,7 @@
       },
       "error": null,
       "id": 5,
-      "ms": 3.192167,
+      "ms": 3.1993329999999998,
       "name": "Extrude2",
       "rolled_back": false,
       "suppressed": false,
@@ -305,7 +305,7 @@
       },
       "error": null,
       "id": 6,
-      "ms": 53.813083,
+      "ms": 56.972167,
       "name": "Sketch3",
       "rolled_back": false,
       "suppressed": false,
@@ -319,7 +319,7 @@
       },
       "error": null,
       "id": 7,
-      "ms": 136613.565917,
+      "ms": 144796.07662500002,
       "name": "Extrude3",
       "rolled_back": false,
       "suppressed": false,
@@ -328,12 +328,12 @@
     }
   ],
   "total": {
-    "area_mm2": 61254.863060774805,
-    "edges": 9030,
-    "faces": 3304,
-    "mass_g": 184.78525616687907,
+    "area_mm2": 64594.76515279178,
+    "edges": 9354,
+    "faces": 3415,
+    "mass_g": 196.15210499079313,
     "open_bodies_skipped": 0,
-    "vertices": 6020,
-    "volume_mm3": 143244.38462548764
+    "vertices": 6236,
+    "volume_mm3": 152055.8953417001
   }
 }
