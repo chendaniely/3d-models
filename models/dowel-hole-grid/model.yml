@@ -26,7 +26,8 @@ print:
   Supports: none
   Hole compensation: none (in Bambu Studio, X-Y hole and contour compensation both 0)
 notes: |
-  Print the tiles for the sizes you'll look at: several fit on one plate, and a key ring through
+  Print the tiles for the sizes you'll look at: several fit on one plate, or one up to 1 inch with
+  the [taper card](dowel-taper-card.html), and a key ring through
   their corner holes keeps them together. Each tile is one dowel size, its name on the top strip,
   and its six holes go up by 0.2 mm, each with its own diameter engraved just under it, rounded to
   0.1 mm:

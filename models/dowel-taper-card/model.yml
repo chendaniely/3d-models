@@ -39,3 +39,7 @@ notes: |
   The [hole grid](dowel-hole-grid.html) answers the same question in 0.2 mm steps, by the
   smallest hole a dowel goes through. Neither decides how a part fits: the
   [fit-test coupon](dowel-fit-coupon.html) does, on the finished dowel.
+
+  The card is 251 by 149 mm, so it prints on one plate with a hole-grid tile up to 1 inch: the
+  card along the front of a Bambu P2S's plate, the tile behind it at the left, clear of the
+  printer's wrapping-detection zone at the back, right of centre.

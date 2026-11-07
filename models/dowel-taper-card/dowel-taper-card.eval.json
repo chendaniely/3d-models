@@ -1,12 +1,12 @@
 {
   "bodies": [
     {
-      "area_mm2": 64594.76515279178,
+      "area_mm2": 58420.237337492355,
       "bbox": {
         "max": [
           251.27272727272728,
-          161.0,
-          6.0000000000000036
+          149.0,
+          6.000000000000004
         ],
         "min": [
           0.0,
@@ -15,31 +15,31 @@
         ]
       },
       "center_of_mass": [
-        119.53304867365422,
-        84.05272213389442,
-        2.9880398658893874
+        118.70880893314126,
+        78.33910548332732,
+        2.986424712260625
       ],
       "closed": true,
       "density_g_cm3": 1.29,
-      "edges": 9354,
+      "edges": 9321,
       "face_types": {
-        "cylinder": 1289,
-        "other": 356,
+        "cylinder": 1268,
+        "other": 365,
         "plane": 1769,
-        "sphere": 1
+        "sphere": 2
       },
-      "faces": 3415,
+      "faces": 3404,
       "kernel": {
         "edges": 9492,
         "faces": 3461,
         "shells": 1,
         "vertices": 6328
       },
-      "mass_g": 196.15210499079313,
+      "mass_g": 172.8138974226547,
       "material": "Default",
       "name": "Card",
-      "vertices": 6236,
-      "volume_mm3": 152055.8953417001
+      "vertices": 6214,
+      "volume_mm3": 133964.26156794938
     }
   ],
   "body_count": 1,
@@ -128,20 +128,20 @@
     {
       "comment": "plastic outside each window, holding its ticks and numbers",
       "error": null,
-      "expression": "20.0 mm",
+      "expression": "15.0 mm",
       "model": false,
       "name": "band",
       "unit": "mm",
-      "value": 20.0
+      "value": 15.0
     },
     {
       "comment": "plastic between the windows, holding two scales",
       "error": null,
-      "expression": "30.0 mm",
+      "expression": "28.0 mm",
       "model": false,
       "name": "mid",
       "unit": "mm",
-      "value": 30.0
+      "value": 28.0
     },
     {
       "comment": "the card's thickness",
@@ -177,7 +177,7 @@
       "model": false,
       "name": "card_w",
       "unit": "mm",
-      "value": 161.0
+      "value": 149.0
     },
     {
       "comment": "the large window's centre line",
@@ -186,7 +186,7 @@
       "model": false,
       "name": "axis2",
       "unit": "mm",
-      "value": 47.5
+      "value": 42.5
     },
     {
       "comment": "the small window's centre line",
@@ -195,7 +195,7 @@
       "model": false,
       "name": "axis1",
       "unit": "mm",
-      "value": 123.0
+      "value": 116.0
     }
   ],
   "sketches": [
@@ -235,7 +235,7 @@
       },
       "error": null,
       "id": 1,
-      "ms": 3.3479170000000003,
+      "ms": 3.4142080000000004,
       "name": "Box1",
       "rolled_back": false,
       "suppressed": false,
@@ -249,7 +249,7 @@
       },
       "error": null,
       "id": 2,
-      "ms": 2.9965,
+      "ms": 2.4545,
       "name": "Sketch1",
       "rolled_back": false,
       "suppressed": false,
@@ -263,7 +263,7 @@
       },
       "error": null,
       "id": 3,
-      "ms": 8.860666,
+      "ms": 6.822166999999999,
       "name": "Extrude1",
       "rolled_back": false,
       "suppressed": false,
@@ -277,7 +277,7 @@
       },
       "error": null,
       "id": 4,
-      "ms": 0.08612500000000001,
+      "ms": 0.053,
       "name": "Sketch2",
       "rolled_back": false,
       "suppressed": false,
@@ -291,7 +291,7 @@
       },
       "error": null,
       "id": 5,
-      "ms": 3.1993329999999998,
+      "ms": 3.071792,
       "name": "Extrude2",
       "rolled_back": false,
       "suppressed": false,
@@ -305,7 +305,7 @@
       },
       "error": null,
       "id": 6,
-      "ms": 56.972167,
+      "ms": 56.773167,
       "name": "Sketch3",
       "rolled_back": false,
       "suppressed": false,
@@ -319,7 +319,7 @@
       },
       "error": null,
       "id": 7,
-      "ms": 144796.07662500002,
+      "ms": 168248.265959,
       "name": "Extrude3",
       "rolled_back": false,
       "suppressed": false,
@@ -328,12 +328,12 @@
     }
   ],
   "total": {
-    "area_mm2": 64594.76515279178,
-    "edges": 9354,
-    "faces": 3415,
-    "mass_g": 196.15210499079313,
+    "area_mm2": 58420.237337492355,
+    "edges": 9321,
+    "faces": 3404,
+    "mass_g": 172.8138974226547,
     "open_bodies_skipped": 0,
-    "vertices": 6236,
-    "volume_mm3": 152055.8953417001
+    "vertices": 6214,
+    "volume_mm3": 133964.26156794938
   }
 }

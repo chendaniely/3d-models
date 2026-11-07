@@ -2266,7 +2266,7 @@ placeholders. `phase-2` carries on after the merge.
 
 ### Task 9: The store gauges: a taper card and a hole grid
 
-> **Built differently** (closed 2026-11-06; commits f51e6df, b712432, 3bbad80): the card's windows are 11 to 36 mm and 30 to 55 mm and taper 0.11 mm per mm, not the listing's 11 to 33, 31 to 53 and 0.1, and its scales run only where a dowel can reach (`LO` and `HI` in the generator): a round dowel reaches about half its diameter past where it touches the sides, so the listing's card couldn't read 2 inches, 1 1/4 or 31.4 to 32.6 mm (Task 9's review, Important). The card is 251 by 161 mm, its scales 12 to 34 and 32 to 52 mm, its ticks 4.5 mm apart. Its test reads each engraved size from the saved design and checks it sits where a dowel of that size stops and can reach (`engraved` in `tests/conftest.py`), where the listing checked `cos_a` alone (Important). The grid's `band` is 10 mm and each number sits 1.2 mm under its own hole, clear of the row below, with a test; its page says the numbers are rounded to 0.1 mm and what a dowel through no hole means; `parameter_names` takes only named entries of a list, with a test (Minor).
+> **Built differently** (closed 2026-11-06; commits f51e6df, b712432, 3bbad80): the card's windows are 11 to 36 mm and 30 to 55 mm and taper 0.11 mm per mm, not the listing's 11 to 33, 31 to 53 and 0.1, and its scales run only where a dowel can reach (`LO` and `HI` in the generator): a round dowel reaches about half its diameter past where it touches the sides, so the listing's card couldn't read 2 inches, 1 1/4 or 31.4 to 32.6 mm (Task 9's review, Important). The card is 251 by 161 mm (149 since Q&A 12, Task 10's step 0a), its scales 12 to 34 and 32 to 52 mm, its ticks 4.5 mm apart. Its test reads each engraved size from the saved design and checks it sits where a dowel of that size stops and can reach (`engraved` in `tests/conftest.py`), where the listing checked `cos_a` alone (Important). The grid's `band` is 10 mm (8 since Q&A 12) and each number sits 1.2 mm under its own hole, clear of the row below, with a test; its page says the numbers are rounded to 0.1 mm and what a dowel through no hole means; `parameter_names` takes only named entries of a list, with a test (Minor).
 
 **Tier:** 2 · **Scenarios:** S33, S34
 
@@ -2997,7 +2997,19 @@ are asked by *Asking Dan*, one at a time, after the list. Dan's changes to the p
 sizes (Q&A 9), and Task 11 retunes them. Start the coupon's print first (step 9): it runs while he
 measures, and it's tried once the dowel is sanded and finished (decided without Dan, 3).
 
-- [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **0a. The gauges on one plate** (Q&A 12), built by the agent before Dan prints them, Tier 3
+  (margins round the engraved words; the windows, the taper, the ticks and the holes don't
+  change, and their tests pass as they were). In Task 9's generator, `.git/gauges.py` (its step
+  3b): the card's `BAND, MID` 20.0, 30.0 become 15.0, 28.0, and the grid's `band` "10 mm" becomes
+  "8 mm"; then the generator and both SolidCraft scripts run again, and `make models`. The card
+  is 251 by 149 mm, the 1-inch tile 93.4 by 87.6. New tests: in `tests/test_dowel_taper_card.py`,
+  `test_the_card_and_a_one_inch_tile_share_the_printers_plate` (the card's width, the tile's and
+  three 5 mm gaps within 256 mm; it failed first, `assert ((161.0 + 91.6) + (3 * 5.0)) <=
+  256.0`), `test_every_word_is_at_least_2_mm_inside_the_cards_long_edges` and
+  `test_words_in_neighbouring_rows_are_at_least_2_mm_apart`, each word reaching from a tenth of
+  its height under its baseline to a tenth over its height; in `tests/test_dowel_hole_grid.py`,
+  each lower-row number 2 mm inside the tile's edge.
 - [ ] **1. Weigh the light:** the Barrina with its socket, cord and timer, on a kitchen scale.
   The parts assume 1 kg; above that, the agent re-runs the carrier's and the socket's moment
   (about 7.5 N·m at 24 inches), and Task 11 lengthens `carrier_l` or `socket_depth`.

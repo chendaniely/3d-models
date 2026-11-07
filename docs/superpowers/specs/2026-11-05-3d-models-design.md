@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`, its start merged to `main` (#2, `7b53336`), and the rail's parts at placeholder sizes (#3, `20c359f`) · two store gauges built (Phase 2 Q&A 11, Task 9)
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`, its start merged to `main` (#2, `7b53336`), and the rail's parts at placeholder sizes (#3, `20c359f`) · two store gauges built (Phase 2 Q&A 11, Task 9), trimmed to share a plate (Q&A 12)
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -234,7 +234,7 @@ replace it.
 | S30 | the light runs for 14 hours, the timer's longest, inside the PETG shade | the shade doesn't soften, warp or discolour, and is nowhere hotter than 60 °C | Phase 2, Tasks 10 and 13 | the temperatures in the load-test log | planned |
 | S31 | a visitor opens any page of the site | their browser fetches nothing from another host: no web font, script or style sheet | Phase 2, Task 1 | `tests/test_offsite.py`; `make docs` | built |
 | S32 | someone lifts a carrier, the arm or a planter on the mounted rail | the rail doesn't rise, and both feet stay on the wall | Phase 2, Tasks 2 and 14 | `tests/test_rail_feet.py` (the floor's screw); Dan's check at the install | planned |
-| S33 | Dan slides the taper card along a dowel from 1/2 to 2 inches until it touches both sides of a window | the tick there reads its diameter in millimetres, to about 0.1 mm between ticks 0.5 mm apart, and its inch size on the other side; a coin of known size checks the card; the card fits a 256 mm plate | Phase 2, Task 9 | `tests/test_dowel_taper_card.py`; Dan's coin check at Task 10 | built |
+| S33 | Dan slides the taper card along a dowel from 1/2 to 2 inches until it touches both sides of a window | the tick there reads its diameter in millimetres, to about 0.1 mm between ticks 0.5 mm apart, and its inch size on the other side; a coin of known size checks the card; the card fits a 256 mm plate, with the grid's 1-inch tile beside it (Phase 2 Q&A 12) | Phase 2, Task 9 | `tests/test_dowel_taper_card.py`; Dan's coin check at Task 10 | built |
 | S34 | Dan pushes a dowel into the hole-grid tile for its size, the smallest hole first | the first hole it goes through gives its diameter to 0.2 mm, from 0.6 mm under its size to 0.4 mm over, each hole engraved with its own; a tile for every 1/8 inch from 1/2 to 2, each on a 256 mm plate | Phase 2, Task 9 | `tests/test_dowel_hole_grid.py` | built |
 
 ### Later
@@ -314,3 +314,5 @@ replace it.
 - 2026-11-06: two gauges to read the dowels at the store, a taper card and a hole grid, in PLA;
   the coupon is tried on the sanded and finished dowel, and the parts take the next hole looser
   (Phase 2 Q&A 11 and decided without Dan 3, `b3219b3`).
+- 2026-11-07: the taper card and the hole grid's 1-inch tile share one plate, their margins
+  trimmed (Phase 2 Q&A 12).

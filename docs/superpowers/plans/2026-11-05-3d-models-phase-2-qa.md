@@ -52,6 +52,18 @@ The batch: (11) what kind of gauge goes to the store.
 |---|---|---|---|
 | 11 | Scenario: at the store Dan pulls out a dowel labelled 1 inch that's really 25.1 mm and a bit oval; at home he sands and finishes it, then wants to know how much it changed. Which gauge is in his pocket? | Both, as two models he prints: a taper card, one plate with two tapered windows, 12 to 32 mm and 31 to 52 mm, read in millimetres and in inch sizes where the dowel stops, checked against a coin; and a hole grid, each inch size from 1/2 to 2 inches with holes from 0.6 mm under to 0.4 mm over in 0.2 mm steps, marked by dots, on several bed-sized plates. Not chosen: one hole per size, each exactly its label | The recommended option (the taper card), and the hole grid as well: "let's make models for both i'll print both the taper card and hole grid" |
 
+## The gauges on one plate (2026-11-07)
+
+Before printing them, Dan opened the taper card's and the hole grid's STLs in his slicer: "i'm
+looking at the dowdel-hole grid stl file and the taper card. there's a lot of whitespace in the
+print, can we reduce the whitespace so i can print both of them on 1 plate on my bambu p2s? they
+currently ALMOST fit on 1 plate". The card was 251 by 161 mm and the 1-inch tile 93.4 by 91.6 mm:
+side by side, 252.6 mm of the plate's 256, with no room for the slicer's spacing.
+
+| # | Question | Answer | Dan's reason, in his words |
+|---|---|---|---|
+| 12 | Dan asked for the taper card and a hole-grid tile to fit on one plate (his instruction, not a scenario question) | The card's bands outside its windows go from 20 to 15 mm and the strip between them from 30 to 28 mm, so it is 251 by 149 mm; each tile's strips under its rows of holes go from 10 to 8 mm, so the 1-inch tile is 93.4 by 87.6 mm. The card and the 1-inch tile fit across the P2S's 256 mm plate 5 mm apart and 5 mm from its front and back edges, the tile at the back left, clear of the printer's wrapping-detection zone at the back, right of centre (Bambu Studio's P2S profile: x 153 to 216 mm, y 235 to 256). The windows, the taper, the ticks and the holes don't change; every word stays at least 2 mm inside the card's edges and from the next row of words, and each hole's number 2 mm inside the tile's edge (Task 10, step 0a) | "there's a lot of whitespace in the print, can we reduce the whitespace so i can print both of them on 1 plate on my bambu p2s? they currently ALMOST fit on 1 plate" |
+
 ## Decided without Dan
 
 The mode is fully vibed, so a change to one of Dan's decisions or an approved design call is ruled

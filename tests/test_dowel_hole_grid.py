@@ -90,6 +90,8 @@ def test_each_holes_diameter_is_engraved_just_under_it_and_clear_of_the_next() -
         assert 0 < centre_y - d / 2 - (y + height) <= 2.0  # just under its own hole
         if row == 0:
             assert y - below_top >= 5.0  # and well above the hole under it
+        else:
+            assert y - 0.1 * height >= 2.0  # and at least 2 mm inside the tile's edge
 
 
 def test_its_page_says_how_to_read_each_hole_and_how_to_print_it() -> None:

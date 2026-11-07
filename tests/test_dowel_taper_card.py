@@ -13,7 +13,9 @@ import models
 from conftest import body, engraved, params
 
 CARD = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-taper-card")
+GRID = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-hole-grid")
 PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
+SPACING_MM = 5.0  # room a slicer keeps between two parts, and here off the plate's edges too
 
 
 def reach(rate: float) -> tuple[float, float]:
@@ -86,6 +88,39 @@ def test_it_is_one_closed_card_that_fits_the_printers_plate() -> None:
         [p["card_l"], p["card_w"], p["thick"]]
     )
     assert p["card_l"] <= PLATE_MM and p["card_w"] <= PLATE_MM
+
+
+def test_the_card_and_a_one_inch_tile_share_the_printers_plate() -> None:
+    """Dan prints both at once (Phase 2 Q&A 12): the card along the plate, the tile beside it."""
+    card, tile = params(CARD), params(GRID)
+    assert tile["dowel_d"] == pytest.approx(25.4)  # the grid as saved is the 1-inch tile
+    assert card["card_w"] + tile["tile_w"] + 3 * SPACING_MM <= PLATE_MM
+    assert tile["tile_l"] + 2 * SPACING_MM <= PLATE_MM
+
+
+def word_box(y: float, height: float) -> tuple[float, float]:
+    """How far an engraved word reaches across the card, from its baseline: a fraction's slash
+    dips a little under it, an i's dot rises a little over its height."""
+    return y - 0.1 * height, y + 1.1 * height
+
+
+def test_every_word_is_at_least_2_mm_inside_the_cards_long_edges() -> None:
+    p = params(CARD)
+    for words, _, y, height in engraved(CARD):
+        low, high = word_box(y, height)
+        assert low >= 2.0 and high <= p["card_w"] - 2.0, words
+
+
+def test_words_in_neighbouring_rows_are_at_least_2_mm_apart() -> None:
+    """Between the windows, the large one's millimetres rise toward the small one's inches; a
+    narrower strip there must not run one row into the other."""
+    found = engraved(CARD)
+    for words, x, y, height in found:
+        for other, x2, y2, height2 in found:
+            # within 20 mm along (the widest word, 1 7/8, is about 16 mm), and over 2 mm above:
+            # another row, since a row's own words step about 0.5 mm from one to the next
+            if abs(x - x2) < 20 and y2 > y + 2.0:
+                assert word_box(y2, height2)[0] - word_box(y, height)[1] >= 2.0, (words, other)
 
 
 def test_its_volume_is_the_card_less_its_windows_and_a_shallow_engraving() -> None:
