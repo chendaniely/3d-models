@@ -1,0 +1,39 @@
+title: Dowel taper card
+summary: >-
+  A card with two tapered windows that reads a dowel's real diameter, from 1/2 to 2 inches, in
+  millimetres and in inch sizes: slide it along the dowel until it stops.
+status: designed
+material: PLA
+print:
+  Orientation: flat, as saved, the engraved face up
+  Layer height: 0.2 mm
+  Walls: 3
+  Infill: 15%
+  Supports: none
+  Hole compensation: none (in Bambu Studio, X-Y hole and contour compensation both 0)
+notes: |
+  A dowel sold as 1 inch can be 25.0 mm, or a little oval, and sanding and a finish change it
+  again by tenths of a millimetre. The card reads its real diameter, at the store or at home.
+
+  1. **Put the dowel through** the window its size falls in, at the wide end: the narrow window
+     reads 11 to 33 mm (1/2 to 1 1/4 inches), the wide one 31 to 53 mm (1 1/4 to 2 inches).
+  2. **Slide the card** until the dowel touches both sides of the window. Don't push hard: the
+     sides give a little, and the card then reads small.
+  3. **Read the tick where it touches.** Millimetres along one side, a tick every 0.5 mm and the
+     whole millimetres numbered; inch sizes along the other, every 1/8 inch. The window narrows
+     0.1 mm for each millimetre along it, so ticks 0.5 mm apart are 5 mm apart on the card, and
+     a tenth of a millimetre is a millimetre between them.
+  4. **Turn the dowel a quarter turn** and read again: the two readings differ by how oval it is.
+
+  A round dowel touches the window's slanted sides a little ahead of its centre, where the window
+  is its diameter times 0.99875 (`cos_a`); the ticks are drawn there.
+
+  **Check the card with a coin** before trusting it to a tenth: lay the card flat, drop a coin
+  into a window and slide it until it touches both sides. A coin's diameter is set by its mint:
+  a Canadian quarter is 23.88 mm, a loonie 26.5 mm and a toonie 28.0 mm; a US quarter is
+  24.26 mm and a nickel 21.21 mm. A printer prints a window a little narrow, so a coin that
+  reads 0.1 mm over means every reading is 0.1 mm over: take that off each one.
+
+  The [hole grid](dowel-hole-grid.html) answers the same question in 0.2 mm steps, by the
+  smallest hole a dowel goes through. Neither decides how a part fits: the
+  [fit-test coupon](dowel-fit-coupon.html) does, on the finished dowel.

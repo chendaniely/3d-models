@@ -14,7 +14,8 @@ download.
 
 **Status:** Phase 1 has merged: the gallery is live, with the fit-test coupon and the sconce's
 wall block and cord clamp. Phase 2, under way, replaces those two with the rail's five parts, then
-prints, tests and installs them.
+prints, tests and installs them; two gauges, a taper card and a hole grid, measure the dowels
+at the store first.
 
 ## Using a model
 

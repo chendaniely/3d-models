@@ -1,0 +1,339 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 61254.863060774805,
+      "bbox": {
+        "max": [
+          244.0,
+          156.0,
+          6.0000000000000036
+        ],
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "center_of_mass": [
+        116.92149893039827,
+        81.71337431270038,
+        2.987566981748481
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 9030,
+      "face_types": {
+        "cylinder": 1199,
+        "other": 363,
+        "plane": 1740,
+        "sphere": 2
+      },
+      "faces": 3304,
+      "kernel": {
+        "edges": 9201,
+        "faces": 3361,
+        "shells": 1,
+        "vertices": 6134
+      },
+      "mass_g": 184.78525616687907,
+      "material": "Default",
+      "name": "Card",
+      "vertices": 6020,
+      "volume_mm3": 143244.38462548764
+    }
+  ],
+  "body_count": 1,
+  "params": [
+    {
+      "comment": "how much wider each window gets per millimetre along it",
+      "error": null,
+      "expression": "0.1",
+      "model": false,
+      "name": "rate",
+      "unit": "",
+      "value": 0.1
+    },
+    {
+      "comment": "the small window's narrow end",
+      "error": null,
+      "expression": "11.0 mm",
+      "model": false,
+      "name": "w1_n",
+      "unit": "mm",
+      "value": 11.0
+    },
+    {
+      "comment": "the small window's wide end",
+      "error": null,
+      "expression": "33.0 mm",
+      "model": false,
+      "name": "w1_w",
+      "unit": "mm",
+      "value": 33.0
+    },
+    {
+      "comment": "the large window's narrow end: it overlaps the small one's top",
+      "error": null,
+      "expression": "31.0 mm",
+      "model": false,
+      "name": "w2_n",
+      "unit": "mm",
+      "value": 31.0
+    },
+    {
+      "comment": "the large window's wide end",
+      "error": null,
+      "expression": "53.0 mm",
+      "model": false,
+      "name": "w2_w",
+      "unit": "mm",
+      "value": 53.0
+    },
+    {
+      "comment": "each window's length; the two are the same",
+      "error": null,
+      "expression": "(w1_w - w1_n) / rate",
+      "model": false,
+      "name": "len",
+      "unit": "mm",
+      "value": 220.0
+    },
+    {
+      "comment": "a dowel stops where the window is its diameter times this: the ticks sit there",
+      "error": null,
+      "expression": "cos(atan(rate / 2))",
+      "model": false,
+      "name": "cos_a",
+      "unit": "",
+      "value": 0.9987523388778446
+    },
+    {
+      "comment": "plastic past each window's narrow end",
+      "error": null,
+      "expression": "8.0 mm",
+      "model": false,
+      "name": "end",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "plastic past each window's wide end, where the units are",
+      "error": null,
+      "expression": "16.0 mm",
+      "model": false,
+      "name": "right",
+      "unit": "mm",
+      "value": 16.0
+    },
+    {
+      "comment": "plastic outside each window, holding its ticks and numbers",
+      "error": null,
+      "expression": "20.0 mm",
+      "model": false,
+      "name": "band",
+      "unit": "mm",
+      "value": 20.0
+    },
+    {
+      "comment": "plastic between the windows, holding two scales",
+      "error": null,
+      "expression": "30.0 mm",
+      "model": false,
+      "name": "mid",
+      "unit": "mm",
+      "value": 30.0
+    },
+    {
+      "comment": "the card's thickness",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "thick",
+      "unit": "mm",
+      "value": 6.0
+    },
+    {
+      "comment": "how deep the ticks and numbers are cut",
+      "error": null,
+      "expression": "0.6 mm",
+      "model": false,
+      "name": "engrave",
+      "unit": "mm",
+      "value": 0.6
+    },
+    {
+      "comment": "the card's length",
+      "error": null,
+      "expression": "end + len + right",
+      "model": false,
+      "name": "card_l",
+      "unit": "mm",
+      "value": 244.0
+    },
+    {
+      "comment": "the card's width",
+      "error": null,
+      "expression": "2 * band + w1_w + mid + w2_w",
+      "model": false,
+      "name": "card_w",
+      "unit": "mm",
+      "value": 156.0
+    },
+    {
+      "comment": "the large window's centre line",
+      "error": null,
+      "expression": "band + w2_w / 2",
+      "model": false,
+      "name": "axis2",
+      "unit": "mm",
+      "value": 46.5
+    },
+    {
+      "comment": "the small window's centre line",
+      "error": null,
+      "expression": "band + w2_w + mid + w1_w / 2",
+      "model": false,
+      "name": "axis1",
+      "unit": "mm",
+      "value": 119.5
+    }
+  ],
+  "sketches": [
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 2,
+      "name": "Sketch1",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    },
+    {
+      "curves": 4,
+      "dof": 0,
+      "id": 4,
+      "name": "Sketch2",
+      "profiles": 1,
+      "status": "solved",
+      "visible": false
+    },
+    {
+      "curves": 3055,
+      "dof": 816,
+      "id": 6,
+      "name": "Sketch3",
+      "profiles": 292,
+      "status": "solved",
+      "visible": false
+    }
+  ],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 0.7362920000000001,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 0.144458,
+      "name": "Sketch1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 3.166,
+      "name": "Extrude1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 0.047875,
+      "name": "Sketch2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 3.192167,
+      "name": "Extrude2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 53.813083,
+      "name": "Sketch3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 136613.565917,
+      "name": "Extrude3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 61254.863060774805,
+    "edges": 9030,
+    "faces": 3304,
+    "mass_g": 184.78525616687907,
+    "open_bodies_skipped": 0,
+    "vertices": 6020,
+    "volume_mm3": 143244.38462548764
+  }
+}

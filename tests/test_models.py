@@ -164,6 +164,21 @@ def test_build_takes_a_size_changing_a_parameter_the_design_just_gained(
     assert models.main(["check"], root=repo) == 0
 
 
+def test_build_takes_a_size_changing_a_text_parameter_only_the_design_lists(
+    repo: Path, fake_cli: Path
+) -> None:
+    # solidcraft-cli's eval lists number parameters alone; a text one is in the design's text_params
+    design = add_design(
+        repo, "tile", '{"params": ["dowel_d"], "text_params": [{"name": "label", "text": "1 in"}]}'
+    )
+    (design.parent / "model.yml").write_text(
+        "sizes:\n  1/2 in: {dowel_d: 12.7 mm, label: 1/2 in}\n", encoding="utf-8"
+    )
+    assert models.main(["build"], root=repo) == 0
+    assert (design.parent / "tile-1-2in.stl").exists()
+    assert models.main(["check"], root=repo) == 0
+
+
 @pytest.mark.parametrize(
     ("yml", "message"),
     [

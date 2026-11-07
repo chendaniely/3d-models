@@ -1,0 +1,363 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 15769.189520782089,
+      "bbox": {
+        "max": [
+          93.39999999999999,
+          87.60000000000001,
+          6.000000000000005
+        ],
+        "min": [
+          0.0,
+          -1.4210854715202004e-14,
+          -1.3322676295501878e-15
+        ]
+      },
+      "center_of_mass": [
+        46.378756654227466,
+        45.13986807828665,
+        2.990464133851498
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 1412,
+      "face_types": {
+        "cylinder": 262,
+        "other": 48,
+        "plane": 200,
+        "sphere": 1
+      },
+      "faces": 511,
+      "kernel": {
+        "edges": 1482,
+        "faces": 532,
+        "shells": 1,
+        "vertices": 988
+      },
+      "mass_g": 39.685216861716505,
+      "material": "Default",
+      "name": "Tile",
+      "vertices": 946,
+      "volume_mm3": 30763.734001330624
+    }
+  ],
+  "body_count": 1,
+  "params": [
+    {
+      "comment": "the dowel size this tile checks: 1 inch as saved; the page offers every 1/8 inch from 1/2 to 2",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "between one hole and the next",
+      "error": null,
+      "expression": "0.2 mm",
+      "model": false,
+      "name": "step",
+      "unit": "mm",
+      "value": 0.2
+    },
+    {
+      "comment": "hole 1: -0.6 mm from the size",
+      "error": null,
+      "expression": "dowel_d - 3 * step",
+      "model": false,
+      "name": "h1",
+      "unit": "mm",
+      "value": 24.799999999999997
+    },
+    {
+      "comment": "hole 2: -0.4 mm from the size",
+      "error": null,
+      "expression": "dowel_d - 2 * step",
+      "model": false,
+      "name": "h2",
+      "unit": "mm",
+      "value": 25.0
+    },
+    {
+      "comment": "hole 3: -0.2 mm from the size",
+      "error": null,
+      "expression": "dowel_d - 1 * step",
+      "model": false,
+      "name": "h3",
+      "unit": "mm",
+      "value": 25.2
+    },
+    {
+      "comment": "hole 4: the size itself",
+      "error": null,
+      "expression": "dowel_d + 0 * step",
+      "model": false,
+      "name": "h4",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "hole 5: +0.2 mm from the size",
+      "error": null,
+      "expression": "dowel_d + 1 * step",
+      "model": false,
+      "name": "h5",
+      "unit": "mm",
+      "value": 25.599999999999998
+    },
+    {
+      "comment": "hole 6: +0.4 mm from the size",
+      "error": null,
+      "expression": "dowel_d + 2 * step",
+      "model": false,
+      "name": "h6",
+      "unit": "mm",
+      "value": 25.799999999999997
+    },
+    {
+      "comment": "plastic between neighbouring holes",
+      "error": null,
+      "expression": "4 mm",
+      "model": false,
+      "name": "wall",
+      "unit": "mm",
+      "value": 4.0
+    },
+    {
+      "comment": "centre to centre between holes, along and across",
+      "error": null,
+      "expression": "h6 + wall",
+      "model": false,
+      "name": "pitch",
+      "unit": "mm",
+      "value": 29.799999999999997
+    },
+    {
+      "comment": "the strip under each row where the holes' sizes are engraved",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "band",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "the strip along the top with the size's name and the ring hole",
+      "error": null,
+      "expression": "12 mm",
+      "model": false,
+      "name": "head",
+      "unit": "mm",
+      "value": 12.0
+    },
+    {
+      "comment": "the tile's thickness, so each hole is this deep",
+      "error": null,
+      "expression": "6 mm",
+      "model": false,
+      "name": "thick",
+      "unit": "mm",
+      "value": 6.0
+    },
+    {
+      "comment": "how deep the words are cut",
+      "error": null,
+      "expression": "0.6 mm",
+      "model": false,
+      "name": "engrave",
+      "unit": "mm",
+      "value": 0.6
+    },
+    {
+      "comment": "the hole for a key ring, to carry the tiles together",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "ring_d",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the tile's length",
+      "error": null,
+      "expression": "3 * pitch + wall",
+      "model": false,
+      "name": "tile_l",
+      "unit": "mm",
+      "value": 93.39999999999999
+    },
+    {
+      "comment": "the tile's width",
+      "error": null,
+      "expression": "2 * band + 2 * pitch + head",
+      "model": false,
+      "name": "tile_w",
+      "unit": "mm",
+      "value": 87.6
+    }
+  ],
+  "sketches": [
+    {
+      "curves": 476,
+      "dof": 0,
+      "id": 9,
+      "name": "Sketch1",
+      "profiles": 36,
+      "status": "solved",
+      "visible": false
+    }
+  ],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 0.72375,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 9.914084,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 9.618417,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 9.057374999999999,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 9.77,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 11.676874999999999,
+      "name": "Cylinder5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 11.843875,
+      "name": "Cylinder6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 16.490042,
+      "name": "Cylinder7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 9.434667000000001,
+      "name": "Sketch1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 3266.699125,
+      "name": "Extrude1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 15769.189520782089,
+    "edges": 1412,
+    "faces": 511,
+    "mass_g": 39.685216861716505,
+    "open_bodies_skipped": 0,
+    "vertices": 946,
+    "volume_mm3": 30763.734001330624
+  }
+}

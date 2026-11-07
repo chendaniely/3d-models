@@ -19,9 +19,8 @@ flowchart LR
   yml --> gallery
   gallery --> pages
   built --> railparts -.-> railup
-  built -.-> gauges
+  built --> gauges
 
   classDef planned stroke-dasharray: 5 5
   class railup planned
-  class gauges planned
 ```

@@ -140,11 +140,23 @@ def clashing_sizes(model: Model, wanted: dict[str, dict[str, str]]) -> str | Non
     return None
 
 
-def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:
-    """The first size that changes a parameter the design's eval.json doesn't list, or None.
-    Without this, solidcraft-cli builds the base geometry under the size's name and exits 0."""
+def parameter_names(model: Model) -> set[str]:
+    """A design's parameters: the numbers its eval.json lists, and the texts (a label it
+    engraves) that only the design itself lists, under text_params."""
     measured = json.loads(model.built("eval.json").read_text(encoding="utf-8"))
     names = {param["name"] for param in measured.get("params", [])}
+    try:
+        design = json.loads(model.design.read_text(encoding="utf-8"))
+    except ValueError:
+        return names
+    texts = design.get("text_params", []) if isinstance(design, dict) else []
+    return names | {param["name"] for param in texts}
+
+
+def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | None:
+    """The first size that changes a parameter the design doesn't have, or None. Without this,
+    solidcraft-cli builds the base geometry under the size's name and exits 0."""
+    names = parameter_names(model)
     for size, changes in wanted.items():
         for name in changes:
             if name not in names:
