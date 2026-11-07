@@ -31,6 +31,27 @@ shade or the bare bulb; (4) when the redesign happens.
 | 9 | Scenario: Dan wants to see the rail's five parts rendered (he asked: "did you redesign the part? i dont' see anythign udpated in the website"). When should they reach the live gallery? | Publish now, retune later: the five parts are built at the guessed sizes, their pages saying which are placeholders, and merged to `main` as soon as they're built; his measurements then retune and rebuild them, and they're published again. Answer 4's measure-first order changes: the privacy task, the five parts, the superseded status, a mid-phase merge, then his measurements and the retune. Not chosen: measuring first and publishing right after building (the recommended option), or only at the phase end | Not the recommended option; no reason given beyond his question above. |
 | 10 | Scenario: the 18 files no scan can read (18: 13 STLs and 5 pictures of the rail's five parts, at placeholder sizes) are about to go to the public gallery (Task 8). Does Dan OK them going out? | OK, all 18, by name: `rail-arm-socket-25mm.stl`, `rail-arm-socket-3-4in.stl`, `rail-arm-socket.png`, `rail-arm-socket.stl`, `rail-arm-tip-25mm.stl`, `rail-arm-tip-3-4in.stl`, `rail-arm-tip.png`, `rail-arm-tip.stl`, `rail-carrier-25mm.stl`, `rail-carrier-3-4in.stl`, `rail-carrier.png`, `rail-carrier.stl`, `rail-feet-25mm.stl`, `rail-feet-3-4in.stl`, `rail-feet.png`, `rail-feet.stl`, `rail-shade.png`, `rail-shade.stl`. Each STL's header holds only "SolidCraft STL" and its model's name; the pictures are renders with no metadata. Not chosen: some held back, or all held | The recommended option; no reason given. |
 
+## The store gauges (2026-11-06)
+
+Before buying the dowels, Dan asked for a gauge to carry to the store, in his words: "[two
+hardware stores near him] has a few dowel sizes, can we create a small thing grid that i can take
+to the store and measure all of them? for tollerances. we only need the larger-ish sizes from half
+inch to 2 in really. and the printer i have is a bambu p2s printer." (The stores' names and
+neighbourhood are left out of this public page.) His Bambu P2S prints up to 256 mm square, so a
+row of 2-inch holes at several clearances doesn't fit on one plate. He then asked: "i do plan to
+sand and apply finishing to the dowels in the final setup. would that change the
+thickness/tolerances when i'm measuring?" The agent's answer: yes, by tenths of a millimetre both
+ways (sanding takes about 0.1 to 0.3 mm off the diameter, a film finish adds about 0.05 to 0.1 mm
+a coat, and a dowel's diameter moves by about 0.1 to 0.25 mm between a dry winter and a damp
+summer), so the store measures, and the fit is tested after the finishing (decided without Dan,
+3).
+
+The batch: (11) what kind of gauge goes to the store.
+
+| # | Question | Answer | Dan's reason, in his words |
+|---|---|---|---|
+| 11 | Scenario: at the store Dan pulls out a dowel labelled 1 inch that's really 25.1 mm and a bit oval; at home he sands and finishes it, then wants to know how much it changed. Which gauge is in his pocket? | Both, as two models he prints: a taper card, one plate with two tapered windows, 12 to 32 mm and 31 to 52 mm, read in millimetres and in inch sizes where the dowel stops, checked against a coin; and a hole grid, each inch size from 1/2 to 2 inches with holes from 0.6 mm under to 0.4 mm over in 0.2 mm steps, marked by dots, on several bed-sized plates. Not chosen: one hole per size, each exactly its label | The recommended option (the taper card), and the hole grid as well: "let's make models for both i'll print both the taper card and hole grid" |
+
 ## Decided without Dan
 
 The mode is fully vibed, so a change to one of Dan's decisions or an approved design call is ruled
@@ -40,3 +61,4 @@ on, logged here, and named in the next briefing.
 |---|---|---|---|
 | 1 | The wall feet have no keyhole and no depth gauge, which the calls Dan approved in answer 6 listed. Each foot is screwed through its plate where the rail stands in front of the screw, under a printed cap; the top cup is deep, so the rail lifts into it past the bottom cup's rim; and a screw up through the bottom cup's floor into the rail's end holds the rail down. | The phase-start council found a keyhole only stops a foot dropping. Lifting a carrier or a planter raised the rail, pushed the top foot up off its screw, and the rail could then lean off the wall with the light on it (critical: goal fit 1, reliability 1). | Two small round caps show behind the rail, where a keyhole showed nothing; the look test (Task 9) judges them. |
 | 2 | Scenario S27 proves the arm tip's stem: the light hangs by its cord from the stem's grip for 48 hours, at three times its weight, and slips under 2 mm. | Answer 4 retired S27 with the cord clamp, but the stem's grip is a cord clamp too, and the load test already judges it (goal fit 8). | Nothing: it restores a check. |
+| 3 | The coupon is tried on the dowel after Dan sands and finishes it, not before, and the parts' `clearance` is one coupon step looser than the tightest hole the finished dowel goes into by hand; the coupon's page and S26 say so. | Dan plans to sand and finish the dowels (above): the fit that matters is the finished dowel's, and a dowel swells in damp weather. The carrier and the arm socket lock with wedges, which take up a hole a little loose; nothing takes up one too tight. | A joint a step looser than it needs to be, its wedge pushed a little further in; the load test shows whether it holds. |
