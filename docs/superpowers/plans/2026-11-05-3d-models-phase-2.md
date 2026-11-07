@@ -29,7 +29,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 9: The store gauges: a taper card and a hole grid, open.
+**Now:** Task 10: [Dan] Measure, weigh, and print the coupon, open.
 
 ***
 
@@ -2266,6 +2266,8 @@ placeholders. `phase-2` carries on after the merge.
 
 ### Task 9: The store gauges: a taper card and a hole grid
 
+> **Built differently** (closed 2026-11-06; commits f51e6df, b712432, 3bbad80): the card's windows are 11 to 36 mm and 30 to 55 mm and taper 0.11 mm per mm, not the listing's 11 to 33, 31 to 53 and 0.1, and its scales run only where a dowel can reach (`LO` and `HI` in the generator): a round dowel reaches about half its diameter past where it touches the sides, so the listing's card couldn't read 2 inches, 1 1/4 or 31.4 to 32.6 mm (Task 9's review, Important). The card is 251 by 161 mm, its scales 12 to 34 and 32 to 52 mm, its ticks 4.5 mm apart. Its test reads each engraved size from the saved design and checks it sits where a dowel of that size stops and can reach (`engraved` in `tests/conftest.py`), where the listing checked `cos_a` alone (Important). The grid's `band` is 10 mm and each number sits 1.2 mm under its own hole, clear of the row below, with a test; its page says the numbers are rounded to 0.1 mm and what a dowel through no hole means; `parameter_names` takes only named entries of a list, with a test (Minor).
+
 **Tier:** 2 · **Scenarios:** S33, S34
 
 Dan asked for a gauge to carry to the store, to read the dowels from 1/2 to 2 inches before he
@@ -2297,8 +2299,8 @@ run whole in a scratch clone.
   design lists (SolidCraft's eval leaves text parameters out, so `make models` refused a size
   changing one).
 
-- [ ] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
-- [ ] **Step 1: Write the failing tests.**
+- [x] **Step 0: Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
+- [x] **Step 1: Write the failing tests.**
 
 `tests/test_dowel_taper_card.py`:
 
@@ -2474,12 +2476,12 @@ def test_build_takes_a_size_changing_a_text_parameter_only_the_design_lists(
     assert models.main(["check"], root=repo) == 0
 ```
 
-- [ ] **Step 2: Run them; watch them fail.** `uv run --frozen pytest -q
+- [x] **Step 2: Run them; watch them fail.** `uv run --frozen pytest -q
   tests/test_dowel_taper_card.py tests/test_dowel_hole_grid.py tests/test_models.py`. Expected:
   `13 failed, 34 passed`: nine with `FileNotFoundError` for a gauge's `.eval.json`, two with
   `KeyError: 'material'`, one listing no sizes, and the text parameter's with `assert 1 == 0`, its
   stderr "size '1/2 in' changes 'label', which the design has no parameter named".
-- [ ] **Step 3a: The text parameters.** In `scripts/models.py`, `unknown_parameter` takes its
+- [x] **Step 3a: The text parameters.** In `scripts/models.py`, `unknown_parameter` takes its
   names from a new `parameter_names`; replace its head, down to its `for` line, with:
 
 ```python
@@ -2504,7 +2506,7 @@ def unknown_parameter(model: Model, wanted: dict[str, dict[str, str]]) -> str | 
 ```
 
   Then `uv run --frozen pytest -q tests/test_models.py` passes.
-- [ ] **Step 3b: Build the designs.** Write this script to `.git/gauges.py`, run
+- [x] **Step 3b: Build the designs.** Write this script to `.git/gauges.py`, run
   `uv run --no-project python .git/gauges.py .`, then `solidcraft-cli run
   .git/dowel-taper-card-script.json --quiet` (about two minutes: the engraving) and
   `solidcraft-cli run .git/dowel-hole-grid-script.json --quiet`; each saves its `.sc`.
@@ -2811,7 +2813,7 @@ if __name__ == "__main__":
         print(out, len(cmds))
 ```
 
-- [ ] **Step 4: Write their pages.**
+- [x] **Step 4: Write their pages.**
 
 `models/dowel-taper-card/model.yml`:
 
@@ -2912,17 +2914,17 @@ notes: |
   how a part fits: the [fit-test coupon](dowel-fit-coupon.html) does, on the finished dowel.
 ```
 
-- [ ] **Step 5: Build them.** `make models` (about eight minutes: the card's engraving is slow to
+- [x] **Step 5: Build them.** `make models` (about eight minutes: the card's engraving is slow to
   export, draw and measure). Look at both pictures, and at the 1/2-inch and 2-inch tiles in a
   slicer or SolidCraft: every number readable, nothing running into a hole or a window.
-- [ ] **Step 6: The docs.** In `website/_overview.qmd`, the edge `  built -.-> gauges` becomes
+- [x] **Step 6: The docs.** In `website/_overview.qmd`, the edge `  built -.-> gauges` becomes
   `  built --> gauges` and the line `  class gauges planned` goes;
   in `README.md`, the status's second sentence reads "Phase 2, under way, replaces those two with
   the rail's five parts, then prints, tests and installs them; two gauges, a taper card and a hole
   grid, measure the dowels at the store first."
-- [ ] **Step 7: Run the checks; they pass.** `make check`. Expected: every test passes twice,
+- [x] **Step 7: Run the checks; they pass.** `make check`. Expected: every test passes twice,
   the thirteen new ones included, and every built STL is watertight (`tests/test_meshes.py`).
-- [ ] **Step 8: Commit.** Write the message to `.git/COMMIT_MSG`:
+- [x] **Step 8: Commit.** Write the message to `.git/COMMIT_MSG`:
 
 ```text
 feat(models): 🤖 add the taper card and the hole grid, gauges for the store
@@ -2951,7 +2953,7 @@ Co-Authored-By: <the model's own line>
   `git add models/dowel-taper-card models/dowel-hole-grid tests/test_dowel_taper_card.py tests/test_dowel_hole_grid.py scripts/models.py tests/test_models.py website/_overview.qmd README.md`,
   then `git commit -F .git/COMMIT_MSG`, then `git log -1 --format='%(trailers)'` shows the
   `Plan:` line.
-- [ ] **Step 9: Review, look forward, close.** The review looks at the pictures and the pages too.
+- [x] **Step 9: Review, look forward, close.** The review looks at the pictures and the pages too.
 
   - **Review (Tier 2: one reviewer under Standards and Spec, as Tasks 2 to 7 had; re-review only
     if a fix changes behaviour beyond its finding),** from `$(cat .git/TASK_BASE)`.
@@ -3411,3 +3413,4 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 6, review | Minor | `models/rail-shade` | Its picture shows the open rim, not the top with its notches and vents | open |
 | Task 6, review | Minor | `models/rail-shade/model.yml` | The notes don't say the shade needs a bed about 155 mm across | open |
 | Task 7, review | Minor | `models/sconce-*/model.yml` | The superseded notes cite "Phase 2 Q&A 1 to 4" on a public gallery page, reachable only through the Design page | open |
+| Task 9, review | Minor | `models/dowel-taper-card`, `models/dowel-hole-grid` | Whether 0.6 mm ticks and 5 to 7 mm engraved numbers in the built-in font's regular face print legibly with a 0.4 mm nozzle is a judgement; Dan's first print (Task 10) shows it | open |
