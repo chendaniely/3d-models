@@ -17,15 +17,17 @@ website:
         text: Home
       - href: models.qmd
         text: Models
-      - href: architecture.qmd
-        text: Architecture
-      - href: design.qmd
-        text: Design
-      - href: changelog.md
-        text: Changelog
-      - href: how-we-work.md
-        text: How we work
     right:
+      - text: Repo
+        menu:
+          - href: architecture.qmd
+            text: Architecture
+          - href: design.qmd
+            text: Design
+          - href: changelog.md
+            text: Changelog
+          - href: how-we-work.md
+            text: How we work
       - icon: github
         href: https://github.com/chendaniely/3d-models
         aria-label: The repo on GitHub
