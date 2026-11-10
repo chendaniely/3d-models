@@ -34,7 +34,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 1: The final whole-branch review.
+**Now:** Phase end, step 2: The rest of the ledger copied into the plan.
 
 ***
 
@@ -3425,7 +3425,7 @@ The same nine steps as Phase 1's Task 10, each one box ending in its commit
 first unticked box. This is the last phase planned: step 5 offers Dan each Later row by *Asking
 Dan*: plan it, keep it optional, or drop it.
 
-- [ ] **1. The final whole-branch review**
+- [x] **1. The final whole-branch review**
 - [ ] **2. The rest of the ledger copied into the plan**
 - [ ] **3. The phase-end council** (`…-phase-2-end-council.md`, with its Design-page line)
 - [ ] **4. The phase-end list worked through**
@@ -3469,3 +3469,9 @@ Dan*: plan it, keep it optional, or drop it.
 | Task 6, review | Minor | `models/rail-shade/model.yml` | The notes don't say the shade needs a bed about 155 mm across | open |
 | Task 7, review | Minor | `models/sconce-*/model.yml` | The superseded notes cite "Phase 2 Q&A 1 to 4" on a public gallery page, reachable only through the Design page | open |
 | Task 9, review | Minor | `models/dowel-taper-card`, `models/dowel-hole-grid` | Whether 0.6 mm ticks and 5 to 7 mm engraved numbers in the built-in font's regular face print legibly with a 0.4 mm nozzle is a judgement; Dan's first print (Task 10) shows it | open |
+| Final review, Spec 1 | Minor | `tests/test_rail_*.py` | S28's parts are tested at 1 inch; the other sizes are held only as closed meshes (the outlines and the feet's volume were seen to change with size, by hand) | open |
+| Final review, re-check | Minor | `tests/test_dowel_hole_grid.py` | Each size's tile is measured by its outline, which follows from its widest hole; no hole's own diameter is measured | open |
+| Final review, Standards | Minor | `scripts/privacy.py:109` | `jpeg_walk` returns two positional optionals, which helped hide its bug; a NamedTuple would name them | open |
+| Final review, Standards | Minor | `scripts/privacy.py:48,56` | The same three APPn segments are listed twice, by name and by marker | open |
+| Final review, Standards | Minor | `scripts/gallery.py:154,181` | The same bracket escaping twice in one function | open |
+| Final review, Standards | Minor | `tests/` | Repeated setup: `PLATE_MM` and `LAYER_MM` twice, near-copy tests in the two gauges, the rail's clearance and wedge checks, two identical bodies in `test_privacy.py`; `standing_on` might read better as `bodies_except` | open |
