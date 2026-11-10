@@ -15,9 +15,8 @@ for each, the check allows nothing but a colour profile and the format's own hou
 refuses the formats it can't read inside (HEIC, AVIF, RAW, video). Since Pillow reads past a
 chunk it doesn't know and stops at the image's end, the file's own structure is checked first: a
 PNG, JPEG or WebP may hold only the chunks or segments a picture needs, and no image anything
-after its end. What a
-photo shows (a window's view, a street, a face) no check can see: Dan looks at each before it's
-staged.
+after its end. What a photo shows (a window's view, a street, a face) no check can see: Dan looks
+at each before it's staged.
 """
 
 from __future__ import annotations
