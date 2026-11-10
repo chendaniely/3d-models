@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`, its start merged to `main` (#2, `7b53336`), and the rail's parts at placeholder sizes (#3, `20c359f`) · two store gauges built (Phase 2 Q&A 11, Task 9), trimmed to share a plate, their numbers raised for a second colour (Q&A 12 to 14) · the lamp paused at Task 10, Phase 2 ending without it (Q&A 15)
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 on `phase-2`, its start merged to `main` (#2, `7b53336`), and the rail's parts at placeholder sizes (#3, `20c359f`) · two store gauges built (Phase 2 Q&A 11, Task 9), trimmed to share a plate, their numbers raised for a second colour (Q&A 12 to 14) · the lamp paused at Task 10, Phase 2 ending without it (Q&A 15) · Phase 2 PR open (#N)
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the

@@ -34,7 +34,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 7: The changelog and status.
+**Now:** Phase end, step 8: The PR.
 
 ***
 
@@ -3431,7 +3431,7 @@ Dan*: plan it, keep it optional, or drop it.
 - [x] **4. The phase-end list worked through**
 - [x] **5. The forward look, and the Later rows offered to Dan**
 - [x] **6. The retro** (`…-phase-2-retro.md`, with its Design-page line)
-- [ ] **7. The changelog and status**
+- [x] **7. The changelog and status**
 - [ ] **8. The PR:** `chore(repo): 🤖 merge Phase 2: the rail's parts and the store gauges (#N)`; it
   adds the gauges' 16 STL and PNG files, which no scan can read, so it waits for Dan's look at each
   before the merge

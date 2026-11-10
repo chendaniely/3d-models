@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-11-09: Phase 2, the rail's parts and the store gauges
+
+- **The rail's five parts:** wall feet, a carrier, an arm socket, an arm tip and a shade, on the
+  gallery at placeholder sizes. They are designs, not yet printed or load-tested.
+- **Two gauges for reading a dowel:** a taper card, and a hole grid with a tile for every 1/8 inch
+  from 1/2 to 2 inches. The card and a tile up to 1 inch share a Bambu P2S's plate; they are 4 mm
+  thick, with raised numbers that one filament change prints in a second colour.
+- **Paused:** measuring, tuning, testing and installing the rail (Phase 2 Q&A 15). Its steps stay in
+  the plan, and their scenarios are on the spec's Later list.
+- **The checks:** `make privacy` looks inside a JPEG's segments and refuses more that could carry
+  text; `make docs` fails if a page would load anything from another host, and the site's fonts and
+  scripts are now served from the site itself.
+- **Superseded:** Phase 1's wall block and cord clamp stay on the gallery, marked as replaced.
+
 ## 2026-11-05: Phase 1, the repo and the first models
 
 - **The pipeline:** `make models` builds each changed SolidCraft design into its STL, an STL per
