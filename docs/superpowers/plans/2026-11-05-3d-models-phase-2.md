@@ -33,7 +33,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 13: [Dan] The load test, paused.
+**Now:** Task 14: [Dan] Install it, paused.
 
 ***
 
@@ -3276,6 +3276,8 @@ PLA (D8), and the joint by hand.
 ### Task 13: [Dan] The load test
 
 **Tier:** none: Dan runs it; the agent records it (Tier 3) · **Scenarios:** S13, S27, S30
+
+> **Paused, not done** (Phase 2 Q&A 15, 2026-11-09): the load test waits with the lamp. The steps stay unticked.
 
 - [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **1. Print the five parts in PETG,** matte, with each page's print settings, and a second
