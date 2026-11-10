@@ -49,6 +49,7 @@ notes: |
   the rail; pull the socket's and the tip's wedges out by their thick ends.
 
   - **Clearance:** the bore is the dowel plus `clearance`, from the fit-test coupon. The 0.4 mm
-    it's saved with is a placeholder until the coupon is printed.
+    it's saved with is a placeholder until the coupon is printed. So are `screw_d`, `head_d` and
+    `head_h`, until the screws are chosen, and `cord_w` and `cord_depth`, until the cord is measured.
 
   This is a first design, not yet printed or load-tested; its page will say when it has been.

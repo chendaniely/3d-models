@@ -1,0 +1,72 @@
+{
+  "design": "dowel-hole-grid.sc",
+  "sha256": "5ab28daffd17ece3b363c3ea42f19b57aa57a1693140d77663d79c39aa6521c6",
+  "sizes": {
+    "1/2 in": {
+      "dowel_d": "12.7 mm",
+      "label": "1/2 in"
+    },
+    "5/8 in": {
+      "dowel_d": "15.875 mm",
+      "label": "5/8 in"
+    },
+    "3/4 in": {
+      "dowel_d": "19.05 mm",
+      "label": "3/4 in"
+    },
+    "7/8 in": {
+      "dowel_d": "22.225 mm",
+      "label": "7/8 in"
+    },
+    "1-1/8 in": {
+      "dowel_d": "28.575 mm",
+      "label": "1 1/8 in"
+    },
+    "1-1/4 in": {
+      "dowel_d": "31.75 mm",
+      "label": "1 1/4 in"
+    },
+    "1-3/8 in": {
+      "dowel_d": "34.925 mm",
+      "label": "1 3/8 in"
+    },
+    "1-1/2 in": {
+      "dowel_d": "38.1 mm",
+      "label": "1 1/2 in"
+    },
+    "1-5/8 in": {
+      "dowel_d": "41.275 mm",
+      "label": "1 5/8 in"
+    },
+    "1-3/4 in": {
+      "dowel_d": "44.45 mm",
+      "label": "1 3/4 in"
+    },
+    "1-7/8 in": {
+      "dowel_d": "47.625 mm",
+      "label": "1 7/8 in"
+    },
+    "2 in": {
+      "dowel_d": "50.8 mm",
+      "label": "2 in"
+    }
+  },
+  "solidcraft_cli": "solidcraft-cli 0.30.1",
+  "built": {
+    "dowel-hole-grid.stl": "304c8b42a9dbeb61e78d60b64fde807286db810e1dc0f496178b44e8b4a7e9e1",
+    "dowel-hole-grid.png": "412051386eff1455b67ba4135093398babbd10eb2e925686847555bbdea4db20",
+    "dowel-hole-grid.eval.json": "de92a53b72aab704dff3f2aa79278ab76cf4bbec877ef7859ddc2898a96e1e76",
+    "dowel-hole-grid-1-2in.stl": "1d35005d9de8a75ed40e6e3175f0131c5e06d5468b0d8c8faf4b10d73a14a624",
+    "dowel-hole-grid-5-8in.stl": "10d73e5444ef3bab3294210ffa9145e86e7eaef7733ee5e39b8778c229f9872d",
+    "dowel-hole-grid-3-4in.stl": "1d6f1f5302565ea659067ca2664eb3749ec379b59c77901f3637ef556e12d839",
+    "dowel-hole-grid-7-8in.stl": "552104fc42e344fdf03a6b9733050052237338449f23fa17fa6fe9f85ae8d7d5",
+    "dowel-hole-grid-1-1-8in.stl": "ea737783a9fe6bcb1fbc1f2109d29ed14fbc5656b0b2cf15a4dcc52d94155608",
+    "dowel-hole-grid-1-1-4in.stl": "b9aded989f8cc476bee20b3196a54f8cbaea6aca44845ecb1c610cd7a4c62e50",
+    "dowel-hole-grid-1-3-8in.stl": "e44f63a0448a3d6176937784982a6aa47bdeb5454184578fdb809cddc51ef7b1",
+    "dowel-hole-grid-1-1-2in.stl": "68f28f903d74ec9117df84b0ffeeaf12c538b59f123e8fd8bc81aef4e3247b2d",
+    "dowel-hole-grid-1-5-8in.stl": "432113812f1ebcb951a42808182c78b155556b1b4bee6e8826f7e0cce869c0ee",
+    "dowel-hole-grid-1-3-4in.stl": "5d5d5d5e200106f9cc61016f03767d8c2b51e466e51e367c0e7cd21d6da7191c",
+    "dowel-hole-grid-1-7-8in.stl": "1546d56f7e0dd73bb72f40785df7046c9eeb8d3476425f9303677456eb9399b0",
+    "dowel-hole-grid-2in.stl": "5d7b15562cd4473dc266537f65a508e6fd37f2ccf15ffc601abb3cc6a5aa058b"
+  }
+}

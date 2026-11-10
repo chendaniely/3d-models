@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import stat
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -81,3 +82,40 @@ def params(model) -> dict[str, float]:
 def body(model, name: str) -> dict:
     """One body of a model, by its name in the design."""
     return next(b for b in measured(model)["bodies"] if b["name"] == name)
+
+
+def standing_on(model, base: str) -> list[dict]:
+    """Every body but a model's base: its raised words and ticks, each its own closed body standing
+    on the base's top (SolidCraft joins many small solids slowly)."""
+    return [b for b in measured(model)["bodies"] if b["name"] != base]
+
+
+def lettering(model) -> list[tuple[str, float, float, float]]:
+    """Every text a model's design letters, raised or cut: (its words, x, y, height), from the saved
+    design."""
+    found = []
+
+    def walk(node) -> None:
+        if isinstance(node, dict):
+            if node.get("type") == "text" and "at" in node:
+                found.append((node["text"], node["at"][0], node["at"][1], node["height"]))
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    walk(json.loads(model.design.read_text(encoding="utf-8")))
+    return found
+
+
+def stl_extents(path: Path) -> list[float]:
+    """The length, width and height of a binary STL's bounding box."""
+    data = path.read_bytes()
+    count = struct.unpack_from("<I", data, 80)[0]
+    corners = [
+        struct.unpack_from("<3f", data, 84 + 50 * i + 12 * k)
+        for i in range(count)
+        for k in (1, 2, 3)
+    ]
+    return [max(c[axis] for c in corners) - min(c[axis] for c in corners) for axis in range(3)]

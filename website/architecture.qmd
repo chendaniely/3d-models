@@ -41,17 +41,20 @@ flowchart LR
 
 ## The rail, part by part
 
+The five printed parts are designed and on the gallery, at placeholder sizes. None of it has been
+printed to use or put up: the lamp is paused (Phase 2 Q&A 15).
+
 ```{mermaid}
-%%| fig-cap: "The grow-light rail, from the wall to the light: what holds what. Solid: built. Dashed: planned, labelled with the phase that brings it."
+%%| fig-cap: "The grow-light rail, from the wall to the light: what holds what. Solid: built, as designs. Dashed: planned or paused, labelled as such."
 flowchart LR
   wall["the wall<br/>a stud, or toggle bolts"]
   feet["rail-feet<br/>both screwed behind the rail, under caps;<br/>the rail screwed down in the bottom cup<br/>Phase 2"]
-  rail["the rail<br/>a dowel, up to 48 in"]
+  rail["the rail<br/>a dowel, up to 48 in<br/>paused"]
   carrier["rail-carrier<br/>a U pushed on from the front,<br/>wedged behind the rail, padded off the wall<br/>Phase 2"]
   socket["rail-arm-socket<br/>down the carrier's dovetail;<br/>the arm wedged in it<br/>Phase 2"]
-  arm["the arm<br/>a dowel, 550 mm"]
+  arm["the arm<br/>a dowel, 550 mm<br/>paused"]
   tip["rail-arm-tip<br/>wedged on the arm's end;<br/>its stem grips the cord<br/>Phase 2"]
-  light["the Barrina<br/>hanging inside the shade on its cord"]
+  light["the Barrina<br/>hanging inside the shade on its cord<br/>paused"]
   shade["rail-shade<br/>PETG, turned onto the stem's lugs;<br/>10 mm of air round the lamp<br/>Phase 2"]
   planter["a planter adapter<br/>on a second carrier, Later (S16)"]
 
@@ -61,19 +64,17 @@ flowchart LR
   rail -.-> planter
 
   classDef planned stroke-dasharray: 5 5
-  class planter planned
+  class planter,rail,arm,light planned
 ```
 
 ## The light's cord
 
 ```{mermaid}
-%%| fig-cap: "The cord is pressed in from the side everywhere it goes, since its plug and timer won't pass a hole. Dashed: planned, labelled with the phase that brings it."
+%%| fig-cap: "The cord is pressed in from the side everywhere it goes, since its plug and timer won't pass a hole. This is the path the parts are designed for: nothing is installed yet."
 flowchart LR
   socketcord["the socket"] --> stem["up the tip's stem,<br/>gripped · Phase 2"] --> keel["along the tip's keel · Phase 2"]
   keel --> clips["under the arm,<br/>in three clips · Phase 2"] --> joint["round the joint"]
   joint --> behind["down behind the rail,<br/>through each carrier's channel · Phase 2"]
   behind --> foot["the bottom foot's groove · Phase 2"] --> outlet["the outlet"]
-
-  classDef planned stroke-dasharray: 5 5
 ```
 

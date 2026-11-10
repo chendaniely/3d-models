@@ -26,6 +26,11 @@ def open_edges(path: Path) -> int:
     return sum(1 for n in edges.values() if n != 2)
 
 
+def test_the_built_stls_are_there_to_check() -> None:
+    """Parametrizing over an empty list would collect nothing and pass."""
+    assert STLS
+
+
 @pytest.mark.parametrize("path", STLS, ids=lambda p: p.name)
 def test_every_built_stl_is_watertight(path: Path) -> None:
     assert open_edges(path) == 0

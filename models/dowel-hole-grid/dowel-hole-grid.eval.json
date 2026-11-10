@@ -1,0 +1,1461 @@
+{
+  "bodies": [
+    {
+      "area_mm2": 13709.204219881853,
+      "bbox": {
+        "max": [
+          93.39999999999999,
+          87.6,
+          4.000000000000001
+        ],
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "center_of_mass": [
+        46.3624952977291,
+        45.091149696525044,
+        1.9999999999999978
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 26,
+      "face_types": {
+        "cylinder": 7,
+        "plane": 6
+      },
+      "faces": 13,
+      "kernel": {
+        "edges": 54,
+        "faces": 20,
+        "shells": 1,
+        "vertices": 36
+      },
+      "mass_g": 26.550305674758402,
+      "material": "Default",
+      "name": "Tile",
+      "vertices": 22,
+      "volume_mm3": 20581.632306014264
+    },
+    {
+      "area_mm2": 36.09300475855532,
+      "bbox": {
+        "max": [
+          13.164371894960963,
+          46.6819730305181,
+          4.800000000000002
+        ],
+        "min": [
+          9.52242725192879,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        11.393158391750614,
+        43.750963389799786,
+        4.399999999797884
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.007950378291154579,
+      "material": "Default",
+      "name": "Lettering",
+      "vertices": 46,
+      "volume_mm3": 6.163083946631456
+    },
+    {
+      "area_mm2": 35.95468725298305,
+      "bbox": {
+        "max": [
+          17.77828246983676,
+          46.599999999999994,
+          4.800000000000002
+        ],
+        "min": [
+          13.749893541518807,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        15.991110023326458,
+        43.75693211163656,
+        4.400000000149849
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 54,
+      "face_types": {
+        "cylinder": 2,
+        "plane": 18
+      },
+      "faces": 20,
+      "kernel": {
+        "edges": 54,
+        "faces": 20,
+        "shells": 1,
+        "vertices": 36
+      },
+      "mass_g": 0.007957866128904895,
+      "material": "Default",
+      "name": "Lettering (2)",
+      "vertices": 36,
+      "volume_mm3": 6.168888472019297
+    },
+    {
+      "area_mm2": 3.887067523438746,
+      "bbox": {
+        "max": [
+          19.50361958836054,
+          41.95486160397444,
+          4.8
+        ],
+        "min": [
+          18.742441447835343,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        19.12303051809794,
+        41.52743080198722,
+        4.3999999999999995
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0006715244290354864,
+      "material": "Default",
+      "name": "Lettering (3)",
+      "vertices": 8,
+      "volume_mm3": 0.5205615728957259
+    },
+    {
+      "area_mm2": 44.94897241924731,
+      "bbox": {
+        "max": [
+          24.332221433640882,
+          46.681973030518094,
+          4.8000000000000025
+        ],
+        "min": [
+          20.58097941802697,
+          41.021930447125605,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        22.458365602056034,
+        43.83092881116297,
+        4.400000000005454
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 84,
+      "face_types": {
+        "cylinder": 22,
+        "other": 4,
+        "plane": 4
+      },
+      "faces": 30,
+      "kernel": {
+        "edges": 96,
+        "faces": 34,
+        "shells": 1,
+        "vertices": 64
+      },
+      "mass_g": 0.010132701421577395,
+      "material": "Default",
+      "name": "Lettering (4)",
+      "vertices": 56,
+      "volume_mm3": 7.854807303548369
+    },
+    {
+      "area_mm2": 36.09300475855531,
+      "bbox": {
+        "max": [
+          42.964371894960955,
+          46.681973030518094,
+          4.8000000000000025
+        ],
+        "min": [
+          39.32242725192878,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        41.19315839175061,
+        43.750963389799786,
+        4.399999999797884
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.00795037829115459,
+      "material": "Default",
+      "name": "Lettering (5)",
+      "vertices": 46,
+      "volume_mm3": 6.163083946631464
+    },
+    {
+      "area_mm2": 39.99796035681509,
+      "bbox": {
+        "max": [
+          47.47679205110007,
+          46.599999999999994,
+          4.800000000000002
+        ],
+        "min": [
+          43.686515257856485,
+          41.02193044712561,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        45.546337406330125,
+        43.87133460355869,
+        4.399999999837646
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 10,
+        "other": 3,
+        "plane": 9
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 63,
+        "faces": 23,
+        "shells": 1,
+        "vertices": 42
+      },
+      "mass_g": 0.008920725461528466,
+      "material": "Default",
+      "name": "Lettering (6)",
+      "vertices": 40,
+      "volume_mm3": 6.9152910554484235
+    },
+    {
+      "area_mm2": 3.887067523438746,
+      "bbox": {
+        "max": [
+          49.30361958836053,
+          41.95486160397444,
+          4.8
+        ],
+        "min": [
+          48.54244144783534,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        48.92303051809794,
+        41.52743080198722,
+        4.3999999999999995
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0006715244290354864,
+      "material": "Default",
+      "name": "Lettering (7)",
+      "vertices": 8,
+      "volume_mm3": 0.5205615728957259
+    },
+    {
+      "area_mm2": 39.359485636377265,
+      "bbox": {
+        "max": [
+          54.16735273243435,
+          46.681973030518094,
+          4.8000000000000025
+        ],
+        "min": [
+          50.345848119233494,
+          41.02193044712561,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        52.25525637257058,
+        43.860937293587185,
+        4.400000000034185
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 27,
+      "face_types": {
+        "cylinder": 6,
+        "other": 3,
+        "plane": 2
+      },
+      "faces": 11,
+      "kernel": {
+        "edges": 48,
+        "faces": 18,
+        "shells": 1,
+        "vertices": 32
+      },
+      "mass_g": 0.009153206830086639,
+      "material": "Default",
+      "name": "Lettering (8)",
+      "vertices": 18,
+      "volume_mm3": 7.095509170609797
+    },
+    {
+      "area_mm2": 36.0930047585553,
+      "bbox": {
+        "max": [
+          72.76437189496097,
+          46.6819730305181,
+          4.800000000000002
+        ],
+        "min": [
+          69.1224272519288,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        70.99315839175063,
+        43.750963389799786,
+        4.399999999797883
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.007950378291154608,
+      "material": "Default",
+      "name": "Lettering (9)",
+      "vertices": 46,
+      "volume_mm3": 6.163083946631478
+    },
+    {
+      "area_mm2": 39.997960356815106,
+      "bbox": {
+        "max": [
+          77.27679205110009,
+          46.599999999999994,
+          4.800000000000002
+        ],
+        "min": [
+          73.48651525785648,
+          41.02193044712561,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        75.34633740633012,
+        43.871334603558694,
+        4.399999999837645
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 10,
+        "other": 3,
+        "plane": 9
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 63,
+        "faces": 23,
+        "shells": 1,
+        "vertices": 42
+      },
+      "mass_g": 0.008920725461528431,
+      "material": "Default",
+      "name": "Lettering (10)",
+      "vertices": 40,
+      "volume_mm3": 6.915291055448396
+    },
+    {
+      "area_mm2": 3.8870675234387226,
+      "bbox": {
+        "max": [
+          79.10361958836054,
+          41.95486160397444,
+          4.8
+        ],
+        "min": [
+          78.34244144783536,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        78.72303051809796,
+        41.52743080198723,
+        4.3999999999999995
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0006715244290354802,
+      "material": "Default",
+      "name": "Lettering (11)",
+      "vertices": 8,
+      "volume_mm3": 0.520561572895721
+    },
+    {
+      "area_mm2": 36.09300475855533,
+      "bbox": {
+        "max": [
+          83.87757274662881,
+          46.6819730305181,
+          4.8000000000000025
+        ],
+        "min": [
+          80.23562810359664,
+          41.099999999999994,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        82.10635924341845,
+        43.750963389799786,
+        4.399999999797884
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.007950378291154579,
+      "material": "Default",
+      "name": "Lettering (12)",
+      "vertices": 46,
+      "volume_mm3": 6.163083946631456
+    },
+    {
+      "area_mm2": 36.093004758555296,
+      "bbox": {
+        "max": [
+          13.164371894960963,
+          8.881973030518099,
+          4.800000000000002
+        ],
+        "min": [
+          9.52242725192879,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        11.393158391750614,
+        5.950963389799787,
+        4.399999999797884
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.00795037829115456,
+      "material": "Default",
+      "name": "Lettering (13)",
+      "vertices": 46,
+      "volume_mm3": 6.163083946631442
+    },
+    {
+      "area_mm2": 39.99796035681509,
+      "bbox": {
+        "max": [
+          17.676792051100072,
+          8.8,
+          4.8000000000000025
+        ],
+        "min": [
+          13.886515257856487,
+          3.2219304471256205,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        15.746337406330127,
+        6.071334603558698,
+        4.399999999837646
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 10,
+        "other": 3,
+        "plane": 9
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 63,
+        "faces": 23,
+        "shells": 1,
+        "vertices": 42
+      },
+      "mass_g": 0.00892072546152844,
+      "material": "Default",
+      "name": "Lettering (14)",
+      "vertices": 40,
+      "volume_mm3": 6.915291055448402
+    },
+    {
+      "area_mm2": 3.8870675234387493,
+      "bbox": {
+        "max": [
+          19.50361958836054,
+          4.1548616039744495,
+          4.8
+        ],
+        "min": [
+          18.742441447835343,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        19.12303051809794,
+        3.7274308019872247,
+        4.4
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0006715244290354871,
+      "material": "Default",
+      "name": "Lettering (15)",
+      "vertices": 8,
+      "volume_mm3": 0.5205615728957265
+    },
+    {
+      "area_mm2": 35.954687252983035,
+      "bbox": {
+        "max": [
+          24.44542228530873,
+          8.8,
+          4.800000000000002
+        ],
+        "min": [
+          20.417033356990775,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        22.658249838798422,
+        5.956932111636558,
+        4.400000000149849
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 54,
+      "face_types": {
+        "cylinder": 2,
+        "plane": 18
+      },
+      "faces": 20,
+      "kernel": {
+        "edges": 54,
+        "faces": 20,
+        "shells": 1,
+        "vertices": 36
+      },
+      "mass_g": 0.007957866128904888,
+      "material": "Default",
+      "name": "Lettering (16)",
+      "vertices": 36,
+      "volume_mm3": 6.168888472019293
+    },
+    {
+      "area_mm2": 36.0930047585553,
+      "bbox": {
+        "max": [
+          42.964371894960955,
+          8.881973030518099,
+          4.8000000000000025
+        ],
+        "min": [
+          39.32242725192878,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        41.19315839175061,
+        5.950963389799788,
+        4.399999999797884
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.00795037829115457,
+      "material": "Default",
+      "name": "Lettering (17)",
+      "vertices": 46,
+      "volume_mm3": 6.16308394663145
+    },
+    {
+      "area_mm2": 39.99796035681508,
+      "bbox": {
+        "max": [
+          47.47679205110007,
+          8.8,
+          4.8000000000000025
+        ],
+        "min": [
+          43.686515257856485,
+          3.2219304471256205,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        45.546337406330125,
+        6.071334603558701,
+        4.399999999837646
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 10,
+        "other": 3,
+        "plane": 9
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 63,
+        "faces": 23,
+        "shells": 1,
+        "vertices": 42
+      },
+      "mass_g": 0.00892072546152845,
+      "material": "Default",
+      "name": "Lettering (18)",
+      "vertices": 40,
+      "volume_mm3": 6.91529105544841
+    },
+    {
+      "area_mm2": 3.8870675234387493,
+      "bbox": {
+        "max": [
+          49.30361958836053,
+          4.1548616039744495,
+          4.8
+        ],
+        "min": [
+          48.54244144783534,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        48.92303051809793,
+        3.7274308019872247,
+        4.4
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0006715244290354871,
+      "material": "Default",
+      "name": "Lettering (19)",
+      "vertices": 8,
+      "volume_mm3": 0.5205615728957265
+    },
+    {
+      "area_mm2": 41.924553488186,
+      "bbox": {
+        "max": [
+          54.12831795599716,
+          8.881973030518097,
+          4.8000000000000025
+        ],
+        "min": [
+          50.439531582682754,
+          3.2219304471256205,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        52.189466398779956,
+        5.981988064515904,
+        4.399999999864774
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 15,
+        "other": 4,
+        "plane": 3
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 69,
+        "faces": 25,
+        "shells": 1,
+        "vertices": 46
+      },
+      "mass_g": 0.009494289234245529,
+      "material": "Default",
+      "name": "Lettering (20)",
+      "vertices": 40,
+      "volume_mm3": 7.359914135074053
+    },
+    {
+      "area_mm2": 36.093004758555324,
+      "bbox": {
+        "max": [
+          72.76437189496097,
+          8.881973030518099,
+          4.8000000000000025
+        ],
+        "min": [
+          69.12242725192878,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        70.99315839175063,
+        5.950963389799785,
+        4.399999999797884
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 69,
+      "face_types": {
+        "cylinder": 17,
+        "other": 1,
+        "plane": 7
+      },
+      "faces": 25,
+      "kernel": {
+        "edges": 72,
+        "faces": 26,
+        "shells": 1,
+        "vertices": 48
+      },
+      "mass_g": 0.007950378291154582,
+      "material": "Default",
+      "name": "Lettering (21)",
+      "vertices": 46,
+      "volume_mm3": 6.163083946631459
+    },
+    {
+      "area_mm2": 39.9979603568151,
+      "bbox": {
+        "max": [
+          77.27679205110009,
+          8.8,
+          4.8000000000000025
+        ],
+        "min": [
+          73.48651525785648,
+          3.2219304471256205,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        75.34633740633014,
+        6.071334603558702,
+        4.399999999837645
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 10,
+        "other": 3,
+        "plane": 9
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 63,
+        "faces": 23,
+        "shells": 1,
+        "vertices": 42
+      },
+      "mass_g": 0.008920725461528436,
+      "material": "Default",
+      "name": "Lettering (22)",
+      "vertices": 40,
+      "volume_mm3": 6.9152910554483995
+    },
+    {
+      "area_mm2": 3.8870675234387253,
+      "bbox": {
+        "max": [
+          79.10361958836054,
+          4.1548616039744495,
+          4.8
+        ],
+        "min": [
+          78.34244144783536,
+          3.3,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        78.72303051809796,
+        3.7274308019872247,
+        4.3999999999999995
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0006715244290354807,
+      "material": "Default",
+      "name": "Lettering (23)",
+      "vertices": 8,
+      "volume_mm3": 0.5205615728957215
+    },
+    {
+      "area_mm2": 44.94897241924725,
+      "bbox": {
+        "max": [
+          83.93222143364089,
+          8.881973030518097,
+          4.800000000000002
+        ],
+        "min": [
+          80.18097941802696,
+          3.2219304471256205,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        82.05836560205603,
+        6.030928811162982,
+        4.400000000005454
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 84,
+      "face_types": {
+        "cylinder": 22,
+        "other": 4,
+        "plane": 4
+      },
+      "faces": 30,
+      "kernel": {
+        "edges": 96,
+        "faces": 34,
+        "shells": 1,
+        "vertices": 64
+      },
+      "mass_g": 0.010132701421577375,
+      "material": "Default",
+      "name": "Lettering (24)",
+      "vertices": 56,
+      "volume_mm3": 7.854807303548353
+    },
+    {
+      "area_mm2": 41.80088132157882,
+      "bbox": {
+        "max": [
+          9.16181689141235,
+          85.1,
+          4.8
+        ],
+        "min": [
+          4.775017743080198,
+          78.1,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        6.836984444734127,
+        81.10828623223978,
+        4.3999999999999995
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 33,
+      "face_types": {
+        "plane": 13
+      },
+      "faces": 13,
+      "kernel": {
+        "edges": 33,
+        "faces": 13,
+        "shells": 1,
+        "vertices": 22
+      },
+      "mass_g": 0.010573087257672843,
+      "material": "Default",
+      "name": "Lettering (25)",
+      "vertices": 22,
+      "volume_mm3": 8.196191672614608
+    },
+    {
+      "area_mm2": 4.326300206368767,
+      "bbox": {
+        "max": [
+          14.060326472675655,
+          85.47260468417316,
+          4.8
+        ],
+        "min": [
+          13.166075230660041,
+          84.61809794180269,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        13.613200851667848,
+        85.04535131298792,
+        4.4
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.0007885963145771293,
+      "material": "Default",
+      "name": "Lettering (26)",
+      "vertices": 8,
+      "volume_mm3": 0.6113149725404103
+    },
+    {
+      "area_mm2": 19.645505900676035,
+      "bbox": {
+        "max": [
+          14.060326472675655,
+          83.47544357700497,
+          4.8
+        ],
+        "min": [
+          13.166075230660041,
+          78.1,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        13.613200851667848,
+        80.78772178850248,
+        4.3999999999999995
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 12,
+      "face_types": {
+        "plane": 6
+      },
+      "faces": 6,
+      "kernel": {
+        "edges": 12,
+        "faces": 6,
+        "shells": 1,
+        "vertices": 8
+      },
+      "mass_g": 0.004960821002165438,
+      "material": "Default",
+      "name": "Lettering (27)",
+      "vertices": 8,
+      "volume_mm3": 3.8455976760972383
+    },
+    {
+      "area_mm2": 45.139487109907016,
+      "bbox": {
+        "max": [
+          19.74378992193045,
+          83.57480482611783,
+          4.800000000000002
+        ],
+        "min": [
+          15.421575585521646,
+          78.1,
+          4.0
+        ]
+      },
+      "center_of_mass": [
+        17.55431031461369,
+        81.07367391586905,
+        4.399999998476346
+      ],
+      "closed": true,
+      "density_g_cm3": 1.29,
+      "edges": 60,
+      "face_types": {
+        "cylinder": 10,
+        "other": 2,
+        "plane": 10
+      },
+      "faces": 22,
+      "kernel": {
+        "edges": 63,
+        "faces": 23,
+        "shells": 1,
+        "vertices": 42
+      },
+      "mass_g": 0.011462209551973346,
+      "material": "Default",
+      "name": "Lettering (28)",
+      "vertices": 40,
+      "volume_mm3": 8.885433761219648
+    }
+  ],
+  "body_count": 29,
+  "params": [
+    {
+      "comment": "the dowel size this tile checks: 1 inch as saved; the page offers every 1/8 inch from 1/2 to 2",
+      "error": null,
+      "expression": "25.4 mm",
+      "model": false,
+      "name": "dowel_d",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "between one hole and the next",
+      "error": null,
+      "expression": "0.2 mm",
+      "model": false,
+      "name": "step",
+      "unit": "mm",
+      "value": 0.2
+    },
+    {
+      "comment": "hole 1: -0.6 mm from the size",
+      "error": null,
+      "expression": "dowel_d - 3 * step",
+      "model": false,
+      "name": "h1",
+      "unit": "mm",
+      "value": 24.799999999999997
+    },
+    {
+      "comment": "hole 2: -0.4 mm from the size",
+      "error": null,
+      "expression": "dowel_d - 2 * step",
+      "model": false,
+      "name": "h2",
+      "unit": "mm",
+      "value": 25.0
+    },
+    {
+      "comment": "hole 3: -0.2 mm from the size",
+      "error": null,
+      "expression": "dowel_d - 1 * step",
+      "model": false,
+      "name": "h3",
+      "unit": "mm",
+      "value": 25.2
+    },
+    {
+      "comment": "hole 4: the size itself",
+      "error": null,
+      "expression": "dowel_d + 0 * step",
+      "model": false,
+      "name": "h4",
+      "unit": "mm",
+      "value": 25.4
+    },
+    {
+      "comment": "hole 5: +0.2 mm from the size",
+      "error": null,
+      "expression": "dowel_d + 1 * step",
+      "model": false,
+      "name": "h5",
+      "unit": "mm",
+      "value": 25.599999999999998
+    },
+    {
+      "comment": "hole 6: +0.4 mm from the size",
+      "error": null,
+      "expression": "dowel_d + 2 * step",
+      "model": false,
+      "name": "h6",
+      "unit": "mm",
+      "value": 25.799999999999997
+    },
+    {
+      "comment": "plastic between neighbouring holes",
+      "error": null,
+      "expression": "4 mm",
+      "model": false,
+      "name": "wall",
+      "unit": "mm",
+      "value": 4.0
+    },
+    {
+      "comment": "centre to centre between holes, along and across",
+      "error": null,
+      "expression": "h6 + wall",
+      "model": false,
+      "name": "pitch",
+      "unit": "mm",
+      "value": 29.799999999999997
+    },
+    {
+      "comment": "the strip under each row where the holes' sizes stand",
+      "error": null,
+      "expression": "8 mm",
+      "model": false,
+      "name": "band",
+      "unit": "mm",
+      "value": 8.0
+    },
+    {
+      "comment": "the strip along the top with the size's name and the ring hole",
+      "error": null,
+      "expression": "12 mm",
+      "model": false,
+      "name": "head",
+      "unit": "mm",
+      "value": 12.0
+    },
+    {
+      "comment": "the tile's thickness, so each hole is this deep: stiff, quick to print",
+      "error": null,
+      "expression": "4 mm",
+      "model": false,
+      "name": "thick",
+      "unit": "mm",
+      "value": 4.0
+    },
+    {
+      "comment": "how far the words stand off the top: a second colour from the layer above thick",
+      "error": null,
+      "expression": "0.8 mm",
+      "model": false,
+      "name": "relief",
+      "unit": "mm",
+      "value": 0.8
+    },
+    {
+      "comment": "the hole for a key ring, to carry the tiles together",
+      "error": null,
+      "expression": "5 mm",
+      "model": false,
+      "name": "ring_d",
+      "unit": "mm",
+      "value": 5.0
+    },
+    {
+      "comment": "the tile's length",
+      "error": null,
+      "expression": "3 * pitch + wall",
+      "model": false,
+      "name": "tile_l",
+      "unit": "mm",
+      "value": 93.39999999999999
+    },
+    {
+      "comment": "the tile's width",
+      "error": null,
+      "expression": "2 * band + 2 * pitch + head",
+      "model": false,
+      "name": "tile_w",
+      "unit": "mm",
+      "value": 87.6
+    }
+  ],
+  "sketches": [
+    {
+      "curves": 476,
+      "dof": 0,
+      "id": 9,
+      "name": "Sketch1",
+      "profiles": 36,
+      "status": "solved",
+      "visible": false
+    }
+  ],
+  "timeline": [
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 1,
+      "ms": 1.1382919999999999,
+      "name": "Box1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "BoxFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 2,
+      "ms": 12.066749999999999,
+      "name": "Cylinder1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 3,
+      "ms": 10.70425,
+      "name": "Cylinder2",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 4,
+      "ms": 12.396,
+      "name": "Cylinder3",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 5,
+      "ms": 14.754083,
+      "name": "Cylinder4",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 6,
+      "ms": 21.77875,
+      "name": "Cylinder5",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 7,
+      "ms": 17.174625,
+      "name": "Cylinder6",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 8,
+      "ms": 21.25075,
+      "name": "Cylinder7",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "CylinderFeature",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 9,
+      "ms": 10.426167,
+      "name": "Sketch1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "Sketch",
+      "warning": null
+    },
+    {
+      "boolean_diagnostics": {
+        "events": [],
+        "truncated": false
+      },
+      "error": null,
+      "id": 10,
+      "ms": 62.530375,
+      "name": "Extrude1",
+      "rolled_back": false,
+      "suppressed": false,
+      "type": "ExtrudeFeature",
+      "warning": null
+    }
+  ],
+  "total": {
+    "area_mm2": 14539.17099312401,
+    "edges": 1361,
+    "faces": 514,
+    "mass_g": 26.737204441970025,
+    "open_bodies_skipped": 0,
+    "vertices": 912,
+    "volume_mm3": 20726.515071294583
+  }
+}

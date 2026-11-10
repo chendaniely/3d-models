@@ -4,7 +4,7 @@
 from them. Most are vibe coded: an agent builds the design and the tooling, and a person prints it
 and says what works.
 
-The first project is a grow-light rail: 1-inch wooden dowels and printed parts, in a Japandi style.
+The first project, paused before printing, is a grow-light rail: 1-inch wooden dowels and printed parts, in a Japandi style.
 A vertical rail stands on two wall feet with no screw in sight, and an arm wedged onto it holds the
 light up to 24 inches out from a corner wall, under a printed shade.
 
@@ -12,9 +12,10 @@ light up to 24 inches out from a corner wall, under a printed shade.
 can turn, its picture, its measurements and print settings, and the `.stl` and `.sc` files to
 download.
 
-**Status:** Phase 1 has merged: the gallery is live, with the fit-test coupon and the sconce's
-wall block and cord clamp. Phase 2, under way, replaces those two with the rail's five parts, then
-prints, tests and installs them.
+**Status:** Phases 1 and 2 have merged and the gallery is live, with the fit-test coupon, two gauges
+that read a dowel's real diameter (a taper card and a hole grid), and the rail's five parts. Those
+five are designs at placeholder sizes, not yet printed or load-tested: printing, testing and
+installing the rail are paused (Phase 2 Q&A 15). Next come new parts, by *Adding a model* below.
 
 ## Using a model
 

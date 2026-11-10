@@ -9,7 +9,8 @@ flowchart LR
   gallery["make docs<br/>doc copies + model pages + Quarto"]
   pages["GitHub Pages<br/>the gallery and its 3D viewer"]
   railparts["the grow-light rail's five parts<br/>Phase 2"]
-  railup["the rail look- and load-tested, and installed<br/>Phase 2"]
+  railup["the rail look- and load-tested, and installed<br/>paused, in no phase yet"]
+  gauges["two dowel gauges for the store:<br/>a taper card and a hole grid<br/>Phase 2"]
 
   design --> build --> built
   built --> ci
@@ -18,6 +19,7 @@ flowchart LR
   yml --> gallery
   gallery --> pages
   built --> railparts -.-> railup
+  built --> gauges
 
   classDef planned stroke-dasharray: 5 5
   class railup planned

@@ -29,7 +29,9 @@ notes: |
   | 3 | +0.6 mm | 26.0 mm |
   | 4 | +0.8 mm | 26.2 mm |
 
-  Push the dowel into each hole. The one to use is the tightest it goes into by hand, all the way,
-  without a mallet; it should hold the coupon up when you lift the dowel. Set each dowel part's
-  `clearance` to that hole's: `step` times its dots. If even four dots is too tight, change `step`
-  to 0.3 mm and print it again.
+  Try it on the dowel as it will be used, sanded and finished: both change its size by tenths of a
+  millimetre. Push the dowel into each hole and find the tightest it goes into by hand, all the
+  way, without a mallet; it should hold the coupon up when you lift the dowel. Set each dowel
+  part's `clearance` one hole looser: `step` times one more than that hole's dots, or four dots
+  if four is the tightest it goes into. A dowel swells in damp weather, and the parts' wedges take up a little slack where nothing can ease a joint
+  that's too tight. If even four dots is too tight, change `step` to 0.3 mm and print it again.
