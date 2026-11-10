@@ -29,7 +29,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 10: [Dan] Measure, weigh, and print the coupon, open.
+**Now:** Task 10: waiting on Dan: step 1, the light's weight (the gauges are printing).
 
 ***
 
