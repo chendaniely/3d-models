@@ -43,8 +43,9 @@ Tallied from the closing commits, and the fixes that name what they escaped from
 
 Across the phase: 70 commits to the start of this retro, 7 of them fixes; no reopen, and no red CI
 on a closing commit. The final review found 3 important in Standards and 3 in Spec, all fixed or
-re-rated. The council raised 5 important: 1 was fixed (the generator), 2 were step 7's own work, and
-2 were wrong when checked, as were 2 minors.
+re-rated. The council raised 8 important: 2 were fixed (the generator, an empty
+glob in a test), 2 were step 7's own work, 2 were re-rated minor when checked, and 2 were wrong, as
+were 2 minors.
 
 ## 4. Starting over
 
