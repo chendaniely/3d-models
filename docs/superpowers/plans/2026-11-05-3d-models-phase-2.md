@@ -33,7 +33,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 10: waiting on Dan: step 1, the light's weight (the gauges are printing).
+**Now:** Task 11: Retune the parts to Dan's measurements, and publish them again, paused.
 
 ***
 
@@ -2994,6 +2994,10 @@ Co-Authored-By: <the model's own line>
 ### Task 10: [Dan] Measure, weigh, and print the coupon
 
 **Tier:** none: Dan's measurements, recorded by the agent (Tier 3) · **Scenarios:** S26, S30
+
+> **Paused at step 0b** (Phase 2 Q&A 15, 2026-11-09): Dan paused the lamp to finish the project and design parts
+> afterwards. Steps 1 to 10 weren't done and stay unticked, as they were, for when the lamp resumes.
+> The gauges' own work (steps 0a and 0b) is built, and the gauges are printing.
 
 Runs in Dan's home. **Now** reads `waiting on Dan: <the step>` until each answer is in. The steps
 are asked by *Asking Dan*, one at a time, after the list. Dan's changes to the parts are settled
