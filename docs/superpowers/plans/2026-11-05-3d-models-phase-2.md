@@ -34,7 +34,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 2: The rest of the ledger copied into the plan.
+**Now:** Phase end, step 3: The phase-end council.
 
 ***
 
@@ -3426,7 +3426,7 @@ first unticked box. This is the last phase planned: step 5 offers Dan each Later
 Dan*: plan it, keep it optional, or drop it.
 
 - [x] **1. The final whole-branch review**
-- [ ] **2. The rest of the ledger copied into the plan**
+- [x] **2. The rest of the ledger copied into the plan**
 - [ ] **3. The phase-end council** (`…-phase-2-end-council.md`, with its Design-page line)
 - [ ] **4. The phase-end list worked through**
 - [ ] **5. The forward look, and the Later rows offered to Dan**
