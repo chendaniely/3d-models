@@ -33,7 +33,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 12: [Dan] The look test, paused.
+**Now:** Task 13: [Dan] The load test, paused.
 
 ***
 
@@ -3213,6 +3213,8 @@ Co-Authored-By: <the model's own line>
 
 **Tier:** none: Dan's verdict, recorded by the agent; Tier 1 if a photo is committed ·
 **Scenarios:** S11, S29
+
+> **Paused, not done** (Phase 2 Q&A 15, 2026-11-09): the look test waits with the lamp. The steps stay unticked.
 
 Settles "not sure if it'll look good with 3d printed parts and dowels" for a few hundred grams of
 PLA (D8), and the joint by hand.
