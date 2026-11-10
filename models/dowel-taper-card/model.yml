@@ -47,4 +47,6 @@ notes: |
 
   The card is 251 by 149 mm, so it prints on one plate with a hole-grid tile up to 1 inch: the
   card along the front of a Bambu P2S's plate, the tile behind it at the left, clear of the
-  printer's wrapping-detection zone at the back, right of centre.
+  printer's wrapping-detection zone at the back, right of centre. A second colour from an AMS
+  adds a prime tower, which Bambu Studio starts at the back left, under that tile: drag it to the
+  open space on the tile's right.
