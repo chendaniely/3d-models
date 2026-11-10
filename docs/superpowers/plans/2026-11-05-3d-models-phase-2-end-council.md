@@ -91,3 +91,31 @@ under-tiered.
    `.sc.bak` files aren't in `.gitignore`.
 5. **Minor:** `make check` runs the suite twice, once under `TZ=UTC`.
 6. **Minor:** CI repeats `make check` as three jobs, which is fine for parallelism.
+
+## Decisions
+
+Each claim was checked against the code before it was decided. Severities are the session's.
+
+| Finding | What the check found | Severity | Decision |
+|---|---|---|---|
+| Goal fit 1 | Wrong: all five pages say "a first design, not yet printed or load-tested" (the shade: "tested with the light on") | none | no change |
+| Goal fit 2 | True | Important | step 7 |
+| Goal fit 3 | True | Important | step 7 |
+| Goal fit 4 | Mostly wrong: the README names the CLI and its version, and *Adding a model* says how a design is saved | Minor | no change |
+| Goal fit 5 | True | Minor | fixed, `389ac9f` |
+| Goal fit 6 | True, and the plan's Cut short note covers it | Minor | no change |
+| Goal fit 7 | True | Minor | step 4, Later S35 |
+| Reliability 1 | True, already the spec's Later S24 | Minor | Later, S24 |
+| Reliability 2 | Partly: `build()` doesn't check, but `make check` reads every STL in the tree, so an empty one fails before a push | Minor | Later, S37 |
+| Reliability 3 | The empty glob is true; an ASCII STL can't pass (the parse fails), and the rounding is theoretical | Minor | fixed, `2639777` |
+| Reliability 4 to 6 | True | Minor | Later, S37 |
+| Reliability 7 | True, and the last push wins | Minor | no change |
+| Security 1 | Wrong: counted from a local `main` that's behind. `origin/main` already has the rail's 18, which Dan OKed by name (Q&A 10); the merge adds the gauges' 16 | none | no change |
+| Security 2 | True | Minor | Later, S37 |
+| Security 3 | Already listed | Minor | Later, S37 |
+| Simplicity 1 | True | Important | fixed, `7bf9ddb`; decided without Dan 6 |
+| Simplicity 2 | A judgement: nothing else stops a photo's location going public, on a public repo, and the history scan is the guard against a past slip | Minor | no change |
+| Simplicity 3 | A judgement: small and stable, and it's not extended | Minor | no change |
+| Simplicity 4 | Wrong about `.sc.bak`: `.gitignore` has it. The built files before a pass are intended | none | no change |
+| Simplicity 5 | True, and `AGENTS.md` requires the second run | Minor | no change |
+| Simplicity 6 | Says it's fine | none | no change |
