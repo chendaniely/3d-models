@@ -50,3 +50,6 @@ notes: |
   printer's wrapping-detection zone at the back, right of centre. A second colour from an AMS
   adds a prime tower, which Bambu Studio starts at the back left, under that tile: drag it to the
   open space on the tile's right.
+
+  `scripts/gauges.py` writes this design, since its ticks are worked out from its windows: to change
+  a window, change it there and run it again.

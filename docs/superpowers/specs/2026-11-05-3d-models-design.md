@@ -103,6 +103,7 @@ models/<slug>/
 scripts/models.py     build | check
 scripts/privacy.py    check | strip: image metadata, unreadable formats, home-folder paths
 scripts/offsite.py    the built site checked: it loads nothing from another host
+scripts/gauges.py     the two gauges' design scripts: the card's ticks are worked out here
 scripts/sitedocs.py   the design docs copied into the site, Quarto's syntax escaped
 scripts/gallery.py    the model pages
 website/              the Quarto site; website/superpowers/ and website/models/ are generated

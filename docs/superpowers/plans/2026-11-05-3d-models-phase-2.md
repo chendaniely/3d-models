@@ -57,7 +57,7 @@ pendant cord.
 - Screws go into a stud or toggle anchors, never plastic plugs.
 - A photo: Strip it first, `make strip FILES=<file>`; then show Dan the stripped file and ask, naming it, whether anything in it shows where he lives (a window's view, a street, a house number, a face, a reflection, a screen). Only after his OK naming the file does it go under `models/<slug>/photos/`, and `make privacy` passes before it's staged.
 - Each design's command script stays in `.git/`, out of the repo; the saved `.sc` holds the same
-  feature tree.
+  feature tree. The gauges' generator is the exception: `scripts/gauges.py` (decided without Dan 6).
 - The tiers judge the code and the docs. The parts' physical strength is proven by the load test
   (Task 13), not by a tier: a Tier 2 part task still holds a light over people's heads.
 
