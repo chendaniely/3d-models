@@ -15,8 +15,8 @@ notes: |
   The light hangs inside the shade on its own cord, gripped in the arm tip's stem. Slide the shade
   up over the bulb and the socket, its top round the stem and its two notches past the stem's
   lugs, then turn it a quarter turn: it rests on the lugs. A cone round the socket widens to a
-  cylinder round the bulb, so the shade stays at least 10 mm from the lamp everywhere, and six
-  vents in its top let the heat out.
+  cylinder round the bulb, so the shade stays at least 10 mm from the lamp all round, and 8 mm
+  above the socket's top, and six vents in its top let the heat out.
 
   - **Its size follows the lamp:** `socket_d`, `socket_l`, `bulb_d` and `bulb_l` are guesses
     until the Barrina is measured. Set them to your own lamp's, and the shade follows.

@@ -49,9 +49,9 @@ notes: |
   Push the dowel into each hole, the smallest first. The first it goes through without forcing
   gives its diameter to 0.2 mm: a 1-inch dowel that goes through 25.2 but not 25.0 is between
   25.0 and 25.2 mm. Try again a quarter turn round: an oval dowel goes through one way and not
-  the other. A dowel that goes through every hole is more than 0.6 mm under its size: try the
-  tile one size down. One that goes through no hole is more than 0.4 mm over: try the tile one
-  size up.
+  the other. A dowel that goes through every hole is more than 0.6 mm under its size, and one
+  that goes through no hole is more than 0.4 mm over. A tile's holes cover 1 mm and the sizes are
+  3.175 mm apart, so the next tile won't read it either: use the [taper card](dowel-taper-card.html).
 
   Printed holes come out a little small, so the grid reads a dowel a little large: by as much as
   the [taper card](dowel-taper-card.html), checked against a coin, reads over. Neither decides
