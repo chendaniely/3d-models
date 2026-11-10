@@ -104,8 +104,9 @@ def jpeg_walk(data: bytes) -> tuple[int | None, int | None]:
     """Where the JPEG's end-of-image marker (FFD9) ends, walking its segments and scans, so an
     FFD9 inside a segment (a thumbnail's) or a second JPEG appended isn't taken for it; and the
     first segment's marker a picture doesn't need (a DNL or a JPGn), or a JFIF, ICC or Adobe
-    segment holding anything but its own data, all of which Pillow reads past. Text inside the scan's coded data, or in a colour profile's
-    own text, is out of its reach: make strip re-encodes a photo, and Dan looks at it."""
+    segment holding anything but its own data, all of which Pillow reads past. Text inside the
+    scan's coded data, or in a colour profile's own text, is out of its reach: make strip
+    re-encodes a photo, and Dan looks at it."""
     stray = None
     seen: set[int] = set()
     at = 2  # past the start-of-image marker
