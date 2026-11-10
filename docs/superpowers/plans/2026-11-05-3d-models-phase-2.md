@@ -34,7 +34,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 4: The phase-end list worked through.
+**Now:** Phase end, step 5: The forward look, and the Later rows offered to Dan.
 
 ***
 
@@ -3428,7 +3428,7 @@ Dan*: plan it, keep it optional, or drop it.
 - [x] **1. The final whole-branch review**
 - [x] **2. The rest of the ledger copied into the plan**
 - [x] **3. The phase-end council** (`…-phase-2-end-council.md`, with its Design-page line)
-- [ ] **4. The phase-end list worked through**
+- [x] **4. The phase-end list worked through**
 - [ ] **5. The forward look, and the Later rows offered to Dan**
 - [ ] **6. The retro** (`…-phase-2-retro.md`, with its Design-page line)
 - [ ] **7. The changelog and status**
@@ -3444,34 +3444,37 @@ Dan*: plan it, keep it optional, or drop it.
 
 | Source | Severity | File | Item | Status |
 |---|---|---|---|---|
-| Phase start, goal fit 19 | Minor | spec, *Open items* | The PythonSCAD grow-light stand from 2026-10-16 ("worth a look at Phase 2's start") wasn't looked at: the rail's design came from Dan's references | open |
-| Phase start, security 8 | Minor | `scripts/privacy.py` | A photo with a suffix the check doesn't list (`.jpe`, `.pjpeg`, none) is never opened; the look test adds the first photos | open |
-| Task 1, Standards 2 | Minor | `scripts/offsite.py` | An `iframe`'s `srcdoc` (HTML with its own tags) isn't parsed | open |
-| Task 1, Standards 3 and 4 | Minor | `scripts/offsite.py` | A URL a browser normalises (a backslash for a slash, a tab inside the scheme, `https:/host`) or CSS escapes and comments (`u\72l(`, `url(/**/…)`) pass; none can come from Quarto's output | open |
-| Task 1, Spec 2 | Minor | `scripts/offsite.py` | A script's `fetch(` or `importScripts(`, an import map, and JSON files aren't read; the phase end's network-log look covers them | open |
-| Task 2, review | Minor | `models/rail-feet` | 0.75 mm of plastic between the cord's groove and each screw's counterbore | open |
-| Task 2, review | Minor | `models/rail-feet` | The caps hold by a press fit alone, with no catch; the look test (Task 12) checks them | open |
-| Task 2, review | Minor | `tests/test_rail_feet.py` | The test holds the parameters, not the built cuts: a design with the floor's hole or the groove deleted would pass | open |
-| Task 3, review | Minor | `tests/test_rail_carrier.py` | The groove's and the wedge's shared slope is held by the parameter alone, not the built geometry | open |
-| Task 3, review | Minor | `models/rail-carrier` | `channel` is measured at the carrier's bottom; the wedge's tail below it is thicker, leaving about 7.7 mm to the pads' plane | open |
-| Task 3, review | Minor | `models/rail-carrier` | The wedge meets the round rail on a line; a face hollowed to the dowel's radius would add contact; the load test (Task 13) shows whether it's needed | open |
-| Task 3, review | Minor | `models/rail-carrier` | Literals outside the parameters (the wedge's 20 mm seat, its 40 mm offset); "three sizes" in a test name counts the saved one | open |
-| Task 4, review | Minor | `models/rail-arm-socket` | The slot's flanks aren't parallel to the dovetail's: the side gap is 0.3 mm at the base, 0.19 mm at the tip; the look test (Task 12) checks the fit | open |
-| Task 4, review | Minor | `models/rail-arm-socket` | The boss is wider than the block, so printed on its back it leaves a 3.9 mm ledge the notes' "Supports: none" doesn't mention | open |
-| Task 4, review | Minor | `tests/test_rail_arm_socket.py` | The groove's wall is measured from the dowel's top, not the bore's (0.2 mm apart) | open |
-| Task 5, review | Minor | `models/rail-arm-tip/model.yml` | "Supports from the bed only" can't reach inside the cap's horizontal bore, whose arch prints unsupported | open |
-| Task 5, review | Minor | `models/rail-arm-tip` | The clips' rings ignore `clearance`, and are three copied blocks with literals | open |
-| Task 5, review | Minor | `tests/test_rail_arm_tip.py` | The test holds the cord's sizes, not its built path through the keel and the stem | open |
-| Task 5, review | Minor | `models/rail-arm-tip` | 1.5 mm of plastic between the keel's channel and the bore | open |
-| Task 6, review | Minor | `tests/test_rail_shade.py` | The gap is tested radially; across the cone's slope it is a little less (about 10 mm at a 12 mm radial gap) | open |
-| Task 6, review | Minor | `tests/test_rail_shade.py` | The notches' fit round the stem's lugs is untested | open |
-| Task 6, review | Minor | `models/rail-shade` | Its picture shows the open rim, not the top with its notches and vents | open |
-| Task 6, review | Minor | `models/rail-shade/model.yml` | The notes don't say the shade needs a bed about 155 mm across | open |
-| Task 7, review | Minor | `models/sconce-*/model.yml` | The superseded notes cite "Phase 2 Q&A 1 to 4" on a public gallery page, reachable only through the Design page | open |
-| Task 9, review | Minor | `models/dowel-taper-card`, `models/dowel-hole-grid` | Whether 0.6 mm ticks and 5 to 7 mm engraved numbers in the built-in font's regular face print legibly with a 0.4 mm nozzle is a judgement; Dan's first print (Task 10) shows it | open |
-| Final review, Spec 1 | Minor | `tests/test_rail_*.py` | S28's parts are tested at 1 inch; the other sizes are held only as closed meshes (the outlines and the feet's volume were seen to change with size, by hand) | open |
-| Final review, re-check | Minor | `tests/test_dowel_hole_grid.py` | Each size's tile is measured by its outline, which follows from its widest hole; no hole's own diameter is measured | open |
-| Final review, Standards | Minor | `scripts/privacy.py:109` | `jpeg_walk` returns two positional optionals, which helped hide its bug; a NamedTuple would name them | open |
-| Final review, Standards | Minor | `scripts/privacy.py:48,56` | The same three APPn segments are listed twice, by name and by marker | open |
-| Final review, Standards | Minor | `scripts/gallery.py:154,181` | The same bracket escaping twice in one function | open |
-| Final review, Standards | Minor | `tests/` | Repeated setup: `PLATE_MM` and `LAYER_MM` twice, near-copy tests in the two gauges, the rail's clearance and wedge checks, two identical bodies in `test_privacy.py`; `standing_on` might read better as `bodies_except` | open |
+| Phase start, goal fit 19 | Minor | spec, *Open items* | The PythonSCAD grow-light stand from 2026-10-16 ("worth a look at Phase 2's start") wasn't looked at: the rail's design came from Dan's references | Later: the spec's *Open items* keeps it, and the rail is paused |
+| Phase start, security 8 | Minor | `scripts/privacy.py` | A photo with a suffix the check doesn't list (`.jpe`, `.pjpeg`, none) is never opened; the look test adds the first photos | Later, S37: no photo is in the repo yet, and the look test that adds the first is paused |
+| Task 1, Standards 2 | Minor | `scripts/offsite.py` | An `iframe`'s `srcdoc` (HTML with its own tags) isn't parsed | Later, S36 |
+| Task 1, Standards 3 and 4 | Minor | `scripts/offsite.py` | A URL a browser normalises (a backslash for a slash, a tab inside the scheme, `https:/host`) or CSS escapes and comments (`u\72l(`, `url(/**/…)`) pass; none can come from Quarto's output | Later, S36 |
+| Task 1, Spec 2 | Minor | `scripts/offsite.py` | A script's `fetch(` or `importScripts(`, an import map, and JSON files aren't read; the phase end's network-log look covers them | Later, S36 |
+| Task 2, review | Minor | `models/rail-feet` | 0.75 mm of plastic between the cord's groove and each screw's counterbore | Later, S35 |
+| Task 2, review | Minor | `models/rail-feet` | The caps hold by a press fit alone, with no catch; the look test (Task 12) checks them | Later, S35 |
+| Task 2, review | Minor | `tests/test_rail_feet.py` | The test holds the parameters, not the built cuts: a design with the floor's hole or the groove deleted would pass | Later, S35 |
+| Task 3, review | Minor | `tests/test_rail_carrier.py` | The groove's and the wedge's shared slope is held by the parameter alone, not the built geometry | Later, S35 |
+| Task 3, review | Minor | `models/rail-carrier` | `channel` is measured at the carrier's bottom; the wedge's tail below it is thicker, leaving about 7.7 mm to the pads' plane | Later, S35 |
+| Task 3, review | Minor | `models/rail-carrier` | The wedge meets the round rail on a line; a face hollowed to the dowel's radius would add contact; the load test (Task 13) shows whether it's needed | Later, S35 |
+| Task 3, review | Minor | `models/rail-carrier` | Literals outside the parameters (the wedge's 20 mm seat, its 40 mm offset); "three sizes" in a test name counts the saved one | Later, S35 |
+| Task 4, review | Minor | `models/rail-arm-socket` | The slot's flanks aren't parallel to the dovetail's: the side gap is 0.3 mm at the base, 0.19 mm at the tip; the look test (Task 12) checks the fit | Later, S35 |
+| Task 4, review | Minor | `models/rail-arm-socket` | The boss is wider than the block, so printed on its back it leaves a 3.9 mm ledge the notes' "Supports: none" doesn't mention | Later, S35 |
+| Task 4, review | Minor | `tests/test_rail_arm_socket.py` | The groove's wall is measured from the dowel's top, not the bore's (0.2 mm apart) | Later, S35 |
+| Task 5, review | Minor | `models/rail-arm-tip/model.yml` | "Supports from the bed only" can't reach inside the cap's horizontal bore, whose arch prints unsupported | Later, S35 |
+| Task 5, review | Minor | `models/rail-arm-tip` | The clips' rings ignore `clearance`, and are three copied blocks with literals | Later, S35 |
+| Task 5, review | Minor | `tests/test_rail_arm_tip.py` | The test holds the cord's sizes, not its built path through the keel and the stem | Later, S35 |
+| Task 5, review | Minor | `models/rail-arm-tip` | 1.5 mm of plastic between the keel's channel and the bore | Later, S35 |
+| Task 6, review | Minor | `tests/test_rail_shade.py` | The gap is tested radially; across the cone's slope it is a little less (about 10 mm at a 12 mm radial gap) | Later, S35 |
+| Task 6, review | Minor | `tests/test_rail_shade.py` | The notches' fit round the stem's lugs is untested | Later, S35 |
+| Task 6, review | Minor | `models/rail-shade` | Its picture shows the open rim, not the top with its notches and vents | Later, S35 |
+| Task 6, review | Minor | `models/rail-shade/model.yml` | The notes don't say the shade needs a bed about 155 mm across | Later, S35 |
+| Task 7, review | Minor | `models/sconce-*/model.yml` | The superseded notes cite "Phase 2 Q&A 1 to 4" on a public gallery page, reachable only through the Design page | Later, S37: the link is honest, and that Q&A is clean |
+| Task 9, review | Minor | `models/dowel-taper-card`, `models/dowel-hole-grid` | Whether 0.6 mm ticks and 5 to 7 mm engraved numbers in the built-in font's regular face print legibly with a 0.4 mm nozzle is a judgement; Dan's first print (Task 10) shows it | Later, S38 |
+| Final review, Spec 1 | Minor | `tests/test_rail_*.py` | S28's parts are tested at 1 inch; the other sizes are held only as closed meshes (the outlines and the feet's volume were seen to change with size, by hand) | Later, S35 |
+| Final review, re-check | Minor | `tests/test_dowel_hole_grid.py` | Each size's tile is measured by its outline, which follows from its widest hole; no hole's own diameter is measured | Later, S37 |
+| Final review, Standards | Minor | `scripts/privacy.py:109` | `jpeg_walk` returns two positional optionals, which helped hide its bug; a NamedTuple would name them | Later, S37 |
+| Final review, Standards | Minor | `scripts/privacy.py:48,56` | The same three APPn segments are listed twice, by name and by marker | Later, S37 |
+| Final review, Standards | Minor | `scripts/gallery.py:154,181` | The same bracket escaping twice in one function | Later, S37 |
+| Final review, Standards | Minor | `tests/` | Repeated setup: `PLATE_MM` and `LAYER_MM` twice, near-copy tests in the two gauges, the rail's clearance and wedge checks, two identical bodies in `test_privacy.py`; `standing_on` might read better as `bodies_except` | Later, S37 |
+| Council, reliability 2 | Minor | `scripts/models.py` | `build()` doesn't check an output is a whole STL before recording it; `make check` still catches an empty one | Later, S37 |
+| Council, reliability 4 to 6 | Minor | `tests/conftest.py`, `scripts/models.py`, `scripts/gallery.py` | The fake CLI never changes a text parameter; `invalid()` says only "stale" once a design changes; a viewer's `data-stl` file isn't checked | Later, S37 |
+| Council, security 2 | Minor | `scripts/privacy.py` | An STL's 80-byte header isn't checked; today each holds only `SolidCraft STL <slug>` | Later, S37 |
