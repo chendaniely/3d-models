@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import stat
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -106,3 +107,15 @@ def lettering(model) -> list[tuple[str, float, float, float]]:
 
     walk(json.loads(model.design.read_text(encoding="utf-8")))
     return found
+
+
+def stl_extents(path: Path) -> list[float]:
+    """The length, width and height of a binary STL's bounding box."""
+    data = path.read_bytes()
+    count = struct.unpack_from("<I", data, 80)[0]
+    corners = [
+        struct.unpack_from("<3f", data, 84 + 50 * i + 12 * k)
+        for i in range(count)
+        for k in (1, 2, 3)
+    ]
+    return [max(c[axis] for c in corners) - min(c[axis] for c in corners) for axis in range(3)]

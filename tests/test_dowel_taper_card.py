@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import math
 from fractions import Fraction
+from itertools import pairwise
 from pathlib import Path
 
 import pytest
@@ -44,6 +45,25 @@ def test_ticks_half_a_millimetre_apart_are_over_4_mm_apart_on_the_card() -> None
     assert p["len"] == pytest.approx((p["w1_w"] - p["w1_n"]) / p["rate"])
     assert p["len"] == pytest.approx((p["w2_w"] - p["w2_n"]) / p["rate"])
     assert p["cos_a"] == pytest.approx(1 / math.sqrt(1 + (p["rate"] / 2) ** 2))
+
+
+def test_the_built_millimetre_ticks_sit_half_a_millimetre_of_dowel_apart() -> None:
+    """S33, from the ticks themselves: each starts 0.4 mm off its window's edge, and 0.5 mm of dowel
+    is 0.5 cos_a / rate along the card."""
+    p = params(CARD)
+    step = 0.5 * p["cos_a"] / p["rate"]
+    boxes = [each["bbox"] for each in standing_on(CARD, "Card")]
+    thin = [b for b in boxes if b["max"][0] - b["min"][0] == pytest.approx(0.6, abs=1e-3)]
+    for window, count in ((1, 45), (2, 41)):  # 12 to 34 mm and 32 to 52 mm, every 0.5 mm
+        along = []
+        for b in thin:
+            x = (b["min"][0] + b["max"][0]) / 2
+            half = (p[f"w{window}_n"] + (x - p["end"]) * p["rate"]) / 2
+            if b["min"][1] == pytest.approx(p[f"axis{window}"] + half + 0.4, abs=0.01):
+                along.append(x)
+        along.sort()
+        assert len(along) == count
+        assert [b - a for a, b in pairwise(along)] == pytest.approx([step] * (count - 1), abs=0.003)
 
 
 def sizes_read(p: dict[str, float]) -> list[tuple[int, float, float]]:

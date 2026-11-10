@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 import models
-from conftest import body, lettering, params, standing_on
+from conftest import body, lettering, params, standing_on, stl_extents
 
 GRID = models.Model(Path(__file__).resolve().parent.parent / "models" / "dowel-hole-grid")
 PLATE_MM = 256.0  # a Bambu P2S prints up to 256 mm square
@@ -52,6 +52,21 @@ def test_it_comes_in_every_eighth_of_an_inch_from_a_half_to_two() -> None:
         changes = listed[listed_as(size)]
         assert float(changes["dowel_d"].removesuffix(" mm")) == pytest.approx(float(size) * 25.4)
         assert changes["label"] == label(size)
+
+
+@pytest.mark.parametrize("size", [Fraction(k, 8) for k in range(4, 17) if k != 8], ids=listed_as)
+def test_each_sizes_tile_is_built_at_that_size(size: Fraction) -> None:
+    """The saved parameters are the 1-inch tile's, so every other size is read from its own STL:
+    the tile's length and width follow from its widest hole (S34)."""
+    p = params(GRID)
+    pitch = float(size) * 25.4 + OFFSETS[-1] + p["wall"]
+    built = stl_extents(GRID.sized(listed_as(size)))
+    expected = [
+        3 * pitch + p["wall"],
+        2 * p["band"] + 2 * pitch + p["head"],
+        p["thick"] + p["relief"],
+    ]
+    assert built == pytest.approx(expected, abs=0.01)
 
 
 def test_even_the_two_inch_tile_fits_the_printers_plate() -> None:
