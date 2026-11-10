@@ -21,7 +21,8 @@ afterwards. Tasks 10 to 14 are paused, unticked, and Phase 2 ends with the gauge
 rail's parts on the gallery at placeholder sizes; the sentence above is the goal as planned.
 
 **Architecture:** five new models under `models/`, and two gauges, each a parametric SolidCraft design built by
-Phase 1's `make models` in three dowel sizes, with a test that holds its fit and its numbers to
+Phase 1's `make models` (each dowel part in three dowel sizes, the shade and the card in one, the
+hole grid in a tile per size), with a test that holds its fit and its numbers to
 the spec; two Tier 1 fixes to the privacy check and the site; and Dan's tasks (measure, look test,
 load test, install), whose answers the agent records and turns into parameters.
 
@@ -69,7 +70,7 @@ pendant cord.
 2. **A lamp bigger than the guesses:** Task 10 measures the socket and the bulb, and Task 11
    retunes the shade; Task 6's test holds 10 mm of air round each.
 3. **A dowel half a millimetre over or under its size:** each wedge's travel covers it; Tasks 3, 4
-   and 6 test it at -0.5, 0 and +0.5 mm.
+   and 5 test it at -0.5, 0 and +0.5 mm.
 4. **A carrier, a planter or the arm lifted:** the rail can't rise, held by the screw through the
    bottom cup's floor (Task 2's test; Task 14's check).
 5. **Drywall with no stud where a foot goes:** 3/16-inch toggle bolts, which clamp each foot's
