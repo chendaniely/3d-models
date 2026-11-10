@@ -118,7 +118,7 @@ def jpeg_walk(data: bytes) -> tuple[int | None, int | None]:
         while at < len(data) and data[at] == 0xFF:  # a marker may follow any number of fill bytes
             at += 1
         if at >= len(data):
-            return None
+            return None, stray
         marker, at = data[at], at + 1
         if marker == 0xD9:
             return at, stray

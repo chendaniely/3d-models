@@ -389,3 +389,8 @@ def test_check_names_a_file_that_goes_before_it_is_read(
 ) -> None:
     monkeypatch.setattr(privacy, "committable", lambda root: [root / "gone.jpg"])
     assert check(repo, capsys) == (1, f"privacy: gone.jpg: {privacy.GONE}\n")
+
+
+@pytest.mark.parametrize("data", [b"\xff\xd8\xff", b"\xff\xd8\xff\xff\xff"])
+def test_a_jpeg_cut_off_in_its_fill_bytes_is_named_not_a_traceback(data: bytes) -> None:
+    assert privacy.structure_problem(data) == privacy.CUT_SHORT
