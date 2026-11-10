@@ -16,6 +16,10 @@ live gallery, then retuned to Dan's measurements and published again (Q&A 9); th
 gaps Phase 1 left are closed first, and two gauges, printed in PLA, measure the dowels at the
 store (Q&A 11).
 
+**Cut short (Q&A 15, 2026-11-09):** Dan paused the lamp to finish the project and design parts
+afterwards. Tasks 10 to 14 are paused, unticked, and Phase 2 ends with the gauges built and the
+rail's parts on the gallery at placeholder sizes; the sentence above is the goal as planned.
+
 **Architecture:** five new models under `models/`, and two gauges, each a parametric SolidCraft design built by
 Phase 1's `make models` in three dowel sizes, with a test that holds its fit and its numbers to
 the spec; two Tier 1 fixes to the privacy check and the site; and Dan's tasks (measure, look test,

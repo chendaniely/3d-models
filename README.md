@@ -12,10 +12,10 @@ light up to 24 inches out from a corner wall, under a printed shade.
 can turn, its picture, its measurements and print settings, and the `.stl` and `.sc` files to
 download.
 
-**Status:** Phase 1 has merged: the gallery is live, with the fit-test coupon and the sconce's
-wall block and cord clamp. Phase 2, under way, replaces those two with the rail's five parts, then
-prints, tests and installs them; two gauges, a taper card and a hole grid, measure the dowels
-at the store first.
+**Status:** Phase 1 has merged and the gallery is live. Phase 2, ending now, replaced the sconce's
+wall block and cord clamp with the rail's five parts, at placeholder sizes, and adds two gauges, a
+taper card and a hole grid, that read a dowel's real diameter. Printing, testing and installing
+the rail are paused (Phase 2 Q&A 15).
 
 ## Using a model
 

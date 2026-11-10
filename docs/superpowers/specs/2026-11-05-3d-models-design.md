@@ -1,6 +1,6 @@
 # 3d-models: design spec
 
-**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`, its start merged to `main` (#2, `7b53336`), and the rail's parts at placeholder sizes (#3, `20c359f`) · two store gauges built (Phase 2 Q&A 11, Task 9), trimmed to share a plate, their numbers raised for a second colour (Q&A 12 to 14)
+**Status:** spec approved 2026-11-05 · Phase 1 merged 746ce34 2026-11-05 · revised 2026-11-06 for the rail (Phase 2 Q&A 1 to 5), approved 2026-11-06 (Phase 2 Q&A 6) · Phase 2 in progress on `phase-2`, its start merged to `main` (#2, `7b53336`), and the rail's parts at placeholder sizes (#3, `20c359f`) · two store gauges built (Phase 2 Q&A 11, Task 9), trimmed to share a plate, their numbers raised for a second colour (Q&A 12 to 14) · the lamp paused at Task 10, Phase 2 ending without it (Q&A 15)
 
 Kickoff's answers, with Dan's reasons in his words, are on the
 [Q&A page](2026-11-05-3d-models-qa.md); the feasibility numbers behind the sconce are in the
@@ -141,7 +141,7 @@ Changelog, and How we work (`AGENTS.md`). Diagrams by link only:
 | Phase | Goal | Done means |
 |---|---|---|
 | 1: the repo and the first models | the pipeline from design to gallery, guarded by CI, with the coupon and the sconce's parts designed | the live site turns the coupon, the wall block and the cord clamp in 3D and downloads each in three sizes; CI runs every check |
-| 2: the grow-light rail | two gauges to read the dowels at the store, then the rail's parts designed from Dan's answers, sized to his measurements, judged by eye, proven by a load test at 24 inches, and installed | the rail and the light are on the wall after a passed load test, the parts' pages saying so; Phase 1's wall block and cord clamp are marked superseded |
+| 2: the grow-light rail | two gauges to read the dowels at the store, then the rail's parts designed from Dan's answers, sized to his measurements, judged by eye, proven by a load test at 24 inches, and installed | cut short (Phase 2 Q&A 15): the gauges built, the rail's parts on the gallery at placeholder sizes, Phase 1's wall block and cord clamp marked superseded; the rail and the light on the wall after a passed load test wait in Later |
 
 ### The rail's design calls
 
@@ -318,3 +318,6 @@ replace it.
   trimmed (Phase 2 Q&A 12).
 - 2026-11-07: the gauges' numbers and ticks stand 0.8 mm proud, so one filament change prints them
   in a second colour, and both gauges are 4 mm thick, from 6 (Phase 2 Q&A 13 and 14).
+- 2026-11-09: the lamp is paused: Phase 2's measuring, retuning, look test, load test and install
+  move to Later, and Phase 2 ends with the gauges built and the rail's parts at placeholder sizes
+  (Phase 2 Q&A 15 and decided without Dan 5).
