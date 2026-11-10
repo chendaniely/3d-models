@@ -34,7 +34,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Phase end, step 9: After the merge.
+**Now:** Phase 2 merged (#4), with the lamp paused (Q&A 15). No phase is planned; new parts come next.
 
 ***
 
@@ -3435,7 +3435,7 @@ Dan*: plan it, keep it optional, or drop it.
 - [x] **8. The PR:** `chore(repo): 🤖 merge Phase 2: the rail's parts and the store gauges (#N)`; it
   adds the gauges' 16 STL and PNG files, which no scan can read, so it waits for Dan's look at each
   before the merge
-- [ ] **9. After the merge:** the gauges' pages are live, their viewers load, and the live site
+- [x] **9. After the merge:** the gauges' pages are live, their viewers load, and the live site
   loads nothing from another host, checked in the browser's network log too
 
 ***
