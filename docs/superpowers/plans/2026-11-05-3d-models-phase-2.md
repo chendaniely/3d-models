@@ -33,7 +33,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 11: Retune the parts to Dan's measurements, and publish them again, paused.
+**Now:** Task 12: [Dan] The look test, paused.
 
 ***
 
@@ -3121,6 +3121,9 @@ measures, and it's tried once the dowel is sanded and finished (decided without 
 ### Task 11: Retune the parts to Dan's measurements, and publish them again
 
 **Tier:** 2 · **Scenarios:** S28, S26, S30
+
+> **Paused, not built** (Phase 2 Q&A 15, 2026-11-09): Task 10's measurements never came, so the five parts stay at
+> their placeholder sizes. The steps stay unticked, as they were, for when the lamp resumes.
 
 **Files:**
 - Modify: the five rail designs (`models/rail-*/rail-*.sc`, by SolidCraft), their built files (by
