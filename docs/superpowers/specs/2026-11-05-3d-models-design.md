@@ -102,6 +102,7 @@ models/<slug>/
   photos/             optional: prints and installs, stripped and looked at first
 scripts/models.py     build | check
 scripts/privacy.py    check | strip: image metadata, unreadable formats, home-folder paths
+scripts/offsite.py    the built site checked: it loads nothing from another host
 scripts/sitedocs.py   the design docs copied into the site, Quarto's syntax escaped
 scripts/gallery.py    the model pages
 website/              the Quarto site; website/superpowers/ and website/models/ are generated
@@ -187,8 +188,8 @@ replace it.
 - **The arm tip and the shade** (Q&A 3; their shape the agent's): a cap on the arm's end with a
   stem down to a shade fixed under it: the shade's top turns onto two lugs at the stem's foot, and
   the lamp hangs inside it on its own cord, which a short band in the stem grips (S27). A cone
-  round the socket widens to a cylinder round the bulb, so the shade's wall is at least 10 mm from
-  the lamp everywhere; vents at its top. Its size waits on Dan's measurement of the socket and the
+  round the socket widens to a cylinder round the bulb, so the shade's wall is at least 10 mm from the lamp all round,
+  and 8 mm above the socket's top; vents at its top. Its size waits on Dan's measurement of the socket and the
   bulb. If the bulb's hottest surface is over 60 °C after an hour on, the gap grows or the
   material changes, decided with Dan.
 - **The cord** (the agent's): from the socket up the stem, along the arm's underside in printed
@@ -224,9 +225,9 @@ replace it.
 | S19 | someone with a 3/4-inch or 25 mm dowel opens a dowel part's page | an STL for their size, and a note on which parameters to change for any other | Phase 1, Tasks 2, 5 to 8 | `tests/test_models.py`, `tests/test_gallery.py` | built |
 | S20 | someone downloads a model | the page says it's CC BY-NC 4.0: print, adapt and share with credit, not for sale | Phase 1, Task 5 | `tests/test_gallery.py` | built |
 | S21 | a file holding a home-folder path is about to be committed | `make privacy` names the file and line, never the path | Phase 1, Task 3 | `tests/test_privacy.py` | built |
-| S28 | a rail part is built at 3/4 inch, 25 mm or 1 inch | each cup and socket takes its dowel with the coupon's clearance, the carrier's open back takes the rail, its wedge fills the gap, the arm's socket is at least 51 mm deep, and each wedge seats inside on a dowel 0.5 mm over or under its size, with the clearance the coupon picks for it | Phase 2, Tasks 2 to 5 | the parts' tests | built |
+| S28 | a rail part is built at 3/4 inch, 25 mm or 1 inch | each cup and socket takes its dowel with the coupon's clearance, the carrier's open back takes the rail, its wedge fills the gap, the arm's socket is at least 51 mm deep, and each wedge seats inside on a dowel 0.5 mm over or under its size, with the clearance the coupon picks for it | Phase 2, Tasks 2 to 5 | the parts' tests, at 1 inch; at every size, that its STL is closed (`tests/test_meshes.py`) | built |
 | S31 | a visitor opens any page of the site | their browser fetches nothing from another host: no web font, script or style sheet | Phase 2, Task 1 | `tests/test_offsite.py`; `make docs` | built |
-| S33 | Dan slides the taper card along a dowel from 1/2 to 2 inches until it touches both sides of a window | the tick there reads its diameter in millimetres, to about 0.1 mm between ticks 0.5 mm apart, and its inch size on the other side; a coin of known size checks the card; the card fits a 256 mm plate, with the grid's 1-inch tile beside it (Phase 2 Q&A 12); its ticks and numbers stand on its top, so one filament change prints them in a second colour (Q&A 13) | Phase 2, Task 9 | `tests/test_dowel_taper_card.py`; Dan's coin check at Task 10 | built |
+| S33 | Dan slides the taper card along a dowel from 1/2 to 2 inches until it touches both sides of a window | the tick there reads its diameter in millimetres, to about 0.1 mm between ticks 0.5 mm apart, and its inch size on the other side; a coin of known size checks the card; the card fits a 256 mm plate, with the grid's 1-inch tile beside it (Phase 2 Q&A 12); its ticks and numbers stand on its top, so one filament change prints them in a second colour (Q&A 13) | Phase 2, Task 9 | `tests/test_dowel_taper_card.py`; Dan's coin check, not yet done (Task 10 is paused, Phase 2 Q&A 15) | built |
 | S34 | Dan pushes a dowel into the hole-grid tile for its size, the smallest hole first | the first hole it goes through gives its diameter to 0.2 mm, from 0.6 mm under its size to 0.4 mm over, each hole marked with its own in raised numbers, a second colour if Dan likes (Phase 2 Q&A 13); a tile for every 1/8 inch from 1/2 to 2, each on a 256 mm plate | Phase 2, Task 9 | `tests/test_dowel_hole_grid.py` | built |
 
 ### Later
@@ -253,12 +254,12 @@ replace it.
 
 - **[Dan] The light's weight, its cord and the wall.** The numbers assume 1 kg; one listing gives
   the Barrina kit, cord and timer included, as 1.7 lb (0.77 kg). The clamp's `cord_d` is a 6 mm
-  guess, and the cord may be flat. Phase 2's measuring task (Task 10) asks.
+  guess, and the cord may be flat. Task 10 asks, when the lamp resumes (paused, Phase 2 Q&A 15).
 - **[Dan] SolidCraft's save folder:** add this repo to the SolidCraft MCP server's `--allow-path`
   so live sessions can save here. Headless builds don't need it.
 - **[Dan] The bulb:** its diameter, height and socket, its weight with its cord and timer, and its
-  hottest surface after an hour on; the shade's size and the load test wait on them (Phase 2's
-  measuring task, Task 10). His changes to the parts are settled (Phase 2 Q&A 1 to 4).
+  hottest surface after an hour on; the shade's size and the load test wait on them (Task 10, paused
+  with the lamp, Phase 2 Q&A 15). His changes to the parts are settled (Phase 2 Q&A 1 to 4).
 - **[Dan] His commits' author address:** the commits carry his personal email, public in the
   history; a GitHub noreply address would keep it out of future commits (Phase 1 end council,
   security 4).
@@ -277,7 +278,8 @@ replace it.
   as he did for Phase 1's end (Phase 1 Q&A 5).
 - **lychee runs in CI only:** it isn't installed on Dan's machine, and running a downloaded copy
   was refused in this session; installing it locally is Dan's call (Phase 1's phase-end list).
-- **The parts are untested designs** until Phase 2's look and load tests; their pages say so.
+- **The parts are untested designs** until the look and load tests, paused with the lamp (Later:
+  S11, S13); their pages say so.
 - **Prior work outside this repo:** a PythonSCAD grow-light stand from 2026-10-16 in Dan's
   `~/temp/pythonscad_lamp`; not used here, but worth a look at Phase 2's start.
 
