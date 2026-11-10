@@ -14,7 +14,8 @@ PNG text chunks; a camera's serial number and its owner's name hide beside it. R
 for each, the check allows nothing but a colour profile and the format's own housekeeping, and
 refuses the formats it can't read inside (HEIC, AVIF, RAW, video). Since Pillow reads past a
 chunk it doesn't know and stops at the image's end, the file's own structure is checked first: a
-PNG or WebP may hold only the chunks a picture needs, and no image anything after its end. What a
+PNG, JPEG or WebP may hold only the chunks or segments a picture needs, and no image anything
+after its end. What a
 photo shows (a window's view, a street, a face) no check can see: Dan looks at each before it's
 staged.
 """
@@ -100,16 +101,11 @@ def png_problem(data: bytes) -> str | None:
     return CUT_SHORT
 
 
-def jpeg_end(data: bytes) -> int | None:
-    """Where the JPEG's end-of-image marker (FFD9) ends, walking its segments and scans, so an
-    FFD9 inside a segment (a thumbnail's) or a second JPEG appended isn't taken for it."""
-    return jpeg_walk(data)[0]
-
-
 def jpeg_walk(data: bytes) -> tuple[int | None, int | None]:
-    """jpeg_end's walk: where the image ends, and the first segment's marker a picture doesn't
-    need (a DNL or a JPGn), or a JFIF, ICC or Adobe segment holding anything but its own data,
-    all of which Pillow reads past. Text inside the scan's coded data, or in a colour profile's
+    """Where the JPEG's end-of-image marker (FFD9) ends, walking its segments and scans, so an
+    FFD9 inside a segment (a thumbnail's) or a second JPEG appended isn't taken for it; and the
+    first segment's marker a picture doesn't need (a DNL or a JPGn), or a JFIF, ICC or Adobe
+    segment holding anything but its own data, all of which Pillow reads past. Text inside the scan's coded data, or in a colour profile's
     own text, is out of its reach: make strip re-encodes a photo, and Dan looks at it."""
     stray = None
     seen: set[int] = set()
