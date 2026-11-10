@@ -33,7 +33,7 @@ pendant cord.
 
 **Spec:** `docs/superpowers/specs/2026-11-05-3d-models-design.md`
 
-**Now:** Task 14: [Dan] Install it, paused.
+**Now:** Phase end, step 1: The final whole-branch review.
 
 ***
 
@@ -3360,6 +3360,8 @@ Co-Authored-By: <the model's own line>
 
 **Tier:** none: Dan installs it; the agent records it, Tier 1 for the photo · **Scenarios:** S14, S32
 
+> **Paused, not done** (Phase 2 Q&A 15, 2026-11-09): the install waits with the lamp. The steps stay unticked.
+
 - [ ] **0. Record the base:** `git rev-parse HEAD > .git/TASK_BASE`.
 - [ ] **1. Mount it** as tested, in the order the wall feet's page gives (*Putting the rail
   together*): its numbers (where the top screw goes, the arm's length) are the parts' own.
@@ -3429,10 +3431,11 @@ Dan*: plan it, keep it optional, or drop it.
 - [ ] **5. The forward look, and the Later rows offered to Dan**
 - [ ] **6. The retro** (`…-phase-2-retro.md`, with its Design-page line)
 - [ ] **7. The changelog and status**
-- [ ] **8. The PR:** `chore(repo): 🤖 merge Phase 2: the grow-light rail (#N)`; it adds STL, PNG
-  and photo files no scan can read, so it waits for Dan's look at each before the merge
-- [ ] **9. After the merge:** the rail's pages are live, their viewers load, the photo shows, and
-  the live site loads nothing from another host, checked in the browser's network log too
+- [ ] **8. The PR:** `chore(repo): 🤖 merge Phase 2: the rail's parts and the store gauges (#N)`; it
+  adds the gauges' 16 STL and PNG files, which no scan can read, so it waits for Dan's look at each
+  before the merge
+- [ ] **9. After the merge:** the gauges' pages are live, their viewers load, and the live site
+  loads nothing from another host, checked in the browser's network log too
 
 ***
 
