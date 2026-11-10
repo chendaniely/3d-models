@@ -22,3 +22,4 @@ under `docs/superpowers/` in the repo, shown as it is.
 - [Phase 2's questions and answers](superpowers/plans/2026-11-05-3d-models-phase-2-qa.md)
 - [Phase 2's start council](superpowers/plans/2026-11-05-3d-models-phase-2-start-council.md)
 - [Phase 2's end council](superpowers/plans/2026-11-05-3d-models-phase-2-end-council.md)
+- [Phase 2's retro](superpowers/plans/2026-11-05-3d-models-phase-2-retro.md)
